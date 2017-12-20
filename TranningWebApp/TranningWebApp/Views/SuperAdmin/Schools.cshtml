@@ -1,0 +1,54 @@
+﻿@using TranningWebApp.Resource
+@model PagedList.IPagedList<TranningWebApp.Repository.DataAccess.school>
+
+@{
+    ViewBag.Title = "Schools";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    string currentFilter = ViewBag.CurrentFilter;
+}
+
+<h2>@SuperAdmin.Schools</h2>
+
+
+
+<div class="firefox-top-margin col-lg-12" id="select_widgets" style="overflow: hidden;">
+
+    <div class="search-box">
+        <form class="form-inline">
+            <div class="form-group">
+                <input type="text" name="q" value="@ViewBag.searchQuery" class="search-text form-control" placeholder="Search..." style="width: 400px;" id="search-text-input" />
+                @*<button class="close-icon" type="reset"></button>*@
+                <div id='button-holder'>
+                    <img src="~/Images/magnify.png" />
+                </div>
+            </div>
+
+
+            @*<button type="submit" class="btn btn-info" style="width: 120px;">Search</button>*@
+            <div class="form-group">
+                @{
+                    bool isArchived = ViewBag.showArchived.ToString().ToLower().Equals("true");
+                }
+                &nbsp;
+                <input type="CheckBox" name="showArchived" @( ViewBag.showArchived ? "checked='checked'" : string.Empty) style="margin-top: 22px;" />
+                Archived
+            </div>
+
+            &nbsp;&nbsp; <button type="button" class="btn btn-info" style="width: 160px;float: right; margin-left:20px" onclick='addEmployee()'>@SuperAdmin.AddEmployee</button>
+
+            &nbsp;&nbsp; <button type="button" class="btn btn-info" style="width: 160px;float: right;" onclick='manageAttendance()'>@SuperAdmin.ManageAttendance</button>
+
+        </form>
+
+    </div>
+    <br />
+</div>
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <span>@Html.DisplayFor(model => Model[i].SchoolName)</span>
+    <br />
+}
+

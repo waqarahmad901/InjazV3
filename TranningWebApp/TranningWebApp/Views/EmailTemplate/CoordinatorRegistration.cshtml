@@ -1,0 +1,27 @@
+﻿
+@model TmsWebApp.Models.EmailTemplateModel
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.CoordinatorName</b>
+    <br />
+    <br />
+    Please fill your registration form and follow the instractions for attached document: .
+    <br />
+    <ol> 
+        <li>  Download the attached document.</li>
+        <li>  Update the document with relevent information.</li>
+        <li>  Upload the document in Injaz : <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>.</li> 
+    </ol> 
+    <br />
+    <br /> 
+    Regards
+    <br />
+    Administrator
+    <br />
+    @Model.User
+    <br />
+    Injaz Tranning Management System
+    <br /> 
+   <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
+</div>

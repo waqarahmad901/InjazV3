@@ -1,0 +1,49 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Models.SessionFeedBack
+@{
+    ViewBag.Title = "FeedBack";
+}
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@SessionX.Session</li>
+        </li>
+        <li class="breadcrumb-item active">@SessionX.FeedBack</li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-6">
+                @using (Html.BeginForm("Feedback", "Session", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary"><i class="icon-plus"></i> @General.Add @SessionX.FeedBack</strong>
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <label for="name">@SessionX.FeedBack</label>
+                                @Html.TextAreaFor(m => m.FeedBack, new { @class = "form-control", @rows = 4, @col = 10 })
+                              
+                            </div>
+                           
+                        </div>          
+                           <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
+                        </div>
+                        @Html.HiddenFor(x => x.SessionId)
+                        @Html.HiddenFor(x=>x.ParticipantId)
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</main>
+

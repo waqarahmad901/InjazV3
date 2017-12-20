@@ -1,0 +1,23 @@
+﻿@model TmsWebApp.Models.EmailTemplateModel
+@{ 
+    string appUrl =  System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.VolunteerName</b>
+    <br />
+    <br />
+    This is to inform you that the session <b>@Model.SessionTitle</b> has been assigned.
+    <br />
+    <br />
+    Regards
+    <br/>
+    Administrator 
+    <br />
+    @Model.User
+    <br />
+    Injaz Tranning Management System 
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

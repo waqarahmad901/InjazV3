@@ -1,0 +1,357 @@
+﻿@using TmsWebApp.Common
+@using TranningWebApp.Common
+@model TranningWebApp.Repository.DataAccess.evaluation_cp_pre
+@{
+    ViewBag.Title = "Index";
+}
+<main class="main">
+
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">الصفحة الرئيسية</li>
+
+    <li class="breadcrumb-item active">الممولين</li>
+
+    <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+
+</ol>
+
+<div class="container-fluid">
+<div class="animated fadeIn">
+<div class="col-sm-12 pull-left">
+@*<form name="form1" action="" method="post">*@
+@using (Html.BeginForm("CPPre", "EvaluationForm", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+{
+
+    <div class="card">
+    <div class="card-header">
+        <strong class="text-primary"><h1>برنامج الشركة</h1></strong>
+        <strong class="text-primary"><p align="center">اختبارات ما قبل</p> </strong>
+    </div>
+    <div class="card-header">
+        <strong class="text-primary">معلومات الطالب</strong>
+    </div>
+    <div class="card-block col-sm-6">
+        <div class="form-group">
+            <label for="name">الإسم:</label>
+            @Html.TextBoxFor(x => x.F1, new { @class = "form-control", @placeholder = "" })
+        </div>
+        <div class="form-group">
+            <label for="name">ما هو تاريخ ميلادك؟</label>
+            <div>
+                @Html.TextBoxFor(x => x.F2_1, new { @class = "form-control  two-digit", @placeholder = "" })
+                @Html.TextBoxFor(x => x.F2_2, new { @class = "form-control  two-digit", @placeholder = "" })-
+                @Html.TextBoxFor(x => x.F2_3, new { @class = "form-control  two-digit", @placeholder = "" })
+                @Html.TextBoxFor(x => x.F2_4, new { @class = "form-control  two-digit", @placeholder = "" })-
+                @Html.TextBoxFor(x => x.F2_5, new { @class = "form-control  two-digit", @placeholder = "" })
+                @Html.TextBoxFor(x => x.F2_6, new { @class = "form-control  two-digit", @placeholder = "" })
+                @Html.TextBoxFor(x => x.F2_7, new { @class = "form-control  two-digit", @placeholder = "" })
+                @Html.TextBoxFor(x => x.F2_8, new { @class = "form-control  two-digit", @placeholder = "" })
+            </div>
+            <label for="name"> اليوم&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;الشهر&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;السنة </label>
+
+        </div>
+        <div class="form-group">
+            <label for="name">الجنس:</label>
+            <label for="male"> @Html.RadioButtonFor(x => x.F3, "Male") ذكر</label>
+            <label for="female"> @Html.RadioButtonFor(x => x.F3, "Fmale")" أنثى</label>
+        </div>
+        <div class="form-group">
+            <label for="name">البلد الذي تشارك فيه في برنامج الشركة</label>
+            @Html.TextBoxFor(x => x.F4, new { @class = "form-control", @placeholder = "" })
+        </div>
+        <div class="form-group">
+            <label for="name">اسم الجامعة التي تدرس فيها</label>
+            @Html.TextBoxFor(x => x.F5, new { @class = "form-control", @placeholder = "" })
+        </div>
+        <div class="form-group">
+            <label for="name">تخصصك الدراسي</label>
+            @Html.TextBoxFor(x => x.F6, new { @class = "form-control", @placeholder = "" })
+        </div>
+        <div class="form-group">
+            <label for="name">التحصيل الأكاديمي:</label>
+            <label for="a">@Html.RadioButtonFor(x => x.F7, "a") بكالوريوس</label>
+            <label for="b">@Html.RadioButtonFor(x => x.F7, "b") شهادة الماجستير</label>
+            <label for="c">@Html.RadioButtonFor(x => x.F7, "c") شهادة الدكتوراة</label>
+        </div>
+        <div class="form-group">
+            <label for="name">هل سبق ان شاركت في برامج مؤسسة إنجاز من قبل؟ في حال كانت الإجابة نعم اكتب إسم البرنامج وتاريخ مشاركتك به:</label>
+            @Html.TextBoxFor(x => x.F8, new { @class = "form-control", @placeholder = "" })
+        </div>
+        <div class="form-group">
+            <label for="name">هل تقوم بتعبئة اختبار ما قبل أم اختبار ما بعد؟:</label>
+            <label for="d">@Html.RadioButtonFor(x => x.F9, "d") اختبار ما قبل</label>
+            <label for="e">@Html.RadioButtonFor(x => x.F9, "e") اختبار ما بعد</label>
+        </div>
+    </div>
+    <div class="card-block col-sm-12">
+        <div class="form-group">
+            <label>
+                يرجى الملاحظة: لا تؤثر إجاباتك للاختبار على مشاركتك في برنامج الشركة. فهو ببساطة يسهم في تحديد المجالات التي تتطلب المزيد من التعلم خلال برنامج الشركة. وبالمثل، لن
+                تؤثر إجاباتك لاختبار ما بعد على مشاركتك في برامج مؤسسة إنجاز الأخرى. لذا، قم بالإجابة على كافة الأسئلة بصدق وشفافية.
+            </label>
+        </div>
+        <div class="row">
+            <table class="table table-hover table-outline mb-0">
+                <thead class="thead-default">
+                <tr>
+                    <th>ما مدى موافقتك على العبارات التالية:</th>
+                    <th class="text-center">أوافق بشدة</th>
+                    <th class="text-center">لا أوافق</th>
+                    <th class="text-center">محايد</th>
+                    <th class="text-center">موافق</th>
+                    <th class="text-center">موافق بشدة</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>أتقن مهارة التفكير الإبداعي.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F10_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F10_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F10_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F10_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F10_5)</td>
+                </tr>
+                <tr>
+                    <td>اتقن مهارة التفاوض.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F11_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F11_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F11_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F11_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F11_5)</td>
+                </tr>
+                <tr>
+                    <td>أدير وقتي بشكل فعّال.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F12_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F12_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F12_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F12_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F12_5)</td>
+                </tr>
+                <tr>
+                    <td>أتقن مهارة تقديم العروض.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F13_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F13_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F13_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F13_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F13_5)</td>
+                </tr>
+                <tr>
+                    <td>أتقن عملية البحث.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F14_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F14_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F14_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F14_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F14_5)</td>
+                </tr>
+                <tr>
+                    <td>أتقن عملية البيع بفعّالية.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F15_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F15_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F15_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F15_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F15_5)</td>
+                </tr>
+                <tr>
+                    <td>بإمكاني العثور على الحلول لأي مشكلة.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F16_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F16_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F16_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F16_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F16_5)</td>
+                </tr>
+                <tr>
+                    <td>أجيد التفكير النقدي والتحليل.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F17_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F17_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F17_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F17_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F17_5)</td>
+                </tr>
+                <tr>
+                    <td>أعمل بفعّالية ضمن الفريق.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F18_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F18_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F18_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F18_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F18_5)</td>
+                </tr>
+                <tr>
+                    <td>أنا قيادي.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F19_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F19_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F19_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F19_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F19_5)</td>
+                </tr>
+                <tr>
+                    <td>أتخذ القرارات الفعّالة بأسلوب سريع.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F20_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F20_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F20_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F20_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F20_5)</td>
+                </tr>
+                <tr>
+                    <td>أتقن حل المسائل الرياضية.</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_1)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_2)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_3)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_4)</td>
+                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_5)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-header">
+        <strong class="text-primary">أسئلة المعرفة: ضع دائرة على الإجابة الصحيحة.</strong>
+    </div>
+    <div class="card-block col-sm-12">
+        <ol type="1">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <li class="primary-heading">أي من العبارات التالية صحيحة؟</li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F22_1) يولد الرياديون ناجحون.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F22_2) يقوم الرياديون باستثمار المبالغ الكبيرة عن طيب خاطر.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F22_3) يجب على الرياديون الناجحين اختراع شيء ما.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F22_4) يواجه الريادي الكثير من المخاطر.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F22_5) لا شيء مما سبق</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F22_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading">
+                        أي من أساليب التمويل التالية تنطوي على بيع جزء من ملكية الشركة
+                        لمستثمرين آخرين؟
+                    </li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F23_1) إصدار الأسهم</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F23_2) القروض التجارية</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F23_3) رأس المال المخاطر</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F23_4) المنح الحكومية</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F23_5) كل ما سبق</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F23_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading">
+                        ان سلمى أحد الرياديين المصريين الذين يعملون في مجال التكنولوجيا.
+                        وتقوم بتبادل البضائع والخدمات مع عدة شركات أخرى. أي من المهارات
+                        الريادية التالية التي ينبغي أن تتقنها سلمى للتأكد من حصول كافة
+                        الأطراف على الشروط المؤاتية والمقبولة؟
+                    </li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F24_1) التفاوض</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F24_2) تشبيك العلاقات</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F24_3) القيادة</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F24_4) البيع</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F24_5) كل ما سبق</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F24_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading"> ما النتائج التي تعود على الشركة عند تصفيتها؟</li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F25_1) تجعل من عملياتها أكثر مرونة</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F25_2) احتساب عدد المنتجات النهائية.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F25_3) تحويل أصول الشركة إلى النقد.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F25_4) تحصل على المزيد من التمويل لشراء أصول جديدة.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F25_5) لا شيء مما سبق.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F25_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading">
+                        تقوم شركة برايت أيدياز Bright Ideas ببيع اللمبات الكهربائية ذات
+                        التقنية العالية التي تستخدم تكنولوجيا الأشعة تحت الحمراء الجديدة.
+                        ويعمل في الشركة١٠ موظفين على مدار ٣٠ ساعة في الأسبوع مقابل ١٢ $ في
+                        الساعة. يحتاج قسم التسويق إلى ٢٠٠  $ في الشهر لشراء اللوازم الضرورية.
+                        وتدفع الشركة ٥٠٠ $ في الشهر مقابل إيجار المكاتب. وفي حزيران، قامت
+                        الشركة ببيع ١٥٠ لمبة ودفعت لموظفيها ١٠ % كعمولة مبيعات و ٥%ضريبة
+                        المبيعات. قم باحتساب مجموع التكاليف الثابتة للشركة. ان الإجابة هي:
+                    </li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F26_1)  ٣,٦٠٠ $</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F26_2) ٤,٣٠٠ $</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F26_3) ٤,٣٠٠    بالإضافة إلى ٥% ضريبة مبيعات$ </label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F26_4) ٤,٣٠٠ بالإضافة إلى ١٠  %  عمولة مبيعات و ٥% ضريبة مبيعات</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F26_5) لا شيء مما سبق.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F26_6) لا أعلم.</label>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <li class="primary-heading">
+                        بالإضافة إلى المعلومات التي تم توفيرها في السؤال 5 أعلاه والتي تتعلق بشركة
+                        برايت أيدياز Bright ideas ، ما هي المعلومات الأخرى التي أنت بحاجة لها
+                        لاحتساب عدد الواحدات التي ينبغي بيعها لتغطية تكاليف الشركة؟
+                    </li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F27_1) عدد مندوبي المبيعات الذين يعملون لدى الشركة</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F27_2) السعر الصافي للمبات</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F27_3) البلد الذي تعمل به الشركة</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F27_4) المعلومات التي تتعلق بشركة التجزئة التي تشتري اللمبات</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F27_5) لا شيء مما سبق.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F27_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading"> لماذا تعتبر القرارات الجماعية أكثر فائدة من القرارات الفردية؟</li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F28_1) يستفيد أعضاء المجموعة من نقاط القوة التي يتمتعون بها ويتوصلون إلى قرارات أفضل.</label>
+                    <label class="block">
+                        @Html.CheckBoxFor(x => x.F28_2) يكون مستوى المعرفة والمهارات والخبرات ضمن المجموعة أوسع نطاقا من
+                        المستويات الفردية
+                    </label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F28_3) بإمكان أعضاء المجموعة الوصول إلى الموارد التي من شأنها أن تعزز عملية اتخاذ القرار.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F28_4) يعتبر العمل الجماعي أكثر فعّالية وإنتاجية من العمل الفردي.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F28_5) كل ما سبق</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F28_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading"> لماذا تقوم الشركات الناجحة بالتواصل بإنتظام مع عملائها الحاليين والمحتملين؟</li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F29_1) لإطلاعهم وإقناعهم بشراء المنتج أو الخدمة</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F29_2) لتأسيس ميزة تنافسية فيما يتعلق بمنتجهم أو خدمتهم</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F29_3) لجمع المعلومات بهدف رفع مستوى جودة منتجهم أو خدمتهم</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F29_4) لإرضائهم</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F29_5) كل ما سبق</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F29_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading"> أي من العبارات التالية صحيحة؟</li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F30_1) نأخذ مستوى رضا الزبائن بعين الاعتبار ولا نهتم بتوقعاتهم.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F30_2) نحتاج إلى بيانات العملاء فقط ولا نحتاج إلى أفكارهم واقتراحاتهم.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F30_3) نحافظ على العملاء من خلال الحصول على التغذية الراجعة / الملاحظات الخاصة</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F30_4) بهم.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F30_5) كل ما سبق</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F30_6) لا أعلم.</label>
+                </div>
+                <div class="form-group">
+                    <li class="primary-heading"> أي من العبارات التالية التي تتعلق بالهيكل التنظيمي غير صحيحة؟</li>
+                    <label class="block">@Html.CheckBoxFor(x => x.F31_1) يشير إلى تقسيم العمل داخل الشركة.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F31_2) يشير إلى أنماط التنسيق داخل الشركة.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F31_3) لا يؤثر على الأنشطة التنظيمية داخل الشركة.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F31_4) يعكس الثقافة والسلطة داخل الشركة..</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F31_5) لا شيء مما سبق.</label>
+                    <label class="block">@Html.CheckBoxFor(x => x.F31_6) لا أعلم.</label>
+                </div>
+            </div>
+        </ol>
+    </div>
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+    </div>
+    </div>
+    @Html.HiddenFor(x => x.SessionId)
+    @Html.HiddenFor(x=>x.StudentId)
+}
+</div>
+
+</div>
+</div>
+</main>
+@{
+
+    var cu = Session["user"] as ContextUser;
+}
+ 
+<script type="text/javascript">
+    var role = "@cu.EnumRole";
+    if (role === "SuperAdmin") {
+        $('input').attr('disabled', 'disabled');
+        $('button').hide();
+    }
+</script>
+ 

@@ -1,0 +1,81 @@
+﻿@model PagedList.IPagedList<TranningWebApp.Repository.DataAccess.school>
+@using TranningWebApp.Resource
+@{
+    ViewBag.Title = "Layout";
+}
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        </li>
+        <li class="breadcrumb-item active">@Menu.EvaluationResults</li>
+        <!-- Breadcrumb Menu-->
+        
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="input-group global-search">
+                    <input type="text" name="global-search" class="form-control" id="search"placeholder="@General.Search" value="@ViewBag.searchQuery">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                    <tr>
+                        <th class="text-center">
+                            <i class="icon-people"></i>
+                        </th>
+                        <th>@Coordinator.SchoolName <i class="fa fa-sort"></i></th>
+                        <th>@Coordinator.Region</th>
+                        <th>@Coordinator.City</th>
+                        <th>@Coordinator.District</th> 
+                        <th>@Coordinator.RegistrationDate</th>
+                        <th>@Coordinator.NoOfSession</th>
+                     
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(Model.Count>0)
+                    {
+                        foreach (var item in Model.ToList())
+                        {
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/coordinator.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@item.SchoolName</td>
+                            <td>@item.Region</td>
+                            <td>@item.City</td>
+                            <td>@item.District</td>  
+                            <td>@item.CreatedAt.ToShortDateString()</td> 
+                            <td>@item.sessions.Count(x => x.Status == "Occured" || x.Status == "Approved")</td> 
+                            @if (item.sessions.Count(x => x.Status == "Occured" || x.Status == "Approved") > 0)
+                            {
+                                <td><a href="@Url.Action("SessionDetails", new {id = item.RowGuid})" title="Edit"><i class="fa fa-pencil"></i></a></td>
+                            }
+                            else
+                            { <td></td>}
+                        </tr> 
+
+                    }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td colspan="9" align="center"> @General.Norecordfound</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.Partial("_Pagination", new TmsWebApp.Models.PageViewModel { CurrentPage = Model.PageNumber, TotalRecords = (int)ViewBag.Count })
+            </div>
+        </div>
+    </div>
+</main>

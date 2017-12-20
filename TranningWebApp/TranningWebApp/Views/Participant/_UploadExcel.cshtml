@@ -1,0 +1,49 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Models.ExcelModel
+
+ 
+@using (Html.BeginForm("UploadExcel", "Participant", FormMethod.Post, new { @class = "form-horizontal",id= "excform", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="card">
+        <div class="card-header">
+            <strong class="text-primary"><i class="icon-plus"></i> @Participant.UploadNewParticipantsList</strong> 
+        </div>
+        <div class="card-block">
+            <div class="form-group">
+                <label>@Participant.UploadExcelFile</label>
+               <input type="file" name="file" id="myfile" onchange="ValidateSingleInput(this,['.xlsx'])"/>
+                <span class="text-danger field-validation-error" id="filevalidation" data-valmsg-for="FunderEmail" data-valmsg-replace="true" style="display:none;float:left"><span id="excelerrormsg" class=""></span></span>
+
+            </div> 
+            @Html.HiddenFor(x => x.SessionId)
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-primary pull-right" onclick="submitform()"><i class="fa fa-dot-circle-o"></i> @General.Submit</button> 
+        </div>
+
+    </div>
+                
+} 
+
+<script type="text/javascript">
+
+    function submitform() {
+        debugger;
+       // e.preventDefault();
+        if ($("#excform").valid()) {
+            var file = document.getElementById("myfile");
+            var isUpload = file.value != '';
+            if (isUpload)
+                $("#excform").submit();
+            else {
+                alert("Please upload file");
+                return false;
+            }
+        }
+    }
+
+    $(":file").filestyle({
+        text: '@TranningWebApp.Resource.General.Choosefile'
+    });
+
+</script> 

@@ -1,0 +1,853 @@
+﻿@model TranningWebApp.Repository.DataAccess.evaluation_syc_pre_part2
+@{
+    ViewBag.Title = "SYCPreP2";
+}
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">الصفحة الرئيسية</li>
+        </li>
+        <li class="breadcrumb-item active">الممولين</li>
+        </li>
+        <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+    <div class="col-sm-12 pull-left">
+        @*<form name="form1" action="" method="post">*@
+        @using (Html.BeginForm("SYCPreP2", "EvaluationForm", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header">
+                        <strong class="text-primary"><h4>  طريقي إلى سوق العمل</h4></strong>
+
+                    </div>
+                    <strong class="text-primary"><p align="center">
+    التقييم القبلي
+
+     </p></strong>
+                </div>
+
+
+
+                <div class="card-block col-sm-6">
+
+                    <div class="form-group">
+                        <label for="name">المدرسة:</label>
+                        @Html.TextBoxFor(x => x.F1, new { @class = "form-control", @placeholder = "" })
+                        @*<input type="text" class="form-control" >*@
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">الفصل الدراسي:</label>
+                        @Html.TextBoxFor(x => x.F2, new { @class = "form-control", @placeholder = "" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">العام الدراسي:</label>
+                        @Html.TextBoxFor(x => x.F3, new { @class = "form-control", @placeholder = "" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">المدينة:</label>
+                        @Html.TextBoxFor(x => x.F4, new { @class = "form-control", @placeholder = "" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">الإسم:</label>
+                        @Html.TextBoxFor(x => x.F5, new { @class = "form-control", @placeholder = "الاسم الأول" })
+                        @Html.TextBoxFor(x => x.F6, new { @class = "form-control", @placeholder = "إسم الأب" })
+                        @Html.TextBoxFor(x => x.F7, new { @class = "form-control", @placeholder = "الإسم الأخير" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">معلومات التواصل:</label>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+                        <style>
+                            input[type=text] {
+                                width: 100%;
+                                border: 0pxsolid #00FF7F;
+                                border-radius: 0px;
+                                margin: 0px 0;
+                                outline: none;
+                                padding: 8px;
+                                box-sizing: border-box;
+                                transition: 0s;
+                                line-height: inherit;
+                            }
+
+                                input[type=text]:focus {
+                                    border-color: SpringGreen;
+                                    box-shadow: 8px SpringGreen;
+                                }
+
+                            .inputwithicon input[type=text] {
+                                padding-right: 40px;
+                            }
+
+                            .inputwithicon {
+                                position: relative;
+                            }
+
+                                .inputwithicon b {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 5px;
+                                    padding: 9px 8px;
+                                    color: #000000;
+                                    transition: .0s;
+                                }
+
+                                .inputwithicon input[type=text]:focus + b {
+                                    color: black;
+                                }
+
+                            input[type=text] {
+                                width: 100%;
+                                border: 0pxsolid #00FF7F;
+                                border-radius: 0px;
+                                margin: 0px 0;
+                                outline: none;
+                                padding: 8px;
+                                box-sizing: border-box;
+                                transition: 0s;
+                                line-height: inherit;
+                            }
+
+                                input[type=text]:focus {
+                                    border-color: SpringGreen;
+                                    box-shadow: 8px SpringGreen;
+                                }
+
+                            .inputwithicon input[type=text] {
+                                padding-right: 40px;
+                            }
+
+                            .inputwithicon {
+                                position: relative;
+                            }
+
+                                .inputwithicon i {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 5px;
+                                    padding: 9px 8px;
+                                    color: #00ff00;
+                                    transition: .0s;
+                                }
+
+                                .inputwithicon input[type=text]:focus + i {
+                                    color: Green;
+                                }
+
+
+
+
+                            width:100%; {
+                                border: 0.025pxsolid #00FF7F;
+                                border-radius: 0px;
+                                margin: 0px 0;
+                                outline: none;
+                                padding: 8px;
+                                box-sizing: border-box;
+                                transition: 0s;
+                                line-height: inherit;
+                            }
+
+                            input[type=text]:focus {
+                                border-color: SpringGreen;
+                                box-shadow: 8px SpringGreen;
+                            }
+
+                            .inputwithicon input[type=text] {
+                                padding-right: 40px;
+                            }
+
+                            .inputwithicon {
+                                position: relative;
+                            }
+
+                                .inputwithicon j {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 5px;
+                                    padding: 9px 8px;
+                                    color: #3b5998;
+                                    transition: .0s;
+                                }
+
+                                .inputwithicon input[type=text]:focus + j {
+                                    color: facebookBlue;
+                                }
+
+                            input[type=text] {
+                                width: 100%;
+                                border: 0.025pxsolid #00FF7F;
+                                border-radius: 0px;
+                                margin: 0px 0;
+                                outline: none;
+                                padding: 8px;
+                                box-sizing: border-box;
+                                transition: 0s;
+                                line-height: inherit;
+                            }
+
+                                input[type=text]:focus {
+                                    border-color: SpringGreen;
+                                    box-shadow: 8px SpringGreen;
+                                }
+
+                            .inputwithicon input[type=text] {
+                                padding-right: 40px;
+                            }
+
+                            .inputwithicon {
+                                position: relative;
+                            }
+
+                                .inputwithicon a {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 5px;
+                                    padding: 9px 8px;
+                                    color: #00aced;
+                                    transition: 0.s;
+                                }
+
+                                .inputwithicon input[type=text]:focus + a {
+                                    color: VerifiedBlue;
+                                }
+                        </style>
+
+                        <div class="inputwithicon ">
+                            @Html.TextBoxFor(x => x.F8, new { @class = "form-control", @placeholder = "هاتف" })
+                            <b class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></b>
+                        </div>
+                        <div class="inputwithicon">
+                            @Html.TextBoxFor(x => x.F9, new { @class = "form-control", @placeholder = "البريد الإلكتروني" })
+                            <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+                        </div>
+                        <div class="inputwithicon ">
+                            @Html.TextBoxFor(x => x.F10, new { @class = "form-control", @placeholder = "فيس بوك" })
+                            <j class="fa fa-facebook fa-lg fa-fw" aria-hidden="true"></j>
+                        </div>
+                        <div class="inputwithicon ">
+                            @Html.TextBoxFor(x => x.F11, new { @class = "form-control", @placeholder = "تؤئتر" })
+                            <a class="fa fa-twitter fa-lg fa-fw" aria-hidden="true"></a>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-block col-sm-6">
+                    <div class="card-header">
+                        <strong class="text-primary"> أولاً: ضع دائرة حول صح أو خطأ لكل من العبارات التالية:</strong>
+                    </div>
+                    <ol>
+                        <div class="form-group">
+                            <li class="primary-heading"> يعرف كافة الأشخاص نقاط القوة ونقاط الضعف لديهم.</li>
+                            <label>@Html.RadioButtonFor(x => x.F12, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F12, "no") خطأ </label>
+
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> ينبغي أن يفوض القادة الجيدون الأعمال لأي عضو قادر في الفريق.</li>
+                            <label>@Html.RadioButtonFor(x => x.F13, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F13, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> يجب أن يتصف القادة بالذكاء العاطفي.</li>
+                            <label>@Html.RadioButtonFor(x => x.F14, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F14, "no") خطأ </label>
+
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> تفويض الأعمال من أسباب إضاعة الوقت.</li>
+                            <label>@Html.RadioButtonFor(x => x.F15, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F15, "no") خطأ </label>
+
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> من مهارات القيادة الفعالة التأثير على الآخرين.</li>
+                            <label>@Html.RadioButtonFor(x => x.F16, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F16, "no") خطأ </label>
+
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading">  يتمكن المدير الجيد من إدارة وقته بالقيام بكافة الأمور الهامة بنفسه.</li>
+                            <label>@Html.RadioButtonFor(x => x.F17, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F17, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> من مسببات ضياع الوقت عدم القدرة على التمييز بين المهام المستعجلة وغير المستعجلة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F18, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F18, "no") خطأ </label>
+
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> من مسببات إدارة الوقت بفعالية القدرة على التمييز بين المهام الهامة وغير الهامة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F19, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F19, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> يؤثر الإجهاد على جودة الأداء في العمل.</li>
+                            <label>@Html.RadioButtonFor(x => x.F20, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F20, "no") خطأ </label>
+
+                    </ol>
+                </div>
+
+                <div class="card-block col-sm-12">
+                    <div class="card-header">
+                        <strong class="text-primary">ثانياً: ضع علامة صح أمام معايير التقييم التالية، استطيع الاتي:</strong>
+                    </div>
+
+                    <div class="row">
+                        <table class="table table-hover table-outline mb-0">
+                            <thead class="thead-default">
+                                <tr>
+                                    <th></th>
+                                    <th class="text-center">أوافق بشدة</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">محايد</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">
+                                        لا أوافق
+                                        بشدة
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> تحديد نقاط القوة والضعف لديّ.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F21_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>كتابة بيان الرؤية الشخصية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F22_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F22_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F22_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F22_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F22_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>فهم المهارات الأساسية التي يحتاج القادة إلى إتقانها.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F23_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F23_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F23_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F23_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F23_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> استكشاف التوجهات القيادية الموجودة في شخصيتي.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F24_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F24_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F24_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F24_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F24_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> معرفة مقدار الذكاء العاطفي لديّّ.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F25_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F25_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F25_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F25_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F25_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> التعرف على تقنيات التأثير التي يستخدمها القادة بفعالية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F26_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F26_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F26_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F26_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F26_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> التمييز بين المهام المستعجلة وغير المستعجلة والهامة وغير الهامة.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F27_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F27_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F27_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F27_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F27_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> فهم العلاقة بين الإجهاد و إدارة الوقت.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F28_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F28_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F28_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F28_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F28_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>تحديد السلوكيات التي تساعد في تضييع الوقت وكيفية التعامل معها.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F29_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F29_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F29_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F29_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F29_5)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-header">
+                    <strong class="text-primary"> ثالثاً: ضع دائرة حول صح أو خطأ لكل من العبارات التالية:</strong>
+
+                    <ol>
+                        <div class="form-group">
+                            <li class="primary-heading"> يعتبر الاستماع بنفس أهمية التحدث في التواصل الشفوي.</li>
+                            <label>@Html.RadioButtonFor(x => x.F30, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F30, "no") خطأ </label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> الضجيج هو عبارة عن أي شئ يعمل على تشويه الرسالة التي يتم إرسالها.</li>
+                            <label>@Html.RadioButtonFor(x => x.F31, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F31, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> ينبغي أن لا تزيد رسالة التعريف عن صفحة واحدة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F32, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F32, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> لا تستخدم أحرف اللغة الانجليزية للكتابة بالعربية إلا في حال كنت تكتب لصديق لك يفهم الأسلوب الذي تكتب به.</li>
+                            <label>@Html.RadioButtonFor(x => x.F33, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F33, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> تعتبر محاولة البحث عن وظيفة في غياب معرفة الذات مضيعة للوقت.</li>
+                            <label>@Html.RadioButtonFor(x => x.F34, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F34, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> لا يعتبر إعداد الملف الوظيفي من أساسيات خطة عمل البحث عن وظيفة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F35, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F35, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> لا يعتبر إضافة الهوايات في السيرة الذاتية من الممارسات الجيدة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F36, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F36, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> تتضمن السيرة الذاتية التسلسلية الشهادات العلمية وخبرات العمل في تسلسل زمني.</li>
+                            <label>@Html.RadioButtonFor(x => x.F37, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F37, "no") خطأ </label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> تعد المقابلة الجماعية من أسهل أنواع المقابلات الشخصية.</li>
+                            <label>@Html.RadioButtonFor(x => x.F38, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F38, "no") خطأ </label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> الإجابة السريعة عن السؤال في المقابلات الشخصية من الأمور المطلوبة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F39, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F39, "no") خطأ </label>
+                    </ol>
+                </div>
+
+                <div class="card-block col-sm-12">
+                    <div class="card-header">
+                        <strong class="text-primary"> رابعاً: ضع علامة صح أمام معايير التقييم التالية، استطيع الاتي:</strong>
+                    </div>
+
+                    <div class="row">
+                        <table class="table table-hover table-outline mb-0">
+                            <thead class="thead-default">
+                                <tr>
+                                    <th></th>
+                                    <th class="text-center">أوافق بشدة</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">محايد</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">
+                                        لا أوافق
+                                        بشدة
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> تحليل الجمهور بشكل جيد قبل عملية التواصل.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F40_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F40_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F40_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F40_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F40_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> اجادة استخدام لغة الجسد في عملية التواصل.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F41_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F41_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F41_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F41_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F41_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> التعرف على بعض أنواع الكتابة في مجال العمل.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F42_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F42_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F42_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F42_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F42_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> اختيار الاسلوب المناسب لكتابة الرسائل على ضوء تحليل الجمهور الذي أقوم بالكتابة له.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F43_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F43_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F43_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F43_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F43_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>تحديد الخطوات الرئيسية لعملية البحث الفعال عن الوظيفة.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F44_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F44_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F44_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F44_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F44_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>تطبيق خطة عمل البحث عن الوظيفة بجميع مراحلها.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F45_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F45_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F45_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F45_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F45_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>كتابة السيرة الذاتية الجيدة المبنية على المبادئ والأسس السليمة.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F46_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F46_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F46_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F46_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F46_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>التركيز على نقاط القوة وتجنب نقاط الضعف في كتابة السيرة الذاتية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F47_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F47_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F47_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F47_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F47_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>معرفة مهارات اجتياز المقابلة الشخصية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F48_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F48_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F48_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F48_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F48_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>استكشاف جوانب عملية اجراء المقابلة الشخصية والتدرب على الاسئلة التي تطرح في أثنائها.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F49_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F49_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F49_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F49_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F49_5)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-block col-sm-6">
+                    <div class="card-header">
+                        <strong class="text-primary">خامساً: ضع دائرة حول صح أو خطأ لكل من العبارات التالية:</strong>
+                    </div>
+                    <ol>
+                        <div class="form-group">
+                            <li class="primary-heading"> من الممكن تعلم الإبداع.</li>
+                            <label>@Html.RadioButtonFor(x => x.F50, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F50, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> تعتبر جودة الأفكار أكثر أهمية من عددها خلال اجتماعات العصف الذهني.</li>
+                            <label>@Html.RadioButtonFor(x => x.F51, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F51, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> (تحديد معايير القرار) يعتبر من الخطوات الاساسية في عملية اتخاذ القرار العقلاني.</li>
+                            <label>@Html.RadioButtonFor(x => x.F52, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F52, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> التحيز في اتخاذ القرار يحول دون اتخاذ القرارات العقلانية السليمة.</li>
+                            <label>@Html.RadioButtonFor(x => x.F53, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F53, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> يتطلب العمل الجماعي التعامل الصحيح مع الخلافات.</li>
+                            <label>@Html.RadioButtonFor(x => x.F54, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F54, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> لا يتطلب العمل الجماعي الثقة بالآخرين.</li>
+                            <label>@Html.RadioButtonFor(x => x.F55, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F55, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> إذا كنت من محبي الاستقرار والروتين اليومي فالأفضل لك مسار ريادة الأعمال.</li>
+                            <label>@Html.RadioButtonFor(x => x.F56, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F56, "no") خطأ </label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> الحياة المستقلة وعدم الاعتماد على الوظائف الحكومية والخاصة من أهم العوامل الداعمة لظهور رواد الأعمال.</li>
+                            <label>@Html.RadioButtonFor(x => x.F57, "yes") صح </label>
+                            <label>@Html.RadioButtonFor(x => x.F57, "no") خطأ </label>
+                    </ol>
+                </div>
+                <div class="card-block col-sm-12">
+
+                    <div class="card-header">
+                        <strong class="text-primary">سادساً: ضع علامة صح أمام معايير التقييم التالية، استطيع الاتي:</strong>
+                    </div>
+                    <div class="row">
+                        <table class="table table-hover table-outline mb-0">
+                            <thead class="thead-default">
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">أوافق بشدة</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">محايد</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">
+                                        لا أوافق
+                                        بشدة
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> تحديد الخطوات الأساسية في عملية اتخاذ القرار.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F58_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F58_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F58_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F58_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F58_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>  استكشاف مجالات الابداع لديّ.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F59_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F59_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F59_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F59_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F59_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>  تطبيق أسلوب العصف الذهني لاتخاذ القرارت الجماعية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F60_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F60_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F60_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F60_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F60_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> تصنيف العناصر المبتكرة لحل المشكلات.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F61_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F61_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F61_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F61_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F61_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> تحديد استراتيجيات إدارة الخلافات.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F62_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F62_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F62_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F62_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F62_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> تحديد مهارات إدارة الفريق بفعالية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F63_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F63_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F63_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F63_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F63_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> معرفة الفرص الوظيفية المستقبلية.</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F64_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F64_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F64_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F64_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F64_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        تحديدأثر ريادة الأعمال في بناء الاقتصادات القوية وكيف يمكنني بدء
+                                        العمل الحر وفق أسس سليمة.
+                                    </td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F65_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F65_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F65_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F65_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F65_5)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <strong class="text-primary">سابعاً: ضع علامة صح للإجابة عن الأسئلة التالية:</strong>
+                </div>
+                <div class="card-block col-sm-12">
+                    <ol type="1">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <li class="primary-heading">ما المسار الذي ترغب في أن تلتحق به في المستقبل؟</li>
+                                <label class="block">@Html.CheckBoxFor(x => x.F66_1) المسار الحكومي (القطاع العام). </label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F66_2)  المسار الخاص (القطاع الخاص).</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F66_3)مسار ريادة الأعمال.</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F66_4)) مسار المنظمات غير الربحية (المنظمات غيرالهادفة للربح).</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F66_5) أرغب في البقاء في المنزل.</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F66_6) لم أحدد بعد.</label>
+                            </div>
+
+                            <div class="form-group">
+                                <li class="primary-heading"> أين تود استكمال دراستك بعد الانتهاء من المرحلة الثانوية؟</li>
+                                <label class="block">@Html.CheckBoxFor(x => x.F67_1) الجامعة.</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F67_2) إحدى مؤسسات التدريب المهني والتقني.</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F67_3) لا أرغب في استكمال الدراسة بعد المرحلة الثانوية.</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F67_4) لم أحدد بعد.</label>
+                            </div>
+                        </div>
+                    </ol>
+                </div>
+                <div class="card-header">
+                    <strong class="text-primary">
+                        ثامناً: يرجى الإجابة على السؤال التالي من خلال تحديد درجة موافقتك عل كل جملة من الجمل المذكورة باستخدام
+                        معايير التقييم التالية:
+                    </strong>
+                </div>
+                <div class="card-block col-sm-12">
+                    <ol type="1">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="block">@Html.CheckBoxFor(x => x.F68_1)  أوافق بشدة على هذه الجملة</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F68_2)  أوافق على هذه الجملة إلى حد ما</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F68_3)  لا أوافق على هذه الجملة ولا أختلف معها (محايد)</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F68_4) لا أوافق على هذه الجملة</label>
+                                <label class="block">@Html.CheckBoxFor(x => x.F68_5)  لا أوافق بشدة على هذه الجملة</label>
+                            </div>
+                    </ol>
+                </div>
+                <div class="card-block col-sm-12">
+                    <div class="form-group">
+                        <strong class="text-primary"><label>تتأثر قراراتي المهنية بالعوامل التالية:</label></strong>
+                    </div>
+
+
+                    <div class="row">
+                        <table class="table table-hover table-outline mb-0">
+                            <thead class="thead-default">
+                                <tr>
+                                    <th></th>
+                                    <th class="text-center">أوافق بشدة</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">محايد</th>
+                                    <th class="text-center">لا أوافق</th>
+                                    <th class="text-center">
+                                        لا أوافق
+                                        بشدة
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> الوالدين والأسرة</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F69_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F69_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F69_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F69_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F69_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> الأصدقاء</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F70_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F70_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F70_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F70_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F70_5)</td>
+                                </tr>
+                                <tr>
+                                    <td> المدرسة</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F71_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F71_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F71_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F71_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F71_5)</td>
+                                </tr>
+                                <tr>
+                                    <td>  البحث الخاص بي (على سبيل المثال، معارض التوظيف، البحث على الإنترنت )</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F72_1)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F72_2)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F72_3)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F72_4)</td>
+                                    <td class="text-center">@Html.CheckBoxFor(x => x.F72_5)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @Html.HiddenFor(x => x.SessionId)
+                @Html.HiddenFor(x => x.StudentId)
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+                </div>
+            </div>
+
+        }
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
+
+@{
+
+    var cu = Session["user"] as TranningWebApp.Common.ContextUser;
+}
+
+<script type="text/javascript">
+    var role = "@cu.EnumRole";
+    if (role === "SuperAdmin") {
+        $('input').attr('disabled', 'disabled');
+        $('button').hide();
+    }
+</script>

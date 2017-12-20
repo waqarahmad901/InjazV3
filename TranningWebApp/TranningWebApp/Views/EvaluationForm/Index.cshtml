@@ -1,0 +1,356 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<main class="main">
+		
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">الصفحة الرئيسية</li>
+    </li>
+    <li class="breadcrumb-item active">الممولين</li>
+    </li>
+    <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+
+                
+</ol>
+		
+<div class="container-fluid">
+<div class="animated fadeIn">
+
+<div class="col-sm-12 pull-left">
+<form name="form1" action="" method="post">
+						
+<div class="card">
+<div class="card-header">
+    <strong class="text-primary">معلومات الطالب</strong>
+</div>
+<div class="card-block col-sm-6">
+								
+    <div class="form-group">
+        <label for="name">الإسم:</label>
+        <input type="text" class="form-control">
+    </div>
+									
+    <div class="form-group">
+        <label for="name">ما هو تاريخ ميلادك؟</label>
+        <div>
+            <input type="text" class="form-control two-digit" > 
+            <input type="text" class="form-control two-digit" > - 
+            <input type="text" class="form-control two-digit" > 
+            <input type="text" class="form-control two-digit" > - 
+            <input type="text" class="form-control two-digit" > 
+            <input type="text" class="form-control two-digit" >
+            <input type="text" class="form-control two-digit" > 
+            <input type="text" class="form-control two-digit" >
+        </div>
+    </div>
+									
+    <div class="form-group">
+        <label for="name">الجنس:</label>
+        <label for="male"><input type="radio" name="gender" id="Male"> ذكر</label>
+        <label for="female"><input type="radio" name="gender" id="Female"> أنثى</label>
+    </div>
+									
+    <div class="form-group">
+        <label for="name">البلد الذي تشارك فيه في برنامج الشركة</label>
+        <input type="text" class="form-control">
+    </div>
+									
+    <div class="form-group">
+        <label for="name">اسم الجامعة التي تدرس فيها</label>
+        <input type="text" class="form-control">
+    </div>
+							
+    <div class="form-group">
+        <label for="name">تخصصك الدراسي</label>
+        <input type="text" class="form-control">
+    </div>
+									
+    <div class="form-group">
+        <label for="name">التحصيل الأكاديمي:</label>
+        <label for="a"><input type="radio" name="gender" id="a"> بكالوريوس</label>
+        <label for="b"><input type="radio" name="gender" id="b"> شهادة الماجستير</label>
+        <label for="c"><input type="radio" name="gender" id="c"> شهادة الدكتوراة</label>
+    </div>
+									
+    <div class="form-group">
+        <label for="name">هل سبق ان شاركت في برامج مؤسسة إنجاز من قبل؟ في حال كانت الإجابة نعم اكتب إسم البرنامج وتاريخ مشاركتك به:</label>
+        <input type="text" class="form-control">
+    </div>
+									
+    <div class="form-group">
+        <label for="name">هل تقوم بتعبئة اختبار ما قبل أم اختبار ما بعد؟:</label>
+        <label for="d"><input type="radio" name="gender" id="d"> اختبار ما قبل</label>
+        <label for="e"><input type="radio" name="gender" id="e"> اختبار ما بعد</label>
+    </div>
+									
+</div>
+<div class="card-block col-sm-12">
+									
+    <div class="form-group">
+        <label>يرجى الملاحظة: لا تؤثر إجاباتك للاختبار على مشاركتك في برنامج الشركة. فهو ببساطة يسهم في تحديد المجالات التي تتطلب المزيد من التعلم خلال برنامج الشركة. وبالمثل، لن
+            تؤثر إجاباتك لاختبار ما بعد على مشاركتك في برامج مؤسسة إنجاز الأخرى. لذا، قم بالإجابة على كافة الأسئلة بصدق وشفافية.</label>
+    </div>
+									
+    <div class="row">
+        <table class="table table-hover table-outline mb-0">
+            <thead class="thead-default">
+            <tr>
+                <th>ما مدى موافقتك على العبارات التالية:</th>
+                <th class="text-center">أوافق بشدة</th>
+                <th class="text-center">لا أوافق</th>
+                <th class="text-center">محايد</th>
+                <th class="text-center">موافق</th>
+                <th class="text-center">موافق بشدة</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>أتقن مهارة التفكير الإبداعي.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>اتقن مهارة التفاوض.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أدير وقتي بشكل فعّال.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أتقن مهارة تقديم العروض.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أتقن عملية البحث.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أتقن عملية البيع بفعّالية.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>بإمكاني العثور على الحلول لأي مشكلة.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أجيد التفكير النقدي والتحليل.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أعمل بفعّالية ضمن الفريق.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أنا قيادي.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أتخذ القرارات الفعّالة بأسلوب سريع.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>أتقن حل المسائل الرياضية.</td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>		
+</div>
+								
+<div class="card-header">
+    <strong class="text-primary">أسئلة المعرفة: ضع دائرة على الإجابة الصحيحة.</strong>
+</div>
+<div class="card-block col-sm-12">
+    <ol type="1">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <li class="primary-heading">أي من العبارات التالية صحيحة؟</li>
+                <label class="block"><input type="checkbox"> يولد الرياديون ناجحون.</label>
+                <label class="block"><input type="checkbox"> يقوم الرياديون باستثمار المبالغ الكبيرة عن طيب خاطر.</label>
+                <label class="block"><input type="checkbox"> يجب على الرياديون الناجحين اختراع شيء ما.</label>
+                <label class="block"><input type="checkbox"> يواجه الريادي الكثير من المخاطر.</label>
+                <label class="block"><input type="checkbox"> لا شيء مما سبق</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> أي من أساليب التمويل التالية تنطوي على بيع جزء من ملكية الشركة
+                    لمستثمرين آخرين؟</li>
+                <label class="block"><input type="checkbox"> إصدار الأسهم</label>
+                <label class="block"><input type="checkbox"> القروض التجارية</label>
+                <label class="block"><input type="checkbox"> رأس المال المخاطر</label>
+                <label class="block"><input type="checkbox"> المنح الحكومية</label>
+                <label class="block"><input type="checkbox"> كل ما سبق</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading">  ان سلمى أحد الرياديين المصريين الذين يعملون في مجال التكنولوجيا.
+                    وتقوم بتبادل البضائع والخدمات مع عدة شركات أخرى. أي من المهارات
+                    الريادية التالية التي ينبغي أن تتقنها سلمى للتأكد من حصول كافة
+                    الأطراف على الشروط المؤاتية والمقبولة؟</li>
+                <label class="block"><input type="checkbox"> التفاوض</label>
+                <label class="block"><input type="checkbox"> تشبيك العلاقات</label>
+                <label class="block"><input type="checkbox"> القيادة</label>
+                <label class="block"><input type="checkbox"> البيع</label>
+                <label class="block"><input type="checkbox"> كل ما سبق</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> ما النتائج التي تعود على الشركة عند تصفيتها؟</li>
+                <label class="block"><input type="checkbox"> تجعل من عملياتها أكثر مرونة</label>
+                <label class="block"><input type="checkbox"> احتساب عدد المنتجات النهائية.</label>
+                <label class="block"><input type="checkbox"> تحويل أصول الشركة إلى النقد.</label>
+                <label class="block"><input type="checkbox"> تحصل على المزيد من التمويل لشراء أصول جديدة.</label>
+                <label class="block"><input type="checkbox"> لا شيء مما سبق.</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> تقوم شركة برايت أيدياز Bright Ideas ببيع اللمبات الكهربائية ذات
+                    التقنية العالية التي تستخدم تكنولوجيا الأشعة تحت الحمراء الجديدة.
+                    ويعمل في الشركة 10 موظفين على مدار 30 ساعة في الأسبوع مقابل 12 $ في
+                    الساعة. يحتاج قسم التسويق إلى 200 $ في الشهر لشراء اللوازم الضرورية.
+                    وتدفع الشركة 500 $ في الشهر مقابل إيجار المكاتب. وفي حزيران، قامت
+                    الشركة ببيع 150 لمبة ودفعت لموظفيها 10 % كعمولة مبيعات و 5%ضريبة
+                    المبيعات. قم باحتساب مجموع التكاليف الثابتة للشركة. ان الإجابة هي:</li>
+                <label class="block"><input type="checkbox"> $3,600</label>
+                <label class="block"><input type="checkbox"> $4,300</label>
+                <label class="block"><input type="checkbox"> $4,300 بالإضافة إلى 5% ضريبة مبيعات</label>
+                <label class="block"><input type="checkbox"> 4,300 بالإضافة إلى 10 % عمولة مبيعات و 5% ضريبة مبيعات</label>
+                <label class="block"><input type="checkbox"> لا شيء مما سبق.</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+										
+        </div>
+									
+        <div class="col-sm-6">
+									
+            <div class="form-group">
+                <li class="primary-heading"> بالإضافة إلى المعلومات التي تم توفيرها في السؤال 5 أعلاه والتي تتعلق بشركة
+                    برايت أيدياز Bright ideas ، ما هي المعلومات الأخرى التي أنت بحاجة لها
+                    لاحتساب عدد الواحدات التي ينبغي بيعها لتغطية تكاليف الشركة؟</li>
+
+                <label class="block"><input type="checkbox"> عدد مندوبي المبيعات الذين يعملون لدى الشركة</label>
+                <label class="block"><input type="checkbox">السعر الصافي للمبات</label>
+                <label class="block"><input type="checkbox"> البلد الذي تعمل به الشركة</label>
+                <label class="block"><input type="checkbox"> المعلومات التي تتعلق بشركة التجزئة التي تشتري اللمبات</label>
+                <label class="block"><input type="checkbox"> لا شيء مما سبق.</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> لماذا تعتبر القرارات الجماعية أكثر فائدة من القرارات الفردية؟</li>
+
+                <label class="block"><input type="checkbox">يستفيد أعضاء المجموعة من نقاط القوة التي يتمتعون بها ويتوصلون إلى قرارات أفضل.</label>
+                <label class="block"><input type="checkbox">يكون مستوى المعرفة والمهارات والخبرات ضمن المجموعة أوسع نطاقا من
+                    المستويات الفردية</label>
+                <label class="block"><input type="checkbox"> بإمكان أعضاء المجموعة الوصول إلى الموارد التي من شأنها أن تعزز عملية اتخاذ القرار.</label>
+                <label class="block"><input type="checkbox">يعتبر العمل الجماعي أكثر فعّالية وإنتاجية من العمل الفردي.</label>
+                <label class="block"><input type="checkbox"> كل ما سبق</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> لماذا تقوم الشركات الناجحة بالتواصل بإنتظام مع عملائها الحاليين والمحتملين؟</li>
+
+                <label class="block"><input type="checkbox">لإطلاعهم وإقناعهم بشراء المنتج أو الخدمة</label>
+                <label class="block"><input type="checkbox">لتأسيس ميزة تنافسية فيما يتعلق بمنتجهم أو خدمتهم</label>
+                <label class="block"><input type="checkbox"> لجمع المعلومات بهدف رفع مستوى جودة منتجهم أو خدمتهم</label>
+                <label class="block"><input type="checkbox">لإرضائهم</label>
+                <label class="block"><input type="checkbox"> كل ما سبق</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> أي من العبارات التالية صحيحة؟</li>
+
+                <label class="block"><input type="checkbox">نأخذ مستوى رضا الزبائن بعين الاعتبار ولا نهتم بتوقعاتهم.</label>
+                <label class="block"><input type="checkbox">نحتاج إلى بيانات العملاء فقط ولا نحتاج إلى أفكارهم واقتراحاتهم.</label>
+                <label class="block"><input type="checkbox"> نحافظ على العملاء من خلال الحصول على التغذية الراجعة/ الملاحظات الخاصة</label>
+                <label class="block"><input type="checkbox">بهم.</label>
+                <label class="block"><input type="checkbox"> كل ما سبق</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+											
+            <div class="form-group">
+                <li class="primary-heading"> أي من العبارات التالية التي تتعلق بالهيكل التنظيمي غير صحيحة؟</li>
+
+                <label class="block"><input type="checkbox">يشير إلى تقسيم العمل داخل الشركة.</label>
+                <label class="block"><input type="checkbox">يشير إلى أنماط التنسيق داخل الشركة.</label>
+                <label class="block"><input type="checkbox"> لا يؤثر على الأنشطة التنظيمية داخل الشركة.</label>
+                <label class="block"><input type="checkbox">يعكس الثقافة والسلطة داخل الشركة..</label>
+                <label class="block"><input type="checkbox"> لا شيء مما سبق.</label>
+                <label class="block"><input type="checkbox"> لا أعلم.</label>
+            </div>
+									
+        </div>
+    </ol>
+</div>
+								
+								
+<div class="card-footer">
+    <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+</div>
+							
+</div>
+</form>
+</div>
+						
+</div>
+</div>
+</main>
+

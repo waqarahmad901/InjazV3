@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+@{
+    string lan = "en";
+    string dir = "ltr";
+    if (ViewBag.IsLanAr != null || (Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar"))
+    {
+        lan = "ar";
+        dir = "rtl";
+    }
+
+}
+<html lang="@lan" dir="@dir">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Injaz</title>
+    <!-- Icons -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application -->
+    <link href='~/Content/fullcalendar.css' rel='stylesheet' />
+    <link href="~/Content/simplePagination.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/cust-style.css" rel="stylesheet" />
+    <link href="~/Scripts/dropzone/basic.min.css" rel="stylesheet" />
+    <link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
+    <link href="~/Content/remodal.css" rel="stylesheet" />
+    <link href="~/Content/jquery.calendars.picker.css" rel="stylesheet" />
+    <link href="~/Content/intlTelInput.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet">
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <script src='~/Scripts/moment.min.js'></script>
+    <script src="~/Scripts/fullcalendar.min.js"></script>
+    <script src="~/Scripts/jquery.simplePagination.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/dropzone/dropzone.min.js"></script>
+    <script src="~/Scripts/remodal.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.plus.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.islamic.js"></script>
+    <script src="~/Scripts/clander/jquery.plugin.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.picker.js"></script>
+    <script src="~/Scripts/clander/date.conversion.js"></script>
+
+    <script src="~/Scripts/data.js"></script>
+
+    <script src="~/Scripts/intlTelInput.js"></script>
+    <script src="~/Scripts/bootstrap-filestyle.min.js"></script>
+    <script type="text/javascript">
+
+        var baseUrl = "@Request.Url.PathAndQuery.Replace("amp", "").Replace("&amp", "")";
+
+        $(document).on("keypress", "#search", function (e) {
+            var key = e.keyCode || e.which;
+            if (key == 13) {
+                e.preventDefault(); // Ensure it is only this code that rusn
+                searchAndPageClick(1, false, "");
+            }
+        });
+
+        $(document).on("click", ".input-group-addon", function (e) {
+            e.preventDefault(); // Ensure it is only this code that rusn
+            searchAndPageClick(1, false, "");
+        });
+
+        function onPageClick(page) {
+            debugger;
+            searchAndPageClick(page, false, "");
+        }
+        function onArchiveClick(page, guid) {
+            searchAndPageClick(page, true, guid);
+        }
+
+        function deleteItem(id) {
+            if (confirm("Are you sure you want to delete funder")) {
+                $(".fadeMe").show();
+                window.location.href = "/Funder/Delete?id=" + id;
+            }
+        }
+
+        function searchAndPageClick(page, isarchived, guid) {
+            var search = $("#search").val() != undefined ? $("#search").val() : "";
+            baseUrl = removeURLParam(baseUrl, "filter");
+            baseUrl = removeURLParam(baseUrl, "page"); 
+            baseUrl = removeURLParam(baseUrl, "archive");
+            if (isarchived) {
+                window.location.href = baseUrl + (baseUrl.indexOf('?') > -1 ? "&" : "?") + "filter=" + search + "&page=" + page + "&archive=" + guid;
+            }
+            else {
+                window.location.href = baseUrl + (baseUrl.indexOf('?') > -1 ? "&" : "?") + "filter=" + search + "&page=" + page;
+
+            }
+
+        }
+
+        function removeURLParam(url, param) {
+            debugger;
+            var urlparts = url.split('?');
+            if (urlparts.length >= 2) {
+                var prefix = encodeURIComponent(param) + '=';
+                var pars = urlparts[1].split(/[&;]/g);
+                for (var i = pars.length; i-- > 0;)
+                    if (pars[i].indexOf(prefix, 0) == 0 || pars[i].indexOf("amp") > -1)
+                        pars.splice(i, 1);
+                if (pars.length > 0)
+                    return urlparts[0] + '?' + pars.join('&');
+                else
+                    return urlparts[0];
+            }
+            else
+                return url;
+        }
+
+    </script>
+</head>
+
+<!-- END HEAD -->
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+
+    @Html.Partial("_HeaderPartial")
+    <div class="app-body">
+        @Html.Partial("_MenuPartial")
+        @RenderBody()
+    </div>
+    @Html.Partial("_FooterPartial")
+
+
+    <script src="~/Scripts/app.js"></script>
+    <script type="text/javascript">
+        $(":file").filestyle({
+            text: '@TranningWebApp.Resource.General.Choosefile'
+        });
+
+
+
+
+    </script>
+</body>
+</html>

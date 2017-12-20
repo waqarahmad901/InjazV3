@@ -1,0 +1,217 @@
+﻿
+@using TranningWebApp.Common
+
+@using TranningWebApp.Resource
+@{
+    var cu = Session["user"] as ContextUser;
+}
+<style type="text/css">
+    .badge-ready {
+        background-color: #EF6A1B;
+    }
+</style>
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Menu.Reports</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                        <tr>
+                            <th class="text-center">
+                                <i class="icon-people"></i>
+                            </th>
+                            <th>@Reports.Reports1 <i class="fa fa-sort"></i></th>
+                            <th></th>                                                                       
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                            {
+
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="avatar">
+                                            <img src="~/img/avatars/session.png" class="img-avatar">
+                                        </div>
+                                    </td>
+                                    <td>@Reports.SchoolRegistraionsandNumberofStudentsChart </td>
+                                    <td>
+                                        
+                                        <a href="@Url.Action("SchoolRegandNumberOfStudentChart")">@General.ViewReport</a>
+                                    </td>
+                                   </tr> 
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.SessionParticipantsChart</td>
+                            <td>
+                                
+                                <a href="@Url.Action("SessionParticipantsChart")">@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.PartnerFundingChart</td>
+                            <td>
+                                
+                                <a href="@Url.Action("PartnerFundingChart")" >@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.PartnerTypeChart</td>
+                            <td>
+                                
+                                <a href="@Url.Action("PartnerTypeChart")" >@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.VolunteerDetailChart</td>
+                            <td>
+                                
+                                <a href="@Url.Action("VolunteerDetailChart")">@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.TotalSchoolParticipants</td>
+                            <td>
+                                
+                                <a href="@Url.Action("TotalSchoolParticipantChart")" >@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.TotalSessioninSchoolParticipants</td>
+                            <td>
+                                
+                                <a href="@Url.Action("TotalSessionInSchoolParticipantChart")" >@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.TotalCourses</td>
+                            <td>
+                                
+                                <a href="@Url.Action("TotalCourseChart")" >@General.ViewReport</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.TotalCoursesbyYear</td>
+                            <td>
+
+                                <a href="@Url.Action("TotalCourseByYearChart")">@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.TotalCoursesbyStages</td>
+                            <td>
+
+                                <a href="@Url.Action("TotalCourseByStageChart")">@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.Numberofstudentswithvolunteerspersession</td>
+                            <td>
+
+                                <a href="@Url.Action("StudentsWithVolunteerChart")">@General.ViewReport</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@Reports.Numberofvolunteerssession</td>
+                            <td>
+                                
+                                <a href="@Url.Action("NumberOfVolunteerSessionChart")" >@General.ViewReport</a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td> @Reports.GeneralReport</td>
+                            <td>         
+                                <a href="@Url.Action("GeneralReport")" title="Edit">@General.ViewReport</a>
+                            </td>
+                        </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="avatar">
+                                            <img src="~/img/avatars/session.png" class="img-avatar">
+                                        </div>
+                                    </td>
+                                    <td> @Reports.GeneralReport</td>
+                                    <td>
+                                        <a href="@Url.Action("GeneralReport")" title="Edit">@General.ViewReport</a>
+                                    </td>
+                                </tr>
+                            }
+
+                    </tbody>
+                </table>           
+            </div>
+        </div>
+    </div>
+</main>

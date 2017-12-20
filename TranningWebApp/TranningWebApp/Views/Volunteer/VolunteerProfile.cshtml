@@ -1,0 +1,326 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Repository.DataAccess.volunteer_profile
+
+@{
+    ViewBag.Title = "Layout";
+    string imagePath = Model.PhotoPath != null ? Model.PhotoPath.Replace("~", "") : "";
+}
+
+<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script type="text/javascript">
+        $(function () {
+            $('.listbox').multiselect({
+                includeSelectAllOption: true,
+                numberDisplayed: 7,
+                nonSelectedText: '@Supervisor.NoneSelected',
+                allSelectedText: '@Supervisor.AllSelected',
+                selectAllText : '@Supervisor.SelectAll'
+
+            });
+            if ("@Model.VolExp" == "Yes")
+            {
+                $(".multiselect-native-select").show();
+
+            }
+        });
+</script>
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Menu.Volunteer</li>
+        
+        <li class="breadcrumb-item active">@Volunteer.CompleteProfile</li>
+
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            @using (Html.BeginForm("VolunteerProfile", "Volunteer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+            {
+                if (Model.IsProfileComplete != null && Model.IsProfileComplete.Value && Request["editprofile"] == null)
+                 {
+                     <div class="col-sm-12">
+
+                         <div class="card" style="border:1px solid red">
+                             
+                             <div class="card-block">
+                                 <label>@Supervisor.ProfileCompleteMsg</label>
+                             </div>
+                         </div>
+                     </div>
+                     <script type="text/javascript">
+                         $(document).ready(function(){
+                             $('input,select,textarea').attr('disabled', 'disabled');
+                             $('button').hide();
+
+                             setTimeout(logout, 5000 * 1);
+                         })
+
+                         function logout() {
+                             window.location.href = '@Url.Action("LogOut","Account")';
+                         }
+                     </script>
+                }
+               
+                <div class="col-sm-6" onload="load()">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary"><i class="icon-plus"></i> @Volunteer.CompleteProfile</strong>
+                        </div>
+                        <div class="card-block">
+                           @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>@Participant.NationalId</label>
+                                @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control" ,@maxlength=10})
+                                @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger"})
+                                 
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Volunteer.Name</label>
+                                @Html.TextBoxFor(m => m.VolunteerName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.VolunteerName, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <div class="form-group">
+                                <label>@General.Email</label>
+                                @Html.TextBoxFor(m => m.VolunteerEmail, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.VolunteerEmail, "", new { @class = "text-danger" })
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>@General.MobileNo.</label>
+                                @Html.TextBoxFor(m => m.VolunteerMobile, new { @class = "form-control phone",@maxlength = 10  })
+                                @Html.ValidationMessageFor(m => m.VolunteerMobile, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <div class="form-group">
+                                <label>@Volunteer.Gender</label>
+                                @Html.DropDownListFor(m => m.Gender, (List<SelectListItem>)ViewBag.genderdd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+
+
+                            </div>
+                           
+                            
+                            <div class="row">
+                                <div class="form-group col-sm-6" >
+                                    <label style="width: 100%">@Volunteer.DateofBirth</label>
+                                    <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                    @Html.TextBoxFor(m => m.DateOfBirth, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
+                                    @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                    <label style="width: 100%"></label>
+                                    <label style="font-style: italic">@Coordinator.Hijri</label>
+                                    @Html.TextBoxFor(m => m.IslamicDate, new { @class = "form-control date-islamic" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label">@Coordinator.TOTCertificate</label>
+                                <div class="col-md-9">
+                                    <label class="radio-inline" for="inline-radio1">
+                                        <input type="radio" id="inline-radio1" name="HasTOTCertificate" value="True"> @Coordinator.Yes
+                                    </label>
+                                    <label class="radio-inline" for="inline-radio2">
+                                        <input type="radio" id="inline-radio2" name="HasTOTCertificate" checked value="False">@Coordinator.No
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>@Volunteer.AcademicQualifications</label>
+                                @Html.TextBoxFor(m => m.AcademicQualification, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.AcademicQualification, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.AcademicQualification1, new { @class = "form-control", @style="margin-top:5px" }) 
+                                @Html.TextBoxFor(m => m.AcademicQualification2, new { @class = "form-control", @style = "margin-top:5px" }) 
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Volunteer.Photo</label>
+                                <input type="file" name="file" id="profile-img">
+                                <hr>
+                                <img  id="profile-img-tag" width="150px" src="@imagePath"/>
+
+                                <script type="text/javascript">
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+
+                                            reader.onload = function (e) {
+                                                $('#profile-img-tag').attr('src', e.target.result);
+                                            }
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                    }
+                                    $("#profile-img").change(function () {
+                                        readURL(this);
+                                    });
+                                </script>
+                                
+                             
+                            </div>
+                         
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary">@Volunteer.Otherdetails</strong>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="form-group">
+                                <label>@Volunteer.TypeOfAccount</label>
+                              @Html.DropDownList("CompanyName", new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text= Volunteer.Company, Value = "Company" },
+                                            new SelectListItem{ Text=Volunteer.Individual , Value = "Individual" },
+                                         }, new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Volunteer.VolunteerExpriences</label>
+                                @Html.DropDownList("VolExp", new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text= General.Select, Value = "" },
+                                            new SelectListItem{ Text= Coordinator.Yes, Value = "Yes" },
+                                            new SelectListItem{ Text=Coordinator.No , Value = "No" },
+                                         }, new { @class = "form-control" ,onchange="changeVolExp(this)"})
+                                @Html.ValidationMessageFor(m => m.VolExp, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group">
+                                                               
+                              @Html.ListBoxFor(m => m.SelectedExp, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text= "Safeer", Value ="Safeer" },
+                                            new SelectListItem{ Text="PF" , Value = "PF"},
+                                            new SelectListItem{ Text="CP" , Value = "CP"},
+                                            new SelectListItem{ Text="SYC – School" , Value = "SYC – School"},
+                                            new SelectListItem{ Text="SYC – University" , Value = "SYC – University"},
+                                            new SelectListItem{ Text="Morshidi" , Value = "Morshidi"},
+                                            new SelectListItem{ Text="LP" , Value = "LP"},
+                                         }, new { @class = "multiselect form-control listbox", multiple = "multiple" })
+                            
+                                                                 
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Volunteer.Telephone</label>
+                                @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control phone",@maxlength = 10  })
+                                @Html.ValidationMessageFor(m => m.Telephone, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mobile">@Coordinator.Region</label>
+                                @Html.DropDownListFor(m => m.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Region, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country">@Coordinator.City</label>
+                                @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control", onchange = "channge(this)" })
+                                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label>@Coordinator.VolunteerActivity1</label>
+                                @Html.TextAreaFor(m => m.VolunteerActivity1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.VolunteerActivity1, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Coordinator.VolunteerActivity2</label>
+                                @Html.TextAreaFor(m => m.VolunteerActivity2, new { @class = "form-control" })
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Coordinator.VolunteerActivity3</label>
+                                @Html.TextAreaFor(m => m.VolunteerActivity3, new { @class = "form-control" })
+
+                            </div>
+                            <div class="form-group">
+                                <label>@Coordinator.OtherCertificates</label>
+                                @Html.TextBoxFor(m => m.OtherCertificate1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.OtherCertificate1, "", new { @class = "text-danger" })
+
+
+                                <br />
+                                @Html.TextBoxFor(m => m.OtherCertificate2, new { @class = "form-control" })
+
+                                <br />
+                                @Html.TextBoxFor(m => m.OtherCertificate3, new { @class = "form-control" })
+
+                            </div>
+                          
+                            <div class="form-group">
+                                <label>@Volunteer.LinkedIn</label>
+                                @Html.TextBoxFor(m => m.LinkedIn, new { @class = "form-control" })
+
+                                @if (Request["editprofile"] != null)
+                                {
+                                    @Html.Hidden("editprofile",new {@value = true})
+                                }
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                @Html.HiddenFor(x => x.GoogleSigninId)
+                @Html.HiddenFor(x => x.LinkedInSignInId)
+                @Html.HiddenFor(x => x.Id)
+            }
+        </div>
+    </div>
+</main>
+ 
+<script type="text/javascript">
+    function channge(obj) {
+  
+        var val = $(obj).val();
+        $.get("/Home/GetDistrict/" + val,
+            function (res) {
+                $("#@Html.IdFor(x=>x.Region)").val(res);
+            });
+
+    }
+    function changeVolExp(obj)
+    {
+        if ($(obj).val() == "Yes") {
+            $(".multiselect-native-select").show();
+        }
+        else {
+            $(".multiselect-native-select").hide();
+
+        }
+    }
+   </script>

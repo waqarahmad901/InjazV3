@@ -1,0 +1,278 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Repository.DataAccess.funder_profile
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Funder.Funders</li>
+        </li>
+        @if (Model.Id > 0)
+        {
+            <li class="breadcrumb-item active"> @Funder.EditFunder</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item active"> @Funder.AddFunder</li>
+        }
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            @using (Html.BeginForm("Edit", "Funder", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id = "abc" }))
+            { <div class="col-sm-6">
+                @Html.ValidationSummary(true)
+                <div class="card">
+                    <div class="card-header">
+                        @if (Model.Id > 0)
+                        {
+                            <strong class="text-primary"><i class="icon-plus"></i> @Funder.EditFunder</strong>
+                        }
+                        else
+                        {
+                            <strong class="text-primary"><i class="icon-plus"></i> @Funder.AddFunder</strong>
+                        }
+
+                    </div>
+                    <div class="card-block">
+
+
+                        <div class="form-group row">
+                            <label class="col-md-4 form-control-label">@Funder.PartnerType</label>
+                            <div class="col-md-8">
+                                <label class="radio-inline" for="inline-radio1" style="margin-right:5%">
+                                    @Html.RadioButtonFor(i => i.PartnerType, "Stragetic", new { @checked = true }) @Funder.Stragetic
+                                </label>
+                                <label class="radio-inline" for="inline-radio1" style="margin-right:5%">
+                                    @Html.RadioButtonFor(i => i.PartnerType, "Volunteering") @Funder.Volunteering
+                                </label>
+                                <label class="radio-inline" for="inline-radio1" style="margin-right:5%">
+                                    @Html.RadioButtonFor(i => i.PartnerType, "Funders") @Funder.Funders
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-4 form-control-label">@Funder.TypeOfFunding</label>
+                            <div class="col-md-8">
+                                <label class="radio-inline" for="inline-radio1" style="margin-right:5%">
+                                    @Html.RadioButtonFor(i => i.TypeOfFunding, "Finanical", new { @checked = true }) @Funder.Finanical
+                                </label>
+                                <label class="radio-inline" for="inline-radio1" style="margin-right:5%">
+                                    @Html.RadioButtonFor(i => i.TypeOfFunding, "InKind") @Funder.InKind
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12" style="padding:0px; margin:0px">
+                                <label for="name">@Participant.FullName</label>
+                            </div>
+                            <div class="col-sm-4" style="padding:0px">
+                                @Html.TextBoxFor(m => m.FunderName, new { @class = "form-control", @placeholder = @Participant.FirstName })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @placeholder = @Participant.FatherName })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.FaimlyName, new { @class = "form-control", @placeholder = @Participant.FaimlyName })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.FunderName, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" ,@maxlength=10>@Participant.NationalId</label>
+                            @Html.TextBoxFor(m => m.NationId, new { @class = "form-control", @maxlength = 10 })
+                            @Html.ValidationMessageFor(m => m.NationId, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">@Coordinator.City</label>
+                            @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control" })
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="country">@General.Country</label>
+                            @Html.DropDownListFor(m => m.Country, (List<SelectListItem>)ViewBag.countries, new { @class = "form-control", @onchange = "changecountry(this)" })
+
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" ,@maxlength=10>@General.Phone</label>
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control phone", @maxlength = 10 })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile">@General.MobileNo</label>
+                            @Html.TextBoxFor(m => m.FunderMobile, new { @class = "form-control phone", @maxlength = 10 })
+                            @Html.ValidationMessageFor(m => m.FunderMobile, "", new { @class = "text-danger" })
+                        </div>
+
+                        @if (Model == null || Model.Id == 0)
+                        {
+                            <div class="form-group">
+                                <label for="email">@General.Email</label>
+                                @Html.TextBoxFor(m => m.FunderEmail, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.FunderEmail, "", new { @class = "text-danger" })
+                                @if (ViewBag.EmailExist != null)
+                                {
+                                    <span class="text-danger field-validation-error funder-email" data-valmsg-for="22d" data-valmsg-replace="true"><span for="FunderEmail111" class="">@General.EmailExist</span></span>
+                                }
+
+                            </div>
+                            <div class="form-group">
+                                <label for="password">@Coordinator.Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label for="email">@General.Email</label>
+                                @Html.TextBoxFor(m => m.FunderEmail, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                            <div class="form-group">
+                                <label for="password">@Coordinator.Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password, @disabled = "disabled" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        }
+
+
+
+                        <div class="form-group">
+                            <label for="active">@General.Active</label>
+                            <label class="switch switch-icon switch-pill switch-success mt-2">
+                                @Html.CheckBoxFor(Model => Model.IsActive, new { @class = "switch-input", @id = "active" })
+                                <span class="switch-label" data-on="" data-off=""></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        @if (Model != null && Model.Id > 0)
+                        {
+                            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                            @Html.HiddenFor(Model => Model.FunderUserID)
+
+                        }
+
+                    </div>
+                    @*<div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i>  @General.Submit</button>
+                    </div>*@
+
+                </div>
+            </div>
+             
+            <div class="col-sm-6">
+
+                <div class="card">
+                    <div class="card-header">
+
+                        <strong class="text-primary"><i class="icon-plus"></i> @Funder.SecondLevel</strong>
+
+
+                    </div>
+                    <div class="card-block">
+
+
+
+                        <div class="form-group">
+                            <div class="col-sm-12" style="padding:0px; margin:0px">
+                                <label for="name">@Participant.FullName</label>
+                            </div>
+                            <div class="col-sm-4" style="padding:0px">
+                                @Html.TextBoxFor(m => m.FunderName1, new { @class = "form-control", @placeholder = @Participant.FirstName })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.FatherName1, new { @class = "form-control", @placeholder = @Participant.FatherName })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.FaimlyName1, new { @class = "form-control", @placeholder = @Participant.FaimlyName })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" ,@maxlength=10>@Participant.NationalId</label>
+                            @Html.TextBoxFor(m => m.NationId1, new { @class = "form-control", @maxlength = 10 })
+                            @Html.ValidationMessageFor(m => m.NationId1, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile">@General.Phone</label>
+                            @Html.TextBoxFor(m => m.PhoneNumber1, new { @class = "form-control phone", @maxlength = 10 })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber1, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="country">@Coordinator.City</label>
+                            @Html.DropDownListFor(m => m.City1, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">@Funder.Website</label>
+                            @Html.TextBoxFor(m => m.PartenerWebsite, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.PartenerWebsite, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="email">@General.Email</label>
+                            @Html.TextBoxFor(m => m.Email1, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "text-danger" })
+                        </div>
+
+                        @if (Model != null && Model.Id > 0)
+                        {
+                        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                        @Html.HiddenFor(Model => Model.FunderUserID)
+
+                        }
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i>  @General.Submit</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            }
+
+
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            if ("@ViewBag.EmailExist" != "null")
+                {
+
+                $(".field-validation-error").not(".funder-email").remove();
+                $('input').removeClass("input-validation-error");
+                }
+            })
+    function changecountry(obj) {
+        debugger;
+        var val = $(obj).val();
+        $.get("/Home/GetCountryIso/" + val,
+            function (res) {
+                var telInput = $(".phone");
+                telInput.intlTelInput("setCountry", res);
+            });
+    }
+
+</script>

@@ -1,0 +1,405 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Repository.DataAccess.session
+@using TmsWebApp.Common;
+@using TranningWebApp.Common
+@{
+
+    var cu = Session["user"] as ContextUser;
+    var errorExcel = Request.QueryString["excelerror"] != null;
+    var error = Request.QueryString["error"];
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        Dropzone.options.dropzoneForm = {
+            maxFiles: 100,
+            addRemoveLinks: true,
+            maxFilesize: 2,
+            acceptedFiles: "image/*,application/pdf,.doc",
+
+            accept: function (file, done) {
+                console.log("uploaded");
+                done();
+            },
+
+            init: function () {
+                var thisDropzone = this;
+
+                var Images = $('#SessionImageLink')[0].value.split(",");
+
+                if (Images != null && Images != "") {
+                    for (var i = 0; i < Images.length; i++) {
+                        if (Images[i] != 'undefind' && Images[i] != null && Images[i] != "") {
+
+                            Images[i] = Images[i].trim();
+                            var mockFile = {
+                                name: Images[i],
+                                size: 12345
+                            };
+
+                            // Call the default addedfile event handler
+                            thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+                            mockFile.previewElement.addEventListener("click", function (mockFile) {
+                                var filename = $(this).find('img').attr('alt');
+                                //alert(filename);
+                                PopupCenter("/Images/Session/SessionPhoto/" + filename, "Images", 800, 600);
+
+                            });
+                            // And optionally show the thumbnail of the file:
+                            thisDropzone.createThumbnailFromUrl(mockFile, "/Images/Session/SessionPhoto/" + Images[i]);
+                             $(".dz-preview").addClass("dz-processing dz-success dz-complete")
+                            //$(".dz-details, .dz-progress,.dz-error-message, .dz-success-mark,.dz-error-mark ").remove();
+                        }
+                    }
+                }
+                var preventDrop = function (e) {
+                    e.preventDefault();
+                };
+                if ("@Model.MarkedCompletedByCoordinator" == "True") {
+                    this.element.removeEventListener('click', this.listeners[1].events.click);
+                    this.element.removeEventListener('drop', this.listeners[0].events.drop);
+                    this.element.addEventListener('drop', preventDrop)
+                }
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeFile(file);
+
+                    //swal({ title: "No More Files Allowed!", type: "warning", confirmButtonColor: "#31B0D5", confirmButtonText: "OK" },
+                    //               function () {
+                    //                   return false;
+                    //               });
+                    $("#dropzoneFormIdentification").css("border", "4px solid red");
+                    $('#identification-photo-error').html("No More Files Allowed!");
+                    $('#identification-photo-error').css("display", "block");
+
+                    setTimeout(
+                        function () {
+                            ClearIdentification();
+                        }, 2000);
+                });
+                this.on("removedfile", function (file) {
+
+                    $('#SessionImageLink')[0].value = $('#SessionImageLink')[0].value.replace(file.name + ",", "");
+                });
+                this.on("addedfile", function (file) {
+                    //
+
+                    file.previewElement.addEventListener("click", function () {
+                        var filename = $(this).find('img').attr('alt');
+                        PopupCenter("/Images/Session/SessionPhoto/" + filename, "Images", 800, 600);
+                    });
+
+                    var Extenstion = file.name.substr((file.name.lastIndexOf('.') + 1));
+                    var filesize = file.size;
+
+                    if ((Extenstion == "jpg" || Extenstion == "png" || Extenstion == "doc" || Extenstion == "pdf" || Extenstion == "jpeg") && (filesize <= 2000000)) {
+
+                        //$('#SessionImageLink')[0].value +=  file.name + ", ";
+
+                    }
+                    else {
+                        this.removeFile(file);
+                        //swal({ title: "File Not Supported!", type: "warning", confirmButtonColor: "#31B0D5", confirmButtonText: "OK" },
+                        //                function () {
+                        //                    return false;
+                        //                });
+                        $("#dropzoneFormIdentification").css("border", "4px solid red");
+                        $('#identification-photo-error').html("File Not Supported!");
+                        $('#identification-photo-error').css("display", "block");
+                    }
+                });
+
+                this.on("success", function (file, response) {
+                    debugger;
+           
+                    var imagePathArray = $('#SessionImageLink')[0].value.split(",");
+
+                    for (i = 0; i < imagePathArray.length; i++) {
+                        var imageName = imagePathArray[i].trim();
+                        if (imageName != "" && response.Message.lastIndexOf(imageName) != -1) {
+
+                            $('#SessionImageLink')[0].value = $('#SessionImageLink')[0].value.replace(imageName + ",", "").trim();
+                            break;
+                        }
+                    }
+
+                    $('#SessionImageLink')[0].value += response.Message + ", ";
+
+                    //  document.getElementById('ProfileImageLink').value = file.name;
+                });
+
+            }
+        };
+
+
+
+        Dropzone.options.dropzoneFormEvaluation = {
+            maxFiles: 100,
+            addRemoveLinks: true,
+            maxFilesize: 2,
+            acceptedFiles: "image/*,application/pdf,.doc",
+
+            accept: function (file, done) {
+                console.log("uploaded");
+                done();
+            },
+
+            init: function () {
+                var thisDropzone = this;
+
+                var Images = $('#EvaluationImageLink')[0].value.split(",");
+
+                if (Images != null && Images != "") {
+                    for (var i = 0; i < Images.length ; i++) {
+                        if (Images[i] != 'undefind' && Images[i] != null && Images[i] != "") {
+
+                            Images[i] = Images[i].trim();
+                            var mockFile = {
+                                name: Images[i],
+                                size: 12345
+                            };
+
+                            // Call the default addedfile event handler
+                            thisDropzone.emit("addedfile", mockFile);
+                            mockFile.previewElement.addEventListener("click", function (mockFile) {
+                                var filename = $(this).find('img').attr('alt');
+                                //alert(filename);
+                                PopupCenter("/Images/Session/SessionEvaluation/" + filename, "Images", 800, 600);
+                            });
+                            // And optionally show the thumbnail of the file:
+                            thisDropzone.createThumbnailFromUrl(mockFile, "/Images/Session/SessionEvaluation/" + Images[i]);
+                            $(".dz-preview").addClass("dz-processing dz-success dz-complete")
+                        }
+                    }
+                }
+
+                var preventDrop = function (e) {
+                    e.preventDefault();
+                };
+                if ("@Model.MarkedCompletedByCoordinator" == "True") {
+                    this.element.removeEventListener('click', this.listeners[1].events.click);
+                    this.element.removeEventListener('drop', this.listeners[0].events.drop);
+                    this.element.addEventListener('drop', preventDrop)
+                }
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeFile(file);
+
+                    //swal({ title: "No More Files Allowed!", type: "warning", confirmButtonColor: "#31B0D5", confirmButtonText: "OK" },
+                    //               function () {
+                    //                   return false;
+                    //               });
+                    $("#dropzoneFormIdentification").css("border", "4px solid red");
+                    $('#identification-photo-error').html("No More Files Allowed!");
+                    $('#identification-photo-error').css("display", "block");
+
+                    setTimeout(
+                        function () {
+                            ClearIdentification();
+                        }, 2000);
+                });
+                this.on("removedfile", function (file) {
+
+                    $('#EvaluationImageLink')[0].value = $('#EvaluationImageLink')[0].value.replace(file.name + ",", "");
+                });
+                this.on("addedfile", function (file) {
+                    //
+                    var Extenstion = file.name.substr((file.name.lastIndexOf('.') + 1));
+                    var filesize = file.size;
+
+                    if ((Extenstion == "jpg" || Extenstion == "png" || Extenstion == "doc" || Extenstion == "pdf" || Extenstion == "jpeg") && (filesize <= 2000000)) {
+
+                        //$('#EvaluationImageLink')[0].value +=  file.name + ", ";
+
+                    }
+                    else {
+                        this.removeFile(file);
+                        //swal({ title: "File Not Supported!", type: "warning", confirmButtonColor: "#31B0D5", confirmButtonText: "OK" },
+                        //                function () {
+                        //                    return false;
+                        //                });
+                        $("#dropzoneFormIdentification").css("border", "4px solid red");
+                        $('#identification-photo-error').html("File Not Supported!");
+                        $('#identification-photo-error').css("display", "block");
+                    }
+                });
+
+                this.on("success", function (file, response) {
+                    debugger;
+                    var imagePathArray = $('#EvaluationImageLink')[0].value.split(",");
+                    file.previewElement.addEventListener("click", function (mockFile) {
+                        var filename = $(this).find('img').attr('alt');
+                        //alert(filename);
+                        PopupCenter("/Images/Session/SessionEvaluation/" + filename, "Images", 800, 600);
+                    });
+                    for (i = 0; i < imagePathArray.length; i++) {
+                        var imageName = imagePathArray[i].trim();
+                        if (imageName != "" && response.Message.lastIndexOf(imageName) != -1) {
+
+                            $('#EvaluationImageLink')[0].value = $('#EvaluationImageLink')[0].value.replace(imageName + ",", "").trim();
+                            break;
+                        }
+                    }
+
+                    $('#EvaluationImageLink')[0].value += response.Message + ", ";
+
+                    //  document.getElementById('ProfileImageLink').value = file.name;
+                    
+                });
+
+            }
+        };
+
+
+        
+
+    });
+
+
+    function participantClick(id) {
+        if (id == null)
+         $("#addstudent").button('loading');
+        var url = "/Participant/Edit?id=" + id + "&sessionId=@Model.Id";
+        $.get(url, { "_": $.now() }, function (data) {
+            $("#addstudent").button('reset');
+
+            $("#detialMapping").html(data);
+            var inffst = $('[data-remodal-id=modal]').remodal();
+            inffst.open();
+        });
+    }
+
+    $(document).on('closed', '.remodal', function (e) {
+
+        $("#filevalidation").hide();
+        // Reason: 'confirmation', 'cancellation'
+        window.location.href = "@Url.Action("Edit",new {id = Model.RowGUID })";
+                      });
+
+    
+     function excelClick() {
+        debugger;
+        $("#excelclick").button('loading');
+
+        var url = "/Participant/UploadExcel?sessionId=@Model.Id";
+         $.get(url, { "_": $.now() }, function (data) {
+             $("#excelclick").button('reset');
+
+            $("#detialMapping").html(data);
+            var excelModel = $('[data-remodal-id=modal]').remodal();
+            excelModel.open();
+            if ("@errorExcel" === "True")
+            { 
+                $("#filevalidation").show(); 
+                $("#excelerrormsg").text("@error")
+            }
+           
+        });
+     }
+    if ("@errorExcel" === "True")
+    {
+        excelClick();
+
+    }
+
+
+ 
+
+
+    function onPageClick(page) {
+        window.location.href = "/Session/Edit/@Model.RowGUID?page=" + page;
+    }
+</script>
+<div class="col-sm-6">
+    <div class="card">
+        <div class="card-header">
+            <strong class="text-primary"><i class="icon-plus"></i> @SessionX.StudentManagement</strong>
+        </div>
+        <div class="card-block">
+            <div class="col-sm-12" style="margin-bottom:10px">
+                <button type="button" id="addstudent" class="btn btn-sm btn-primary pull-right"  data-loading-text="<i class='fa fa-plus'></i> @SessionX.AddStudent <i class='fa fa-spinner fa-spin'></i>" name="SubmitButton" onclick="participantClick(@null)"><i class="fa fa-plus"></i> @SessionX.AddStudent </button>
+                @*<button type="button" class="btn btn-sm btn-primary pull-right" name="SubmitButton" style="margin-right:5%" value="approved"><i class="fa fa-dot-circle-o"></i> Add In Bulk</button>*@
+                <button type="button" id="excelclick" class="btn btn-sm btn-primary pull-right" name="SubmitButton" data-loading-text="<i class='fa fa-upload'></i> @SessionX.UploadExcel <i class='fa fa-spinner fa-spin'></i>" style="margin-right:5%" value="approved" onclick="excelClick()"><i class="fa fa-upload"></i> @SessionX.UploadExcel </button>
+                <a class="btn btn-sm btn-primary pull-right" style="margin-right:5%" href="~/Uploads/DocumentLibrary/DefaultDocument/StudentList.xlsx" name="SubmitButton"><i class="fa fa-download"></i> @SessionX.DownloadExcel</a>
+            </div>
+            <table class="table table-hover table-outline mb-0">
+                <thead class="thead-default">
+                    <tr>
+                        <th>@SessionX.StudentName</th>
+                        <th>@SessionX.Phone</th>
+                        <th>@General.Email</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.PagedParticipants)
+                    {
+                        <tr>
+                            <td>@(item.Name + " " + item.FatherName + " " + item.Family)</td>
+                            <td>@item.Mobile</td>
+                            <td>@item.Email</td>
+                            <td><a href="#" onclick="participantClick('@item.RowGuid')" title="Edit"><i class="fa fa-pencil"></i></a></td>
+                        </tr>
+                    }
+                </thead>
+            </table>
+            @Html.Partial("_Pagination", new TmsWebApp.Models.PageViewModel { CurrentPage = Model.PagedParticipants.PageNumber, RecordsPerPage = Model.PagedParticipants.PageSize, TotalRecords = (int)ViewBag.Count })
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6">
+    @using (Html.BeginForm("MarkCompleted", "Session", FormMethod.Post))
+    {
+        <div class="card">
+            <div class="card-header">
+                <strong class="text-primary"><i class="icon-plus"></i> @SessionX.SessionManagement</strong>
+            </div>
+            <div class="card-block">
+                <form action="#"></form>
+
+                <div class="form-group">
+                    <label>@SessionX.UploadAddsessionformphoto</label>
+                    @Html.HiddenFor(x => x.SessionImageLink)
+                    <form action="@Url.Action("SaveUploadedFile","Home",new {type = "sessionphoto" })" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 100%; background: none; ">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-group">
+                    <label>@SessionX.UploadAddevluationformphoto</label>
+                    @Html.HiddenFor(x => x.EvaluationImageLink)
+                    <form action="@Url.Action("SaveUploadedFile","Home",new {type = "seesionevaluation" })" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneFormEvaluation" style="width: 100%; background: none; ">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </form>
+                </div>
+                <div class="form-group">
+                    @Html.CheckBoxFor(x => x.MarkedCompletedByVolunteer, new { @style = "margin-top:5px" })
+                    <label style="margin-left:10px"> @SessionX.SessionMarkedCompleted </label>
+                </div>
+                <div class="form-group">
+                    @Html.CheckBoxFor(x => x.MarkedCompletedByCoordinator, new { @style = "margin-top:5px" })
+                    <label style="margin-left:10px">@SessionX.SessionMarkedCompletedCoordniator </label>
+                </div>
+                
+            </div>
+            <div class="card-footer">
+                @if (cu.EnumRole == EnumUserRole.Coordinator && Model.MarkedCompletedByCoordinator)
+                {
+                    if (!Model.IsFilledCoordinator)
+                    {
+                         <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="fillvolunteerevaluation" style="margin-left:10px"><i class="fa fa-dot-circle-o"></i> @SessionX.Fillupvolunteerevaluation</button>
+                    }
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="Upload" style="margin-left:10px"><i class="fa fa-dot-circle-o"></i> @SessionX.UploadPhotos</button>
+                    <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="MarkComplete"><i class="fa fa-dot-circle-o"></i> @SessionX.MarkCompleted</button>
+                }
+            </div>
+            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+        </div>
+    }
+</div>
+

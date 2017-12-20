@@ -1,0 +1,251 @@
+﻿@model TranningWebApp.Repository.DataAccess.evaluation_coordinator
+@{
+    ViewBag.Title = "CoordinatorForm";
+}
+
+
+  <main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">الصفحة الرئيسية</li>
+
+        <li class="breadcrumb-item active">الممولين</li>
+
+        <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-12 pull-left">
+               @using (Html.BeginForm("CoordinatorForm", "EvaluationForm", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+               {
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <strong class="text-primary"><p align="center"><h1> تقييم رحلة التطوع</h1></p></strong>
+                            <strong class="text-primary"><p align="center">سوف نشعر بعظيم الإمتنان إذا قمتم بإستيفاء هذا الاستبيان، لمساعدتنا في تحسين عملية تطوعكم معنا.</p></strong>
+                        </div>
+
+                        <div class="card-block col-sm-6">
+
+                            <div class="form-group">
+                                <label for="name">الاسم:</label>
+                                @Html.TextBoxFor(x => x.F1, new { @class = "form-control", @placeholder = "" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">البريد الالكتروني :</label>
+                                @Html.TextBoxFor(x => x.F2, new { @class = "form-control", @placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label for="name">الجوال:</label>
+                                @Html.TextBoxFor(x => x.F3, new { @class = "form-control", @placeholder = "" })
+                            </div>
+
+
+                            <label>  المنطقة    </label>
+                           
+                             
+                            @Html.DropDownListFor(m => m.F4, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control" })
+                                         
+                            
+                            <label>   المدينة      </label>
+                             
+                               @Html.DropDownListFor(m => m.F5, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control", onchange = "channge(this)" })
+                   
+                            <div class="form-group">
+                                <label for="name">المدرسة:</label>
+
+                                @Html.TextBoxFor(x => x.F6, new { @class = "form-control", @placeholder = "" })
+                            </div>
+                            <label>   اختر البرنامج الذي تم التطوع به</label>
+                                @Html.DropDownList("F7", new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="سفير", Value = "سفير" },
+                                            new SelectListItem{ Text="الشركة" , Value = "الشركة" },
+                                            new SelectListItem{ Text="طريقي إلى سوق العمل", Value = "طريقي إلى سوق العمل" },
+                                            new SelectListItem{ Text="امواج فرح", Value = "امواج فرح" },
+                                         }, new { @class = "form-control" })
+
+                            <div class="card-header">
+                                <strong class="text-primary">هل تعتقد أن مبادرة سفير حققت الأهداف المرجوة منها وهي:</strong>
+                            </div>
+                            <ol>
+                                <div class="card-block col-sm-12">
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <li class="primary-heading"><strong class="text-primary">فتح آفاق جديدة للطالب تساعدة في تحديد مساره الوظيفي ورغبته المهنية : </strong></li>
+                                            <label class="block">@Html.CheckBoxFor(x => x.F8_1)   أوافق </label>
+                                            <label class="block">@Html.CheckBoxFor(x => x.F8_2)   لا أوافق  </label>
+                                            <label class="block">@Html.CheckBoxFor(x => x.F8_3)   نوعاً ما   </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <li class="primary-heading"><strong class="text-primary">  رفع الوعي بثقافة ريادة الأعمال وإدارة المشاريع الخاصة : </strong> </li>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F9_1)   أوافق </label>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F9_2)   لا أوافق  </label>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F9_3)   نوعاً ما   </label>
+                                    </div>
+
+                            </ol>
+
+                            <div class="card-block col-sm-12">
+                                <table class="table table-hover table-outline mb-0">
+                                    <thead class="thead-default">
+                                        <li class="primary-heading"> <strong class="text-primary"> فيما يلي بعض المكاسب التي يمكن للمرء أن يجنيها شخصياً من تطوعه. </strong></li>
+                                        <tr>
+                                            <th> </th>
+                                            <th class="text-center">أوافق</th>
+                                            <th class="text-center">لا أوافق</th>
+                                            <th class="text-center">نوعاً ما </th>
+
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>تطو المهارات الشخصية (الثقة، احترام -الذات - الإرادة الذاتية)</td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F10_1) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F10_2) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F10_3) </td>
+                                        </tr>
+                                        <tr>
+                                            <td>تنمبة المهارات العملية والحياتية </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F11_1) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F11_2) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F11_3) </td>
+                                        </tr>
+                                        <tr>
+                                            <td>فرصة لبناءعلاقات جديدة </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F12_1) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F12_2) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F12_3) </td>
+                                        </tr>
+                                        <tr>
+                                            <td>الإحساس بالثقة في الآخرين	</td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F13_1) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F13_2) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F13_3) </td>
+                                        </tr>
+                                        <tr>
+                                            <td>المشاركة في الأنشطة المحلية</td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F14_1) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F14_2) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F14_3) </td>
+                                        </tr>
+                                        <tr>
+                                            <td>الإحساس بالإنتماء لمجتمعكم</td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F15_1) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F15_2) </td>
+                                            <td class="text-center">@Html.CheckBoxFor(x => x.F15_3) </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="card-header">
+                                <strong class="text-primary"><h5>  يسعى برنامج إنجاز السعودية على التنسيق باحترافية وأعلى جودة مع منسقي الجهات التعليمية ورأيك يهمنا في تحسين الأداء </h5></strong>
+                            </div>
+                            <ol>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary">  التواصل الفعال (قبل، أثناء، بعد) تقديم المبادرة؟  </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F16_1)  أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F16_2)  لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F16_3)  نوعاً ما   </label>
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary"> الموظف على درايه بعمله وقادر على الإجابة عن كافة الاستفسارات :</strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F17_1)   أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F17_2)   لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F17_3)   نوعاً ما   </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary"> يتعامل الموظف مع المتطوعين بلطف وود : </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F18_1)   أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F18_2)   لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F18_3)   نوعاً ما   </label>
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary">  من السهل الوصول إلى مسؤول علاقات المتطوعين : </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F19_1)   أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F19_2)   لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F19_3)   نوعاً ما   </label>
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary">  الوقت الذي استغرق في التطوع .  </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F20_1)  أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F20_2)  لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F20_3)  نوعاً ما   </label>
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary">  كفاءة الموظف واسلوب تعاملة وقدرتة على إجابة التساؤلات  : </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F21_1)  أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F21_2)  لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F21_3)  نوعاً ما   </label>
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary">  جودة ودقة المعلومات المرسلة في البريد الالكتروني للمتطوعين قبل التطوع . </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F22_1)   أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F22_2)   لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F22_3)   نوعاً ما   </label>
+                                </div>
+                            </ol>
+                            <div class="card-header">
+                                <strong class="text-primary"><h5>يمثل المنسق داخل الجهة التعليمية عنصر هام من عناصر نجاح المبادرة ورأيك فيه يهمنا</h5> </strong>
+                            </div>
+                            <ol>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary">  مدى تعاون المنسق معكم :  </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F23_1)   أوافق </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F23_2)   لا أوافق  </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F23_3)   نوعاً ما   </label>
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary"> هل ترغب في إعادة التطوع : </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F24_1)  نعم </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F24_2)   لا </label>
+                                                      
+                                </div>
+                                <div class="form-group">
+                                    <li class="primary-heading"><strong class="text-primary"> هل ترغب في ترشيح متطوعين للتطوع مع برنامج إنجاز السعودية؟  </strong> </li>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F25_1)  نعم </label>
+                                    <label class="block">@Html.CheckBoxFor(x => x.F25_2)   لا </label>
+                                                        
+                                </div>
+                            </ol>
+                        </div>
+                        @Html.HiddenFor(x => x.SessionId)
+                        @Html.HiddenFor(x => x.CoordinatorId)
+                        @Html.HiddenFor(x => x.VolunteerId)
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+                        </div>
+                        </div>
+               }
+            </div>
+        </div>
+        
+    </div>
+</main>
+
+@{
+
+    var cu = Session["user"] as TranningWebApp.Common.ContextUser;
+}
+
+<script type="text/javascript">
+
+   
+    var role = "@cu.EnumRole";
+    if (role === "SuperAdmin") {
+        $('input,select').attr('disabled', 'disabled');
+        $('button').hide();
+    }
+</script>

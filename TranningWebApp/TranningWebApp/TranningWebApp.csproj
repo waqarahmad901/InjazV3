@@ -1,0 +1,1266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EEB78F02-D757-45DF-96D5-DD6AB3D6F468}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TranningWebApp</RootNamespace>
+    <AssemblyName>TranningWebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>57541</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excel.4.5, Version=2.1.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalAssemblies\Excel.4.5.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalAssemblies\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Common\AuthorizeUserAttribute.cs" />
+    <Compile Include="Common\CertificateDictionary.cs" />
+    <Compile Include="Common\ContextUser.cs" />
+    <Compile Include="Common\EncryptionKeys.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\SHA1.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseOnlyArabicController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CertificateController.cs" />
+    <Compile Include="Controllers\CoordinatorController.cs" />
+    <Compile Include="Controllers\EmailTemplateController.cs" />
+    <Compile Include="Controllers\EvaluationFormController.cs" />
+    <Compile Include="Controllers\EvaluationResultController.cs" />
+    <Compile Include="Controllers\FunderController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OTController.cs" />
+    <Compile Include="Controllers\ParticipantController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
+    <Compile Include="Controllers\SupervisorController.cs" />
+    <Compile Include="Controllers\VolunteerController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HelpingUtilities\EmailSender.cs" />
+    <Compile Include="HelpingUtilities\ExcelReader.cs" />
+    <Compile Include="HelpingUtilities\Logger.cs" />
+    <Compile Include="HelpingUtilities\PdfGenerator.cs" />
+    <Compile Include="HelpingUtilities\Util.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChartBaseModel.cs" />
+    <Compile Include="Models\DashBoardClanderModel.cs" />
+    <Compile Include="Models\DashBoardModel.cs" />
+    <Compile Include="Models\EmailTemplateModel.cs" />
+    <Compile Include="Models\ExcelMode.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PageViewModel.cs" />
+    <Compile Include="Models\NumberOfVolunteerSessionModel.cs" />
+    <Compile Include="Models\pdfDataModel.cs" />
+    <Compile Include="Models\SchoolParticipantModel.cs" />
+    <Compile Include="Models\TotalCourseByStageDataModel.cs" />
+    <Compile Include="Models\StudentsWithVolunteerModel.cs" />
+    <Compile Include="Models\GeneralReportModel.cs" />
+    <Compile Include="Models\TotalCourseByYearModel.cs" />
+    <Compile Include="Models\TotalCourseModel.cs" />
+    <Compile Include="Models\TotalSessionInSchoolParticipantModel.cs" />
+    <Compile Include="Models\TotalSchoolParticipantModel.cs" />
+    <Compile Include="Models\VolunteerDetailModel.cs" />
+    <Compile Include="Models\PartnerFundingModel.cs" />
+    <Compile Include="Models\PartnerTypeModel.cs" />
+    <Compile Include="Models\PdfCoordinatesModel.cs" />
+    <Compile Include="Models\SessionFeedBack.cs" />
+    <Compile Include="Models\SessionParticipantModel.cs" />
+    <Compile Include="Pdf Generation\pdfGenerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AccountRepository.cs" />
+    <Compile Include="Repository\CertificateRepository.cs" />
+    <Compile Include="Repository\CoordinatorRepository.cs" />
+    <Compile Include="Repository\Core\IRepository.cs" />
+    <Compile Include="Repository\DashBoardRepositry.cs" />
+    <Compile Include="Repository\DataAccess\AdminUser.cs" />
+    <Compile Include="Repository\DataAccess\admin_user.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\certificate.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\coordinator_profile.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_coordinator.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_cp_post.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_cp_pre.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_murshadee_after.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_murshadee_before.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_pf_post.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_pf_pre.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_safeer_post.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_safeer_pre.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_syc_post_part1.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_syc_post_part2.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_syc_pre_part1.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_syc_pre_part2.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_volunteer.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\evaluation_volunteer_coordinator.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\funder_profile.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\lk_city.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\lk_country.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\lk_evaluation_form.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\lk_role.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\orientation_training.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\Partial\certificate.cs" />
+    <Compile Include="Repository\DataAccess\Partial\CoordinatorProfile.cs" />
+    <Compile Include="Repository\DataAccess\Partial\FunderProfile.cs" />
+    <Compile Include="Repository\DataAccess\Partial\OrientationTranning.cs" />
+    <Compile Include="Repository\DataAccess\Partial\ParticipantProfile.cs" />
+    <Compile Include="Repository\DataAccess\Partial\School.cs" />
+    <Compile Include="Repository\DataAccess\Partial\Session.cs" />
+    <Compile Include="Repository\DataAccess\Partial\TrainingProjectEntities.cs" />
+    <Compile Include="Repository\DataAccess\Partial\User.cs" />
+    <Compile Include="Repository\DataAccess\Partial\VolunteerProfile.cs" />
+    <Compile Include="Repository\DataAccess\ParticipantProfile.cs" />
+    <Compile Include="Repository\DataAccess\participant_profile.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\school.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\session.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\session_evaluationform_photo.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\session_evaluationform_result.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\session_participant.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\session_photo.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\session_time.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\sysdiagram.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\TmsModel.Context1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TmsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\TmsModel.cs" />
+    <Compile Include="Repository\DataAccess\TmsModel.Designer.cs">
+      <DependentUpon>TmsModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\TmsModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\TmsModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TmsModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\user.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\volunteer_profile.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\EvaluationFormRepository.cs" />
+    <Compile Include="Repository\FunderRepository.cs" />
+    <Compile Include="Repository\Lookup\CityRepository.cs" />
+    <Compile Include="Repository\Lookup\EvaluationFormRepository.cs" />
+    <Compile Include="Repository\Lookup\CountryRepository.cs" />
+    <Compile Include="Repository\OTRepository.cs" />
+    <Compile Include="Repository\ParticipiantRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\SchoolRepository.cs" />
+    <Compile Include="Repository\SessionRepository.cs" />
+    <Compile Include="Repository\VolunteerRepository.cs" />
+    <Compile Include="Resource\Certificate.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Certificate.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Certificate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Certificate.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Coordinator.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Coordinator.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Coordinator.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Coordinator.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Funder.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Funder.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Funder.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Funder.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Menu.Designer.cs">
+      <DependentUpon>Menu.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resource\Menu.ar.Designer.cs">
+      <DependentUpon>Menu.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resource\General.ar.Designer.cs">
+      <DependentUpon>General.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resource\General.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\OT.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OT.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\OT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OT.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Participant.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Participant.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Participant.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Participant.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Reports.ar.Designer.cs">
+      <DependentUpon>Reports.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resource\SessionX.ar1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SessionX.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\SessionX.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SessionX.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\SuperAdmin.ar1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SuperAdmin.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\SuperAdmin1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SuperAdmin.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Supervisor.ar.Designer.cs">
+      <DependentUpon>Supervisor.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resource\Supervisor.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Supervisor.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Reports.Designer.cs">
+      <DependentUpon>Reports.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resource\Volunteer.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Volunteer.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Volunteer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Volunteer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="img\ok-128.png" />
+    <Content Include="Scripts\bootstrap-filestyle.min.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap\bootstrap.css" />
+    <Content Include="Content\cust-style.css" />
+    <Content Include="img\avatars\admins-generate-reports.png" />
+    <Content Include="img\avatars\mark.png" />
+    <Content Include="img\avatars\evaluation.png" />
+    <Content Include="img\avatars\ot.png" />
+    <Content Include="img\avatars\session.png" />
+    <Content Include="img\avatars\participant.png" />
+    <Content Include="img\avatars\coordinator.png" />
+    <Content Include="img\avatars\certificate.png" />
+    <Content Include="img\avatars\admin.png" />
+    <Content Include="img\avatars\volunteer.png" />
+    <Content Include="img\avatars\6.jpg" />
+    <Content Include="img\avatars\1.png" />
+    <Content Include="img\avatars\partners-icon.png" />
+    <Content Include="img\flags%402x.png" />
+    <Content Include="img\flags.png" />
+    <Content Include="Scripts\data.js" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Content\jquery.calendars.picker.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\remodal.css" />
+    <Content Include="Content\simple-line-icons.css" />
+    <Content Include="Content\simplePagination.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\vendors\chart.js\chart.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Simple-Line-Icons.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\Session\SessionEvaluation\aa.png" />
+    <Content Include="Images\Session\SessionEvaluation\img.png" />
+    <Content Include="Images\Session\SessionEvaluation\Screenshot %281%29.png" />
+    <Content Include="Images\Session\SessionEvaluation\Screenshot %282%29.png" />
+    <Content Include="Images\Session\SessionEvaluation\Screenshot %283%29.png" />
+    <Content Include="Images\Session\SessionEvaluation\Screenshot %284%29.png" />
+    <Content Include="Images\Session\SessionEvaluation\TMS process.jpg" />
+    <Content Include="Images\Session\SessionEvaluation\w2p icons.png" />
+    <Content Include="Images\Session\SessionEvaluation\WIN_20160717_11_49_33_Pro.jpg" />
+    <Content Include="Images\Session\SessionEvaluation\_95424360_a96505f9-5129-4c5d-9923-0e2b58fcdce0.jpg" />
+    <Content Include="Images\Session\SessionPhoto\aa.png" />
+    <Content Include="Images\Session\SessionPhoto\Screenshot %282%29.png" />
+    <Content Include="Images\Session\SessionPhoto\Screenshot %283%29.png" />
+    <Content Include="Images\Session\SessionPhoto\Screenshot %284%29.png" />
+    <Content Include="Images\Session\SessionPhoto\TMS INJAZ %284%29.jpg" />
+    <Content Include="Images\Session\SessionPhoto\TMS process.jpg" />
+    <Content Include="Images\Session\SessionPhoto\_95424360_a96505f9-5129-4c5d-9923-0e2b58fcdce0.jpg" />
+    <Content Include="img\avatars\1_old.jpg" />
+    <Content Include="img\avatars\2.jpg" />
+    <Content Include="img\avatars\3.jpg" />
+    <Content Include="img\avatars\4.jpg" />
+    <Content Include="img\avatars\5.jpg" />
+    <Content Include="img\avatars\6_old.jpg" />
+    <Content Include="img\avatars\7.jpg" />
+    <Content Include="img\avatars\8.jpg" />
+    <Content Include="img\flags\Afghanistan.png" />
+    <Content Include="img\flags\African Union.png" />
+    <Content Include="img\flags\Albania.png" />
+    <Content Include="img\flags\Algeria.png" />
+    <Content Include="img\flags\American Samoa.png" />
+    <Content Include="img\flags\Andorra.png" />
+    <Content Include="img\flags\Angola.png" />
+    <Content Include="img\flags\Anguilla.png" />
+    <Content Include="img\flags\Antarctica.png" />
+    <Content Include="img\flags\Antigua &amp; Barbuda.png" />
+    <Content Include="img\flags\Arab League.png" />
+    <Content Include="img\flags\Argentina.png" />
+    <Content Include="img\flags\Armenia.png" />
+    <Content Include="img\flags\Aruba.png" />
+    <Content Include="img\flags\ASEAN.png" />
+    <Content Include="img\flags\Australia.png" />
+    <Content Include="img\flags\Austria.png" />
+    <Content Include="img\flags\Azerbaijan.png" />
+    <Content Include="img\flags\Bahamas.png" />
+    <Content Include="img\flags\Bahrain.png" />
+    <Content Include="img\flags\Bangladesh.png" />
+    <Content Include="img\flags\Barbados.png" />
+    <Content Include="img\flags\Belarus.png" />
+    <Content Include="img\flags\Belgium.png" />
+    <Content Include="img\flags\Belize.png" />
+    <Content Include="img\flags\Benin.png" />
+    <Content Include="img\flags\Bermuda.png" />
+    <Content Include="img\flags\Bhutan.png" />
+    <Content Include="img\flags\Bolivia.png" />
+    <Content Include="img\flags\Bosnia &amp; Herzegovina.png" />
+    <Content Include="img\flags\Botswana.png" />
+    <Content Include="img\flags\Brazil.png" />
+    <Content Include="img\flags\Brunei.png" />
+    <Content Include="img\flags\Bulgaria.png" />
+    <Content Include="img\flags\Burkina Faso.png" />
+    <Content Include="img\flags\Burundi.png" />
+    <Content Include="img\flags\Cambodja.png" />
+    <Content Include="img\flags\Cameroon.png" />
+    <Content Include="img\flags\Canada.png" />
+    <Content Include="img\flags\Cape Verde.png" />
+    <Content Include="img\flags\CARICOM.png" />
+    <Content Include="img\flags\Cayman Islands.png" />
+    <Content Include="img\flags\Central African Republic.png" />
+    <Content Include="img\flags\Chad.png" />
+    <Content Include="img\flags\Chile.png" />
+    <Content Include="img\flags\China.png" />
+    <Content Include="img\flags\CIS.png" />
+    <Content Include="img\flags\Colombia.png" />
+    <Content Include="img\flags\Commonwealth.png" />
+    <Content Include="img\flags\Comoros.png" />
+    <Content Include="img\flags\Congo-Brazzaville.png" />
+    <Content Include="img\flags\Congo-Kinshasa%28Zaire%29.png" />
+    <Content Include="img\flags\Cook Islands.png" />
+    <Content Include="img\flags\Costa Rica.png" />
+    <Content Include="img\flags\Cote d%27Ivoire.png" />
+    <Content Include="img\flags\Croatia.png" />
+    <Content Include="img\flags\Cuba.png" />
+    <Content Include="img\flags\Cyprus.png" />
+    <Content Include="img\flags\Czech Republic.png" />
+    <Content Include="img\flags\Denmark.png" />
+    <Content Include="img\flags\Djibouti.png" />
+    <Content Include="img\flags\Dominica.png" />
+    <Content Include="img\flags\Dominican Republic.png" />
+    <Content Include="img\flags\Ecuador.png" />
+    <Content Include="img\flags\Egypt.png" />
+    <Content Include="img\flags\El Salvador.png" />
+    <Content Include="img\flags\England.png" />
+    <Content Include="img\flags\Equatorial Guinea.png" />
+    <Content Include="img\flags\Eritrea.png" />
+    <Content Include="img\flags\Estonia.png" />
+    <Content Include="img\flags\Ethiopia.png" />
+    <Content Include="img\flags\European Union.png" />
+    <Content Include="img\flags\Faroes.png" />
+    <Content Include="img\flags\Fiji.png" />
+    <Content Include="img\flags\Finland.png" />
+    <Content Include="img\flags\France.png" />
+    <Content Include="img\flags\Gabon.png" />
+    <Content Include="img\flags\Gambia.png" />
+    <Content Include="img\flags\Georgia.png" />
+    <Content Include="img\flags\Germany.png" />
+    <Content Include="img\flags\Ghana.png" />
+    <Content Include="img\flags\Gibraltar.png" />
+    <Content Include="img\flags\Greece.png" />
+    <Content Include="img\flags\Greenland.png" />
+    <Content Include="img\flags\Grenada.png" />
+    <Content Include="img\flags\Guadeloupe.png" />
+    <Content Include="img\flags\Guam.png" />
+    <Content Include="img\flags\Guatemala.png" />
+    <Content Include="img\flags\Guernsey.png" />
+    <Content Include="img\flags\Guinea-Bissau.png" />
+    <Content Include="img\flags\Guinea.png" />
+    <Content Include="img\flags\Guyana.png" />
+    <Content Include="img\flags\Haiti.png" />
+    <Content Include="img\flags\Honduras.png" />
+    <Content Include="img\flags\Hong Kong.png" />
+    <Content Include="img\flags\Hungary.png" />
+    <Content Include="img\flags\Iceland.png" />
+    <Content Include="img\flags\India.png" />
+    <Content Include="img\flags\Indonezia.png" />
+    <Content Include="img\flags\Iran.png" />
+    <Content Include="img\flags\Iraq.png" />
+    <Content Include="img\flags\Ireland.png" />
+    <Content Include="img\flags\Islamic Conference.png" />
+    <Content Include="img\flags\Isle of Man.png" />
+    <Content Include="img\flags\Israel.png" />
+    <Content Include="img\flags\Italy.png" />
+    <Content Include="img\flags\Jamaica.png" />
+    <Content Include="img\flags\Japan.png" />
+    <Content Include="img\flags\Jersey.png" />
+    <Content Include="img\flags\Jordan.png" />
+    <Content Include="img\flags\Kazakhstan.png" />
+    <Content Include="img\flags\Kenya.png" />
+    <Content Include="img\flags\Kiribati.png" />
+    <Content Include="img\flags\Kosovo.png" />
+    <Content Include="img\flags\Kuwait.png" />
+    <Content Include="img\flags\Kyrgyzstan.png" />
+    <Content Include="img\flags\Laos.png" />
+    <Content Include="img\flags\Latvia.png" />
+    <Content Include="img\flags\Lebanon.png" />
+    <Content Include="img\flags\Lesotho.png" />
+    <Content Include="img\flags\Liberia.png" />
+    <Content Include="img\flags\Libya.png" />
+    <Content Include="img\flags\Liechtenshein.png" />
+    <Content Include="img\flags\Lithuania.png" />
+    <Content Include="img\flags\Luxembourg.png" />
+    <Content Include="img\flags\Macao.png" />
+    <Content Include="img\flags\Macedonia.png" />
+    <Content Include="img\flags\Madagascar.png" />
+    <Content Include="img\flags\Malawi.png" />
+    <Content Include="img\flags\Malaysia.png" />
+    <Content Include="img\flags\Maldives.png" />
+    <Content Include="img\flags\Mali.png" />
+    <Content Include="img\flags\Malta.png" />
+    <Content Include="img\flags\Marshall Islands.png" />
+    <Content Include="img\flags\Martinique.png" />
+    <Content Include="img\flags\Mauritania.png" />
+    <Content Include="img\flags\Mauritius.png" />
+    <Content Include="img\flags\Mexico.png" />
+    <Content Include="img\flags\Micronesia.png" />
+    <Content Include="img\flags\Moldova.png" />
+    <Content Include="img\flags\Monaco.png" />
+    <Content Include="img\flags\Mongolia.png" />
+    <Content Include="img\flags\Montenegro.png" />
+    <Content Include="img\flags\Montserrat.png" />
+    <Content Include="img\flags\Morocco.png" />
+    <Content Include="img\flags\Mozambique.png" />
+    <Content Include="img\flags\Myanmar%28Burma%29.png" />
+    <Content Include="img\flags\Namibia.png" />
+    <Content Include="img\flags\NATO.png" />
+    <Content Include="img\flags\Nauru.png" />
+    <Content Include="img\flags\Nepal.png" />
+    <Content Include="img\flags\Netherlands Antilles.png" />
+    <Content Include="img\flags\Netherlands.png" />
+    <Content Include="img\flags\New Caledonia.png" />
+    <Content Include="img\flags\New Zealand.png" />
+    <Content Include="img\flags\Nicaragua.png" />
+    <Content Include="img\flags\Niger.png" />
+    <Content Include="img\flags\Nigeria.png" />
+    <Content Include="img\flags\North Korea.png" />
+    <Content Include="img\flags\Northern Cyprus.png" />
+    <Content Include="img\flags\Northern Ireland.png" />
+    <Content Include="img\flags\Norway.png" />
+    <Content Include="img\flags\Olimpic Movement.png" />
+    <Content Include="img\flags\Oman.png" />
+    <Content Include="img\flags\OPEC.png" />
+    <Content Include="img\flags\Pakistan.png" />
+    <Content Include="img\flags\Palau.png" />
+    <Content Include="img\flags\Palestine.png" />
+    <Content Include="img\flags\Panama.png" />
+    <Content Include="img\flags\Papua New Guinea.png" />
+    <Content Include="img\flags\Paraguay.png" />
+    <Content Include="img\flags\Peru.png" />
+    <Content Include="img\flags\Philippines.png" />
+    <Content Include="img\flags\Poland.png" />
+    <Content Include="img\flags\Portugal.png" />
+    <Content Include="img\flags\Puerto Rico.png" />
+    <Content Include="img\flags\Qatar.png" />
+    <Content Include="img\flags\Red Cross.png" />
+    <Content Include="img\flags\Reunion.png" />
+    <Content Include="img\flags\Romania.png" />
+    <Content Include="img\flags\Russia.png" />
+    <Content Include="img\flags\Rwanda.png" />
+    <Content Include="img\flags\Saint Lucia.png" />
+    <Content Include="img\flags\Samoa.png" />
+    <Content Include="img\flags\San Marino.png" />
+    <Content Include="img\flags\Sao Tome &amp; Principe.png" />
+    <Content Include="img\flags\Saudi Arabia.png" />
+    <Content Include="img\flags\Scotland.png" />
+    <Content Include="img\flags\Senegal.png" />
+    <Content Include="img\flags\Serbia%28Yugoslavia%29.png" />
+    <Content Include="img\flags\Seychelles.png" />
+    <Content Include="img\flags\Sierra Leone.png" />
+    <Content Include="img\flags\Singapore.png" />
+    <Content Include="img\flags\Slovakia.png" />
+    <Content Include="img\flags\Slovenia.png" />
+    <Content Include="img\flags\Solomon Islands.png" />
+    <Content Include="img\flags\Somalia.png" />
+    <Content Include="img\flags\Somaliland.png" />
+    <Content Include="img\flags\South Africa.png" />
+    <Content Include="img\flags\South Korea.png" />
+    <Content Include="img\flags\Spain.png" />
+    <Content Include="img\flags\Sri Lanka.png" />
+    <Content Include="img\flags\St Kitts &amp; Nevis.png" />
+    <Content Include="img\flags\St Vincent &amp; the Grenadines.png" />
+    <Content Include="img\flags\Sudan.png" />
+    <Content Include="img\flags\Suriname.png" />
+    <Content Include="img\flags\Swaziland.png" />
+    <Content Include="img\flags\Sweden.png" />
+    <Content Include="img\flags\Switzerland.png" />
+    <Content Include="img\flags\Syria.png" />
+    <Content Include="img\flags\Tahiti%28French Polinesia%29.png" />
+    <Content Include="img\flags\Taiwan.png" />
+    <Content Include="img\flags\Tajikistan.png" />
+    <Content Include="img\flags\Tanzania.png" />
+    <Content Include="img\flags\Thailand.png" />
+    <Content Include="img\flags\Timor-Leste.png" />
+    <Content Include="img\flags\Togo.png" />
+    <Content Include="img\flags\Tonga.png" />
+    <Content Include="img\flags\Trinidad &amp; Tobago.png" />
+    <Content Include="img\flags\Tunisia.png" />
+    <Content Include="img\flags\Turkey.png" />
+    <Content Include="img\flags\Turkmenistan.png" />
+    <Content Include="img\flags\Turks and Caicos Islands.png" />
+    <Content Include="img\flags\Tuvalu.png" />
+    <Content Include="img\flags\Uganda.png" />
+    <Content Include="img\flags\Ukraine.png" />
+    <Content Include="img\flags\United Arab Emirates.png" />
+    <Content Include="img\flags\United Nations.png" />
+    <Content Include="img\flags\United-Kingdom.png" />
+    <Content Include="img\flags\Uruguay.png" />
+    <Content Include="img\flags\USA.png" />
+    <Content Include="img\flags\Uzbekistan.png" />
+    <Content Include="img\flags\Vanutau.png" />
+    <Content Include="img\flags\Vatican City.png" />
+    <Content Include="img\flags\Venezuela.png" />
+    <Content Include="img\flags\Viet Nam.png" />
+    <Content Include="img\flags\Virgin Islands British.png" />
+    <Content Include="img\flags\Virgin Islands US.png" />
+    <Content Include="img\flags\Wales.png" />
+    <Content Include="img\flags\Western Sahara.png" />
+    <Content Include="img\flags\Yemen.png" />
+    <Content Include="img\flags\Zambia.png" />
+    <Content Include="img\flags\Zimbabwe.png" />
+    <Content Include="img\gbutton.png" />
+    <Content Include="img\injaz-sm.png" />
+    <Content Include="img\injaz.png" />
+    <Content Include="img\logo image.png" />
+    <Content Include="img\logo-enjaz2png.png" />
+    <Content Include="img\logo-origin.png" />
+    <Content Include="img\logo-small.png" />
+    <Content Include="img\main-logo1.png" />
+    <Content Include="img\profile_avatar.png" />
+    <Content Include="img\sign-in-with-google.png" />
+    <Content Include="img\sign_in_google.png" />
+    <Content Include="Repository\DataAccess\TmsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TmsModel.Context1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repository\DataAccess\TmsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TmsModel1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\font-awesome.css.map" />
+    <Content Include="Content\maps\bootstrap\bootstrap-grid.css.map" />
+    <Content Include="Content\maps\bootstrap\bootstrap-reboot.css.map" />
+    <Content Include="Content\maps\bootstrap\bootstrap.css.map" />
+    <Content Include="Content\maps\vendors\chart.js\chart.css.map" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\Simple-Line-Icons.eot" />
+    <Content Include="fonts\Simple-Line-Icons.ttf" />
+    <Content Include="fonts\Simple-Line-Icons.woff" />
+    <Content Include="fonts\Simple-Line-Icons.woff2" />
+    <EntityDeploy Include="Repository\DataAccess\TmsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TmsModel1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Repository\DataAccess\TmsModel.edmx.diagram">
+      <DependentUpon>TmsModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Content\intlTelInput.css" />
+    <Content Include="fonts\Helvetica\Helvetica LT 45 Light.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica LT 47 Light Condensed.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica LT 75 Bold Outline.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica LT 77 Bold Condensed.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica Neue CE 35 Thin.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica Neue CE 36 Thin Italic.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica Neue CE 55 Roman.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica Neue CE 56 Italic.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica Neue CE 75 Bold.ttf" />
+    <Content Include="fonts\Helvetica\Helvetica Neue CE 76 Bold Italic.ttf" />
+    <Content Include="fonts\Helvetica\HelveticaLight 2.ttf" />
+    <Content Include="fonts\Helvetica\HelveticaLight.ttf" />
+    <Content Include="fonts\Arabic Fonts\adobe arabic\AdobeArabic-Bold.otf" />
+    <Content Include="fonts\Arabic Fonts\adobe arabic\AdobeArabic-BoldItalic.otf" />
+    <Content Include="fonts\Arabic Fonts\adobe arabic\AdobeArabic-Italic.otf" />
+    <Content Include="fonts\Arabic Fonts\adobe arabic\AdobeArabic-Regular.otf" />
+    <Content Include="fonts\Arabic Fonts\GE Dinar Two\GE Dinar Two Light.otf" />
+    <Content Include="fonts\Arabic Fonts\GE Dinar Two\GE Dinar Two Medium.otf" />
+    <Content Include="fonts\Arabic Fonts\trado.ttf" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\clander\date.conversion.js" />
+    <Content Include="Scripts\clander\jquery.calendars.islamic.js" />
+    <Content Include="Scripts\clander\jquery.calendars.js" />
+    <Content Include="Scripts\clander\jquery.calendars.picker.js" />
+    <Content Include="Scripts\clander\jquery.calendars.plus.js" />
+    <Content Include="Scripts\clander\jquery.plugin.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Scripts\fullcalendar.min.js" />
+    <Content Include="Scripts\intlTelInput.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.simplePagination.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\remodal.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\utils.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Uploads\ImageLibrary\006de5fc-626d-4fc9-89e3-8122c427d3f4.png" />
+    <Content Include="Uploads\ImageLibrary\010d7d84-bd40-4d4f-ad33-71437d82dc2e.jpg" />
+    <Content Include="Uploads\ImageLibrary\13bc8c73-bc9c-465f-ac5b-58abffe8cd96.png" />
+    <Content Include="Uploads\ImageLibrary\13c28da0-1f0d-4ac6-a77b-357934f9778b.jpg" />
+    <Content Include="Uploads\ImageLibrary\21e495a9-bb56-4ecf-968d-6df90690c02d.jpg" />
+    <Content Include="Uploads\ImageLibrary\2b194fab-c102-4e9c-b8dd-c897bcb2320c.jpg" />
+    <Content Include="Uploads\ImageLibrary\2e36405e-5e90-4eb5-8fad-a52ddf09eefe.jpg" />
+    <Content Include="Uploads\ImageLibrary\40131b07-8186-46b1-8ec3-275c066b36b0.jpg" />
+    <Content Include="Uploads\ImageLibrary\4533e653-73ff-470e-a032-188aa2afde72.jpg" />
+    <Content Include="Uploads\ImageLibrary\47748003-fddc-415b-8764-3cad793f712a.jpg" />
+    <Content Include="Uploads\ImageLibrary\4c4faabc-b67c-49a8-abd1-50b95abcb8c1.jpg" />
+    <Content Include="Uploads\ImageLibrary\4cbdbb8b-4948-4490-847d-57006bc5340f.jpg" />
+    <Content Include="Uploads\ImageLibrary\50c75c6e-9544-4608-9381-2be509aeef7b.jpg" />
+    <Content Include="Uploads\ImageLibrary\58a60e4b-a6e9-49e8-943f-340b5ad268ef.jpg" />
+    <Content Include="Uploads\ImageLibrary\5a2cd454-d6cc-490d-aa6e-2fca0a2b6fff.jpg" />
+    <Content Include="Uploads\ImageLibrary\5c197360-9fd6-4301-87e9-35042035b5aa.jpg" />
+    <Content Include="Uploads\ImageLibrary\5eae841b-112b-48c1-9480-2e07ad3e8aaa.jpg" />
+    <Content Include="Uploads\ImageLibrary\69dd7503-b2d3-4283-af0f-2ef1e3786997.jpg" />
+    <Content Include="Uploads\ImageLibrary\6bc983b7-0700-4c4b-b711-9d97257ed895.jpg" />
+    <Content Include="Uploads\ImageLibrary\9df15b69-8843-436f-8048-9781af9ad891.jpg" />
+    <Content Include="Uploads\ImageLibrary\cc255c6d-308c-4af8-aac1-dff6a4b6cb9e.jpg" />
+    <Content Include="Uploads\ImageLibrary\db53270f-5b18-4eeb-889a-092304530f92.jpg" />
+    <Content Include="Uploads\ImageLibrary\de21f1d4-e578-4790-9852-bae2364beb90.jpg" />
+    <Content Include="Uploads\ImageLibrary\e71b16d6-f946-4466-ada8-79d02ec85789.jpg" />
+    <Content Include="Uploads\ImageLibrary\ec2bd759-270c-4fe0-a5c1-3a582b8488b2.jpg" />
+    <Content Include="Uploads\ImageLibrary\ef745ddc-4f07-4083-b5a5-22de2e871f34.png" />
+    <Content Include="Uploads\ImageLibrary\f0c5cd99-b3cc-4dcd-b7d3-2042c11c4b56.jpg" />
+    <Content Include="Uploads\ImageLibrary\f8e71693-44fe-482e-8981-c4b6b370f41f.jpg" />
+    <Content Include="Uploads\ImageLibrary\fe224dbc-7ef5-4024-9231-003f548f5d98.jpg" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Uploads\CertificateLibrary\CP Certificate Volunteer 2016.pdf" />
+    <Content Include="Uploads\CertificateLibrary\SYC Certificates - Student.pdf" />
+    <Content Include="Views\Account\UpdatePassword.cshtml" />
+    <Content Include="Views\Certificate\Edit.cshtml" />
+    <Content Include="Views\Certificate\Index.cshtml" />
+    <Content Include="Views\Coordinator\CoordinatorProfile.cshtml" />
+    <Content Include="Views\Coordinator\Edit.cshtml" />
+    <Content Include="Views\Coordinator\Index.cshtml" />
+    <Content Include="Views\Coordinator\Register.cshtml" />
+    <Content Include="Views\EmailTemplate\CoordinatorProfile.cshtml" />
+    <Content Include="Views\EmailTemplate\CoordinatorRegistration.cshtml" />
+    <Content Include="Views\Funder\Edit.cshtml" />
+    <Content Include="Views\Funder\Index.cshtml" />
+    <Content Include="Views\Home\DashBoard.cshtml" />
+    <Content Include="Views\OT\Edit.cshtml" />
+    <Content Include="Views\OT\Index.cshtml" />
+    <Content Include="Views\Participant\Edit.cshtml" />
+    <Content Include="Views\Participant\Index.cshtml" />
+    <Content Include="Views\Participant\ParticipantProfile.cshtml" />
+    <Content Include="Views\Participant\_ManageParticipant.cshtml" />
+    <Content Include="Views\Session\Edit.cshtml" />
+    <Content Include="Views\Session\Index.cshtml" />
+    <Content Include="Views\Session\_SessionOccured.cshtml" />
+    <Content Include="Views\Shared\_FooterPartial.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartial.cshtml" />
+    <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Views\Shared\_Pagination.cshtml" />
+    <Content Include="Views\SuperAdmin\Index.cshtml" />
+    <Content Include="Views\SuperAdmin\Schools.cshtml" />
+    <Content Include="Views\Supervisor\Edit.cshtml" />
+    <Content Include="Views\Supervisor\Index.cshtml" />
+    <Content Include="Views\Volunteer\Index.cshtml" />
+    <Content Include="Views\Volunteer\VolunteerProfile.cshtml" />
+    <Content Include="Views\EvaluationForm\Index.cshtml" />
+    <Content Include="Uploads\DocumentLibrary\DefaultDocument\CoordinatorRegister.docx" />
+    <Content Include="Views\Coordinator\SchoolLocation.cshtml" />
+    <Content Include="Views\Participant\_UploadExcel.cshtml" />
+    <Content Include="Views\EmailTemplate\ResetPassword.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerAcceptsOT.cshtml" />
+    <Content Include="Views\EvaluationForm\CPPost.cshtml" />
+    <Content Include="Views\EvaluationForm\CPPre.cshtml" />
+    <Content Include="Views\EvaluationForm\MrshdyAfter.cshtml" />
+    <Content Include="Views\EvaluationForm\MrshdyBefore.cshtml" />
+    <Content Include="Views\EvaluationForm\safeerPre.cshtml" />
+    <Content Include="Views\EvaluationForm\SafferPost.cshtml" />
+    <Content Include="Views\EvaluationForm\SYCPostP1.cshtml" />
+    <Content Include="Views\EvaluationForm\SYCPostP2.cshtml" />
+    <Content Include="Views\EvaluationForm\SYCPreP1.cshtml" />
+    <Content Include="Views\EvaluationForm\SYCPreP2.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerConfirmAttendense.cshtml" />
+    <Content Include="Views\EvaluationResult\Index.cshtml" />
+    <Content Include="Views\EvaluationResult\SessionDetails.cshtml" />
+    <Content Include="Views\EvaluationResult\ParticipantDetail.cshtml" />
+    <Content Include="Views\Account\UserList.cshtml" />
+    <Content Include="Views\Account\EditUser.cshtml" />
+    <Content Include="Views\Account\Admin.cshtml" />
+    <Content Include="Views\EvaluationForm\PFPost.cshtml" />
+    <Content Include="Views\EvaluationForm\PFPre.cshtml" />
+    <Content Include="Views\EmailTemplate\CoordinatorMarkCompleted.cshtml" />
+    <Content Include="Views\Session\FeedBack.cshtml" />
+    <Content Include="Views\Session\StudentAttendense.cshtml" />
+    <Content Include="Views\EvaluationForm\VolCorEvaluation.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerFeedBack.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\SchoolRegandNumberOfStudentChart.cshtml" />
+    <Content Include="Views\Report\PartnerFundingChart.cshtml" />
+    <Content Include="Views\Report\SessionParticipantsChart.cshtml" />
+    <Content Include="Views\Report\PartnerTypeChart.cshtml" />
+    <Content Include="Views\Report\VolunteerDetailChart.cshtml" />
+    <Content Include="Views\Report\TotalSchoolParticipantChart.cshtml" />
+    <Content Include="Views\Report\TotalCourseChart.cshtml" />
+    <Content Include="Views\Report\StudentsWithVolunteerChart.cshtml" />
+    <Content Include="Views\Report\TotalSessionInSchoolParticipantChart.cshtml" />
+    <Content Include="Views\Report\NumberOfVolunteerSessionChart.cshtml" />
+    <Content Include="Views\Report\TotalCourseByStageChart.cshtml" />
+    <Content Include="Views\Report\GeneralReport.cshtml" />
+    <Content Include="Views\EmailTemplate\SendKitBymailCourier.cshtml" />
+    <Content Include="Views\EmailTemplate\ConfirmKitReceivedBySchool.cshtml" />
+    <Content Include="Views\EmailTemplate\ApprovedByAdmin.cshtml" />
+    <Content Include="Views\EmailTemplate\SessionOccured.cshtml" />
+    <Content Include="Views\EmailTemplate\SessionCreatedSchool.cshtml" />
+    <Content Include="Views\EmailTemplate\SessionDateChanged.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerAssignSession.cshtml" />
+    <Content Include="Views\EmailTemplate\FunderProfile.cshtml" />
+    <Content Include="Views\Report\TotalCourseByYearChart.cshtml" />
+    <Content Include="Views\EmailTemplate\UserProfile.cshtml" />
+    <Content Include="Views\EvaluationForm\VolenteerForm.cshtml" />
+    <Content Include="Views\EvaluationForm\CoordinatorForm.cshtml" />
+    <Content Include="Views\Session\RequestSession.cshtml" />
+    <Content Include="Views\EmailTemplate\ParticipantProfile.cshtml" />
+    <Content Include="Uploads\DocumentLibrary\DefaultDocument\StudentList.xlsx" />
+    <Content Include="Views\EmailTemplate\VolunteerRegister.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerApproved.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\Certificate.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Certificate.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Certificate.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Certificate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Coordinator.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Coordinator.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Coordinator.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Coordinator.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Funder.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Funder.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Funder.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Funder.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Menu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Menu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Menu.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Menu.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\General.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\General.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\OT.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OT.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\OT.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OT.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Participant.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Participant.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Participant.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Participant.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Reports.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reports.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\SessionX.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SessionX.ar1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\SessionX.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SessionX.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\SuperAdmin.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SuperAdmin.ar1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\SuperAdmin.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SuperAdmin1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Supervisor.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Supervisor.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Supervisor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Supervisor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Reports.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reports.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Volunteer.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Volunteer.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Volunteer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Volunteer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>57541</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:44301/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

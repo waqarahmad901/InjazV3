@@ -1,0 +1,187 @@
+﻿@model TranningWebApp.Repository.DataAccess.coordinator_profile
+@using TranningWebApp.Resource
+@using TranningWebApp.Common
+@{ 
+    var cu = Session["user"] as ContextUser;
+}
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Coordinator.SchoolCoordinator</li>
+        </li>
+        @if (Model.Id > 0)
+        {
+        <li class="breadcrumb-item active"> @General.Edit @Coordinator.SchoolCoordinator</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item active"> @General.AddNew @Coordinator.SchoolCoordinator</li>
+        }
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-6">
+                @using (Html.BeginForm("Edit", "Coordinator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+
+                    <div class="card">
+                        <div class="card-header">
+                            @if (Model.Id > 0)
+                            {
+                            <strong class="text-primary"><i class="icon-plus"></i> @General.Edit @Coordinator.SchoolCoordinator</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-primary"><i class="icon-plus"></i> @General.AddNew @Coordinator.SchoolCoordinator</strong>
+
+                            }
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <label for="name">@Coordinator.SchoolName</label>
+                                @Html.TextBoxFor(m => m.school.SchoolName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.school.SchoolName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">@Coordinator.Region</label>
+                                @Html.DropDownListFor(m => m.school.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.school.Region, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group"> 
+                                <label for="country">@Coordinator.City</label>
+                                @Html.DropDownListFor(m => m.school.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control", onchange = "channge(this)" })
+                                @Html.ValidationMessageFor(m => m.school.City, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label for="phone",@maxlength = 10 >@Coordinator.District</label>
+                                @Html.TextBoxFor(m => m.school.District, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.school.District, "", new { @class = "text-danger" })
+
+                            </div>
+
+                           
+
+                            @*@if (Model == null || Model.Id == 0)
+                            {*@
+                                <div class="form-group">
+                                    <label for="email">@General.Email</label>
+                                    @Html.TextBoxFor(m => m.CoordinatorEmail, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.CoordinatorEmail, "", new { @class = "text-danger" })
+                                    @if (ViewBag.EmailExist != null)
+                                    {
+                                        <span class="text-danger field-validation-error" data-valmsg-for="FunderEmail" data-valmsg-replace="true"><span for="FunderEmail" class="">@General.EmailExist</span></span>
+                                    }
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">@Coordinator.Password</label>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+
+                            @*}
+                            else
+                            {
+                                <div class="form-group">
+                                    <label for="email">@General.Email</label>
+                                    @Html.TextBoxFor(m => m.CoordinatorEmail, new { @class = "form-control", @disabled = "disabled" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">@Coordinator.Password</label>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password,@disabled="disabled" })
+                                    
+                                </div>
+                            }*@
+                           
+
+
+                            <div class="form-group">
+                                    <label for="active">@General.Active</label>
+                                    <label class="switch switch-icon switch-pill switch-success mt-2">
+                                        @Html.CheckBoxFor(Model => Model.IsActive, new { @class = "switch-input", @id = "active" })
+                                        <span class="switch-label" data-on="" data-off=""></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                </div>
+                            @if (Model.school != null && Model.school.Status != "Initial" && Model.school.DocumentPath != null && cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                            {
+                                <div class="form-group">
+                                    <label>@Coordinator.UploadDocument</label>
+                                    <b>
+                                        <label class="form-control" style="border: none">
+                                            <a href="@(Model.school == null ? "" : Model.school.DocumentPath.Replace("~", ""))" download>@Coordinator.UploadDocument</a>
+                                        </label>
+                                    </b>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>@Coordinator.ShowProfile</label>
+                                    <b><label class="form-control" style="border: none">
+                                        <a href="@Url.Action("Register", new {id = Model.RowGuid,completemsg = false})"> @Coordinator.ShowProfile</a>
+                                    </label>
+                                    </b>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label>@Coordinator.ShowCordProfile</label>
+                                    <b>
+                                        <label class="form-control" style="border: none">
+                                            <a href="@Url.Action("CoordinatorProfile", new {id = Model.RowGuid,completemsg = false})"> @Coordinator.ShowCordProfile</a>
+                                        </label>
+                                    </b>
+
+                                </div>
+                            }
+
+                      
+                            @if (Model != null && Model.Id > 0)
+                            {
+                                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                            }
+                        </div>             <div class="card-footer">
+                            @if (Model.school != null && Model.school.Status == "Pending" && Model.school.DocumentPath != null)
+                            {
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" value="approved"><i class="fa fa-dot-circle-o"></i> @Coordinator.Approved</button>
+
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @Coordinator.Submit</button>
+
+                            }
+                        </div>
+                   </div>
+                   
+                }
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    function channge(obj) {
+        //$.get("/Home/ChnageCity",
+        //    function(res) {
+
+        //    });
+        var val = $(obj).val();
+        $.get("/Home/GetDistrict/" + val,
+            function (res) {
+                $("#@Html.IdFor(x=>x.school.Region)").val(res);
+            });
+
+    }
+    var isCoordinator = "@(cu.EnumRole == TmsWebApp.Common.EnumUserRole.Coordinator)";
+    if (isCoordinator == "True")
+    {
+        $("#@Html.IdFor(x=>x.school.SchoolName), #@Html.IdFor(x=>x.school.City), #@Html.IdFor(x => x.school.District), #@Html.IdFor(x => x.school.Region)").attr('disabled', 'disabled');
+    }
+
+</script>

@@ -1,0 +1,233 @@
+﻿@using TranningWebApp.Resource
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    var chart;
+    var data2;
+    function DownloadReport() {
+        var fileHex = chart.getImageURI();
+        if (fileHex.length == 0)
+            return;
+        var mydata = "@Reports.Month: @Reports.Total: @Reports.Occured; @Reports.Jan:" + data2.JanTotalCount + ":" + data2.JanCountApproved + ";@Reports.Feb:" + data2.FebTotalCount + ":" + data2.FebCountApproved + ";@Reports.March :" + data2.MarchTotalCount + ":" + data2.MarchCountApproved + ";@Reports.April:" + data2.AprilTotalCount + ":" + data2.AprilCountApproved + ";@Reports.May:" + data2.MayTotalCount + ":" +
+        data2.MayCountApproved + ";@Reports.June:" + data2.JuneTotalCount + ":" + data2.JuneCountApproved + ";@Reports.July:" + data2.JulyTotalCount + ":" + data2.JulyCountApproved + ";@Reports.Aug:" + data2.AugTotalCount + ":" + data2.AugCountApproved + ";@Reports.Sept:" + data2.SeptTotalCount + ":" + data2.SeptCountApproved + "; @Reports.Oct:" + data2.OctTotalCount + ":" + data2.OctCountApproved + ";@Reports.Nov:" + data2.NovTotalCount + ":" +
+        data2.NovCountApproved + "; @Reports.Dec:" + data2.DecTotalCount + ":" + data2.DecCountApproved;
+        var dateSelected = $("#YearSelected").val();
+        var d = new Date(dateSelected);
+        var yy = d.getFullYear();
+        var prefix = '%%{ Report: @Reports.TotalCoursesbyYear }{ Year : ' + yy + ' }{' + mydata + '  }%%';
+        $.ajax({
+            type: 'POST',
+            url: '/Report/GeneratePdf',
+            data: { 'graphString': prefix + fileHex },
+
+            success: function (pdfPath) {
+                window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+            }
+        });
+
+
+
+    }
+        function GenerateReport()
+        {
+            var yearselected = $("#YearSelected").val();
+
+            $.post("@Url.Action("GetTotalCourseByYearData", "Report")",
+                {
+                    SelectYear: yearselected,
+
+                },
+                function (data1, status) {
+                    if (data1.length == 0) {
+                        document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                        return;
+                    }
+                    data2 = data1;
+                    $("#janT").text(data1.JanTotalCount);
+                    $("#jan").text(data1.JanCountApproved);
+                    $("#FebT").text(data1.FebTotalCount);
+                    $("#Feb").text(data1.FebCountApproved);
+                    $("#MarchT").text(data1.MarchTotalCount);
+                    $("#March").text(data1.MarchCountApproved);
+                    $("#AprilT").text(data1.AprilTotalCount);
+                    $("#April").text(data1.AprilCountApproved);
+                    $("#MayT").text(data1.MayTotalCount);
+                    $("#May").text(data1.MayCountApproved);
+                    $("#JuneT").text(data1.JuneTotalCount);
+                    $("#June").text(data1.JuneCountApproved);
+                    $("#JulyT").text(data1.JulyTotalCount);
+                    $("#July").text(data1.JulyCountApproved);
+                    $("#AugT").text(data1.AugTotalCount);
+                    $("#Aug").text(data1.AugCountApproved);
+                    $("#SeptT").text(data1.SeptTotalCount);
+                    $("#Sept").text(data1.SeptCountApproved);
+                    $("#NovT").text(data1.NovTotalCount);
+                    $("#Nov").text(data1.NovCountApproved);
+                    $("#OctT").text(data1.OctTotalCount);
+                    $("#Oct").text(data1.OctCountApproved);
+                    $("#DecT").text(data1.DecTotalCount);
+                    $("#Dec").text(data1.DecCountApproved);
+                    google.charts.load('current', { 'packages': ['corechart'] });
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['@Reports.Month', '@Reports.Total', '@Reports.Occured'],
+                            ['@Reports.Jan', data1.JanTotalCount, data1.JanCountApproved],
+                            ['@Reports.Feb', data1.FebTotalCount, data1.FebCountApproved],
+                            ['@Reports.March', data1.MarchTotalCount, data1.MarchCountApproved],
+                            ['@Reports.April', data1.AprilTotalCount, data1.AprilCountApproved],
+                            ['@Reports.May', data1.MayTotalCount, data1.MayCountApproved],
+                            ['@Reports.June', data1.JuneTotalCount, data1.JuneCountApproved],
+                            ['@Reports.July', data1.JulyTotalCount, data1.JulyCountApproved],
+                            ['@Reports.Aug', data1.AugTotalCount, data1.AugCountApproved],
+                            ['@Reports.Sept', data1.SeptTotalCount, data1.SeptCountApproved],
+                            ['@Reports.Nov', data1.NovTotalCount, data1.NovCountApproved],
+                            ['@Reports.Oct', data1.OctTotalCount, data1.OctCountApproved],
+                            ['@Reports.Dec', data1.DecTotalCount, data1.DecCountApproved]
+                        ]);
+
+                        var options = {
+                            title: '',
+                            curveType: 'function',
+                            legend: { position: 'bottom' }
+                        };
+
+                        chart = new google.visualization.LineChart(document.getElementById('School_Reports'));
+
+
+                        chart.draw(data, options);
+                    }
+                });
+    }
+</script>
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+                
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.SelectYear</label>
+                                    <input type="text" id="YearSelected" class="form-control date"  dateFormat="yyyy">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                   
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF"  onclick="DownloadReport()"  value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+                                 @*<button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>*@
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+                            <h3><u>@Reports.TotalCoursesbyYear</u></h3>
+                            <br>
+                            <table class="table table-hover table-outline mb-0">
+
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th>@Reports.Month</th>
+                                        <th>@Reports.Total</th>
+                                        <th>@Reports.Occured</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Reports.Jan</td>
+                                        <td><span id="janT"></span></td>
+                                        <td><span id="jan"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Feb</td>
+                                        <td><span id="FebT"></span></td>
+                                        <td><span id="Feb"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.March</td>
+                                        <td><span id="MarchT"></span></td>
+                                        <td><span id="March"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.April</td>
+                                        <td><span id="AprilT"></span></td>
+                                        <td><span id="April"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.May</td>
+                                        <td><span id="MayT"></span></td>
+                                        <td><span id="May"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.June</td>
+                                        <td><span id="JuneT"></span></td>
+                                        <td><span id="June"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.July</td>
+                                        <td><span id="JulyT"></span></td>
+                                        <td><span id="July"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Aug</td>
+                                        <td><span id="AugT"></span></td>
+                                        <td><span id="Aug"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Sept</td>
+                                        <td><span id="SeptT"></span></td>
+                                        <td><span id="Sept"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Nov</td>
+                                        <td><span id="NovT"></span></td>
+                                        <td><span id="Nov"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Oct</td>
+                                        <td><span id="OctT"></span></td>
+                                        <td><span id="Oct"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Dec</td>
+                                        <td><span id="DecT"></span></td>
+                                        <td><span id="Dec"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>  
+
+                            <hr>
+
+                            <div style="color:red;"  id="School_Reports"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+ 
+            </div>
+        </div>
+    </div>
+</main>

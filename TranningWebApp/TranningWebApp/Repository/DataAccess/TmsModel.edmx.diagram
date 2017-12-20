@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d90dccb920054770912a3b295f622b22" Name="Diagram1" ZoomLevel="27">
+        <EntityTypeShape EntityType="TrainingProjectModel.admin_user" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.coordinator_profile" Width="1.5" PointX="7.5" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.lk_country" Width="1.5" PointX="3" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.lk_role" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.orientation_training" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.participant_profile" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.school" Width="1.5" PointX="5.25" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session_evaluationform_photo" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session_evaluationform_result" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session_photo" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.sysdiagram" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingProjectModel.volunteer_profile" Width="1.5" PointX="9.875" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="TrainingProjectModel.FK_adminuser_lk_role" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainingProjectModel.FK_user_lk_role" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainingProjectModel.FK_coordinator_profile_school" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_school" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_volunteer_profile" />
+        <AssociationConnector Association="TrainingProjectModel.FK_participant_profile_school" />
+        <AssociationConnector Association="TrainingProjectModel.FK_orientation_training_school" />
+        <AssociationConnector Association="TrainingProjectModel.FK_orientation_training_session" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_evaluationform_photo_session" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_photo_session" />
+        <AssociationConnector Association="TrainingProjectModel.FK_volunteer_profile_orientation_training" />
+        <EntityTypeShape EntityType="TrainingProjectModel.certificate" Width="1.5" PointX="5.375" PointY="10.375" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_certificate" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_certificate1" />
+        <AssociationConnector Association="TrainingProjectModel.FK_coordinator_profile_school1" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_cp_post" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_murshadee_after" Width="1.5" PointX="16.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_murshadee_before" Width="1.5" PointX="16.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_safeer_post" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_syc_post_part1" Width="1.5" PointX="20.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_syc_post_part2" Width="1.5" PointX="22.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_syc_pre_part1" Width="1.5" PointX="24.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_syc_pre_part2" Width="1.5" PointX="26.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.lk_city" Width="1.5" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.lk_evaluation_form" Width="1.5" PointX="28.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_cp_pre" Width="1.5" PointX="0.75" PointY="28.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.user" Width="1.5" PointX="3" PointY="29.25" />
+        <AssociationConnector Association="TrainingProjectModel.FK_coordinator_profile_user" />
+        <AssociationConnector Association="TrainingProjectModel.FK_user_lk_role1" />
+        <AssociationConnector Association="TrainingProjectModel.FK_participant_profile_user" />
+        <AssociationConnector Association="TrainingProjectModel.FK_school_user" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_safeer_pre" Width="1.5" PointX="28.625" PointY="3.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session_participant" Width="1.5" PointX="7.75" PointY="6.5" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_participant_participant_profile" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_participant_session" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_pf_post" Width="1.5" PointX="28.375" PointY="24.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_pf_pre" Width="1.5" PointX="14.375" PointY="29.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_volunteer_coordinator" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_coordinator" Width="1.5" PointX="30.375" PointY="24.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.evaluation_volunteer" Width="1.5" PointX="31.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TrainingProjectModel.funder_profile" Width="1.5" PointX="8.25" PointY="32.625" />
+        <AssociationConnector Association="TrainingProjectModel.FK_funder_profile_lu_country" />
+        <AssociationConnector Association="TrainingProjectModel.FK_funder_profile_user" />
+        <AssociationConnector Association="TrainingProjectModel.FK_volunteer_profile_user" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session_time" Width="1.5" PointX="5" PointY="17.25" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_time_session" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

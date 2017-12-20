@@ -1,0 +1,166 @@
+﻿@using TranningWebApp.Resource
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        var chart;
+        var data2;
+            function DownloadReport() {
+                var fileHex = chart.getImageURI();
+                if (fileHex.length == 0)
+                    return;
+
+                var YearSelect = $("#SelectedYear").val();
+                var d = new Date(YearSelect);
+                var yy = d.getFullYear();
+
+                var mydata = "@Reports.Status : @Reports.NumberofCourses; @Reports.Submitted:" + data2.SubmittedCount + "; @Reports.OutStanding:" + data2.OutStandingCount + "; @Reports.DateChanged :" + data2.DateChangedCount;
+
+                var prefix = '%%{ Report: @Reports.TotalCourses}{ Year : ' + yy + ' }{ ' + mydata + ' }%%';
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Report/GeneratePdf',
+                    data: { 'graphString': prefix + fileHex },
+
+            success: function (pdfPath) {
+                window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+            }
+        });
+
+    }
+
+
+        function GenerateReport() {
+            var YearSelect = $("#SelectedYear").val();
+
+            $.post("@Url.Action("GetTotalCourseData", "Report")",
+                {
+                    YearSelected: YearSelect
+                },
+                function (data1, status) {
+                    if (data1.length == 0) {
+                        document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                        return;
+                    }
+                    data2 = data1;
+
+                    $("#Submitted").text(data1.SubmittedCount);
+                    $("#Out-Standing").text(data1.OutStandingCount);
+                    $("#Date-Changed").text(data1.DateChangedCount);
+                    google.charts.load('current', { packages: ['corechart', 'bar'] });
+                    google.charts.setOnLoadCallback(drawBasic);
+
+                    function drawBasic() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['@Reports.Status', '@Reports.NumberofCourses', { role: 'style' }],
+                            ['@Reports.Submitted', data1.SubmittedCount, '#7f6084'],
+                            ['@Reports.OutStanding', data1.OutStandingCount, '#c24642'],
+                            ['@Reports.DateChanged', data1.DateChangedCount, '#369ead']
+                        ]);
+
+                        var options = {
+                            title: "",
+                            width: 800,
+                            height: 500,
+                            bar: { groupWidth: "40%" },
+                            legend: { position: 'none' }
+                        };
+                        chart = new google.visualization.BarChart(document.getElementById('School_Reports'));
+
+                        chart.draw(data, options);
+                    }
+                });
+            }
+</script>
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+
+                            @*<div class="row">*@
+                                @*<div class="form-group col-sm-6">
+
+                                    <label>Select Year</label>
+                                    <select>
+                                       @{DateTime start =new DateTime(2000, 1, 1);}
+                                        @{DateTime end = new DateTime(2050, 1, 1);}
+                                        @for (DateTime x = start; x.Year < end.Year; x = x.AddYears(1) ) 
+                                        {
+                                            <option id="SelectedYear" value="@x.Year">@x.Year</option>
+                                        }
+                                  </select>
+                                </div>*@
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label style="width: 100%">@Reports.SelectYear</label>
+                                        <input type="text" id="SelectedYear" class="form-control date">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF"  onclick="DownloadReport()"  value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+                      
+                        <h3><u>@Reports.CoursesDetail</u></h3>
+                        <br>
+                        <table class="table table-hover table-outline mb-0">
+
+                            <thead class="thead-default">
+                                <tr>
+                                    <th>@Reports.Status</th>
+                                    <th>@Reports.NumberofCourses</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Reports.Submitted</td>
+                                    <td><span id="Submitted"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>@Reports.OutStanding</td>
+                                    <td><span id="Out-Standing"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>@Reports.DateChanged</td>
+                                    <td><span id="Date-Changed"></span></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                            <hr>
+
+                            <div style="color:red;"  id="School_Reports"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

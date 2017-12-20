@@ -1,0 +1,27 @@
+﻿
+@model TmsWebApp.Models.EmailTemplateModel
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.FunderName</b>
+    <br />
+    <br />
+    Please update your details in registration form<br />
+    <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
+    <br />
+    User : <b>@Model.UserName</b>
+    <br />
+    Password : <b>@Model.Password</b>
+    <br />
+    <br />
+    Regards
+    <br />
+    Administrator
+    <br />
+    @Model.User
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
+
+</div>

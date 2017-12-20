@@ -1,0 +1,96 @@
+﻿@using TranningWebApp.Resource
+@model PagedList.IPagedList<TranningWebApp.Repository.DataAccess.participant_profile>
+
+@{
+    ViewBag.Title = "Layout";
+}
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        </li>
+        <li class="breadcrumb-item active">@Participant.ParticipantLabel</li>
+        <!-- Breadcrumb Menu-->
+        @*<li class="breadcrumb-menu">
+            <div class="btn-group" role="group">
+                <a class="btn btn-primary" href="@Url.Action("Edit")"><i class="icon-plus"></i> @Participant.AddnewParticipant</a>
+            </div>
+        </li>*@
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="input-group global-search">
+                    <input type="text" name="global-search" class="form-control" id="search"placeholder="@General.Search" value="@ViewBag.searchQuery">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                        <tr>
+                            <th class="text-center">
+                                <i class="icon-people"></i>
+                            </th>
+                            <th>@Participant.NationalId <i class="fa fa-sort"></i></th>
+                            <th>@Participant.Name</th>
+                            <th>@General.MobileNo</th>
+                            <th>@General.Email</th>
+                            <th>@Coordinator.City</th>
+                            <th>@Coordinator.SchoolName</th>
+                            <th>@Supervisor.VolunteerName</th>
+                            <th>@SessionX.Session</th>
+                            <th>@Participant.Status <i class="fa fa-sort-down"></i></th>
+                            <th>@General.EditDetails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.Count > 0) {
+                            foreach (var item in Model.ToList())
+                            {
+                            <tr>
+                                <td class="text-center">
+                                    <div class="avatar">
+                                        <img src="~/img/avatars/participant.png" class="img-avatar">
+                                    </div>
+                                </td>
+                                <td>@item.NationalID</td>
+                                <td>@(item.Name + " " + item.FatherName + " " + item.Family)</td>
+                                <td>@item.Mobile</td>
+                                <td>@item.Email</td>
+                                <td>@item.City</td>
+                                <td>@(item.school != null ? item.school.SchoolName : "")</td>
+                                <td>@(item.session_participant.Count > 0 ? item.session_participant.Select(x => x.session).Last().volunteer_profile.VolunteerName : "")</td>
+
+                                <td>@(item.session_participant.Count > 0 ? item.session_participant.Select(x => x.session).Last().ProgramName : "")</td>
+                           
+                                @if (item.isActive)
+                                {
+                                    <td><span class="badge badge-success">@Participant.Active</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="badge badge-default">@Participant.Inactive</span></td>
+
+                                }
+                                <td><a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a> <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a></td>
+                            </tr>
+                        }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td colspan="7" align="center"> @General.Norecordfound</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.Partial("_Pagination", new TmsWebApp.Models.PageViewModel { CurrentPage = Model.PageNumber, TotalRecords = (int)ViewBag.Count })
+            </div>
+        </div>
+    </div>
+</main>

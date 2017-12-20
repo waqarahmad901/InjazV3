@@ -1,0 +1,81 @@
+﻿@using TmsWebApp.Common
+@using TranningWebApp.Resource
+@model System.Collections.Generic.IEnumerable<TranningWebApp.Repository.DataAccess.session>
+ 
+
+<style type="text/css">
+    .badge-ready {
+        background-color: #EF6A1B;
+    }
+</style>
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@ViewBag.schoolname</li>
+        
+        <!-- Breadcrumb Menu-->
+ 
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+              
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                    <tr> 
+                        <th class="text-center">
+                                <i class="icon-people"></i>
+                            </th>
+                       
+                        <th>@SessionX.ProgramName</th> 
+                        <th>@SessionX.RequestedDate</th> 
+                        <th>@General.CoordinatorEvaluation </th>
+                        <th>@General.VolunteerEvaluation </th>
+                        <th>@General.Noofparticipants </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(Model.Count() > 0)
+                    { foreach (var item in Model)
+                        {
+                        <tr> 
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                </div>
+                            </td>
+                            <td>@item.ProgramName</td> 
+                            <td>@(item.ActualDateTime != null ? item.ActualDateTime.Value.ToString("dd/MM/yyyy") : "")</td> 
+                            <td><a href="@Url.Action("CoordinatorForm","EvaluationForm", new {sessionId = item.Id})">@General.ViewResult</a></td>
+                            <td><a href="@Url.Action("VolenteerForm","EvaluationForm", new {sessionId = item.Id})">@General.ViewResult</a></td>
+
+                              
+                            <td>@(item.session_participant?.Count ?? 0)</td>
+                             @if ((item.session_participant?.Count ?? 0) > 0)
+                             {
+                                 <td>
+                                     <a href="@Url.Action("ParticipantDetail", new {id = item.RowGUID})" title="Edit"><i class="fa fa-pencil"></i></a>
+
+                                 </td>
+                             }
+                             else
+                             { <td></td>}
+                        </tr>
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" align="center"> @General.Norecordfound</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

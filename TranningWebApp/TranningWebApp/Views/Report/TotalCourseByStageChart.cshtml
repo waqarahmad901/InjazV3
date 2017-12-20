@@ -1,0 +1,157 @@
+﻿@model TranningWebApp.Models.GeneralReportModel
+@using TranningWebApp.Resource
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    var chart;
+    var data2;
+    function DownloadReport() {
+        var fileHex = chart.getImageURI();
+        if (fileHex.length == 0)
+            return;
+
+        var datefrom = $("#DateFrom").val();
+        var dateto = $("#DateTo").val();
+
+        var mydata = "@Reports.Stages : @Reports.NumberofCourses; @Reports.Secondary:" + data2.SecondaryCount + "; @Reports.Middle:" + data2.MiddleCount + "; @Reports.Primary :" + data2.PrimaryCount;   
+        var prefix = '%%{ Report: @Reports.TotalCoursesbyStages }{   @Reports.DateFrom : ' + datefrom + '   @Reports.DateTo  ' +  dateto + '}{ ' + mydata + ' }%%';
+        $.ajax({
+            type: 'POST',
+            url: '/Report/GeneratePdf',
+            data: { 'graphString': prefix + fileHex },
+
+            success: function (pdfPath) {
+                window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+            }
+        });
+
+    }
+        function GenerateReport()
+        {
+            var datefrom = $("#DateFrom").val();
+            var dateto = $("#DateTo").val();
+
+            $.post("@Url.Action("GetTotalCourseByStageData", "Report")",
+                {
+                    datefrom: datefrom,
+                    dateto: dateto,
+
+                },
+                function (data1, status) {
+                    data2 = data1;
+                    if (data1.length == 0) {
+                        document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                        return;
+                    }
+
+                    $("#Secondary").text(data1.SecondaryCount);
+                    $("#Middle").text(data1.MiddleCount);
+                    $("#Primary").text(data1.PrimaryCount);
+                    google.charts.load('current', { packages: ['corechart', 'bar'] });
+                    google.charts.setOnLoadCallback(drawBasic);
+
+
+                    function drawBasic() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['@Reports.Stages', '@Reports.NumberofCourses', { role: 'style' }],
+                            ['@Reports.Secondary', data1.SecondaryCount, '#7f6084'],
+                            ['@Reports.Middle', data1.MiddleCount, '#c24642'],
+                            ['@Reports.Primary', data1.PrimaryCount, '#369ead']
+                        ]);
+
+                        var options = {
+                            title: "",
+                            width: 800,
+                            height: 500,
+                            bar: { groupWidth: "40%" },
+                            legend: { position: 'none' }
+
+
+                        };
+
+
+                        chart = new google.visualization.BarChart(document.getElementById('School_Reports'));
+
+                        chart.draw(data, options);
+                    }
+                });
+    }
+</script>
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.DateFrom</label>
+                                    <input type="text" id="DateFrom" class="form-control date">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.DateTo</label>
+                                    <input type="text" id="DateTo" class="form-control date">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF"  onclick="DownloadReport()"  value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+                            <h3><u>@Reports.TotalCoursesbyStages</u></h3>
+                            <br>
+                            <table class="table table-hover table-outline mb-0">
+
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th>@Reports.Stages</th>
+                                        <th>@Reports.NumberofCourses</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Reports.Secondary</td>
+                                        <td><span id="Secondary"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Middle</td>
+                                        <td><span id="Middle"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Primary</td>
+                                        <td><span id="Primary"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>  
+                            <hr>
+
+                            <div  style="color:red;" id="School_Reports"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

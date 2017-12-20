@@ -1,0 +1,340 @@
+﻿@model TranningWebApp.Repository.DataAccess.coordinator_profile
+@using TranningWebApp.Resource
+@{
+    string lan = "en";
+    string dir = "ltr";
+    if (Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar")
+    {
+        lan = "ar";
+        dir = "rtl";
+
+    }
+    Layout = null;
+    string imagePath = Model.school.PhotoPath != null ? Model.school.PhotoPath.Replace("~", "") : null;
+    bool msg = Request.QueryString["completemsg"] == "Fasle";
+}
+ 
+<!DOCTYPE html>
+<html  lang="@lan" dir="@dir">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Injaz</title>
+    <!-- Icons -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application -->
+    <link href='~/Content/fullcalendar.css' rel='stylesheet' />
+    <link href="~/Content/simplePagination.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/cust-style.css" rel="stylesheet" />
+    <link href="~/Scripts/dropzone/basic.min.css" rel="stylesheet" />
+    <link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
+    <link href="~/Content/remodal.css" rel="stylesheet" />
+    <link href="~/Content/jquery.calendars.picker.css" rel="stylesheet" />
+    <link href="~/Content/intlTelInput.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet">
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <script src='~/Scripts/moment.min.js'></script>
+    <script src="~/Scripts/fullcalendar.min.js"></script>
+    <script src="~/Scripts/jquery.simplePagination.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/dropzone/dropzone.min.js"></script>
+    <script src="~/Scripts/remodal.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.plus.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.islamic.js"></script>
+    <script src="~/Scripts/clander/jquery.plugin.js"></script>
+    <script src="~/Scripts/clander/jquery.calendars.picker.js"></script>
+    <script src="~/Scripts/clander/date.conversion.js"></script>
+
+    <script src="~/Scripts/data.js"></script>
+
+    <script src="~/Scripts/intlTelInput.js"></script>
+    <script src="~/Scripts/bootstrap-filestyle.min.js"></script>
+
+</head>
+
+
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+    <header class="app-header navbar">
+        <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">☰</button>
+        <a class="navbar-brand" href="#"></a>
+        <ul class="nav navbar-nav ml-auto px-3" style="margin-left : 100px"> 
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-language"></i>
+                </a>
+                @if (lan == "ar")
+                {
+                <div class="dropdown-menu  dropdown-menu-left">
+         
+                    <a class="dropdown-item  @(lan == "en" ? "hover" : "") " href="@Url.Action("ChangeLanguage", "Home", new { lan = "en" })">English</a>
+                    <a class="dropdown-item  @(lan == "ar" ? "hover" : "") " href="@Url.Action("ChangeLanguage", "Home", new { lan = "ar" })">العربیہ</a>
+                </div>
+                }
+                else
+                {
+                    <div class="dropdown-menu  dropdown-menu-right">
+
+                        <a class="dropdown-item  @(lan == "en" ? "hover" : "") " href="@Url.Action("ChangeLanguage", "Home", new { lan = "en" })">English</a>
+                        <a class="dropdown-item  @(lan == "ar" ? "hover" : "") " href="@Url.Action("ChangeLanguage", "Home", new { lan = "ar" })">العربیہ</a>
+                    </div>
+                }
+            </li>
+        </ul>
+    </header>
+
+    <main class="main" style="margin-left:0px">
+
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">@General.Home</li>
+            <li class="breadcrumb-item">@Coordinator.SchoolCoordinator</li>
+            </li>
+            <li class="breadcrumb-item active">@Coordinator.Registeration</li>
+
+        </ol>
+
+        <div class="container-fluid">
+            <div class="animated fadeIn">
+
+                @using (Html.BeginForm("Register", "Coordinator", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+
+                    if (ViewBag.CompleteFirstTime != null)
+                    {
+                        <div class="col-sm-12">
+
+                            <div class="card" style="border:1px solid red">
+
+                                <div class="card-block">
+                                    <label>@Coordinator.cordErrorMsg</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-header">
+                                @if (Model.IsRegisterComplete != null && Model.IsRegisterComplete.Value)
+                                {
+                                    <strong class="text-primary"><i class="icon-plus"></i> @Coordinator.schoolregisterationdetail</strong>
+
+                                }
+                                else
+                                {
+                                    <strong class="text-primary"><i class="icon-plus"></i> @Coordinator.Completeregisterationform</strong>
+                                }
+                            </div>
+                            <div class="card-block">
+
+                                <div class="form-group">
+                                    <label>@Coordinator.Telephone</label>
+                                    @Html.TextBoxFor(m => m.school.Telephone, new { @class = "form-control phone",@maxlength = 10  })
+                                    @Html.ValidationMessageFor(m => m.school.Telephone, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>@Coordinator.Fax</label>
+                                    @Html.TextBoxFor(m => m.school.Fax, new { @class = "form-control phone",@maxlength = 10  })
+                                    @Html.ValidationMessageFor(m => m.school.Fax, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>@Coordinator.SchoolID</label>
+                                    @Html.TextBoxFor(m => m.school.SchoolID, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.school.SchoolID, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>@Coordinator.SchoolWebsite</label>
+                                    @Html.TextBoxFor(m => m.school.Website, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.school.Website, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>@Coordinator.SchoolGeoLocation</label>
+                                    @Html.TextBoxFor(m => m.school.SchoolGeoLocation, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.school.SchoolGeoLocation, "", new { @class = "text-danger" })
+                                </div>
+
+                                @*<div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label style="width: 100%">@Coordinator.SchoolGeoLocation</label>
+                                        <label style="font-style: italic">@Coordinator.Latitude </label>
+                                        @Html.TextBoxFor(m => m.school.Lat, new { @class = "form-control", @maxlength = 11 })
+                                        @Html.ValidationMessageFor(m => m.school.Lat, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                        <label style="width: 100%"></label>
+                                        <label style="font-style: italic">@Coordinator.Longitude</label>
+                                        @Html.TextBoxFor(m => m.school.Lng, new { @class = "form-control", @style = "margin-top:3px", @maxlength = 11 })
+                                        @Html.ValidationMessageFor(m => m.school.Lng, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+
+                                <div class="form-group">
+                                    <label>@Coordinator.Photo</label>
+                                    <input type="file" name="file" id="profile-img" onchange='ValidateSingleInput(this,[".jpg", ".jpeg", ".bmp", ".gif", ".png"])' />
+                                    <hr>
+                                    <img src="@imagePath" id="profile-img-tag" width="150px" height="150px" />
+
+                                    <script type="text/javascript">
+                                        function readURL(input) {
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
+
+                                                reader.onload = function (e) {
+                                                    $('#profile-img-tag').attr('src', e.target.result);
+                                                }
+                                                reader.readAsDataURL(input.files[0]);
+                                            }
+                                        }
+                                        $("#profile-img").change(function () {
+                                            readURL(this);
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                    <label>@Coordinator.Document</label>
+                                    <input type="file" name="file" class="form-control coorddocument" onchange="ValidateSingleInput(this,['.pdf','.docx'])">
+                                    @if (ViewBag.NeedFile != null)
+                                    {
+                                        <span class="text-danger field-validation-error" data-valmsg-for="FunderEmail" data-valmsg-replace="true"><span for="FunderEmail" class="">Please upload document</span></span>
+                                    }
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                        <div class="col-sm-6">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong class="text-primary">@Coordinator.Contactdetails</strong>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolManagerName</label>
+                                        @Html.TextBoxFor(m => m.school.SchoolManagerName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.school.SchoolManagerName, "", new { @class = "text-danger" })
+
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolManagerEmail</label>
+                                        @Html.TextBoxFor(m => m.school.SchoolManagerEmailAddress, new { @class = "form-control" })
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolManagerMobile</label>
+                                        @Html.TextBoxFor(m => m.school.SchoolManagerMobile, new { @class = "form-control phone",@maxlength = 10  })
+                                        @Html.ValidationMessageFor(m => m.school.SchoolManagerMobile, "", new { @class = "text-danger" })
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@Coordinator.StageOfSchool</label>
+                                        @Html.DropDownListFor(m => m.school.StageOfSchool, (List<SelectListItem>)ViewBag.stageofschooldd, new { @class = "form-control" })
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@Coordinator.TypeOfSchool</label>
+                                        @Html.DropDownListFor(m => m.school.TypeOfSchool, (List<SelectListItem>)ViewBag.typesofschooldd, new { @class = "form-control" })
+
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolGuardName</label>
+                                        @Html.TextBoxFor(m => m.school.SchoolGuardName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.school.SchoolGuardName, "", new { @class = "text-danger" })
+
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolGuardMobile</label>
+                                        @Html.TextBoxFor(m => m.school.SchoolGuardMobile, new { @class = "form-control phone",@maxlength = 10  })
+                                        @Html.ValidationMessageFor(m => m.school.SchoolGuardMobile, "", new { @class = "text-danger" })
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolGoogleAccount</label>
+                                        @Html.TextBoxFor(m => m.school.GoogleAddress, new { @class = "form-control" })
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolLinkedinAccount</label>
+                                        @Html.TextBoxFor(m => m.school.LinkedInAddress, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolFaceBook</label>
+                                        @Html.TextBoxFor(m => m.school.FaceBook, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@Coordinator.SchoolYouTube</label>
+                                        @Html.TextBoxFor(m => m.school.YouTube, new { @class = "form-control" })
+                                    </div>
+
+                                    <!-- <div class="form-group">
+                                        <label for="active">Active</label>
+                                        <label class="switch switch-icon switch-pill switch-success mt-2">
+                                            <input type="checkbox" class="switch-input" checked="" id="active">
+                                            <span class="switch-label" data-on="" data-off=""></span>
+                                            <span class="switch-handle"></span>
+                                        </label>
+                                    </div> -->
+                                    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @Coordinator.Submit</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                }
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer" style="margin-left:0">
+        <p class="text-muted">@General.Copyright</p>
+    </footer>
+
+    <script src="~/Scripts/app.js"></script>
+    <script type="text/javascript">
+
+        if ("@Model.IsRegisterComplete" === "True") {
+            $('button').hide();
+            $('input,select').attr("disabled", "disabled");
+        }
+
+        $(":file").filestyle({
+            text: '@General.Choosefile'
+        });
+         
+    </script>
+</body>
+</html>

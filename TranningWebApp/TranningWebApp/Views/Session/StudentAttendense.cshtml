@@ -1,0 +1,66 @@
+﻿@model List<TranningWebApp.Repository.DataAccess.participant_profile>
+@using TranningWebApp.Resource
+@{
+    ViewBag.Title = "StudentAttendense";
+    string sessionId = Request.QueryString["sessionId"];
+}
+<script type="text/javascript">
+
+    function checkAllClick() {
+        if (document.getElementById('checkall').checked) {
+            $('.check').prop('checked', true);
+        } else {
+            $('.check').prop('checked', false);
+        }
+    }
+
+</script>
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Participant.ParticipantLabel</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="col-sm-6">
+                @using (Html.BeginForm("StudentAttendense", "Session", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <input type="checkbox" onclick="checkAllClick()" id="checkall" style="margin-right:5px"/>
+                            <strong class="text-primary">@SessionX.MarkStudentAttendense</strong>
+                        </div>
+                        <div class="card-block">
+                            @for(int i = 0; i< Model.Count; i++ )
+                            { 
+                            <div class="form-group">
+                               @Html.CheckBoxFor(x=>Model[i].IsSelected, new { @style = "margin-top:5px", @class = "check" })
+                               <label style="margin-left:10px">@(Model[i].Name + " "+ Model[i].FatherName + " " + Model[i].Family)</label>
+                            </div>
+                            @Html.HiddenFor(x=> Model[i].Id)
+                            }
+                        </div>
+                        <input type="hidden" name="sessionid" value="@sessionId" />
+                        <div class="card-footer">
+                            @if (Model.Count == 0)
+                            {
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" disabled><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
+
+                            }
+                            else
+                            {
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
+                            }
+                        </div>
+                        
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,141 @@
+﻿.input-validation-error {
+  padding-right: 3rem;
+  background-repeat: no-repeat;
+  background-position: center right 0.52344rem;
+  background-size: 1.04688rem 1.04688rem; 
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f86c6b' viewBox='-2 -2 7 7'%3E%3Cpath stroke='%23f86c6b' d='M0 0l3 3m0-3L0 3'/%3E%3Ccircle r='.5'/%3E%3Ccircle cx='3' r='.5'/%3E%3Ccircle cy='3' r='.5'/%3E%3Ccircle cx='3' cy='3' r='.5'/%3E%3C/svg%3E");
+  border-color: rgba(255, 0, 0, 0.5) !important;
+}
+label + .input-validation-error {
+  color: red;
+}
+.comment-box{
+    display:none;
+}
+
+.dropzone {
+        background: gray;
+        border: black dashed 3px;
+        width: 200px;
+        padding: 50px;
+        text-align: center;
+        color: white;
+    }
+
+.calendars,.calendars-month {
+    width:260px !important;
+}
+    .calendars-month td .calendars-other-month {
+        background-color:transparent !important;
+    }
+
+    
+
+.intl-tel-input {
+    width: 100% !important;
+}
+.calendars-month td {
+    padding : 0em !important;
+}
+.calendars-ctrl {
+    background-color:#018445 !important;
+}
+
+
+*[dir="rtl"] .intl-tel-input.allow-dropdown .flag-container, .intl-tel-input.separate-dial-code .flag-container {
+    right : 0;
+}
+
+*[dir="rtl"] .intl-tel-input .selected-flag .iti-arrow {
+    right :70px;
+}
+
+*[dir="rtl"] .intl-tel-input.separate-dial-code .selected-dial-code {
+    padding-right : 28px;
+}
+
+*[dir="rtl"] .phone {
+    padding-right : 92px !important;
+}
+
+.input-group-addon {
+    cursor:pointer;
+}
+*[dir="rtl"] .input-group-addon {
+    border-right:0px;
+    border-left:1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+*[dir=rtl] ol li:first-child:before {
+    content : '' !important;
+}
+*[dir="rtl"] .input-group-addon {
+    border:1px solid rgba(0, 0, 0, 0.15) !important ;
+}
+.card-group .card + .card {
+     border:1px solid rgba(0, 0, 0, 0.15) !important ;
+}
+
+input[id$='Email']:disabled {
+    color : green;
+}
+
+
+input[id$='Password']:disabled {
+    color : green;
+}
+
+html[dir="rtl"] svg rect {
+    top: -1000px !important;
+    left: auto !important;
+}
+
+  .multiselect-container>li>a>label {
+  padding: 4px 20px 3px 20px;
+  color : #263238;
+}
+    .btn-group {
+        width:100%;
+    }
+    .multiselect {
+        width:100%;
+    }
+    .multiselect-container {
+        width : 100%;
+    } 
+
+ .multiselect-native-select .dropdown-toggle 
+    {
+    text-align:left !important;
+    display: block !important;
+    width: 100%;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25 !important;
+    color: #607d8b;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 0;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s !important;
+    }
+*[dir=rtl] .multiselect-selected-text {
+    float:right;
+}
+*[dir=rtl] .dropdown-toggle::after {
+    float:right;
+    
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+*[dir=rtl] .multiselect-container>li>a {
+    float:right;
+    padding-left:50%;
+}
+.multiselect-native-select {
+    display :none;
+}
+
+

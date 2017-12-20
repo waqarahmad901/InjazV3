@@ -1,0 +1,161 @@
+﻿@using System.Configuration
+@using TmsWebApp.Models
+@model TmsWebApp.Models.LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "";
+    string linkedClientId = ConfigurationManager.AppSettings["ClientIdLinkedIn"];
+    string redirectUri = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) +
+                          "/Account/LinkedIn";
+    string code = "123456";
+    string linkedInUrl = $"https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={linkedClientId}&redirect_uri={redirectUri}&state={code}";
+
+}
+
+@using TranningWebApp.Resource
+@{
+    string lan = "en";
+    string dir = "ltr";
+    if (Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar")
+    {
+        lan = "ar";
+        dir = "rtl";
+
+    }
+}
+<!DOCTYPE html>
+<html lang="@lan" dir="@dir">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Injaz</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/simple-line-icons.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/cust-style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <style>
+        .dropdown-toggle::after {
+            display:none;
+        }
+        ul {
+  list-style-type: none;
+}
+
+
+    </style>
+</head>
+
+<body class="app flex-row align-items-center login">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-12 text-center">
+                <img src="~/img/injaz.png" class="logo">
+            </div>
+            <div class="col-md-7">
+                <div class="card-group">
+                    <div class="card mt-3 mb-3">
+                        <div class="card-block">
+                            <div class="row">
+                                <div  style="width:60%">
+                                    <h3>@General.Signin</h3>
+                                    <p class="text-muted">@General.Signintoyouraccount</p>
+                                </div>
+                                <ul>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle nav-link" style="padding:0; padding-right:10px; float:left" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-language"></i>
+                                        </a>
+                                        @if (lan == "ar")
+                                        {
+                                            <a style="margin-top: 9% " href="@Url.Action("ChangeLanguage", "Home", new { lan = "en" })">English</a>
+                                        }
+                                        else
+                                        {
+                                            <a style="margin-top: 9% " href="@Url.Action("ChangeLanguage", "Home", new { lan = "ar" })">العربیہ</a>
+                                        }
+
+                                    </li>
+                                </ul>
+                            </div>
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl, autocomplete = "kuchbee" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-addon">
+                                            <i class="icon-user"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = @General.Username })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-addon">
+                                            <i class="icon-lock"></i>
+                                        </span>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = @General.Password })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                                    if (ViewBag.Error != null)
+                                    {
+                                        <p class="error"><i class="fa fa-exclamation-triangle"></i> @ViewBag.Error</p>
+                                    }
+                                    if (ViewBag.CorError != null)
+                                    {
+                                        <p class="error"><i class="fa fa-exclamation-triangle"></i> @ViewBag.CorError</p>
+                                    }
+                                    @Html.Hidden("route", "non-manager")
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <button type="submit" class="btn btn-primary px-4">@General.Login</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <a value="signup" name="button" class="btn btn-primary px-4" href="@Url.Action("VolunteerProfile", "Volunteer")" style="margin-right:40%">@General.signup</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 text-center pull-right" style="margin-top:5%">
+                                                <a href="@Url.Action("ForgotPassword")" class="btn btn-link px-0">@General.Forgotpassword</a>
+                                            </div>
+                                        </div>
+                                       
+                                    <div class="row">
+                                        <div class="py-2">
+
+                                        </div>
+                                    </div>
+                                }
+</div>
+                     
+                    </div>
+                    <div class="card  mt-3 mb-3 ">
+                        <div class="card-block">
+                            <div class="mt-5 text-center">
+                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = "/Account/ExternalLogin" })
+                                <a class="btn btn-block btn-linkedin" href="@linkedInUrl">
+                                    <span>@General.SigninwithLinkedin</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted text-center">@General.Copyright</p>
+            </div>
+        </div>
+    </div>
+     
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("input:text,form").attr("autocomplete", "kuchbee");
+        })
+    </script>
+</body>
+
+</html>

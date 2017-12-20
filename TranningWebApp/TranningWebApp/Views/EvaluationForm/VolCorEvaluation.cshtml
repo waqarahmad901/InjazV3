@@ -1,0 +1,75 @@
+﻿@model TranningWebApp.Repository.DataAccess.evaluation_volunteer_coordinator
+@{
+    ViewBag.Title = "SYCPreP2";
+}
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">الصفحة الرئيسية</li>
+        </li>
+        <li class="breadcrumb-item active">الممولين</li>
+        </li>
+        <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-12 pull-left">
+    @*<form name="form1" action="" method="post">*@
+    @using (Html.BeginForm("VolCorEvaluation", "EvaluationForm", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header">
+                    <strong class="text-primary"><h4>  طريقي إلى سوق العمل</h4></strong>
+
+                </div>
+                <strong class="text-primary">
+                    <p align="center">
+                        التقييم القبلي
+
+                    </p>
+                </strong>
+            </div>
+
+
+
+            <div class="card-block col-sm-6">
+
+                <div class="form-group">
+                    <label for="name">المدرسة:</label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "" })
+                    @*<input type="text" class="form-control" >*@
+                </div>
+
+                @Html.HiddenFor(x => x.SessionId)
+                @Html.HiddenFor(x => x.CoordinatorId)
+                @Html.HiddenFor(x => x.VolunteerId)
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+                </div>
+            </div>
+            </div>
+            }
+        </div>
+
+        </div>
+    </div>
+</main>
+
+
+
+@{
+
+    var cu = Session["user"] as TranningWebApp.Common.ContextUser;
+}
+
+<script type="text/javascript">
+    var role = "@cu.EnumRole";
+    if (role === "SuperAdmin") {
+        $('input').attr('disabled', 'disabled');
+        $('button').hide();
+    }
+</script>

@@ -1,0 +1,139 @@
+﻿@model TranningWebApp.Models.GeneralReportModel
+@using TranningWebApp.Resource;
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    var chart;
+    var data2;
+
+    function DownloadReport() {
+        var fileHex = chart.getImageURI();
+        if (fileHex.length == 0)
+            return;
+       
+        var mydata = "@Reports.PartnerType : @Reports.NoofPartners; @Funder.Funder1:" + data2.FunderCount + "; @Funder.Volunteering:" + data2.VolunteeringCount + "; @Funder.Stragetic :" + data2.StrategicCount;
+        var prefix = '%%{ @Reports.NumberofPartnerswithinPartnertype  }{  }{ ' + mydata + ' }%%';
+        $.ajax({
+            type: 'POST',
+            url: '/Report/GeneratePdf',
+            data: { 'graphString': prefix + fileHex },
+            
+            success: function (pdfPath) {
+                window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+            }
+        });
+
+
+    }
+
+    function GenerateReport() {
+        $.post("@Url.Action("GetPartnerTypeData", "Report")",
+            function (data1, status) {
+                data2 = data1;
+                if (data1.length == 0) {
+                    document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                    return;
+                }
+
+                $("#Funder").text(data1.FunderCount);
+                $("#Volunteering").text(data1.VolunteeringCount);
+                $("#Strategic").text(data1.StrategicCount);
+                google.charts.load('current', { packages: ['corechart', 'bar'] });
+                google.charts.setOnLoadCallback(drawBasic);
+
+                function drawBasic() {
+
+                    var data = google.visualization.arrayToDataTable([
+                        ['@Funder.PartnerType', '@Reports.NoofPartners', { role: 'style' }],
+                        ['@Funder.Funders', data1.FunderCount, '#7f6084'],
+                        ['@Funder.Volunteering', data1.VolunteeringCount, '#c24642'],
+                        ['@Funder.Stragetic', data1.StrategicCount, '#369ead']
+                    ]);
+
+
+
+                    var options = {
+                        title: "",
+                        width: 800,
+                        height: 500,
+                        bar: { groupWidth: "40%" },
+                        legend: { position: 'none' }
+
+
+                    };
+
+
+                    chart = new google.visualization.BarChart(document.getElementById('School_Reports'));
+
+                    chart.draw(data, options);
+                }
+            });
+    }
+</script>
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF" onclick="DownloadReport()" value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+                            <h3><u>@Reports.NumberofPartnerswithinPartnertype</u></h3>
+                            <br>
+                            <table class="table table-hover table-outline mb-0">
+                                
+                                <thead class="thead-default">
+                                    <tr>                                     
+                                        <th>@Funder.PartnerType</th>
+                                        <th>@Reports.NumberofPartners</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>@Funder.Funders</td>
+                                    <td ><span id="Funder"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Funder.Volunteering</td>
+                                        <td><span id="Volunteering"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Funder.Stragetic</td>
+                                        <td><span id="Strategic"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>                        
+                            <hr>
+
+                            <div style="color:red;" id="School_Reports"></div>
+                            <div id="png"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

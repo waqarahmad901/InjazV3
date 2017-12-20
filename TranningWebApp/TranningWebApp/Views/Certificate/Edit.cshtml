@@ -1,0 +1,99 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Repository.DataAccess.certificate
+@{
+    string fileName = "";
+    if (Model.UploadFilePath != null)
+    {
+        fileName = Path.GetFileName(Model.UploadFilePath);
+    }
+}
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Certificate.CertificateLabel</li>
+        </li>
+
+        @if (Model.Id > 0)
+        {
+            <li class="breadcrumb-item active"> @General.Edit @Menu.Certificate</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item active"> @Certificate.Addnewcertificate</li>
+        }
+         
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-6">
+                @using (Html.BeginForm("Edit", "Certificate", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <div class="card">
+                        <div class="card-header">
+                            @if (Model.Id > 0)
+                            {
+                                <strong class="text-primary"><i class="icon-plus"></i> @General.Edit @Menu.Certificate</strong>
+                            }
+                            else
+                            {
+                                <strong class="text-primary"><i class="icon-plus"></i> @Certificate.Addnewcertificate</strong>
+                            }
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <label for="name">@Certificate.CertificateName</label>
+                               @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label for="country">@Certificate.SelectCertificate</label>
+                                @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.cctypes, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-6 form-control-label">@Certificate.TypeOfCertificate</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline" for="inline-radio1">
+                                        @Html.RadioButtonFor(i => i.TypeCertificate, "Student", new { @checked = true }) @Certificate.Student
+                                    </label>
+                                    <label class="radio-inline" for="inline-radio2">
+                                        @Html.RadioButtonFor(i => i.TypeCertificate, "Volunteer") @Certificate.Volunteer
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>@Certificate.UploadCertificateFile</label>
+                                <b><label class="form-control" style="border:none"><a href="@(Model.UploadFilePath == null ? "" : Model.UploadFilePath.Replace("~",""))" target="_blank">@fileName</a></label></b>
+                            </div>
+                            <div class="form-group">
+                                <label>@Certificate.CertificateLabel</label>
+                                
+                                <input type="file" name="file" class="form-control" onchange="ValidateSingleInput(this,['.pdf'])">
+                                @if (ViewBag.NeedFile != null)
+                                {
+                                    <span class="text-danger field-validation-error" data-valmsg-for="file" data-valmsg-replace="true"><span for="file" class=""> @Certificate.UploadCertificateFile </span></span>
+                                }
+                            </div>
+                           
+                            @if (Model != null && Model.Id > 0)
+                            {
+                                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                            }
+                        </div>             <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i>@General.Submit</button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</main>
+

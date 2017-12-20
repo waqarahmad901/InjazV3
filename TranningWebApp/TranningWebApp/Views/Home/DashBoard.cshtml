@@ -1,0 +1,146 @@
+﻿ @model TranningWebApp.Models.DashBoardModel
+@using TranningWebApp.Resource
+@{ 
+
+    bool isAr = Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar";
+}
+<main class="main">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row py-3">
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="social-box bg-info">
+                        <small class="text-uppercase font-weight-bold ">@General.Sessions</small>
+                        <i class="icon-calendar bg-info"></i>
+                        <ul>
+                            <li>
+                                <strong>@Model.SessionPendingCount</strong>
+                                <span>@General.Pending</span>
+                            </li>
+                            <li>
+                                <strong>@Model.SessionActiveCount</strong>
+                                <span>@General.Approved</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="social-box bg-info bg-success">
+                        <small class="text-uppercase font-weight-bold ">@General.Volunteers</small>
+                        <i class="icon-user-following bg-info bg-success"></i>
+                        <ul>
+                            <li>
+                                <strong>@Model.volunteerPendingCount</strong>
+                                <span>@General.Pending</span>
+                            </li>
+                            <li>
+                                <strong>@Model.volunteerAvailableCount</strong>
+                                <span>@General.Approved</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="social-box bg-info bg-warning">
+                        <small class="text-uppercase font-weight-bold ">@General.Participants</small>
+                        <i class="icon-people bg-info bg-warning"></i>
+                        <ul>
+                            <li>
+                                <strong>@Model.ParticipantEnrolledCount</strong>
+                                <span>@General.Enrolled</span>
+                            </li>
+                            <li>
+                                <strong>@Model.ParticipantCertificateCount</strong>
+                                <span>@General.Certified</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="social-box bg-info bg-purple">
+                        <small class="text-uppercase font-weight-bold ">@General.Schools</small>
+                        <i class="fa fa-building-o bg-info bg-purple"></i>
+                        <ul>
+                            <li>
+                                <strong>@Model.SchoolPendingCount</strong>
+                                <span>@General.Pending</span>
+                            </li>
+                            <li>
+                                <strong>@Model.SchoolApprovedCount</strong>
+                                <span>@General.Approved</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                  
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            @General.SessionCalendar 
+                        </div>
+                        <div class="card-block">
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main> 
+<script>
+
+	$(document).ready(function() {
+
+	    var json = "@Model.sessionsJson";
+	    json = JSON.parse(json.replace(/&quot;/g, '"'));
+
+
+		$('#calendar').fullCalendar({
+
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: json,
+		
+			eventClick: function (event) {
+			    if (event.url) {
+			        window.open(event.url);
+			        return false;
+			    }
+			},
+			viewRender: function (view, element) {
+			    if ("@isAr" == "True") {
+			        var startDate = $('.fc-day-top').eq(0).attr("data-date").split("-");
+			        var days = $('.fc-day-top').length;
+			        $.get("/Home/ConvertDateCalendarList?dateConv=" + startDate[2] + "/" + startDate[1] + "/" + startDate[0] + "&calendar=Hijri&dateLangCulture=en-us&days=" + days, function (res) {
+
+			            debugger;
+			            for (i = 0; i < $('.fc-day-top').length; i++) {
+			                $('.fc-day-top').eq(i).find(".fc-day-number").text(res.dates[i]);
+			            }
+			            var startdate = res.startdate.split(' ');
+			            var enddate = res.enddate.split(' ');
+			            $('.fc-left h2').html("<div style='float:right'><span>" + startdate[2] + "</span><span> " + startdate[1] + "</span><span style='float:right'>&nbsp; " + startdate[0] + "</span></div>");
+			            $('.fc-left h2').append("<div style='float:right'>&nbsp; - &nbsp;</div>");
+			            $('.fc-left h2').append("<div style='float:right'><span>" + enddate[2] + "</span><span> " + enddate[1] + "</span><span style='float:right'>&nbsp; " + enddate[0] + "</span></div>");
+			            $('.fc-sat span:eq(0)').text('السبت');
+			            $('.fc-sun span:eq(0)').text('الأحد');
+			            $('.fc-mon span:eq(0)').text('الإثنين');
+			            $('.fc-tue span:eq(0)').text('الثلاثاء');
+			            $('.fc-wed span:eq(0)').text('الأربعاء');
+			            $('.fc-thu span:eq(0)').text('الخميس');
+			            $('.fc-fri span:eq(0)').text('الجمعة');
+			            $('.fc-today-button').text('اليوم');
+			            $('.fc-more').text($('.fc-more').text().replace("more", "أكثر من"));
+			        });
+			    }
+		}
+		});
+				
+	});
+
+</script>

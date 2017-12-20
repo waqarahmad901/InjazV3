@@ -1,0 +1,153 @@
+﻿@using System.Diagnostics
+@using TranningWebApp.Common
+@using TranningWebApp.Resource
+ @{
+     var currentUrl = Request.Url?.AbsolutePath.Split('/')[1];
+
+     var user = Session["user"] as ContextUser;
+     
+     bool isShow = false;
+     bool isShowSubCoordiinator = true;
+     if (Request.IsAuthenticated && user != null)
+     {
+         if (user.EnumRole == TmsWebApp.Common.EnumUserRole.Volunteer)
+         {
+             var repository = new TranningWebApp.Repository.VolunteerRepository();
+             if (user.GoogleId != null)
+             {
+                 isShow = repository.GetByGoogleId(user.GoogleId) != null && repository.GetByGoogleId(user.GoogleId).OTAttendenceForVolunteer;
+             }
+             else
+             {
+                 isShow = repository.GetByLinkedInId(user.LinkedInId) != null && repository.GetByLinkedInId(user.LinkedInId).OTAttendenceForVolunteer;
+
+             }
+         }
+         if (user.EnumRole == TmsWebApp.Common.EnumUserRole.Participant)
+         {
+             var repository = new TranningWebApp.Repository.AccountRepository();
+             isShow = repository.Get(user.OUser.Id).FirstLogin;
+         }
+         if (user.EnumRole == TmsWebApp.Common.EnumUserRole.Coordinator)
+         {
+             var repository = new TranningWebApp.Repository.CoordinatorRepository();
+             isShowSubCoordiinator = repository.GetByUserId(user.OUser.Id).ParentId == null;
+         }
+     } 
+ }
+
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        @if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+        {
+        <ul class="nav">
+            <li class="nav-item @(@currentUrl.Contains("DashBoard") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("DashBoard", "Home")"><i class="icon-grid"></i> @Menu.Dashboard</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Funder") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Funder")"><i class="fa fa-credit-card"></i> @Menu.Funders</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Supervisor") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "approved" })"><i class="icon-user-following"></i> @Menu.Volunteer</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Coordinator") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Coordinator")"><i class="fa fa-building-o"></i> @Menu.SchoolCoordinators</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Participant") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Participant")"><i class="icon-people"></i> @Menu.Participant</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Session") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("OT") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "OT")"><i class="fa fa-building-o"></i> @Menu.OTs</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Certificate") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Certificate")"><i class="icon-calendar"></i> @Menu.Certificate</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Equals("Account") ? "active" : "")">
+                <a class="nav-link"href="@Url.Action("UserList", "Account")"><i class="icon-calendar"></i> @Menu.Accounts</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Equals("EvaluationResult") || currentUrl.Equals("EvaluationForm") ? "active" : "")">
+                <a class="nav-link"href="@Url.Action("Index", "EvaluationResult")"><i class="icon-calendar"></i> @Menu.EvaluationResults</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Equals("Report") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Report")"><i class="icon-doc"></i> @Menu.Reports</a>
+            </li>
+
+        </ul>
+        }
+        else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Coordinator)
+        {
+            <ul class="nav">
+                <li class="nav-item @(@currentUrl.Contains("Session") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("SchoolLocation") && currentUrl.Contains("Coordinator") ? "active" : "")" >
+                    <a class="nav-link" href="@Url.Action("SchoolLocation", "Coordinator")"><i class="icon-calendar"></i> @Menu.SchoolLocations</a>
+                </li>
+                @if (isShowSubCoordiinator)
+                {
+                <li class="nav-item @(@currentUrl.Contains("Coordinator") && currentUrl.Contains("Index") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Coordinator")"><i class="fa fa-building-o"></i> @Menu.SubCoordinators</a>
+                </li>
+                }
+            </ul>
+        }
+        else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Participant)
+        {
+            <ul class="nav">
+                @if (isShow)
+                {
+                    <li class="nav-item @(@currentUrl.Contains("Session/Index") ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+                    </li>
+                    <li class="nav-item @(@currentUrl.Contains("Session/RequestSession") ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("RequestSession", "Session")"><i class="icon-calendar"></i> @Menu.RequestSession</a>
+                    </li>
+                }
+            </ul>
+        }
+        else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Volunteer)
+        {
+            <ul class="nav"> 
+                @if (isShow)
+                {
+                <li class="nav-item @(@currentUrl.Contains("Session") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+                </li>
+                }
+            </ul>
+
+        }
+        else if (user != null && (user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver1
+            || user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver2
+            || user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver3))
+        {
+            <ul class="nav">
+                <li class="nav-item @(@currentUrl.Contains("pending") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "pending" })"><i class="fa fa-clock-o"></i> @Menu.Requested</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("approved") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "approved" })"><i class="fa fa-check-square-o"></i> @Menu.Accepted</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("rejected") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "rejected" })"><i class="fa fa-close"></i> @Menu.Rejected</a>
+                </li>
+
+
+            </ul>
+        }
+
+        else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Funder)
+        {
+            <ul class="nav"> 
+                <li class="nav-item @(@currentUrl.Equals("Report") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Report")"><i class="icon-doc"></i> @Menu.Reports</a>
+                </li> 
+            </ul> 
+        }
+
+
+    </nav>
+</div>

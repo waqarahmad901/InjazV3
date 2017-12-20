@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddnewSchoolCoordinator" xml:space="preserve">
+    <value>Add new School Coordinator</value>
+  </data>
+  <data name="AddSchoolCoordinator" xml:space="preserve">
+    <value>Add School Coordinator</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="CompleteProfile" xml:space="preserve">
+    <value>Complete Profile</value>
+  </data>
+  <data name="Completeregisterationform" xml:space="preserve">
+    <value>Complete school registration form</value>
+  </data>
+  <data name="Contactdetails" xml:space="preserve">
+    <value>Contact details</value>
+  </data>
+  <data name="CoordinatorLabel" xml:space="preserve">
+    <value>Coordinator</value>
+  </data>
+  <data name="CoordinatorEmail" xml:space="preserve">
+    <value>Coordinator Email</value>
+  </data>
+  <data name="CoordinatorName" xml:space="preserve">
+    <value>Coordinator Name</value>
+  </data>
+  <data name="DateofBirth" xml:space="preserve">
+    <value>Date of Birth</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Emailaddress" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="Gorgian" xml:space="preserve">
+    <value>Gregorian</value>
+  </data>
+  <data name="Hijri" xml:space="preserve">
+    <value>Hijri</value>
+  </data>
+  <data name="NationalID" xml:space="preserve">
+    <value>National ID</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OtherCertificates" xml:space="preserve">
+    <value>Other Certificates</value>
+  </data>
+  <data name="Otherdetails" xml:space="preserve">
+    <value>Other details</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Registeration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Registration Date</value>
+  </data>
+  <data name="SchoolCoordinator" xml:space="preserve">
+    <value>School Coordinator</value>
+  </data>
+  <data name="SchoolGeoLocation" xml:space="preserve">
+    <value>School Geo Location</value>
+  </data>
+  <data name="SchoolGoogleAccount" xml:space="preserve">
+    <value>School Google Account</value>
+  </data>
+  <data name="SchoolGuardMobile" xml:space="preserve">
+    <value>School Guard Mobile</value>
+  </data>
+  <data name="SchoolGuardName" xml:space="preserve">
+    <value>School Guard Name</value>
+  </data>
+  <data name="SchoolID" xml:space="preserve">
+    <value>School ID</value>
+  </data>
+  <data name="SchoolLinkedinAccount" xml:space="preserve">
+    <value>School Linkedin Account</value>
+  </data>
+  <data name="SchoolManagerEmail" xml:space="preserve">
+    <value>School Manager Email</value>
+  </data>
+  <data name="SchoolManagerMobile" xml:space="preserve">
+    <value>School Manager Mobile</value>
+  </data>
+  <data name="SchoolManagerName" xml:space="preserve">
+    <value>School Manager Name</value>
+  </data>
+  <data name="SchoolName" xml:space="preserve">
+    <value>School Name</value>
+  </data>
+  <data name="SchoolWebsite" xml:space="preserve">
+    <value>School Website</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Telephone" xml:space="preserve">
+    <value>Telephone</value>
+  </data>
+  <data name="TOTCertificate" xml:space="preserve">
+    <value>TOT Certificate</value>
+  </data>
+  <data name="UploadDocument" xml:space="preserve">
+    <value>Download Uploaded Document</value>
+  </data>
+  <data name="VolunteerActivity1" xml:space="preserve">
+    <value>Volunteer Activity 1 </value>
+  </data>
+  <data name="VolunteerActivity2" xml:space="preserve">
+    <value>Volunteer Activity 2</value>
+  </data>
+  <data name="VolunteerActivity3" xml:space="preserve">
+    <value>Volunteer Activity 3</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="cordErrorMsg" xml:space="preserve">
+    <value>we will get back to you shortly. Currently it logout from the system.</value>
+  </data>
+  <data name="LatError" xml:space="preserve">
+    <value>Enter valid value</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="SchoolGeoLocations" xml:space="preserve">
+    <value>School Geo Locations</value>
+  </data>
+  <data name="SchoolLocations" xml:space="preserve">
+    <value>School Locations</value>
+  </data>
+  <data name="StageOfSchool" xml:space="preserve">
+    <value>Stage Of School</value>
+  </data>
+  <data name="TypeOfSchool" xml:space="preserve">
+    <value>Type Of School</value>
+  </data>
+  <data name="NoOfSession" xml:space="preserve">
+    <value>No Of Session</value>
+  </data>
+  <data name="ShowProfile" xml:space="preserve">
+    <value>School Profile</value>
+  </data>
+  <data name="schoollocationmsg" xml:space="preserve">
+    <value>Click here to view school location</value>
+  </data>
+  <data name="SchoolFaceBook" xml:space="preserve">
+    <value>School FaceBook</value>
+  </data>
+  <data name="schoolregisterationdetail" xml:space="preserve">
+    <value>School registration details</value>
+  </data>
+  <data name="SchoolYouTube" xml:space="preserve">
+    <value>School YouTube</value>
+  </data>
+  <data name="ShowCordProfile" xml:space="preserve">
+    <value>Coordinator profile</value>
+  </data>
+  <data name="Initial" xml:space="preserve">
+    <value>Initial</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="AddNewSubcoordinator" xml:space="preserve">
+    <value>Add new subcoordinator</value>
+  </data>
+  <data name="Subcoordinator" xml:space="preserve">
+    <value>Subcoordinator</value>
+  </data>
+  <data name="RequestStatus" xml:space="preserve">
+    <value>Request Status</value>
+  </data>
+</root>

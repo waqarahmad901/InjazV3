@@ -1,0 +1,253 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Models.GeneralReportModel
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        var data2;
+        function DownloadReport() {
+         
+            var datefrom = $("#DateFrom").val();
+            var dateto = $("#DateTo").val();
+
+            var mydata = " @Reports.Reports1 : @Reports.Amount; @Reports.NumberofSchools:" + data2.SchoolCount + "; @Reports.NumberofStudents:" + data2.StudentCount;
+            mydata += " ; @Reports.NumberofVolunteers:" + data2.VolunteerCount;
+            mydata += " ; @Reports.NumberofSessions:" + data2.SessionCount;
+            mydata += " ; @Reports.NumberofPartners:" + data2.PartnerCount;
+            mydata += " ; @Reports.NumberofCoordinators:" + data2.CoordinatorCount;
+            mydata += " ; @Reports.NumberofPreEvaluations:" + data2.EvaluationPreCount;
+            mydata += " ; @Reports.NumberofPostEvaluations:" + data2.EvaluationPostCount;
+            var prefix = '%%{ Report: @Reports.GeneralReport }{   @Reports.DateFrom : ' + datefrom + '   @Reports.DateTo  ' + dateto + '}{  ' + mydata + ' }%%';
+            $.ajax({
+                type: 'POST',
+                url: '/Report/GeneratePdf',
+                data: { 'graphString': prefix},
+
+                success: function (pdfPath) {
+                    window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+                }
+            });
+
+        }
+
+
+        function GenerateReport() {
+            var datefrom = $("#DateFrom").val();
+            var dateto = $("#DateTo").val();
+            var city = $("#city").val();
+
+
+            $.post("@Url.Action("GetGeneralReportData", "Report")",
+                {
+                    datefrom: datefrom,
+                    dateto: dateto,
+                    city: city
+                },
+                function (data1, status) {
+                    if (data1.length == 0) {
+                        document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                        return;
+                    }
+                    data2 = data1;
+                    $("#SchoolCount").text(data1.SchoolCount);
+                    $("#StudentCount").text(data1.StudentCount);
+                    $("#VolunteerCount").text(data1.VolunteerCount);
+                    $("#SessionCount").text(data1.SessionCount);
+                    $("#PartnerCount").text(data1.PartnerCount);
+                    $("#CoordinatorCount").text(data1.CoordinatorCount);
+                    $("#EvaluationPreCount").text(data1.EvaluationPreCount);
+                    $("#EvaluationPostCount").text(data1.EvaluationPostCount);
+                    $("#CitiCount").text(data1.CitiesCount);
+
+                })
+        }
+</script>
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol> 
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.DateFrom</label>
+                                    <input type="text" id="DateFrom" class="form-control date">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.DateTo</label>
+                                    <input type="text" id="DateTo" class="form-control date">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <table class="table table-hover table-outline mb-0">
+                                    <thead class="thead-default">
+                                        <tr>
+                                            <th class="text-center">
+                                                <i class="icon-people"></i>
+                                            </th>
+                                            <th>@Reports.Reports1 <i class="fa fa-sort"></i></th>
+                                            <th>@Reports.Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofSchools</td>
+                                            <td><span id="SchoolCount"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofStudents</td>
+                                            <td>
+                                                <span id="StudentCount"></span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofVolunteers</td>
+                                            <td><span id="VolunteerCount"></span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofSessions</td>
+                                            <td>
+                                                <span id="SessionCount"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofPartners</td>
+                                            <td>
+                                                <span id="PartnerCount"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofCoordinators</td>
+                                            <td>
+                                                <span id="CoordinatorCount"></span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofPreEvaluations</td>
+                                            <td>
+                                                <span id="EvaluationPreCount"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofPostEvaluations</td>
+                                            <td>
+                                                <span id="EvaluationPostCount"></span>
+
+                                            </td>
+                                        </tr>
+
+                                        @*<tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.Numberofcities</td>
+                                            <td>
+                                                <span id="CitiCount"></span>
+
+                                            </td>
+                                        </tr>*@
+                                        <tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF" onclick="DownloadReport()" value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+
+                         
+
+                            <div id="School_Reports"></div>
+
+
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

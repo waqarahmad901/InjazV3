@@ -1,0 +1,214 @@
+﻿@using TranningWebApp.Resource
+@model PagedList.IPagedList<TranningWebApp.Repository.DataAccess.session>
+@using TmsWebApp.Common
+@using TranningWebApp.Common
+@{
+    ViewBag.Title = "Index";
+
+    var cu = Session["user"] as ContextUser;
+
+    var participant = new TranningWebApp.Repository.ParticipiantRepository().GetByUserId(cu.OUser.Id);
+}
+
+<style type="text/css">
+    .badge-ready {
+        background-color: #EF6A1B;
+    }
+</style>
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        </li>
+        <li class="breadcrumb-item active">@SessionX.Session</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu">
+            <div class="btn-group" role="group">
+                @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Edit")"><i class="icon-plus"></i> @SessionX.Addnewsession</a>
+                }
+            </div>
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="input-group global-search">
+                    <input type="text" name="global-search" class="form-control" id="search" placeholder="@General.Search" value="@ViewBag.searchQuery">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                        <tr>
+                            <th class="text-center">
+                                <i class="icon-people"></i>
+                            </th>
+                            <th>@SessionX.ProgramName</th>
+                            <th>@SessionX.TargetGroup <i class="fa fa-sort"></i></th>
+
+                            @if (cu.EnumRole != TmsWebApp.Common.EnumUserRole.Participant)
+                            {
+                                <th>@SessionX.ProposedDate</th>
+                            }
+                            <th>@SessionX.RequestedDate</th>
+                            @if (cu.EnumRole == EnumUserRole.SuperAdmin || cu.EnumRole == EnumUserRole.Volunteer)
+                            {
+                                <th>@SessionX.SchoolName</th>
+                            }
+                            @if (cu.EnumRole == EnumUserRole.Volunteer)
+                            {
+                                <th>@Participant.Certificate</th>
+                            }
+                            @if (cu.EnumRole != EnumUserRole.Volunteer)
+                            {
+                                <th>@SessionX.Volunteer</th>
+                            }
+                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.Participant)
+                            {
+                                <th>@Participant.EvaluationStatus</th>
+                                <th>@Participant.Certificate</th>
+                                <th>@Participant.FeedBack</th>
+                            }
+                            <th>@Coordinator.RequestStatus<i class="fa fa-sort-down"></i></th>
+                            <th>@SessionX.Status</th> 
+                            <th>@General.EditDetails</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var item in Model.ToList())
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="avatar">
+                                            <img src="~/img/avatars/session.png" class="img-avatar">
+                                        </div>
+                                    </td>
+                                    <td>@item.ProgramName</td>
+                                    <td>@item.TargetGroup</td>
+                                    @if (cu.EnumRole != TmsWebApp.Common.EnumUserRole.Participant)
+                                    {
+                                        <td>@item.ProposedDateTime.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    <td>@(item.ActualDateTime != null ? item.ActualDateTime.Value.ToString("dd/MM/yyyy") : "")</td>
+                                    @if (cu.EnumRole == EnumUserRole.SuperAdmin || cu.EnumRole == EnumUserRole.Volunteer)
+                                    {
+
+                                        <td>@(item.school != null ? item.school.SchoolName : "")</td>
+                                    }
+                                    @if (cu.EnumRole == EnumUserRole.Volunteer)
+                                    {
+                                        if (item.IsVolunteerCertificateGenerated)
+                                        {
+                                            <td><span class="badge badge-success">@General.VolunteerCertificateGenerated</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge badge-default">@Participant.NotGenerated</span></td>
+                                        }
+                                    }
+                                    @if (cu.EnumRole != EnumUserRole.Volunteer)
+                                    {
+                                        <td>@(item.volunteer_profile != null ? item.volunteer_profile.VolunteerName : "")</td>
+                                    }
+                                    @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.Participant)
+                                    {
+                                        var sessionParticipant = item.session_participant.Where(x => x.ParticipantID == participant.Id).First();
+                                        bool hasCertificate = sessionParticipant.IsCertificateGenerated ?? false;
+                                        bool isEvaluated = (sessionParticipant.IsPreEvaluated ?? false) && (sessionParticipant.IsPostEvaluated ?? false);
+                                        bool feedBack = sessionParticipant.FeedBack != null;
+
+                                        if (isEvaluated)
+                                        {
+                                            <td><span class="badge badge-success">@Participant.Done</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge badge-default">@Participant.Awaiting</span></td>
+                                        }
+                                        if (hasCertificate)
+                                        {
+                                            <td><span class="badge badge-success">@Participant.Generated</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge badge-default">@Participant.NotGenerated</span></td>
+                                        }
+
+                                        if (feedBack)
+                                        {
+                                            <td><span class="badge badge-success">@Participant.Generated</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge badge-default">@Participant.NotGenerated</span></td>
+                                        }
+                                    }
+
+
+                                    @{
+                                        string cssClass = "default";
+                                        if (item.Status == SessionStatus.Pending.ToString())
+                                        { cssClass = "warning"; }
+                                        if (item.Status == SessionStatus.Approved.ToString())
+                                        { cssClass = "success"; }
+                                        if (item.Status == SessionStatus.Rejected.ToString())
+                                        { cssClass = "danger"; }
+                                        if (item.Status == SessionStatus.Occured.ToString())
+                                        { cssClass = "info"; }
+                                        if (item.Status == SessionStatus.DateChanges.ToString())
+                                        { cssClass = "ready"; }
+
+                                    }
+                                    <td><span class="badge badge-@cssClass">@item.Status</span></td>
+
+                                    @if (cu.EnumRole == EnumUserRole.SuperAdmin)
+                                    {
+                                        if (item.IsActive)
+                                        {
+                                        <td><span class="badge badge-success">@General.Active</span></td>
+                                        }
+                                        else
+                                        {
+                                        <td><span class="badge badge-default">@General.InActive</span></td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>
+                                        @if (!(cu.EnumRole == EnumUserRole.Coordinator && item.Status == SessionStatus.DateChanges.ToString()) && item.Status != SessionStatus.Rejected.ToString())
+                                        {
+                                            <a href="@Url.Action("Edit", new { id = item.RowGUID })" title="Edit"><i class="fa fa-pencil"></i></a>
+                                            if (cu.EnumRole == EnumUserRole.SuperAdmin)
+                                            {
+                                             <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGUID')" title="Archive"><i class="fa fa-archive"></i></a>
+                                            }
+                                        }
+                                    </td>
+
+                                </tr>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="9" align="center"> @General.Norecordfound</td>
+                                            </tr>
+                                        }
+                    </tbody>
+                </table>
+                @Html.Partial("_Pagination", new TmsWebApp.Models.PageViewModel { CurrentPage = Model.PageNumber, TotalRecords = (int)ViewBag.Count })
+            </div>
+        </div>
+    </div>
+</main>

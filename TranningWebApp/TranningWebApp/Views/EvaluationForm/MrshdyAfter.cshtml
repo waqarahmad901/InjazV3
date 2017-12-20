@@ -1,0 +1,423 @@
+﻿@model TranningWebApp.Repository.DataAccess.evaluation_murshadee_after
+@{
+    ViewBag.Title = "MrshdyAfter";
+}
+
+<main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">الصفحة الرئيسية</li>
+
+        <li class="breadcrumb-item active">الممولين</li>
+
+        <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-12 pull-left">
+    @*<form name="form1" action="" method="post">*@
+    @using (Html.BeginForm("MrshdyAfter", "EvaluationForm", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+        <div class="card">
+            <div class="card-header">
+                <strong class="text-primary"><h1>برنامج أنا ومحيطي </h1></strong>
+                <strong class="text-primary"><p align="center"> القبليم البعدي</p></strong>
+            </div>
+            <div class="card-block col-sm-6">
+                <div class="form-group">
+                    <label for="name">المدرسة:</label>
+                    @Html.TextBoxFor(x => x.F1, new { @class = "form-control", @placeholder = "" })
+                </div>
+                <div class="form-group">
+                    <label for="name">الفصل الدراسي:</label>
+                    @Html.TextBoxFor(x => x.F2, new { @class = "form-control", @placeholder = "" })
+                </div>
+                <div class="form-group">
+                    <label for="name">العام الدراسي:</label>
+                    @Html.TextBoxFor(x => x.F3, new { @class = "form-control", @placeholder = "" })
+                </div>
+                <div class="form-group">
+                    <label for="name">المدينة:</label>
+                    @Html.TextBoxFor(x => x.F4, new { @class = "form-control", @placeholder = "" })
+                </div>
+                <div class="form-group">
+                    <label for="name">الإسم:</label>
+                    @Html.TextBoxFor(x => x.F5, new { @class = "form-control", @placeholder = "الاسم الأول" })
+                    @Html.TextBoxFor(x => x.F6, new { @class = "form-control", @placeholder = "إسم الأب" })
+                    @Html.TextBoxFor(x => x.F7, new { @class = "form-control", @placeholder = "الإسم الأخير" })
+                </div>
+                <div class="form-group">
+                    <label for="name">معلومات التواصل:</label>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+                    <style>
+                        input[type=text] {
+                            width: 100%;
+                            border: 0pxsolid #00FF7F;
+                            border-radius: 0px;
+                            margin: 0px 0;
+                            outline: none;
+                            padding: 8px;
+                            box-sizing: border-box;
+                            transition: 0s;
+                            line-height: inherit;
+                        }
+
+                            input[type=text]:focus {
+                                border-color: SpringGreen;
+                                box-shadow: 8px SpringGreen;
+                            }
+
+                        .inputwithicon input[type=text] {
+                            padding-right: 40px;
+                        }
+
+                        .inputwithicon {
+                            position: relative;
+                        }
+
+                            .inputwithicon b {
+                                position: absolute;
+                                right: 0;
+                                top: 5px;
+                                padding: 9px 8px;
+                                color: #000000;
+                                transition: .0s;
+                            }
+
+                            .inputwithicon input[type=text]:focus + b {
+                                color: black;
+                            }
+
+                        input[type=text] {
+                            width: 100%;
+                            border: 0pxsolid #00FF7F;
+                            border-radius: 0px;
+                            margin: 0px 0;
+                            outline: none;
+                            padding: 8px;
+                            box-sizing: border-box;
+                            transition: 0s;
+                            line-height: inherit;
+                        }
+
+                            input[type=text]:focus {
+                                border-color: SpringGreen;
+                                box-shadow: 8px SpringGreen;
+                            }
+
+                        .inputwithicon input[type=text] {
+                            padding-right: 40px;
+                        }
+
+                        .inputwithicon {
+                            position: relative;
+                        }
+
+                            .inputwithicon i {
+                                position: absolute;
+                                right: 0;
+                                top: 5px;
+                                padding: 9px 8px;
+                                color: #00ff00;
+                                transition: .0s;
+                            }
+
+                            .inputwithicon input[type=text]:focus + i {
+                                color: Green;
+                            }
+
+
+
+
+                        width:100%; {
+                            border: 0.025pxsolid #00FF7F;
+                            border-radius: 0px;
+                            margin: 0px 0;
+                            outline: none;
+                            padding: 8px;
+                            box-sizing: border-box;
+                            transition: 0s;
+                            line-height: inherit;
+                        }
+
+                        input[type=text]:focus {
+                            border-color: SpringGreen;
+                            box-shadow: 8px SpringGreen;
+                        }
+
+                        .inputwithicon input[type=text] {
+                            padding-right: 40px;
+                        }
+
+                        .inputwithicon {
+                            position: relative;
+                        }
+
+                            .inputwithicon j {
+                                position: absolute;
+                                right: 0;
+                                top: 5px;
+                                padding: 9px 8px;
+                                color: #3b5998;
+                                transition: .0s;
+                            }
+
+                            .inputwithicon input[type=text]:focus + j {
+                                color: facebookBlue;
+                            }
+
+                        input[type=text] {
+                            width: 100%;
+                            border: 0.025pxsolid #00FF7F;
+                            border-radius: 0px;
+                            margin: 0px 0;
+                            outline: none;
+                            padding: 8px;
+                            box-sizing: border-box;
+                            transition: 0s;
+                            line-height: inherit;
+                        }
+
+                            input[type=text]:focus {
+                                border-color: SpringGreen;
+                                box-shadow: 8px SpringGreen;
+                            }
+
+                        .inputwithicon input[type=text] {
+                            padding-right: 40px;
+                        }
+
+                        .inputwithicon {
+                            position: relative;
+                        }
+
+                            .inputwithicon a {
+                                position: absolute;
+                                right: 0;
+                                top: 5px;
+                                padding: 9px 8px;
+                                color: #00aced;
+                                transition: 0.s;
+                            }
+
+                            .inputwithicon input[type=text]:focus + a {
+                                color: VerifiedBlue;
+                            }
+                    </style>
+
+                    <div class="inputwithicon ">
+                        @Html.TextBoxFor(x => x.F8, new { @class = "form-control", @placeholder = "هاتف" })
+                        <b class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></b>
+                    </div>
+                    <div class="inputwithicon">
+                        @Html.TextBoxFor(x => x.F9, new { @class = "form-control", @placeholder = "البريد الإلكتروني" })
+                        <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+                    </div>
+                    <div class="inputwithicon ">
+                        @Html.TextBoxFor(x => x.F10, new { @class = "form-control", @placeholder = "فيس بوك" })
+                        <j class="fa fa-facebook fa-lg fa-fw" aria-hidden="true"></j>
+                    </div>
+                    <div class="inputwithicon ">
+                        @Html.TextBoxFor(x => x.F11, new { @class = "form-control", @placeholder = "تؤئتر" })
+                        <a class="fa fa-twitter fa-lg fa-fw" aria-hidden="true"></a>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-header">
+                <strong class="text-primary"> الرجاء وضع دائرة على إجابة واحدة:</strong>
+            </div>
+            <div class="card-block col-sm-12">
+                <ol type="1">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <li class="primary-heading"> عندما يتصرف أحد الأصدقاء بطريقة تغضبك أو يخطئ بحقك:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F12_1)  تثور وتوجه له كلاماً جارحاً.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F12_2)  تصمت وتكبت في نفسك.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F12_3)  تحاول أن تعبر عن غضبك بأسلوب هادئ وباستخدام لغه هادئة.</label>
+                        </div>
+
+                        <div class="form-group">
+                            <li class="primary-heading"> التواصل الجيد بين الأفراد يشمل:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F13_1)  حسن الاستماع لما يوجه لك من حديث.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F13_2)  أن تعبر عن وجهة نظرك بدقة ووضوح.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F13_3)  أن تختار الكلمات المناسبة عندما تتحدث مع الآخرين.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F13_4)  جميع ما ذكر.</label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading">ما علاقة العائلة بالقيم:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F14_1) العائلة هي المصدر الوحيد للقيم.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F14_2) العائلة هي مصدر هام للقيم.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F14_3) ليس للعائلة علاقة بالقيم.</label>
+
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> المراهقة هي:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F15_1)  وصف لسلوك غير مهذب أو طائش يقوم به أفراد من عمر معين.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F15_2)  مرحلة عمرية تطرأ فيها تغيرات جسدية واضحة.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F15_3)  مرحلة عمرية تطرأ فيها تغيرات جسدية ونفسية.</label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> المجتمع الذي ننتمي إليه هو:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F16_1)  البلد.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F16_2)  البلد/العائلة.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F16_3)  المجتمع البشري.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F16_4)  جميع ما ذكر.</label>
+                        </div>
+
+                        <div class="form-group">
+                            <li class="primary-heading"> من قواعد الحوار الجيد:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F17_1)  التحدث بصوت مرتفع، التمسك بوجهة النظر التي تطرحها والاستشهاد كثيراً بالتجارب الشخصية.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F17_2)  الاستماع الجيد، عدم الإساءة للمخالف لوجهة نظرنا واحترام الإختلاف في الرأي.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F17_3)  توجيه الأسئلة للمحاور عن موضوع الحوار فقط، التشكيك في وجهة نظره والنظر مباشرةً بعين المحاور عندما نعبر عن وجهة نظرنا.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F17_4)  كل ما ذكر.</label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> الأهداف التي نسعى لتحقيقها لها خصائص منها:</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F18_1)  غير محددة بزمن/ مطابقة لأحلامنا.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F18_2)  واقعية وقابلة للتحقيق/محددة بزمن معين.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F18_3)  الأهداف ليس لها خصائص.</label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> ما هو السؤال الذي علينا دائماً الإجابة عليه لفهم ومعالجة أي مشكلة نواجهها؟</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F19_1)  لماذا؟</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F19_2)  أين؟</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F19_3) متى؟</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F19_4)  من؟</label>
+                        </div>
+                        <div class="form-group">
+                            <li class="primary-heading"> أي من العبارات الآتية تعتبر دافعاً من دوافع التطوع؟</li>
+                            <label class="block">@Html.CheckBoxFor(x => x.F20_1)  الرغبة في إظهار الذات وحب الظهور.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F20_2)  الرغبة في تحقيق مكانة مرموقة في المجتمع.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F20_3)  تعلم مهارات جديدة وتطوير المهارات الحالية.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F20_4)  رغبة الإنسان في مجاملة الناس وبناء علاقات اجتماعية.</label>
+                            <label class="block">@Html.CheckBoxFor(x => x.F20_5)  جميع ما ذكر.</label>
+                        </div>
+                    </div>
+                </ol>
+            </div>
+            <div class="card-header">
+                <strong class="text-primary"> أجب على الأسئلة التالية</strong>
+            </div>
+            <div class="card-block col-sm-6">
+                <div class="form-group">
+                    <ul type="none">
+                        <label for="name"><li class="primary-heading">  ما هو أجمل ماتراه في مدينتك؟  </li> </label>
+                        @Html.TextBoxFor(x => x.F21, new { @class = "form-control", @placeholder = "" })
+                    </ul>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="name"> ما الذي تود تغييره في مدينتك إن استطعت؟</label>
+                    @*<textarea class="form-control"></textarea>*@
+                    @Html.TextAreaFor(x => x.F22, new { @class = "form-control", @placeholder = "", @style = "height:75px;" })
+
+                </div>
+                <div class="form-group">
+                    <label for="name"> في رأيك ما هو التلوث البيئي؟</label>
+                    @Html.TextAreaFor(x => x.F23, new { @class = "form-control", @placeholder = "", @style = "height:75px;" })
+                </div>
+                <div class="form-group">
+                    <label for="name"> هل يؤرقك نفاذ الموارد الطبيعية؟</label>
+                    @Html.TextAreaFor(x => x.F24, new { @class = "form-control", @placeholder = "", @style = "height:75px;" })
+                </div>
+                <div class="form-group">
+                    <label for="name"> ما هي السلوكيات التي تود تغييرها في حياتك اليومية للحفاظ على البيئة؟</label>
+                    @Html.TextAreaFor(x => x.F25, new { @class = "form-control", @placeholder = "", @style = "height:75px;" })
+                </div>
+            </div>
+            <div class="card-block col-sm-12">
+                <div class="form-group">
+                    <strong class="text-primary"> الرجاء وضع دائرة على الإجابة التي تتفق معها في الجدول أدناه </strong>
+                </div>
+                <div class="row">
+                    <table class="table table-hover table-outline mb-0">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>العبارة</th>
+                                <th class="text-center">أوافق بشدة</th>
+                                <th class="text-center">لا أوافق</th>
+                                <th class="text-center">محايد</th>
+                                <th class="text-center">لا أوافق</th>
+                                <th class="text-center">
+                                    لا أوافق
+                                    بشدة
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>وجود المعلم/المعلمة شجعني على حضور الدورة.</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F26_1)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F26_2)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F26_3)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F26_4)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F26_5)</td>
+                            </tr>
+                            <tr>
+                                <td>مواضيع البرنامج شجعتني على حضور الدورة.</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F27_1)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F27_2)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F27_3)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F27_4)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F27_5)</td>
+                            </tr>
+                            <tr>
+                                <td>شجعت زملائي في المدرسة على التسجيل في البرنامج.</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F28_1)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F28_2)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F28_3)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F28_4)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F28_5)</td>
+                            </tr>
+                            <tr>
+                                <td>شجعتني عائلتي على التسجيل في الدرة القادمة.</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F29_1)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F29_2)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F29_3)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F29_4)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F29_5)</td>
+                            </tr>
+                            <tr>
+                                <td>لدي حماس لحضور الدورة القادمة.</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F30_1)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F30_2)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F30_3)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F30_4)</td>
+                                <td class="text-center">@Html.CheckBoxFor(x => x.F30_5)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.SessionId)
+            @Html.HiddenFor(x => x.StudentId)
+            <div class="card-footer">
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+            </div>
+        </div>
+
+
+    }
+
+
+            </div>
+        </div>
+    </div>
+</main>
+
+@{
+
+    var cu = Session["user"] as TranningWebApp.Common.ContextUser;
+}
+
+<script type="text/javascript">
+    var role = "@cu.EnumRole";
+    if (role === "SuperAdmin") {
+        $('input').attr('disabled', 'disabled');
+        $('button').hide();
+    }
+</script>

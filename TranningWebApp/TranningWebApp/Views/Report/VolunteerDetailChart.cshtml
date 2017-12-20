@@ -1,0 +1,130 @@
+﻿@model TranningWebApp.Models.GeneralReportModel
+@using TranningWebApp.Resource
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        var chart;
+        var data2;
+    function DownloadReport() {
+        var fileHex = chart.getImageURI();
+        if (fileHex.length == 0)
+            return;
+        var mydata = "@Reports.Status : @Reports.Amount; @Reports.Participated:" + data2.ParticipatedCount + "; @Reports.NotParticipated:" + data2.NotParticipatedCount;
+        var prefix = '%%{ Report: @Reports.VolunteerDetailChart }{  }{ ' + mydata + ' }%%';
+        $.ajax({
+            type: 'POST',
+            url: '/Report/GeneratePdf',
+            data: { 'graphString': prefix + fileHex },
+
+            success: function (pdfPath) {
+                window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+            }
+        });
+
+    }
+        function GenerateReport()
+        {
+
+            $.post("@Url.Action("GetVolunteerDetailData", "Report")",
+                function (data1, status) {
+                    data2 = data1;
+                    if (data1.length == 0) {
+                        document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                        return;
+                    }
+
+                    $("#Participated").text(data1.ParticipatedCount);
+                    $("#Not-Participated").text(data1.NotParticipatedCount);
+                    google.charts.load('current', { packages: ['corechart', 'bar'] });
+                    google.charts.setOnLoadCallback(drawBasic);
+
+                    function drawBasic() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['@Reports.Status', '@Reports.Amount', { role: 'style' }],
+                            ['@Reports.Participated', data1.ParticipatedCount, '#7f6084'],
+                            ['@Reports.NotParticipated', data1.NotParticipatedCount, '#c24642']
+                        ]);
+
+
+                        var options = {
+                            title: "",
+                            width: 800,
+                            height: 500,
+                            bar: { groupWidth: "40%" },
+                            legend: { position: 'none' }
+
+
+                        };
+
+
+                        chart = new google.visualization.BarChart(document.getElementById('School_Reports'));
+
+                        chart.draw(data, options);
+                    }
+                });
+        }
+    </script>
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+                    
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF"  onclick="DownloadReport()"  value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+                            <h3><u>@Reports.ParticipantsDetail</u></h3>
+                            <br>
+                            <table class="table table-hover table-outline mb-0">
+
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th>@Reports.Status</th>
+                                        <th>@Reports.Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Reports.Participated</td>
+                                        <td><span id="Participated"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.NotParticipated</td>
+                                        <td><span id="Not-Participated"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            <hr>
+
+                            <div style="color:red;"  id="School_Reports"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

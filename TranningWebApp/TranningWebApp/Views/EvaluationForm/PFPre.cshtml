@@ -1,0 +1,187 @@
+﻿@model TranningWebApp.Repository.DataAccess.evaluation_pf_pre
+@{
+    ViewBag.Title = "PFPre";
+}
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">الصفحة الرئيسية</li>
+
+        <li class="breadcrumb-item active">الممولين</li>
+
+        <li class="breadcrumb-item active">إضافة ممولين جدد</li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-12 pull-left">
+                @*<form name="form1" action="" method="post">*@
+                @using (Html.BeginForm("PFPre", "EvaluationForm", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary"><h1>برنامج تمويلي الشخصي</h1></strong>
+                            <strong class="text-primary"><p align="center"> التقييم القبلي</p></strong>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                يرجى الإجابة على الأسئلة الواردة أدناه، هدفنا الحصول على إجابات صحيحة من الطالب لنتمكن من تحسين أداء
+                                البرامج المقدمة، وستكون الإجابات موضع ثقة.
+                            </label>
+                        </div>
+                        <div class="card-block col-sm-6">
+
+                            <div class="form-group">
+                                <label for="name">الاسم الكامل:</label>
+                                @Html.TextBoxFor(x => x.F1, new { @class = "form-control", @placeholder = "" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">البريد الالكتروني:</label>
+                                @Html.TextBoxFor(x => x.F2, new { @class = "form-control", @placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label for="name">التاريخ:</label>
+                                @Html.TextBoxFor(x => x.F3, new { @class = "form-control", @placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label for="name">الجنس:</label>
+                                <label for="male"> @Html.RadioButtonFor(x => x.F4, "Male") ذكر</label>
+                                <label for="female"> @Html.RadioButtonFor(x => x.F4, "Female")" أنثى</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">تاريخ الميلاد:</label>
+                                <div>
+                                    @Html.TextBoxFor(x => x.F5_1, new { @class = "form-control  two-digit", @placeholder = "" })
+                                    @Html.TextBoxFor(x => x.F5_2, new { @class = "form-control  two-digit", @placeholder = "" })-
+                                    @Html.TextBoxFor(x => x.F5_3, new { @class = "form-control  two-digit", @placeholder = "" })
+                                    @Html.TextBoxFor(x => x.F5_4, new { @class = "form-control  two-digit", @placeholder = "" })-
+                                    @Html.TextBoxFor(x => x.F5_5, new { @class = "form-control  two-digit", @placeholder = "" })
+                                    @Html.TextBoxFor(x => x.F5_6, new { @class = "form-control  two-digit", @placeholder = "" })
+                                    @Html.TextBoxFor(x => x.F5_7, new { @class = "form-control  two-digit", @placeholder = "" })
+                                    @Html.TextBoxFor(x => x.F5_8, new { @class = "form-control  two-digit", @placeholder = "" })
+                                </div>
+
+                                <label for="name"> اليوم&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;الشهر&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;السنة </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">اسم المدرسة:</label>
+                                @Html.TextBoxFor(x => x.F6, new { @class = "form-control", @placeholder = "" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">اسم المتطوع:</label>
+                                @Html.TextBoxFor(x => x.F7, new { @class = "form-control", @placeholder = "" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">المرحلة الدراسية:</label>
+                                @Html.TextBoxFor(x => x.F8, new { @class = "form-control", @placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label for="name">الفصل الدراسي:</label>
+                                @Html.TextBoxFor(x => x.F9, new { @class = "form-control", @placeholder = "" })
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="name">هل سبق وأن قمت بالمشاركة ببرامج انجاز؟ وكم عددها؟</label>
+
+                            </div>
+                            <label class="block">@Html.CheckBoxFor(x => x.F10_1) هذه المرة الاولى  &nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(x => x.F10_2) ١ &nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(x => x.F10_3) ٢ &nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(x => x.F10_4) ٣  &nbsp;&nbsp;&nbsp;&nbsp; @Html.CheckBoxFor(x => x.F10_5) ٤ &nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(x => x.F10_6) ٥   وأكثر </label>
+                            <div class="card-header">
+                                <strong class="text-primary">أسئلة علمية:</strong>
+                            </div>
+                            <ul type="none">
+                                <div class="card-block col-sm-12">
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <li class="primary-heading"><strong class="text-primary">  ١. رتب من ١ إلى ٣ من حيث الأهمية، ما هو التخطيط المالي :</strong></li>
+                                            <label class="block">@Html.CheckBoxFor(x => x.F11_1) الانفاق بحرص</label>
+                                            <label class="block">@Html.CheckBoxFor(x => x.F11_2) كسب المال</label>
+                                            <label class="block">@Html.CheckBoxFor(x => x.F11_3) ادخار المال</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"> <strong class="text-primary">       ٢ . ما هي أفضل المؤشرات التي تضمن حصولك على المال مستقبلاً؟ </strong></label>
+                                        @Html.TextBoxFor(x => x.F12, new { @class = "form-control", @placeholder = "" })
+                                    </div>
+                                    <div class="form-group">
+                                        <li class="primary-heading"><strong class="text-primary">   ٣. لم تعتقد ادخار المال مهم؟ اختر كل ما تراه صحيحا  </strong> </li>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F13_1) لشراء سلعة ذات مبلغ عالي مثلا: سيارة</label>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F13_2) لحماية مدخراتك المالية</label>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F13_3) لتغطية كل التكاليف غير المتوقعة مثال: علاج بمستشفى</label>
+                                        <label class="block">@Html.CheckBoxFor(x => x.F13_4) لتجنب القرض والديون</label>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table table-hover table-outline mb-0">
+                                            <thead class="thead-default">
+                                <li class="primary-heading"><strong class="text-primary">     ٤. لكل من الحسابات المالية بالأدنى، يرجى تحديد ما تعتقد بأنه حساب ثابت أو حساب متغير؟    </strong>  </li>
+                                <tr>
+                                    <th></th>
+                                    <th class="text-center">حساب ثابت</th>
+                                    <th class="text-center">حساب متغير</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>ايجار السكن</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F14_1)</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F14_2)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>تكاليف السفر</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F15_1)</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F15_2)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>السلع المنزلية</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F16_1)</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F16_2)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>الخدمات التلفزيونية(باقات القنوات، باقات الانترنت)</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F17_1)</td>
+                                        <td class="text-center">@Html.CheckBoxFor(x => x.F17_2)</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(x => x.SessionId)
+                    @Html.HiddenFor(x => x.StudentId)
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> إرسال</button>
+                    </div>
+                </div>
+                        </div>
+                    
+
+                }
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+@{
+
+    var cu = Session["user"] as TranningWebApp.Common.ContextUser;
+}
+
+<script type="text/javascript">
+    var role = "@cu.EnumRole";
+    if (role === "SuperAdmin") {
+        $('input').attr('disabled', 'disabled');
+        $('button').hide();
+    }
+</script>

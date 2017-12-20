@@ -1,0 +1,89 @@
+﻿@using TranningWebApp.Resource
+@model System.Collections.Generic.List<TranningWebApp.Repository.DataAccess.participant_profile>
+
+@{
+    
+}
+
+
+<style type="text/css">
+    .badge-ready {
+        background-color: #EF6A1B;
+    }
+</style>
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@ViewBag.schoolname</li>
+        </li>
+        <li class="breadcrumb-item">@ViewBag.sessionname</li>
+        <!-- Breadcrumb Menu-->
+ 
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+              
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                    <tr>
+                        <th class="text-center">
+                            <i class="icon-people"></i>
+                        </th>
+                        <th>@Participant.Name</th> 
+                        <th>@General.PreEvaluation</th>
+                        <th>@General.PostEvaluation</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model.Count > 0) {
+                        foreach (var item in Model)
+                        {
+                            var sp = item.session_participant.Where(x => x.ParticipantID == item.Id).FirstOrDefault();
+                            var prefilled = sp.IsPreEvaluated != null && sp.IsPreEvaluated.Value;
+                            var postfilled = sp.IsPostEvaluated != null && sp.IsPostEvaluated.Value;
+
+                        <tr>
+                            <td class="text-center">
+                                <div class="avatar">
+                                    <img src="~/img/avatars/evaluation.png" class="img-avatar">
+                                </div>
+
+                            <td>@item.Name</td>
+                            @if (ViewBag.preform != null && prefilled)
+                            {
+                                
+                                <td><a href="@Url.Action(@ViewBag.preform, "EvaluationForm", new {participantid = item.Id, sessionid = ViewBag.sessionid })">@General.ViewResult</a></td>
+                            }
+                            else
+                            {
+                                <td></td> 
+                            }
+                            @if (ViewBag.postform != null && postfilled)
+                            {
+                                <td><a href="@Url.Action(@ViewBag.postform, "EvaluationForm", new { participantid = item.Id, sessionid = ViewBag.sessionid })">@General.ViewResult</a></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                        </tr>
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" align="center"> @General.Norecordfound</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

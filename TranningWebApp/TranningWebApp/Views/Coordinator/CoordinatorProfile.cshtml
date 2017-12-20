@@ -1,0 +1,212 @@
+﻿@model TranningWebApp.Repository.DataAccess.coordinator_profile
+@using TranningWebApp.Resource
+@using TranningWebApp.Common
+@{
+    ViewBag.Title = "Layout";
+
+    string imagePath = Model.PhotoPath != null ? Model.PhotoPath.Replace("~", "") : null;
+   
+        var cu = Session["user"] as ContextUser;
+    
+}
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Coordinator.SchoolCoordinator</li>
+        </li>
+        <li class="breadcrumb-item active">@Coordinator.CompleteProfile</li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            @using (Html.BeginForm("CoordinatorProfile", "Coordinator", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+            {
+
+                <div class="col-sm-6">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary"><i class="icon-plus"></i> @Coordinator.CompleteProfile</strong>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="form-group">
+                                <div class="col-sm-12" style="padding:0px; margin:0px">
+                                    <label for="name">@Participant.FullName</label>
+                                </div>
+                                <div class="col-sm-4" style="padding:0px">
+                                    @Html.TextBoxFor(m => m.CoordinatorName, new { @class = "form-control", @placeholder = @Participant.FirstName })
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @placeholder = @Participant.FatherName })
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(m => m.FaimlyName, new { @class = "form-control", @placeholder = @Participant.FaimlyName })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.CoordinatorName, "", new { @class = "text-danger" })
+
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label>@Coordinator.Emailaddress</label>
+                                @Html.TextBoxFor(m => m.CoordinatorEmail, new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(m => m.CoordinatorEmail, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>@Coordinator.Gender</label>
+                                @Html.DropDownListFor(m => m.Gender, (List<SelectListItem>)ViewBag.gender, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Coordinator.DateofBirth</label>
+                                    <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                    @Html.TextBoxFor(m => m.DateOfBirth, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
+                                    @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                    <label style="width: 100%"></label>
+                                    <label style="font-style: italic">@Coordinator.Hijri</label>
+                                    @Html.TextBoxFor(m => m.IslamicDate, new { @class = "form-control date-islamic" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>@General.MobileNo</label>
+                                @Html.TextBoxFor(m => m.CoordinatorMobile, new { @class = "form-control phone",@maxlength = 10  })
+                                @Html.ValidationMessageFor(m => m.CoordinatorMobile, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>@Coordinator.Class</label>
+                                @Html.TextBoxFor(m => m.Class, new { @class = "form-control" })
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>@Participant.NationalId</label>
+                                @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control",@maxlength = 10 })
+                                @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger" })
+                            </div>
+
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label">@Coordinator.TOTCertificate</label>
+                                <div class="col-md-9">
+                                    <label class="radio-inline" for="inline-radio1">
+                                        <input type="radio" id="inline-radio1" name="HasTOTCertificate" value="True"> @Coordinator.Yes
+                                    </label>
+                                    <label class="radio-inline" for="inline-radio2">
+                                        <input type="radio" id="inline-radio2" name="HasTOTCertificate" checked value="False">@Coordinator.No
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Volunteer.AcademicQualifications</label>
+                                @Html.TextBoxFor(m => m.AcademicQualification, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.AcademicQualification, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.AcademicQualification2, new { @class = "form-control", @style = "margin-top:5px" })
+                                @Html.TextBoxFor(m => m.AcademicQualification3, new { @class = "form-control", @style = "margin-top:5px" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Coordinator.Photo</label>
+                                <input type="file" name="file" class="form-control" id="profile-img">
+                                <hr>
+                                <img src="@imagePath" id="profile-img-tag" width="150" height="150" />
+
+                                <script type="text/javascript">
+                                        function readURL(input) {
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
+
+                                                reader.onload = function (e) {
+                                                    $('#profile-img-tag').attr('src', e.target.result);
+                                                }
+                                                reader.readAsDataURL(input.files[0]);
+                                            }
+                                        }
+                                        $("#profile-img").change(function () {
+                                            readURL(this);
+                                        });
+                                </script>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary">@Coordinator.Otherdetails</strong>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="form-group">
+                                <label>@Coordinator.VolunteerActivity1</label>
+                                @Html.TextAreaFor(m => m.VolunteerActivity1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.VolunteerActivity1, "", new { @class = "text-danger" })
+                                 
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Coordinator.VolunteerActivity2</label>
+                                @Html.TextAreaFor(m => m.VolunteerActivity2, new { @class = "form-control" })
+                               
+                            </div>
+
+                            <div class="form-group">
+                                <label>@Coordinator.VolunteerActivity3</label>
+                                @Html.TextAreaFor(m => m.VolunteerActivity3, new { @class = "form-control" })
+                                
+                            </div> 
+                            <div class="form-group">
+                                <label@Coordinator.>@Coordinator.OtherCertificates</label@Coordinator.>
+                                @Html.TextBoxFor(m => m.OtherCertificate1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.OtherCertificate1, "", new { @class = "text-danger" })
+
+                               
+                                <br />
+                                @Html.TextBoxFor(m => m.OtherCertificate2, new { @class = "form-control" })
+                             
+                                <br />
+                                @Html.TextBoxFor(m => m.OtherCertificate3, new { @class = "form-control" })
+                              
+                            </div>
+                             
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i>@Coordinator.Submit</button>
+                        </div>
+
+                    </div>
+
+                </div>
+                @Html.HiddenFor(x=>x.Id)
+            }
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+
+    var isSuperAdmin = "@(cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)";
+        if (isSuperAdmin == "True") {
+            $('button').hide();
+            $('input,select,textarea').attr("disabled", "disabled");
+        }
+
+
+
+</script>

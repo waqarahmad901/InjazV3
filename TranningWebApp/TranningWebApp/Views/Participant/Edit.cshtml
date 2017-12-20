@@ -1,0 +1,131 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Repository.DataAccess.participant_profile
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Participant.ParticipantLabel</li>
+        </li>
+        @if (Model.Id > 0)
+        {
+            <li class="breadcrumb-item active"> @General.Edit @Menu.Participant</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item active"> @Participant.AddnewParticipant</li>
+        }
+
+
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-6">
+                @using (Html.BeginForm("Edit", "Participant", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+
+                            @if (Model.Id > 0)
+                            {
+                                <strong class="text-primary"><i class="icon-plus"></i> @General.Edit @Menu.Participant</strong>
+                            }
+                            else
+                            {    
+                                 <strong class="text-primary"><i class="icon-plus"></i> @Participant.AddnewParticipant</strong>
+
+                            }
+
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <div class="col-sm-12" style="padding:0px; margin:0px">
+                                    <label for="name">@Participant.FullName</label>
+                                </div>
+                                <div class="col-sm-4" style="padding:0px">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = @Participant.FirstName })
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @placeholder = @Participant.FatherName })
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(m => m.Family, new { @class = "form-control", @placeholder = @Participant.FaimlyName })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <div class="form-group">
+                                <label for="phone",@maxlength = 10 >@Participant.NationalId</label>
+                                @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control", @maxlength = 10 })
+                                @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mobile">@General.MobileNo</label>
+                                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control phone",@maxlength = 10  })
+                                @Html.ValidationMessageFor(m => m.Mobile, "", new { @class = "text-danger" })
+                            </div>
+
+                            @if (Model == null || Model.Id == 0)
+                            {
+                                <div class="form-group">
+                                    <label for="email">@General.Email</label>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    @if (ViewBag.EmailExist != null)
+                                    {
+                                        <span class="text-danger field-validation-error" data-valmsg-for="FunderEmail" data-valmsg-replace="true"><span for="FunderEmail" class="">@General.EmailExist</span></span>
+                                    }
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">@Participant.Password</label>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <label for="email">@General.Email</label>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+
+                            <div class="form-group">
+                                <label for="password">@Participant.Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password, @disabled = "disabled" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            }
+
+                            <div class="form-group">
+                                <label for="active">@General.Active</label>
+                                <label class="switch switch-icon switch-pill switch-success mt-2">
+                                    @Html.CheckBoxFor(Model => Model.isActive, new { @class = "switch-input", @id = "active" })
+                                    <span class="switch-label" data-on="" data-off=""></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                            </div>
+                            @if (Model != null && Model.Id > 0)
+                            {
+                                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                                @Html.HiddenFor(Model => Model.ParticipantUserID)
+
+                            }
+                        </div>             <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</main>

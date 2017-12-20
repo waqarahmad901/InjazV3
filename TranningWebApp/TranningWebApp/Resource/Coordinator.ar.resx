@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddnewSchoolCoordinator" xml:space="preserve">
+    <value>إضافة منسقي المدارس</value>
+  </data>
+  <data name="AddSchoolCoordinator" xml:space="preserve">
+    <value>إضافة منسقي المدارس</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>تم الموافقة</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>الصف الدراسي</value>
+  </data>
+  <data name="CompleteProfile" xml:space="preserve">
+    <value>إكمال الملف الشخصي</value>
+  </data>
+  <data name="Completeregisterationform" xml:space="preserve">
+    <value>إكمال نموذج  التسجيل</value>
+  </data>
+  <data name="Contactdetails" xml:space="preserve">
+    <value>تفاصيل بيانات التواصل</value>
+  </data>
+  <data name="CoordinatorEmail" xml:space="preserve">
+    <value>البريد الإلكتروني للمرشد الطلابي</value>
+  </data>
+  <data name="CoordinatorLabel" xml:space="preserve">
+    <value>المرشد الطلابي</value>
+  </data>
+  <data name="CoordinatorName" xml:space="preserve">
+    <value>اسم المرشد الطلابي</value>
+  </data>
+  <data name="DateofBirth" xml:space="preserve">
+    <value>تاريخ الميلاد</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>الحي</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>المستندات (نموذج الموافقة)</value>
+  </data>
+  <data name="Emailaddress" xml:space="preserve">
+    <value>عنوان البريد الإلكتروني</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>الفاكس</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>نوع الجنس</value>
+  </data>
+  <data name="Gorgian" xml:space="preserve">
+    <value>تاريخ الميلادي</value>
+  </data>
+  <data name="Hijri" xml:space="preserve">
+    <value>تاريخ الهجري</value>
+  </data>
+  <data name="NationalID" xml:space="preserve">
+    <value>رقم الهوية الوطنية</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="OtherCertificates" xml:space="preserve">
+    <value>شهادات أخرى</value>
+  </data>
+  <data name="Otherdetails" xml:space="preserve">
+    <value>تفاصيل أخرى</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمه السر</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>الصورة الشخصية</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>المنطقة</value>
+  </data>
+  <data name="Registeration" xml:space="preserve">
+    <value>التسجيل</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>تاريخ التسجيل</value>
+  </data>
+  <data name="SchoolCoordinator" xml:space="preserve">
+    <value>المرشد الطلابي للمدرسة</value>
+  </data>
+  <data name="SchoolGeoLocation" xml:space="preserve">
+    <value> الموقع الجغرافي للمدرسة</value>
+  </data>
+  <data name="SchoolGoogleAccount" xml:space="preserve">
+    <value>رابط حساب  Google</value>
+  </data>
+  <data name="SchoolGuardMobile" xml:space="preserve">
+    <value>رقم جوال حارس المدرسة</value>
+  </data>
+  <data name="SchoolGuardName" xml:space="preserve">
+    <value>اسم حارس المدرسة</value>
+  </data>
+  <data name="SchoolID" xml:space="preserve">
+    <value>الرقم الوزاري للمدرسة</value>
+  </data>
+  <data name="SchoolLinkedinAccount" xml:space="preserve">
+    <value>رابط حساب لينكدين</value>
+  </data>
+  <data name="SchoolManagerEmail" xml:space="preserve">
+    <value>البريد الإلكتروني لمدير المدرسة</value>
+  </data>
+  <data name="SchoolManagerMobile" xml:space="preserve">
+    <value>رقم جوال مدير المدرسة</value>
+  </data>
+  <data name="SchoolManagerName" xml:space="preserve">
+    <value>اسم مدير المدرسة</value>
+  </data>
+  <data name="SchoolName" xml:space="preserve">
+    <value>اسم المدرسة</value>
+  </data>
+  <data name="SchoolWebsite" xml:space="preserve">
+    <value>رابط موقع المدرسة (إن وجد )</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="Telephone" xml:space="preserve">
+    <value>رقم الهاتف الثابت</value>
+  </data>
+  <data name="TOTCertificate" xml:space="preserve">
+    <value>شهادة تدريب المدربين</value>
+  </data>
+  <data name="UploadDocument" xml:space="preserve">
+    <value>رفع الملف بصيغىة ( ملف إكسيل )</value>
+  </data>
+  <data name="VolunteerActivity1" xml:space="preserve">
+    <value>النشاط التطوعي الأول</value>
+  </data>
+  <data name="VolunteerActivity2" xml:space="preserve">
+    <value>النشاط التطوعي الثاني</value>
+  </data>
+  <data name="VolunteerActivity3" xml:space="preserve">
+    <value>النشاط التطوعي الثالث</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="cordErrorMsg" xml:space="preserve">
+    <value>نحن سوف نعود اليكم في وقت قريب. حاليا الخروج من النظام</value>
+  </data>
+  <data name="LatError" xml:space="preserve">
+    <value>أدخل قيمة صالحة</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>خط العرض</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>خط الطول</value>
+  </data>
+  <data name="SchoolGeoLocations" xml:space="preserve">
+    <value>الموقع الجغرافي للمدرسة</value>
+  </data>
+  <data name="SchoolLocations" xml:space="preserve">
+    <value>مواقع المدرسة</value>
+  </data>
+  <data name="StageOfSchool" xml:space="preserve">
+    <value>المرحلة من المدرسة</value>
+  </data>
+  <data name="TypeOfSchool" xml:space="preserve">
+    <value>نوع المدرسة</value>
+  </data>
+  <data name="NoOfSession" xml:space="preserve">
+    <value>عدد الدورات</value>
+  </data>
+  <data name="ShowProfile" xml:space="preserve">
+    <value>الملف الشخصي للمدرسة</value>
+  </data>
+  <data name="schoollocationmsg" xml:space="preserve">
+    <value>انقر هنا لعرض موقع المدرسة</value>
+  </data>
+  <data name="SchoolFaceBook" xml:space="preserve">
+    <value>كتاب وجه المدرسة</value>
+  </data>
+  <data name="schoolregisterationdetail" xml:space="preserve">
+    <value>تفاصيل تسجيل المدرسة</value>
+  </data>
+  <data name="SchoolYouTube" xml:space="preserve">
+    <value>مدرسة أنت الأنبوبة</value>
+  </data>
+  <data name="ShowCordProfile" xml:space="preserve">
+    <value>الملف الشخصي للمنسق</value>
+  </data>
+  <data name="Initial" xml:space="preserve">
+    <value>مبدئي</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>قيد الانتظار</value>
+  </data>
+  <data name="AddNewSubcoordinator" xml:space="preserve">
+    <value>إضافة مرشد طلابي للمدرسة</value>
+  </data>
+  <data name="Subcoordinator" xml:space="preserve">
+    <value>المنسق الفرعي</value>
+  </data>
+  <data name="RequestStatus" xml:space="preserve">
+    <value>حالة الطلب</value>
+  </data>
+</root>

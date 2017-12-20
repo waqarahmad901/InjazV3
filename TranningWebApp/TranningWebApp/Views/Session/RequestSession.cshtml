@@ -1,0 +1,47 @@
+﻿@model List<TranningWebApp.Repository.DataAccess.session>
+@using TranningWebApp.Resource
+@{ 
+    string studentId = Request.QueryString["studentId"];
+}
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Participant.ParticipantLabel</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="col-sm-6">
+                @using (Html.BeginForm("RequestSession", "Session", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary"> @SessionX.AssignSessions</strong>
+                        </div>
+                        <div class="card-block">
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <div class="form-group">
+                                    @Html.CheckBoxFor(x => Model[i].IsSelected, new { @style = "margin-top:5px", @class = "check" })
+                                    <label style="margin-left:10px">@Model[i].ProgramName</label>
+                                </div>
+                                @Html.HiddenFor(x => Model[i].Id)
+                            }
+                        </div>
+                        <input type="hidden" name="sessionid" value="@studentId" />
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,35 @@
+﻿@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    @if (!string.IsNullOrEmpty(Model.CoordinatorName))
+    {
+        <br /><text>Dear</text><b> @Model.CoordinatorName</b>
+    }
+    @if (!string.IsNullOrEmpty(Model.VolunteerName))
+    {
+        <br /><text>Dear</text><b> @Model.VolunteerName</b>
+    }
+    @if (!string.IsNullOrEmpty(Model.User))
+    {
+        <br /><text>Dear</text><b> @Model.User</b>
+    }
+    <br />
+    <br />
+    This is to inform you that the session <b>@Model.SessionTitle</b> has occured.
+    <br />
+    <br /> 
+    Regards
+    <br />
+    Administrator
+    <br />
+    @Model.User
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddInBulk" xml:space="preserve">
+    <value>إضافة ملف كامل</value>
+  </data>
+  <data name="Addnewsession" xml:space="preserve">
+    <value>إضافة جلسة تدريبية جديدة</value>
+  </data>
+  <data name="AddStudent" xml:space="preserve">
+    <value>إضافة طالب</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>تم الموافقة</value>
+  </data>
+  <data name="ApprovedbyAdmin" xml:space="preserve">
+    <value>تمت الموافقة علي الطلب من مسؤول  النظام</value>
+  </data>
+  <data name="ChangeDate" xml:space="preserve">
+    <value>تغيير التاريخ</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>تأكيد على الطلب</value>
+  </data>
+  <data name="ConfirmKitReceivedBySchool" xml:space="preserve">
+    <value>تأكيد على استلام أدوات التدريب من المدرسة</value>
+  </data>
+  <data name="FeedBack" xml:space="preserve">
+    <value>رأيك</value>
+  </data>
+  <data name="Fillupvolunteerevaluation" xml:space="preserve">
+    <value>تعبئة  تقييم المتطوع</value>
+  </data>
+  <data name="Hijri" xml:space="preserve">
+    <value>تاريخ الهجري</value>
+  </data>
+  <data name="MarkComplete" xml:space="preserve">
+    <value>اكتمل</value>
+  </data>
+  <data name="MarkCompleted" xml:space="preserve">
+    <value>تم اكتمل الطلب</value>
+  </data>
+  <data name="NewSession" xml:space="preserve">
+    <value>جلسة تدريبية  جديدة</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="ProgramName" xml:space="preserve">
+    <value>اسم البرنامج</value>
+  </data>
+  <data name="ProgramPurpose" xml:space="preserve">
+    <value>البرنامج المقترح</value>
+  </data>
+  <data name="ProposedDate" xml:space="preserve">
+    <value>التاريخ المقترح</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>طلب</value>
+  </data>
+  <data name="RequestedDate" xml:space="preserve">
+    <value>التاريخ المطلوب</value>
+  </data>
+  <data name="RequestThisSession" xml:space="preserve">
+    <value>طلب هذه الجلسة التدريبية</value>
+  </data>
+  <data name="School" xml:space="preserve">
+    <value>المدرسة</value>
+  </data>
+  <data name="SchoolName" xml:space="preserve">
+    <value>اسم المدرسة</value>
+  </data>
+  <data name="SchoolProposedDate" xml:space="preserve">
+    <value>تاريخ المدرسة المقترح</value>
+  </data>
+  <data name="SendthekitbyMailCourier" xml:space="preserve">
+    <value>إرسال أدوات التدريب  بالبريد السريع</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>جلسة التدريبية</value>
+  </data>
+  <data name="Sessionhasoccured" xml:space="preserve">
+    <value>تم انعقاد الجلسة التدريبية</value>
+  </data>
+  <data name="SessionManagement" xml:space="preserve">
+    <value>إدارة الجلسة التدريبية</value>
+  </data>
+  <data name="Sessionmarkedcompletedbyvolunteer" xml:space="preserve">
+    <value>تم اكتمال الجلسة التدريبية من المتطوع</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="StudentCertificate" xml:space="preserve">
+    <value>شهادة الطالب</value>
+  </data>
+  <data name="StudentEvaluation" xml:space="preserve">
+    <value>تقييم الطالب</value>
+  </data>
+  <data name="StudentManagement" xml:space="preserve">
+    <value>إدارة الطالب</value>
+  </data>
+  <data name="StudentName" xml:space="preserve">
+    <value>أسم الطالب</value>
+  </data>
+  <data name="StudnetAttendence" xml:space="preserve">
+    <value>تحضير الطالب للجلسة التدريبية.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="SubmitPostEvaluation" xml:space="preserve">
+    <value>إرسال  التقييم  بعد الجلسة</value>
+  </data>
+  <data name="SubmitPreEvaluation" xml:space="preserve">
+    <value>إرسال  التقييم  قبل الجلسة</value>
+  </data>
+  <data name="TargetGroup" xml:space="preserve">
+    <value>المجموعة المستهدفة</value>
+  </data>
+  <data name="UploadAddevluationformphoto" xml:space="preserve">
+    <value>تحميل صورة نموذج التقييم</value>
+  </data>
+  <data name="UploadAddsessionformphoto" xml:space="preserve">
+    <value>تحميل إضافة صورة الجلسة التدريبية</value>
+  </data>
+  <data name="UploadExcel" xml:space="preserve">
+    <value>رفغ  ملف الإكسيل</value>
+  </data>
+  <data name="ViewCertificate" xml:space="preserve">
+    <value>عرض الشهادة</value>
+  </data>
+  <data name="Volunteer" xml:space="preserve">
+    <value>متطوع</value>
+  </data>
+  <data name="VolunteerCertificate" xml:space="preserve">
+    <value>شهادة المتطوع</value>
+  </data>
+  <data name="SessionMarkedCompleted" xml:space="preserve">
+    <value>يتم وضع علامة علامة الانتهاء من قبل المتطوعين</value>
+  </data>
+  <data name="SessionMarkedCompletedCoordniator" xml:space="preserve">
+    <value>تم وضع علامة على جلسة الانتهاء من قبل منسق</value>
+  </data>
+  <data name="UploadPhotos" xml:space="preserve">
+    <value>تحميل الصور</value>
+  </data>
+  <data name="AssignThisSession" xml:space="preserve">
+    <value>تعيين هذه الجلسة</value>
+  </data>
+  <data name="StudentAttendense" xml:space="preserve">
+    <value>حضور الطالب</value>
+  </data>
+  <data name="FillUpCoordinatorForm" xml:space="preserve">
+    <value>نموذج منسق التعبئة</value>
+  </data>
+  <data name="AssignSessions" xml:space="preserve">
+    <value>تعيين الجلسات</value>
+  </data>
+  <data name="SessionDetail" xml:space="preserve">
+    <value>تفاصيل الجلسة</value>
+  </data>
+  <data name="DownloadExcel" xml:space="preserve">
+    <value>تنزيل نموذج إكسيل</value>
+  </data>
+  <data name="MarkStudentAttendense" xml:space="preserve">
+    <value>وضع علامة على حضور الطالب</value>
+  </data>
+</root>

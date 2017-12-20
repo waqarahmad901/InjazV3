@@ -1,0 +1,203 @@
+﻿@using TranningWebApp.Resource
+@model TranningWebApp.Repository.DataAccess.participant_profile
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Injaz</title>
+<!-- Icons -->
+<link href="~/Content/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/simple-line-icons.css" rel="stylesheet">
+<!-- Main styles for this application -->
+<link href='~/Content/fullcalendar.css' rel='stylesheet' />
+<link href="~/Content/simplePagination.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/Content/cust-style.css" rel="stylesheet" />
+<link href="~/Scripts/dropzone/basic.min.css" rel="stylesheet" />
+<link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
+<link href="~/Content/remodal.css" rel="stylesheet" />
+<link href="~/Content/jquery.calendars.picker.css" rel="stylesheet" />
+<link href="~/Content/intlTelInput.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet">
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src='~/Scripts/moment.min.js'></script>
+<script src="~/Scripts/fullcalendar.min.js"></script>
+<script src="~/Scripts/jquery.simplePagination.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<script src="~/Scripts/remodal.js"></script>
+<script src="~/Scripts/clander/jquery.calendars.js"></script>
+<script src="~/Scripts/clander/jquery.calendars.plus.js"></script>
+<script src="~/Scripts/clander/jquery.calendars.islamic.js"></script>
+<script src="~/Scripts/clander/jquery.plugin.js"></script>
+<script src="~/Scripts/clander/jquery.calendars.picker.js"></script>
+<script src="~/Scripts/clander/date.conversion.js"></script>
+
+<script src="~/Scripts/data.js"></script>
+
+<script src="~/Scripts/intlTelInput.js"></script>
+
+<style type="text/css">
+    #stuform .form-group {
+        clear:both;
+    }
+  *[dir="rtl"]  #stuform  label {
+        float: right;
+    } 
+   *[dir="rtl"] #stuform span {
+        float: right;
+    }
+    *[dir="rtl"] #stuform  strong {
+        float: right;
+    }
+</style>
+@using (Html.BeginForm("Edit", "Participant", FormMethod.Post, new { @class = "form-horizontal", id="stuform", role = "form" }))
+            {
+    <div class="card">
+        <div class="card-header">
+            <strong class="text-primary"><i class="icon-plus"></i> @Participant.ParticipantDetail</strong>
+        </div>
+        <div class="card-block">
+            <div class="form-group">
+                <div class="col-sm-12" style="padding:0px; margin:0px">
+                    <label for="name">@Participant.FullName</label>
+                </div>
+                <div class="col-sm-4" style="padding:0px">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = @Participant.FirstName })
+                </div>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @placeholder = @Participant.FatherName })
+                </div>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Family, new { @class = "form-control", @placeholder = @Participant.FaimlyName })
+                </div>
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+
+            </div>
+
+            <div class="form-group">
+                <label for="phone",@maxlength = 10 >@Participant.NationalId</label>
+                @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control", @maxlength = 10 })
+                @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger" })
+
+
+
+
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">@General.MobileNo</label>
+                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control phone",@maxlength = 10 })
+                @Html.ValidationMessageFor(m => m.Mobile, "", new { @class = "text-danger" })
+                @Html.HiddenFor(x => x.MobileNo)
+            </div>
+
+            @if (Model == null || Model.Id == 0)
+            {
+                <div class="form-group">
+                    <label for="email">@General.Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id="email", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    <span class="text-danger field-validation-error" id="emailvalidation" data-valmsg-for="FunderEmail" data-valmsg-replace="true" style="display:none"><span for="FunderEmail" class="">@General.EmailExist</span></span>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label for="password">@Participant.Password</label>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password, @autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+
+                </div>
+
+            }
+            else
+            {
+                <div class="form-group">
+                    <label for="email">@General.Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group">
+                    <label for="password">@Participant.Password</label>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", value = Model.Password, @autocomplete = "off", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+
+                </div>
+            }
+          
+
+
+
+            @*<div class="form-group">
+                <label for="active">@Participant.Active</label>
+                <label class="switch switch-icon switch-pill switch-success mt-2">
+                    @Html.CheckBoxFor(Model => Model.isActive, new { @class = "switch-input", @id = "active" })
+                    <span class="switch-label" data-on="" data-off=""></span>
+                    <span class="switch-handle"></span>
+                </label>
+            </div>*@
+            @if (Model != null && Model.Id > 0)
+            {
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                            @Html.HiddenFor(Model => Model.ParticipantUserID)
+
+            }
+            @Html.HiddenFor(x=>x.isActive,new {value = true })
+            @Html.HiddenFor(x => x.SessionId)
+            @Html.HiddenFor(x => x.Id)
+            <input type="hidden" name="participant" value="true" />
+        </div>
+        <div class="card-footer">
+            <button type="button" id="submitgbutton" data-loading-text="<i class='fa fa-dot-circle-o'></i> @General.Submit <i class='fa fa-spinner fa-spin'></i>" class="btn btn-sm btn-primary pull-right" onclick="submitform()"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
+        </div>
+
+    </div>
+
+}
+
+<script type="text/javascript">
+
+    
+    function submitform() { 
+       // e.preventDefault();
+        if ($("#stuform").valid()) {
+            $('#submitgbutton').button('loading');
+            debugger;
+           
+            // check if email is already exist
+            $.ajax({
+                url : "/Participant/CheckEmail",
+                type : "get",
+                async: false,
+                data : {  email: $("#email").val()  },
+                success:function (data, status) {
+                    $('#submitgbutton').button('reset');
+                    if (data == true) {
+                        $("#emailvalidation").show();
+                        
+                    }
+                    else {
+                        debugger;
+                        var intlNumber = $(".selected-dial-code").text() + $("#Mobile").val();
+                        $("#MobileNo").val(intlNumber); 
+                        $("#stuform").submit();
+                    }
+                }    
+             }); 
+        }  
+    }
+
+</script> 
+
+<script src="~/Scripts/app.js"></script>

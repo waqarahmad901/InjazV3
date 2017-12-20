@@ -1,0 +1,23 @@
+﻿@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.CoordinatorName</b>
+    <br />
+    <br />
+    This is to inform you that Administrator <b>@Model.User</b> has send kit for session <b>@Model.SessionTitle</b> by mail courier.
+    <br />
+    <br /> 
+    Regards
+    <br />
+    Administrator
+    <br />
+    @Model.User
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

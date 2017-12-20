@@ -1,0 +1,66 @@
+﻿@model TranningWebApp.Repository.DataAccess.school
+
+@using TranningWebApp.Resource
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item">@Coordinator.SchoolLocations</li>
+           
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-sm-6">
+                @using (Html.BeginForm("SchoolLocation", "Coordinator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary"><i class="icon-plus"></i> @Coordinator.SchoolGeoLocations</strong>
+                        </div>
+                        <div class="card-block">
+
+                            @*<div class="form-group">
+                                <label for="name">@Coordinator.Latitude</label>
+                                @Html.TextBoxFor(m => m.Lat, new { @class = "form-control", @maxlength = 11 })
+
+                            </div>
+                            <div class="form-group">
+                                <label for="name">@Coordinator.Longitude</label>
+                                @Html.TextBoxFor(m => m.Lng, new { @class = "form-control", @maxlength = 11 })
+                            </div>*@
+                            @if(!string.IsNullOrEmpty(Model.SchoolGeoLocation))
+                            { 
+                            <div class="form-group">
+                                
+                                <b><label class="form-control" style="border: none">
+                                     <a href="@Model.SchoolGeoLocation" target="_blank">@Coordinator.schoollocationmsg</a>
+                                    </label>
+                                </b>
+
+                            </div>
+                            }
+                            <div class="form-group">
+                                <label>@Coordinator.SchoolGeoLocation</label>
+                                @Html.TextBoxFor(m => m.SchoolGeoLocation, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.SchoolGeoLocation, "", new { @class = "text-danger" })
+                            </div>
+
+                            @Html.HiddenFor(x => x.Id)
+                        </div>
+                        <div class="card-footer"> 
+                                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
+                             
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</main>
+

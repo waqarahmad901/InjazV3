@@ -1,0 +1,235 @@
+﻿@model TranningWebApp.Repository.DataAccess.volunteer_profile
+@using TmsWebApp.Common;
+@using TmsWebApp.HelpingUtilities
+@using TranningWebApp.Common
+@using TranningWebApp.Resource
+@{
+    ViewBag.Title = "Edit";
+    bool isApproved = Model.IsApprovedAtLevel1 != null && Model.IsApprovedAtLevel1.Value
+        && Model.IsApprovedAtLevel2 != null && Model.IsApprovedAtLevel2.Value
+        && Model.IsApprovedAtLevel3 != null && Model.IsApprovedAtLevel3.Value;
+
+    var cu = Session["user"] as ContextUser;
+}
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Menu.Volunteer</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="col-sm-6">
+                @using (Html.BeginForm("Edit", "Supervisor", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="text-primary">@Supervisor.VolunteersApproval</strong>
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.NationalID</label>
+                                <input type="text" class="form-control" value="@Model.NationalID" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.Name</label>
+                                <input type="text" class="form-control" value="@Model.VolunteerName" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@General.MobileNo</label>
+                                <input type="text" class="form-control phone" value="@Model.VolunteerMobile" disabled>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6" >
+                                    <label style="width: 100%">@Supervisor.DateofBirth</label>
+                                    <label style="font-style: italic">@Supervisor.Gorgian</label>
+                                    <input type="text" class="form-control" value="@Model.DateOfBirth.ToShortDateString()" disabled>
+                                </div>
+                                <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                    <label style="width: 100%"></label>
+                                    <label style="font-style: italic">@Supervisor.Hijri</label>
+                                    <input type="text" class="form-control" value="@Util.DateConversion(Model.DateOfBirth.ToShortDateString(),"Hijri","en-us")" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.Gender</label>
+                                <input type="text" class="form-control" value="@Model.Gender" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@General.Email</label>
+                                <input type="text" class="form-control" value="@Model.VolunteerEmail" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.AcademicQualification</label>
+                                <input type="text" class="form-control" value="@Model.AcademicQualification" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.Company</label>
+                                <input type="text" class="form-control" value="@Model.CompanyName" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.Experience</label>
+                                <input type="text" class="form-control" value="@Model.VolunteerExperince1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.Telephone</label>
+                                <input type="text" class="form-control phone" value="@Model.Telephone" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.Region</label>
+                                <input type="text" class="form-control" value="@Model.Region" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.City</label>
+                                <input type="text" class="form-control" value="@Model.City" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-form-control-label">@Supervisor.LinkedIn</label>
+                                <input type="text" class="form-control" value="@Model.LinkedIn" disabled>
+                            </div>
+                            @if ((Model.IsApprovedAtLevel1 != null && Model.IsApprovedAtLevel1.Value )||(Model.IsRejected != null && Model.IsRejected.Value))
+                            {
+                                <div class="checkbox form-group">
+                                    <label for="level1">
+                                        <input type="checkbox" checked disabled id="level1"  style="display:none"> @Supervisor.Level1Approved
+                                    </label>
+                                    <a href="#" class="pull-right comment">@Supervisor.Comments</a>
+                                    <textarea class="form-control comment-box" disabled>@Model.ApprovedAtLevel1Comments</textarea>
+                                </div>
+                                @Html.HiddenFor(x=>x.ApprovedAtLevel1Comments)
+                            }
+                            else if (Model.IsApprovedAtLevel1 == null || !Model.IsApprovedAtLevel1.Value)
+                            {
+                                <div class="checkbox form-group">
+                                    <label for="level1">
+                                        <input type="checkbox" id="level1"  style="display:none"> @Supervisor.Level1Approved
+                                    </label>
+                                    <a href="#" class="pull-right comment"><i class="fa fa-plus-square"></i> @Supervisor.AddComment</a>
+                                    @Html.TextAreaFor(x => x.ApprovedAtLevel1Comments, new { @class = "form-control comment-box" })
+                                </div>
+                            }
+                            @if ((Model.IsApprovedAtLevel2 != null && Model.IsApprovedAtLevel2.Value) || (Model.IsRejected != null && Model.IsRejected.Value))
+                            {
+                                <div class="checkbox form-group">
+                                    <label for="level2">
+                                        <input type="checkbox" checked disabled id="level2"  style="display:none"> @Supervisor.Level2Approved
+                                    </label>
+                                    <a href="#" class="pull-right comment">@Supervisor.Comments</a>
+                                    <textarea class="form-control comment-box" disabled>@Model.ApprovedAtLevel2Comments</textarea>
+                                </div>
+                                @Html.HiddenFor(x => x.ApprovedAtLevel2Comments)
+
+                            }
+                            else if (Model.IsApprovedAtLevel1 != null && Model.IsApprovedAtLevel1.Value && (Model.IsApprovedAtLevel2 == null || !Model.IsApprovedAtLevel2.Value))
+                            {
+                                <div class="checkbox form-group">
+                                    <label for="level2">
+                                        <input type="checkbox" id="level2" style="display:none"> @Supervisor.Level2Approved
+                                    </label>
+                                    <a href="#" class="pull-right comment"><i class="fa fa-plus-square"></i> @Supervisor.AddComment</a>
+                                    @Html.TextAreaFor(x => x.ApprovedAtLevel2Comments, new { @class = "form-control comment-box" })
+                                </div>
+                            }
+                            @if ((Model.IsApprovedAtLevel3 != null && Model.IsApprovedAtLevel3.Value) || (Model.IsRejected != null && Model.IsRejected.Value))
+                            {
+                                <div class="checkbox form-group">
+                                    <label for="level2">
+                                        <input type="checkbox" checked disabled id="level2" style="display:none"> @Supervisor.Level3Approved
+                                    </label>
+                                    <a href="#" class="pull-right comment">@Supervisor.Comments</a>
+                                    <textarea class="form-control comment-box" disabled>@Model.ApprovedAtLevel3Comments</textarea>
+                                </div>
+                                @Html.HiddenFor(x => x.ApprovedAtLevel3Comments)
+
+                            }
+                            else if (Model.IsApprovedAtLevel1 != null && Model.IsApprovedAtLevel1.Value
+                                && Model.IsApprovedAtLevel2 != null && Model.IsApprovedAtLevel2.Value
+                                )
+                            {
+                                <div class="checkbox form-group">
+                                    <label for="level2">
+                                        <input type="checkbox" id="level2"  style="display:none"> @Supervisor.Level3Approved
+                                    </label>
+                                    <a href="#" class="pull-right comment"><i class="fa fa-plus-square"></i> @Supervisor.AddComment</a>
+                                    @Html.TextAreaFor(x => x.ApprovedAtLevel3Comments, new { @class = "form-control comment-box" })
+
+                                </div>
+                            }
+
+                            @if (!Model.OTAcceptedByVolunteer && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
+                            {
+                                <div class="form-group">
+                                    <label class="form-form-control-label">@Supervisor.SetOT</label>
+                                    @Html.DropDownListFor(m => m.OTId, (List<SelectListItem>)ViewBag.Otsdd, new { @class = "form-control" })
+                                </div>
+                            }
+                            @if (Model.orientation_training != null && cu.EnumRole == EnumUserRole.Volunteer)
+                            {
+                                <div class="form-group">
+                                    <label class="form-form-control-label">@Supervisor.SetOT</label>
+                                    @Html.DropDownListFor(m => m.OTId, (List<SelectListItem>)ViewBag.Otsdd, new { @class = "form-control", @disabled = "disabled" })
+                                </div>
+                                @Html.CheckBoxFor(x => x.OTAcceptedByVolunteer, new { @style = "margin-top:5px" })
+                                <label style="margin-left:10px">@Supervisor.Accecptedbyvolunteer </label>
+                            }
+
+                            @if (Model.OTAcceptedByVolunteer && cu.EnumRole == EnumUserRole.SuperAdmin)
+                            {
+                                <div class="form-group">
+                                    <label class="form-form-control-label">@Supervisor.SetOT</label>
+                                    @Html.DropDownListFor(m => m.OTId, (List<SelectListItem>)ViewBag.Otsdd, new { @class = "form-control", @disabled = "disabled" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.CheckBoxFor(x => x.OTAcceptedByVolunteer, new { @style = "margin-top:5px", @disabled = "disabled" })
+                                    <label style="margin-left:10px">@Supervisor.Accecptedbyvolunteer </label>
+                                </div>
+                                <div class="form-group">
+                                    @Html.CheckBoxFor(x => x.OTAttendenceForVolunteer, new { @style = "margin-top:5px" })
+                                    <label style="margin-left:10px">@Supervisor.OTAttendance</label>
+                                </div>
+                                    }
+                                    @Html.HiddenFor(x => x.RowGuid)
+                                </div>
+                        @if (!isApproved && (Model.IsRejected == null || Model.IsRejected.Value == false))
+                        {
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="approved"><i class="fa fa-check-square-o"></i> @Supervisor.Approve</button>
+                                <button type="submit" class="btn btn-sm btn-danger pull-left" name="SubmitButton" value="reject"><i class="fa fa-times"></i> @Supervisor.Reject</button>
+                            </div>
+                        }
+                        @if (Model.orientation_training != null && cu.EnumRole == EnumUserRole.Volunteer)
+                        {
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="accept"><i class="fa fa-check-square-o"></i> @Supervisor.Accept</button>
+                            </div>
+                        }
+
+                        @if (!Model.OTAcceptedByVolunteer && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
+                        {
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="otdate"><i class="fa fa-check-square-o"></i> @Supervisor.SetOTDate</button>
+
+                            </div>
+                        }
+
+                        @if (Model.OTAcceptedByVolunteer && cu.EnumRole == EnumUserRole.SuperAdmin)
+                        {
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="otattendense"><i class="fa fa-check-square-o"></i> @Supervisor.Confirm</button>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</main>

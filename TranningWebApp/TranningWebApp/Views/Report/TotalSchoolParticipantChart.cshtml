@@ -1,0 +1,235 @@
+﻿@model TranningWebApp.Repository.DataAccess.coordinator_profile
+@using TranningWebApp.Resource
+@{ 
+    string lan = "en"; 
+    if (ViewBag.IsLanAr != null || (Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar"))
+    {
+        lan = "ar"; 
+    }
+ }
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+    <script>
+        var chart;
+        var data2;
+        function GenerateReport() {
+
+            var datefrom = $("#DateFrom").val();
+            var dateto = $("#DateTo").val();
+            var city = $("#city").val();
+
+            $.post("@Url.Action("GetTotalSchoolParticipantData","Report")",
+                {
+                    datefrom: datefrom,
+                    dateto: dateto,
+                    city: city
+                },
+                function (data1, status) {
+                    if (data1.length == 0) {
+                        document.getElementById("School_Reports").innerHTML = "@Reports.NoDataFound";
+                        return;
+                    }
+                    data2 = data1;
+                    $("#Secondary").text(data1.TotalSecondaryCount);
+                    $("#SecondaryM").text(data1.SecondaryMaleCount);
+                    $("#SecondaryF").text(data1.SecondaryFemaleCount);
+                    $("#Middle").text(data1.TotalMiddleCount);
+                    $("#MiddleM").text(data1.MiddleMaleCount);
+                    $("#MiddleF").text(data1.MiddleFemaleCount);
+                    $("#Primary").text(data1.TotalPrimaryCount);
+                    $("#PrimaryM").text(data1.PrimaryMaleCount);
+                    $("#PrimaryF").text(data1.PrimaryFemaleCount);
+                    google.charts.load('current', { 'packages': ['bar'] });
+                    google.charts.setOnLoadCallback(drawChart);
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['@Reports.Stages', '@Reports.TotalNumberofStudents', '@Reports.NumberofMaleStudents', '@Reports.NumberofFemaleStudents', { role: 'annotation' }],
+                            ['@Reports.Secondary', data1.TotalSecondaryCount, data1.SecondaryMaleCount, data1.SecondaryFemaleCount, '@Reports.TotalNumberofsessions'],
+                            ['@Reports.Middle', data1.TotalMiddleCount, data1.MiddleMaleCount, data1.MiddleFemaleCount, '@Reports.NumberofMalesession'],
+                            ['@Reports.Primary', data1.TotalPrimaryCount, data1.PrimaryMaleCount, data1.PrimaryFemaleCount, '@Reports.NumberofFemalesession']
+                        ]);
+
+                        var options = {
+                            chart: {
+                                title: ''
+
+                            },
+                            bars: 'horizontal',
+                            hAxis: { format: 'decimal' },
+                            height: 400,
+                            colors: ['#369ead', '#c24642', '#7f6084']
+                        };
+
+
+                        chart = new google.charts.Bar(document.getElementById('School_Reports'));
+
+                        //google.visualization.events.addListener(chart, 'ready', function () {
+                        //    var test1 = chart.getImageURI();
+                        //});
+
+                      
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+                        google.visualization.events.addListener(chart, 'ready', afterDraw);
+
+                        function afterDraw() {
+
+
+                           
+
+                            if ("@lan" == "ar") {
+                                var rectX = $("svg g").first().find("rect").eq(1).attr("x");
+                                $("svg g").first().find("text").each(function () {
+
+                                    var value = parseFloat(rectX) + 110;
+                                    $(this).attr("x", value);
+                                });
+                            }
+                        }
+                    }
+                });
+        }
+
+
+        function DownloadReport() {
+            var svg = document.querySelector("svg");
+            var rect = document.querySelector("rect")
+            rect.setAttribute("fill", "green")
+            var svgData = new XMLSerializer().serializeToString(svg);
+            var canvas = document.createElement("canvas");
+            var svgSize = svg.getBoundingClientRect();
+            canvas.width = svgSize.width * 3;
+            canvas.height = svgSize.height * 3;
+            canvas.style.width = svgSize.width;
+            canvas.style.height = svgSize.height;
+            var ctx = canvas.getContext("2d");
+            ctx.scale(3, 3);
+            var img = document.createElement("img");
+            img.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
+            rect.setAttribute("fill", "red")
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0);
+                var canvasdata = canvas.toDataURL("image/png", 1);
+                var fileHex = canvasdata;
+                if (fileHex.length == 0)
+                    return;
+
+                var mydata = "@Reports.Stages: @Reports.TotalNumberofsessions: @Reports.NumberofMalesession:  @Reports.NumberofFemalesession;@Reports.Secondary: " + data2.TotalSecondaryCount + ":" + data2.SecondaryMaleCount + ":" + data2.SecondaryFemaleCount + "; @Reports.Middle:" + data2.TotalMiddleCount + ":" + data2.MiddleMaleCount + ":" + data2.MiddleFemaleCount + ";@Reports.Primary:" + data2.TotalPrimaryCount + ":" + data2.PrimaryMaleCount + ":" + data2.PrimaryFemaleCount;
+
+
+                var datefrom = $("#DateFrom").val();
+                var dateto = $("#DateTo").val();
+                var city = $("#city").val();
+                var prefix = '%%{ Report: @Reports.TotalSchoolParticipants }{   @Reports.DateFrom : ' + datefrom + '   @Reports.DateTo  ' +  dateto + '; @Coordinator.City :' + city + '}{ ' + mydata + ' }%%';
+                $.ajax({
+                    type: 'POST',
+                    url: '/Report/GeneratePdf',
+                    data: { 'graphString': prefix + fileHex },
+
+                    success: function (pdfPath) {
+                        window.location = '/Report/DownloadPdf?filePath=' + pdfPath;
+                    }
+                });
+            }
+        }
+
+
+
+</script>
+
+
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Reports.Reports1</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Reports.Reports1</strong>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.DateFrom</label>
+                                    <input type="text" id="DateFrom" class="form-control date">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@Reports.DateTo</label>
+                                    <input type="text" id="DateTo" class="form-control date">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+
+                                    <label for="country">@Coordinator.City</label>
+                                    @Html.DropDownListFor(m => m.school.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control", @Id = "city" })
+                                </div>
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="card-footer">
+                                <br>
+                                <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-left:8px" name="DownloadPDF"  onclick="DownloadReport()"  value=""><i class="fa fa-check-square-o"></i> @Reports.DownloadPDF </button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="" onclick="GenerateReport()"><i class="fa fa-check-square-o"></i> @Reports.GenerateReport </button>
+                            </div>
+
+                            <br>
+                            <hr>
+                            <h3><u>@Reports.TotalSchoolParticipants</u></h3>
+                            <br>
+                            <table class="table table-hover table-outline mb-0">
+
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th>@Reports.Stages</th>
+                                        <th>@Reports.TotalNumberofStudents</th>
+                                        <th>@Reports.NumberofMaleStudents</th>
+                                        <th>@Reports.NumberofFemaleStudents</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Reports.Secondary</td>
+                                        <td><span id="Secondary"></span></td>
+                                        <td><span id="SecondaryM"></span></td>
+                                        <td><span id="SecondaryF"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Middle</td>
+                                        <td><span id="Middle"></span></td>
+                                        <td><span id="MiddleM"></span></td>
+                                        <td><span id="MiddleF"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Reports.Primary</td>
+                                        <td><span id="Primary"></span></td>
+                                        <td><span id="PrimaryM"></span></td>
+                                        <td><span id="PrimaryF"></span></td>
+                                    </tr>                               
+
+                                </tbody>
+                            </table> 
+                            <hr>
+
+                            <div  style="color:red;" id="School_Reports"></div>
+                            <canvas width="200px" height="200px" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

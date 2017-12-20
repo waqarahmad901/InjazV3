@@ -1,0 +1,196 @@
+﻿@using TranningWebApp.Resource
+@model PagedList.IPagedList<TranningWebApp.Repository.DataAccess.volunteer_profile>
+@using TranningWebApp.Common
+@{
+    ViewBag.Title = "Index";
+    var cu = Session["user"] as ContextUser;
+    string status = Request.QueryString["status"];
+
+    string lan = "en";
+    string dir = "ltr";
+    if (ViewBag.IsLanAr != null || (Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar"))
+    {
+        lan = "ar";
+        dir = "rtl";
+    }
+
+}
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@General.Home</li>
+        <li class="breadcrumb-item active">@Supervisor.VolunteersManagement</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-primary">@Supervisor.VolunteersManagement</strong>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-hover table-outline mb-0">
+                            <thead class="thead-default">
+                                <tr>
+                                    <th class="text-center">
+                                        <i class="icon-people"></i>
+                                    </th>
+                                    <th>@Supervisor.VolunteerName <i class="fa fa-sort"></i></th>
+                                    <th>@General.Email</th>
+                                    <th>@Volunteer.Gender</th>
+                                    <th>@Volunteer.City</th>
+                                    <th>@Coordinator.TOTCertificate</th>
+                                    <th>@Volunteer.AcademicQualifications</th>
+                                    <th>@General.MobileNo</th>
+
+                                    @if (status == "pending" || string.IsNullOrEmpty(status))
+                                    {
+                                        <th>@Supervisor.RequestStatus</th>
+                                    }
+                                    @if (status == "rejected")
+                                    {
+                                        <th>@General.RejectedBy</th>
+
+                                    }
+                                    @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                    {
+                                        <th>@Supervisor.OTAttendence</th>
+                                        <th>@Coordinator.Status</th>
+                                    }
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model.ToList())
+                                    {
+                                        <tr>
+
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/1.png" class="img-avatar">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div>@item.VolunteerName</div>
+
+                                            </td>
+                                            <td>@item.VolunteerEmail</td>
+                                            <td>@item.Gender</td>
+                                            <td>@item.City</td>
+                                            <td>@item.HasTOTCertificate</td>
+                                            <td>@item.AcademicQualification</td>
+                                            <td>@item.VolunteerMobile</td>
+                                            @if (status == "pending" || string.IsNullOrEmpty(status))
+                                            {
+                                                <td>
+                                                    <a href="@Url.Action("ApproveRejectByCustomUrl", new {rowGuid = item.RowGuid, reqStatus = "approved" ,comment=""})">@Supervisor.Approve</a> &nbsp; &nbsp; &nbsp;
+                                                    <a href="#" onclick="openModel('@item.RowGuid')">@Supervisor.Reject</a>
+                                                </td>
+                                            }
+                                            @if (status == "rejected")
+                                            {
+                                                <td>@item.RejectedBy</td>
+
+                                            }
+                                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                            {
+                                                if (item.OTAttendenceForVolunteer)
+                                                {
+                                                    <td>@Supervisor.Marked</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Supervisor.NotMarked</td>
+
+                                                }
+                                            }
+
+                                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                            {
+                                                if (item.IsActive != null && item.IsActive.Value)
+                                                {
+                                                    <td><span class="badge badge-success">@General.Active</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge badge-default">@General.InActive</span></td>
+                                                }
+                                            }
+                                            <td>
+                                                <a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                                {
+                                                    <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a>
+                                                }
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="10" align="center"> @General.Norecordfound</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @Html.Partial("_Pagination", new TmsWebApp.Models.PageViewModel { CurrentPage = Model.PageNumber, TotalRecords = (int)ViewBag.Count })
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</main>
+<div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="text-primary lbl"> @Supervisor.RejectVolunteer</strong>
+                </div>
+                <div class="card-block">
+                    <div class="form-group">
+                        <label class="lbl">@Supervisor.Comments</label>
+                        <textarea  class = "form-control" rows="5" id="txtComment"></textarea>
+                        </div>
+                    </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-sm btn-danger pull-right" onclick="rejectvolun()"><i class="fa fa-times"></i> @Supervisor.Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var rowId = "";
+    function openModel(rowId) {
+        if ("@dir" === "rtl")
+        {
+            $(".lbl").css("float", "right");
+        }
+        this.rowId = rowId;
+        var excelModel = $('[data-remodal-id=modal]').remodal();
+        excelModel.open();
+    }
+    function rejectvolun()
+    {
+        debugger;
+        window.location.href = "/Supervisor/ApproveRejectByCustomUrl?rowGuid=" + rowId + "&reqStatus=reject&comment=" + $("#txtComment").val();
+    }
+
+</script>
