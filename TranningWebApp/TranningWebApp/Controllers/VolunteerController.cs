@@ -105,6 +105,9 @@ namespace TmsWebApp.Controllers
         }
         oVolunteer.NationalID = volunteer.NationalID;
         oVolunteer.VolunteerName = volunteer.VolunteerName;
+        oVolunteer.SecondName = volunteer.SecondName;
+        oVolunteer.ThirdName = volunteer.ThirdName;
+        oVolunteer.LastName = volunteer.LastName;
         oVolunteer.GoogleSigninId = cu != null ? cu.GoogleId : "";
         oVolunteer.LinkedInSignInId = cu != null ? cu.LinkedInId : "";
         oVolunteer.VolunteerEmail = volunteer.VolunteerEmail;

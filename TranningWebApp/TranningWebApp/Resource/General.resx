@@ -360,11 +360,26 @@
   <data name="EditDetails" xml:space="preserve">
     <value>Edit Detail</value>
   </data>
+  <data name="AcademicDegree" xml:space="preserve">
+    <value>Academic degree</value>
+  </data>
   <data name="AgeValidation" xml:space="preserve">
     <value>Enter age greater than 18</value>
   </data>
   <data name="AlreadyAccount" xml:space="preserve">
     <value>Already have an account?</value>
+  </data>
+  <data name="Bachelor" xml:space="preserve">
+    <value>Bachelor</value>
+  </data>
+  <data name="Diploma" xml:space="preserve">
+    <value>Diploma</value>
+  </data>
+  <data name="Fellowship" xml:space="preserve">
+    <value>Fellowship</value>
+  </data>
+  <data name="HigherDiploma" xml:space="preserve">
+    <value>Higher Diploma</value>
   </data>
   <data name="HowResetPassword" xml:space="preserve">
     <value>How to rest your password</value>
@@ -372,10 +387,28 @@
   <data name="InstractionOption" xml:space="preserve">
     <value>We've just sent you instructions on</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="PHD" xml:space="preserve">
+    <value>PHD</value>
+  </data>
   <data name="ResetPassword" xml:space="preserve">
     <value>Password reset sent!</value>
   </data>
+  <data name="SecondName" xml:space="preserve">
+    <value>Second Name</value>
+  </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>Specialization</value>
+  </data>
+  <data name="ThirdName" xml:space="preserve">
+    <value>Third Name</value>
+  </data>
   <data name="TSignin" xml:space="preserve">
     <value>Sign In</value>
+  </data>
+  <data name="UniversitiesName" xml:space="preserve">
+    <value>Universities Name</value>
   </data>
 </root>

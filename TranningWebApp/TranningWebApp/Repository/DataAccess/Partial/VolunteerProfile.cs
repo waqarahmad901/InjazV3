@@ -57,6 +57,10 @@ namespace TranningWebApp.Repository.DataAccess
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string VolExp { get; set; }
 
+        public string SecondName { get; set; }
+        public string ThirdName { get; set; }
+        public string LastName { get; set; }
+
         public string IslamicDate
         {
             get

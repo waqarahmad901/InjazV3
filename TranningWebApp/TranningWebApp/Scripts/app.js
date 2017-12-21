@@ -78,7 +78,7 @@ $(document).ready(function($){
               mydate.setFullYear(year, month - 1, day);
 
               var maxDate = new Date();
-              maxDate.setYear(maxDate.getYear() - 10);
+              maxDate.setFullYear(maxDate.getFullYear() - 10);
 
               if (maxDate < mydate) {
                   

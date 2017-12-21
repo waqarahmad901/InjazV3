@@ -61,6 +61,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Academic degree.
+        /// </summary>
+        public static string AcademicDegree {
+            get {
+                return ResourceManager.GetString("AcademicDegree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string Account {
@@ -133,6 +142,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bachelor.
+        /// </summary>
+        public static string Bachelor {
+            get {
+                return ResourceManager.GetString("Bachelor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certified.
         /// </summary>
         public static string Certified {
@@ -192,6 +210,15 @@ namespace TranningWebApp.Resource {
         public static string Country {
             get {
                 return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diploma.
+        /// </summary>
+        public static string Diploma {
+            get {
+                return ResourceManager.GetString("Diploma", resourceCulture);
             }
         }
         
@@ -259,6 +286,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fellowship.
+        /// </summary>
+        public static string Fellowship {
+            get {
+                return ResourceManager.GetString("Fellowship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Female.
         /// </summary>
         public static string Female {
@@ -291,6 +327,15 @@ namespace TranningWebApp.Resource {
         public static string Forgotpassword {
             get {
                 return ResourceManager.GetString("Forgotpassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Higher Diploma.
+        /// </summary>
+        public static string HigherDiploma {
+            get {
+                return ResourceManager.GetString("HigherDiploma", resourceCulture);
             }
         }
         
@@ -372,6 +417,15 @@ namespace TranningWebApp.Resource {
         public static string Male {
             get {
                 return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master.
+        /// </summary>
+        public static string Master {
+            get {
+                return ResourceManager.GetString("Master", resourceCulture);
             }
         }
         
@@ -529,6 +583,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PHD.
+        /// </summary>
+        public static string PHD {
+            get {
+                return ResourceManager.GetString("PHD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -646,6 +709,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Second Name.
+        /// </summary>
+        public static string SecondName {
+            get {
+                return ResourceManager.GetString("SecondName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string Select {
@@ -727,6 +799,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specialization.
+        /// </summary>
+        public static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -736,11 +817,29 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Third Name.
+        /// </summary>
+        public static string ThirdName {
+            get {
+                return ResourceManager.GetString("ThirdName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign In.
         /// </summary>
         public static string TSignin {
             get {
                 return ResourceManager.GetString("TSignin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Universities Name.
+        /// </summary>
+        public static string UniversitiesName {
+            get {
+                return ResourceManager.GetString("UniversitiesName", resourceCulture);
             }
         }
         

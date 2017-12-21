@@ -2234,6 +2234,9 @@
           <Property Name="GoogleSigninId" Type="nvarchar" MaxLength="50" />
           <Property Name="LinkedInSignInId" Type="nvarchar" MaxLength="50" />
           <Property Name="VolunteerName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="256" />
+          <Property Name="ThirdName" Type="nvarchar" MaxLength="256" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="256" />
           <Property Name="VolunteerEmail" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="VolunteerMobile" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
@@ -3071,6 +3074,9 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="user" Relationship="TrainingProjectModel.FK_volunteer_profile_user" FromRole="volunteer_profile" ToRole="user" />
           <Property Name="RejectedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SecondName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ThirdName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_adminuser_lk_role">
           <End Role="lk_role" Type="Self.lk_role" Multiplicity="1" />
@@ -5747,6 +5753,9 @@
           <EntitySetMapping Name="volunteer_profile">
             <EntityTypeMapping TypeName="TrainingProjectModel.volunteer_profile">
               <MappingFragment StoreEntitySet="volunteer_profile">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
                 <ScalarProperty Name="RejectedBy" ColumnName="RejectedBy" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="HasTOTCertificate1" ColumnName="HasTOTCertificate1" />

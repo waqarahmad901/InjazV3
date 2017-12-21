@@ -160,7 +160,7 @@
     <value>أنثى</value>
   </data>
   <data name="FirstName" xml:space="preserve">
-    <value>الاسم الاول</value>
+    <value>اسم الأول</value>
   </data>
   <data name="forgotentermsg" xml:space="preserve">
     <value>الرجاء إدخال بريدك الإلكتروني للحصول على كلمة المرور</value>
@@ -178,7 +178,7 @@
     <value>اسم المستخدم / كلمة المرور غير صحيح. حاول مرة أخرى!</value>
   </data>
   <data name="LastName" xml:space="preserve">
-    <value>الكنية</value>
+    <value>اسم العائلة</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>تسجيل الدخول</value>
@@ -363,14 +363,38 @@
   <data name="AlreadyAccount" xml:space="preserve">
     <value>هل لديك حساب؟</value>
   </data>
+  <data name="Bachelor" xml:space="preserve">
+    <value>بكالوريس</value>
+  </data>
+  <data name="Diploma" xml:space="preserve">
+    <value>دبلوم</value>
+  </data>
+  <data name="Fellowship" xml:space="preserve">
+    <value>زمالة</value>
+  </data>
+  <data name="HigherDiploma" xml:space="preserve">
+    <value>دبلوم عالي</value>
+  </data>
   <data name="HowResetPassword" xml:space="preserve">
     <value>كيفية إعادة تعيين كلمة المرور</value>
   </data>
   <data name="InstractionOption" xml:space="preserve">
     <value>لقد أرسلنا إليك تعليمات</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>ماجستير</value>
+  </data>
+  <data name="PHD" xml:space="preserve">
+    <value>دكتوراه</value>
+  </data>
   <data name="ResetPassword" xml:space="preserve">
     <value>تم إعادة تعيين كلمة المرور!</value>
+  </data>
+  <data name="SecondName" xml:space="preserve">
+    <value>اسم الأب</value>
+  </data>
+  <data name="ThirdName" xml:space="preserve">
+    <value>اسم الثالث</value>
   </data>
   <data name="TSignin" xml:space="preserve">
     <value>تسجيل الدخول</value>
