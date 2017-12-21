@@ -241,6 +241,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you have TOT Certificate?.
+        /// </summary>
+        public static string HaveTOTCertificate {
+            get {
+                return ResourceManager.GetString("HaveTOTCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hijri.
         /// </summary>
         public static string Hijri {

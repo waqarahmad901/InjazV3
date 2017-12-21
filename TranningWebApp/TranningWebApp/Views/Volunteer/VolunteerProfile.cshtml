@@ -116,7 +116,7 @@
                                 <div class="form-group col-sm-6" >
                                     <label style="width: 100%">@Volunteer.DateofBirth</label>
                                     <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                    @Html.TextBoxFor(m => m.DateOfBirth, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
+                                    @Html.TextBoxFor(m => m.DateOfBirth, "{0:dd/MM/yyyy}", new { @class = "form-control date voldate" })
                                     @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
 
                                 </div>
@@ -128,8 +128,8 @@
                             </div>
                             
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label">@Coordinator.TOTCertificate</label>
-                                <div class="col-md-9">
+                                <label class="col-md-8 form-control-label">@Coordinator.HaveTOTCertificate</label>
+                                <div class="col-md-4">
                                     <label class="radio-inline" for="inline-radio1">
                                         <input type="radio" id="inline-radio1" name="HasTOTCertificate" value="True"> @Coordinator.Yes
                                     </label>
@@ -302,7 +302,7 @@
         </div>
     </div>
 </main>
- 
+
 <script type="text/javascript">
     function channge(obj) {
   

@@ -360,4 +360,19 @@
   <data name="EditDetails" xml:space="preserve">
     <value>تحرير التفاصيل</value>
   </data>
+  <data name="AlreadyAccount" xml:space="preserve">
+    <value>هل لديك حساب؟</value>
+  </data>
+  <data name="HowResetPassword" xml:space="preserve">
+    <value>كيفية إعادة تعيين كلمة المرور</value>
+  </data>
+  <data name="InstractionOption" xml:space="preserve">
+    <value>لقد أرسلنا إليك تعليمات</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>تم إعادة تعيين كلمة المرور!</value>
+  </data>
+  <data name="TSignin" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
 </root>

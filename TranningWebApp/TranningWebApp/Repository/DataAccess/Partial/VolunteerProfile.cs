@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TmsWebApp.HelpingUtilities;
+using TranningWebApp.Models.CustomValidator;
 
 namespace TranningWebApp.Repository.DataAccess
 {
@@ -30,10 +31,9 @@ namespace TranningWebApp.Repository.DataAccess
         [StringLength(10, MinimumLength = 10, ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "NationalIdValidation")]
         public string NationalID { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
-
         public string AcademicQualification { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
 
+        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public System.DateTime DateOfBirth { get; set; }
         public string CompanyName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]

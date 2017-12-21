@@ -68,10 +68,13 @@ namespace TmsWebApp.Controllers
             ViewBag.citiesdd = cities;
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
             new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "" }).ToList();
-            ViewBag.distictdd = distict; 
-            oVolunteer.DateOfBirth = DateTime.Now;
-            if(oVolunteer.Id == 0)
+            ViewBag.distictdd = distict;
+
+            if (oVolunteer.Id == 0)
+            {
                 oVolunteer.VolExp = "";
+                oVolunteer.DateOfBirth = DateTime.Now.AddYears(-10);
+            }
             else
                 oVolunteer.VolExp = !string.IsNullOrEmpty(oVolunteer.VolunteerExperince1) ? "Yes" : "No";
             oVolunteer.SelectedExp = !string.IsNullOrEmpty(oVolunteer.VolunteerExperince1) ? oVolunteer.VolunteerExperince1.Split(',') : new string[] { };

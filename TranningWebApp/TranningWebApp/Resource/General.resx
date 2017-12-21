@@ -360,4 +360,22 @@
   <data name="EditDetails" xml:space="preserve">
     <value>Edit Detail</value>
   </data>
+  <data name="AgeValidation" xml:space="preserve">
+    <value>Enter age greater than 18</value>
+  </data>
+  <data name="AlreadyAccount" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="HowResetPassword" xml:space="preserve">
+    <value>How to rest your password</value>
+  </data>
+  <data name="InstractionOption" xml:space="preserve">
+    <value>We've just sent you instructions on</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Password reset sent!</value>
+  </data>
+  <data name="TSignin" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
 </root>

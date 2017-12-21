@@ -106,6 +106,24 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter age greater than 18.
+        /// </summary>
+        public static string AgeValidation {
+            get {
+                return ResourceManager.GetString("AgeValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Already have an account?.
+        /// </summary>
+        public static string AlreadyAccount {
+            get {
+                return ResourceManager.GetString("AlreadyAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approved.
         /// </summary>
         public static string Approved {
@@ -286,11 +304,29 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How to rest your password.
+        /// </summary>
+        public static string HowResetPassword {
+            get {
+                return ResourceManager.GetString("HowResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In Active.
         /// </summary>
         public static string InActive {
             get {
                 return ResourceManager.GetString("InActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;ve just sent you instructions on.
+        /// </summary>
+        public static string InstractionOption {
+            get {
+                return ResourceManager.GetString("InstractionOption", resourceCulture);
             }
         }
         
@@ -565,6 +601,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password reset sent!.
+        /// </summary>
+        public static string ResetPassword {
+            get {
+                return ResourceManager.GetString("ResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
         public static string Role {
@@ -687,6 +732,15 @@ namespace TranningWebApp.Resource {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string TSignin {
+            get {
+                return ResourceManager.GetString("TSignin", resourceCulture);
             }
         }
         

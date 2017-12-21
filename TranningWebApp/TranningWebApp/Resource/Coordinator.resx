@@ -324,4 +324,7 @@
   <data name="RequestStatus" xml:space="preserve">
     <value>Request Status</value>
   </data>
+  <data name="HaveTOTCertificate" xml:space="preserve">
+    <value>Do you have TOT Certificate?</value>
+  </data>
 </root>

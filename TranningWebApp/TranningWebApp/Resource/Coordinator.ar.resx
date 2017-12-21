@@ -324,4 +324,7 @@
   <data name="RequestStatus" xml:space="preserve">
     <value>حالة الطلب</value>
   </data>
+  <data name="HaveTOTCertificate" xml:space="preserve">
+    <value>هل لديك شهادة تدريب مدربين ؟</value>
+  </data>
 </root>

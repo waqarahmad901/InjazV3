@@ -238,6 +238,7 @@
     <Compile Include="HelpingUtilities\Util.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChartBaseModel.cs" />
+    <Compile Include="Models\CustomValidator\AgeValidator.cs" />
     <Compile Include="Models\DashBoardClanderModel.cs" />
     <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\EmailTemplateModel.cs" />
@@ -935,6 +936,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.simplePagination.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

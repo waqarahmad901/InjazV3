@@ -65,7 +65,29 @@ $(document).ready(function($){
   $("form").unbind('submit').submit(function (e) {
       if ($(this).valid()) {
           debugger;
-       
+          if ($(".voldate").val() != undefined && $(".voldate").val() != "")
+          {
+              var val = $(".voldate").val();
+              var dateOfBirth = val;
+              var arr_dateText = dateOfBirth.split("/");
+              day = arr_dateText[0];
+              month = arr_dateText[1];
+              year = arr_dateText[2];
+
+              var mydate = new Date();
+              mydate.setFullYear(year, month - 1, day);
+
+              var maxDate = new Date();
+              maxDate.setYear(maxDate.getYear() - 10);
+
+              if (maxDate < mydate) {
+                  
+                  $(".voldate").next().html("<span for='DateOfBirth' class=''>Sorry, only persons over the age of 10 can be covered</span>")
+                  return false;
+              }
+              return true;
+             
+          }
           if ($(".coorddocument").val() == "")
           {
               alert("Please upload document");
