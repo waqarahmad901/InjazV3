@@ -122,6 +122,7 @@ namespace TmsWebApp.Controllers
                 sessionModel = new session();
                 sessionModel.IsActive = true;
                 sessionModel.PropesedDateString = DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy");
+                sessionModel.ProposedDateTime = DateTime.Now.AddMonths(1); 
                 sessionModel.ProposedEndDateTime = DateTime.Now.AddMonths(1).AddDays(3);
             }
             else
@@ -214,7 +215,7 @@ namespace TmsWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(session session)
+        public ActionResult Edit(session session,FormCollection collection)
         {
             var sessionRepo = new SessionRepository();
             session oSession = null;
@@ -270,6 +271,24 @@ namespace TmsWebApp.Controllers
                 oSession.ProgramName = session.ProgramName;
                 oSession.ProposedDateTime = DateTime.ParseExact(session.PropesedDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 oSession.ProposedEndDateTime = session.ProposedEndDateTime;
+
+                int days = (oSession.ProposedEndDateTime - oSession.ProposedDateTime).Value.Days;
+
+                for (int i = 0; i <= days; i++)
+                {
+                    DateTime fromTime = DateTime.ParseExact(collection["proFromTime_" + i].ToString(),"hh:mm tt", CultureInfo.InvariantCulture);
+                    DateTime toTime = DateTime.ParseExact(collection["proToTime_" + i].ToString(),"hh:mm tt", CultureInfo.InvariantCulture);
+                    oSession.session_proposed_time.Add(
+                        new session_proposed_time
+                        {
+                            IsActive = collection["procheck_" + i] == "on" ? false : true,
+                            ProposedStartTime = fromTime.TimeOfDay,
+                            ProposedEndTime = toTime.TimeOfDay,
+                        }
+                        );
+                }
+
+
                 oSession.VolunteerId = session.VolunteerId == 0 ? null : session.VolunteerId;
                 oSession.StudentCertificate = session.StudentCertificate == 0 ? null : session.StudentCertificate;
                 oSession.VolunteerCertificate = session.VolunteerCertificate == 0 ? null : session.VolunteerCertificate;

@@ -21,7 +21,9 @@ namespace TranningWebApp.Repository.DataAccess
             this.session_evaluationform_photo = new HashSet<session_evaluationform_photo>();
             this.session_photo = new HashSet<session_photo>();
             this.session_participant = new HashSet<session_participant>();
-            this.session_time = new HashSet<session_time>();
+            this.session_proposed_time = new HashSet<session_proposed_time>();
+            this.session_actual_time = new HashSet<session_actual_time>();
+         
         }
     
         public int Id { get; set; }
@@ -62,7 +64,9 @@ namespace TranningWebApp.Repository.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<session_participant> session_participant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<session_time> session_time { get; set; }
+        public virtual ICollection<session_actual_time> session_actual_time { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<session_proposed_time> session_proposed_time { get; set; }
         public virtual lk_country lk_country { get; set; }
     }
 }

@@ -362,6 +362,9 @@
     <Compile Include="Repository\DataAccess\session.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\DataAccess\session_actual_time.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\DataAccess\session_evaluationform_photo.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
@@ -374,7 +377,7 @@
     <Compile Include="Repository\DataAccess\session_photo.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\DataAccess\session_time.cs">
+    <Compile Include="Repository\DataAccess\session_proposed_time.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\DataAccess\sysdiagram.cs">

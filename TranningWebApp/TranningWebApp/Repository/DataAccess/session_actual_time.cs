@@ -12,14 +12,13 @@ namespace TranningWebApp.Repository.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class session_time
+    public partial class session_actual_time
     {
         public int Id { get; set; }
         public int SessionId { get; set; }
         public Nullable<System.TimeSpan> ProposedStartTime { get; set; }
         public Nullable<System.TimeSpan> ProposedEndTime { get; set; }
-        public Nullable<System.TimeSpan> ActualStartTime { get; set; }
-        public Nullable<System.TimeSpan> ActualEndTime { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual session session { get; set; }
     }

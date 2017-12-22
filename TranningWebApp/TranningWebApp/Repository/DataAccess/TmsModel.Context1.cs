@@ -59,6 +59,7 @@ namespace TranningWebApp.Repository.DataAccess
         public virtual DbSet<evaluation_coordinator> evaluation_coordinator { get; set; }
         public virtual DbSet<evaluation_volunteer> evaluation_volunteer { get; set; }
         public virtual DbSet<funder_profile> funder_profile { get; set; }
-        public virtual DbSet<session_time> session_time { get; set; }
+        public virtual DbSet<session_actual_time> session_actual_time { get; set; }
+        public virtual DbSet<session_proposed_time> session_proposed_time { get; set; }
     }
 }

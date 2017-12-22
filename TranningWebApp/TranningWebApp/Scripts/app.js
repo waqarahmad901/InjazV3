@@ -369,16 +369,16 @@ function renderTimeControl() {
     for (i = 0; i <= dateDiff; i++) {
         var html = "<div class='form-group col-sm-12'>";
         html += "  <div class='col-sm-2' style='padding:0px'>"
-        html += "<input type='checkbox' id = 'procheck_" + i + "'  name = 'procheck_" + i + "' onchange = 'changeTimeCheck(this,\"proFromTime_\",\"proToTime_\"," + i + ")'/>"
+        html += "<input type='checkbox' name = 'procheck_" + i + "' onchange = 'changeTimeCheck(this,\"proFromTime_\",\"proToTime_\"," + i + ")'/>"
         html += "</div>"
         html += "  <div class='col-sm-2' style='padding:0px'>"
         html += newDate.getDate() + " " + monthNames[newDate.getMonth()]
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='textbox' name='proFromTime_" + i + "' class='form-control timepicker' data-provide='timepicker'/>"
+        html += "<input type='text' name='proFromTime_" + i + "' class='form-control timepicker' data-provide='timepicker'/>"
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='textbox' class='form-control timepicker' name='proToTime_" + i + "' data-provide='timepicker'/>"
+        html += "<input type='text' class='form-control timepicker' name='proToTime_" + i + "' data-provide='timepicker'/>"
         html += " </div> "
         html += " </div> "
 
@@ -386,18 +386,22 @@ function renderTimeControl() {
 
         newDate.setDate(dateStart.getDate() + 1);
     }
+    bindTimePicker();
+
+}
+
+function bindTimePicker()
+{
     $('.timepicker').timepicker({
-        timeFormat: 'h:mm p',
+        timeFormat: 'hh:mm p',
         interval: 15,
         minTime: '10',
-        maxTime: '6:00pm',
-        defaultTime: '10',
+        maxTime: '6:00pm', 
         startTime: '10:00',
         dynamic: false,
         dropdown: true,
         scrollbar: true
     });
-
 }
 
 var date_diff_indays = function (date1, date2) {
@@ -411,11 +415,11 @@ function changeTimeCheck(checkbox,from,to, index)
 {
     debugger;
     if (checkbox.checked == true) {
-        $('input[name*="' + from + index + '"]').attr('disabled', 'disabled');
-        $('input[name*="' + to + index + '"]').attr('disabled', 'disabled');
+        $('input[name*="' + from + index + '"]').attr('readonly', 'readonly');
+        $('input[name*="' + to + index + '"]').attr('readonly', 'readonly');
     } else {
-        $('input[name*="' + from + index + '"]').removeAttr('disabled');
-        $('input[name*="' + to + index + '"]').removeAttr('disabled');
+        $('input[name*="' + from + index + '"]').removeAttr('readonly');
+        $('input[name*="' + to + index + '"]').removeAttr('readonly');
     }
 }
  
