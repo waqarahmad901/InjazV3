@@ -189,7 +189,7 @@
                                     <label style="margin-left:10px">@Supervisor.Accecptedbyvolunteer </label>
                                 </div>
                                 <div class="form-group">
-                                    @Html.CheckBoxFor(x => x.OTAttendenceForVolunteer, new { @style = "margin-top:5px" })
+                                    @Html.CheckBoxFor(x => x.OTAttendenceForVolunteer, new { @style = "margin-top:5px",@onchange="changeAttForVol(this)" })
                                     <label style="margin-left:10px">@Supervisor.OTAttendance</label>
                                 </div>
                                     }
@@ -219,8 +219,10 @@
 
                         @if (Model.OTAcceptedByVolunteer && cu.EnumRole == EnumUserRole.SuperAdmin)
                         {
+                                string btnState = Model.OTAttendenceForVolunteer ? "" : "disabled"; 
+                            
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="otattendense"><i class="fa fa-check-square-o"></i> @Supervisor.Confirm</button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" id="approveBtn" name="SubmitButton" value="otattendense" @btnState><i class="fa fa-check-square-o"></i> @Supervisor.Confirm</button>
 
                             </div>
                         }
@@ -233,3 +235,15 @@
         </div>
     </div>
 </main>
+<script type="text/javascript">
+  
+        function changeAttForVol(checkbox)
+        {
+            if (checkbox.checked == true) {
+                document.getElementById("approveBtn").removeAttribute("disabled");
+            } else {
+                document.getElementById("approveBtn").setAttribute("disabled", "disabled");
+            }
+        }
+
+</script>

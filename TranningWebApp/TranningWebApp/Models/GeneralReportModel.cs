@@ -10,8 +10,13 @@ namespace TranningWebApp.Models
 
         public int SchoolCount { get; set; }
         public int StudentCount { get; set; }
+        public int MaleStudentCount { get; set; }
+        public int FemaleStudentCount { get; set; }
         public int VolunteerCount { get; set; }
         public int SessionCount { get; set; }
+        public int PrimarySchoolCount { get; set; }
+        public int MiddleSchoolCount { get; set; }
+        public int SeconderySchoolCount { get; set; }
         public int PartnerCount { get; set; }
         public int CoordinatorCount { get; set; }
         public int CertificateCount { get; set; }

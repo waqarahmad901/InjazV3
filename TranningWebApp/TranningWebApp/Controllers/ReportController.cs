@@ -197,14 +197,17 @@ namespace TranningWebApp.Controllers
         public ActionResult GeneralReport()
         {
             var Values = new GeneralReportModel();
+            var cities = new CityRepository().Get().Distinct().Select(x =>
+                 new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+            ViewBag.citiesdd = cities;
             return View(Values);
         }
 
         [HttpPost]
-        public ActionResult GetGeneralReportData(string datefrom, string dateto)
+        public ActionResult GetGeneralReportData(string datefrom, string dateto,string city)
         {
 
-            var sp = new ReportRepository().GetGeneralReport(datefrom, dateto);
+            var sp = new ReportRepository().GetGeneralReport(datefrom, dateto,city);
             return Json(sp, JsonRequestBehavior.AllowGet);
 
         }
@@ -257,6 +260,6 @@ namespace TranningWebApp.Controllers
                         "application/pdf");
         }
 
-        
+
     }
 }

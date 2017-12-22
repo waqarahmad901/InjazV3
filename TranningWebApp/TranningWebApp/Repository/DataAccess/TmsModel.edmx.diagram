@@ -64,6 +64,7 @@
         <AssociationConnector Association="TrainingProjectModel.FK_volunteer_profile_user" />
         <EntityTypeShape EntityType="TrainingProjectModel.session_time" Width="1.5" PointX="5" PointY="17.25" />
         <AssociationConnector Association="TrainingProjectModel.FK_session_time_session" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_lk_country" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

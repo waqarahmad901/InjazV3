@@ -80,7 +80,7 @@ namespace TmsWebApp.Controllers
             //Sorting order
             session = session.OrderByDescending(x => x.CreatedAt);
             ViewBag.Count = session.Count();
-
+           
             return View(session.ToPagedList(page, pageSize));
         }
 
@@ -122,6 +122,7 @@ namespace TmsWebApp.Controllers
                 sessionModel = new session();
                 sessionModel.IsActive = true;
                 sessionModel.PropesedDateString = DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy");
+                sessionModel.ProposedEndDateTime = DateTime.Now.AddMonths(1).AddDays(3);
             }
             else
             {
@@ -166,6 +167,19 @@ namespace TmsWebApp.Controllers
                 ViewBag.Count = sessionModel.session_participant.Count();
                 ViewBag.IsSessionEnabledForVolunteer = true;
             }
+
+            ViewBag.genderdd = new List<SelectListItem>
+                {
+                    new SelectListItem { Selected = true, Text = General.Male, Value =  "Male"},
+                new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
+                };
+            var cities = new CityRepository().Get().Distinct().Select(x =>
+                  new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+            ViewBag.citiesdd = cities;
+            var countries = new CountryRepository().Get().Select(x =>
+                       new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
+            ViewBag.countries = countries;
+
             return View(sessionModel);
         }
 
@@ -229,7 +243,10 @@ namespace TmsWebApp.Controllers
             {
                 oSession.ProgramPurpose = "ProgramPurposeNotUsed";
                 oSession.TargetGroup = session.TargetGroup;
-               
+                oSession.Gender = session.Gender;
+                oSession.City = session.City;
+                oSession.Country = session.Country;
+
                 if (oSession.SchoolID == null && session.SchoolID != null && session.SchoolID.Value != 0)
                 {
                     var cor = new CoordinatorRepository().GetBySchool(session.SchoolID.Value);

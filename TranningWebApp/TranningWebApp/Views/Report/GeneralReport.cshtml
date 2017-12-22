@@ -4,18 +4,27 @@
     <script>
         var data2;
         function DownloadReport() {
-         
+
             var datefrom = $("#DateFrom").val();
             var dateto = $("#DateTo").val();
+            var city = $("#city").val();
 
-            var mydata = " @Reports.Reports1 : @Reports.Amount; @Reports.NumberofSchools:" + data2.SchoolCount + "; @Reports.NumberofStudents:" + data2.StudentCount;
+            var mydata = " @Reports.Reports1 : @Reports.Amount; @Reports.NumberofSchools:" + data2.SchoolCount
+            mydata += "; @Reports.Primary:" + data2.PrimarySchoolCount;
+            mydata += "; @Reports.Middle:" + data2.MiddleSchoolCount;
+            mydata += "; @Reports.Secondary:" + data2.SeconderySchoolCount;
+            mydata += "; @Reports.NumberofStudents:" + data2.StudentCount;
+            mydata += "; @Reports.NumberofMaleStudents:" + data2.MaleStudentCount;
+            mydata += "; @Reports.NumberofFemaleStudents:" + data2.FemaleStudentCount;
+            mydata += " ; @Reports.NumberofVolunteers:" + data2.VolunteerCount;
+            mydata += " ; @Reports.NumberofVolunteers:" + data2.VolunteerCount;
             mydata += " ; @Reports.NumberofVolunteers:" + data2.VolunteerCount;
             mydata += " ; @Reports.NumberofSessions:" + data2.SessionCount;
             mydata += " ; @Reports.NumberofPartners:" + data2.PartnerCount;
             mydata += " ; @Reports.NumberofCoordinators:" + data2.CoordinatorCount;
             mydata += " ; @Reports.NumberofPreEvaluations:" + data2.EvaluationPreCount;
             mydata += " ; @Reports.NumberofPostEvaluations:" + data2.EvaluationPostCount;
-            var prefix = '%%{ Report: @Reports.GeneralReport }{   @Reports.DateFrom : ' + datefrom + '   @Reports.DateTo  ' + dateto + '}{  ' + mydata + ' }%%';
+            var prefix = '%%{ Report: @Reports.GeneralReport }{   @Reports.DateFrom : ' + datefrom + '   @Reports.DateTo  ' + dateto + ' @Coordinator.City : ' + city + '  }{  ' + mydata + ' }%%';
             $.ajax({
                 type: 'POST',
                 url: '/Report/GeneratePdf',
@@ -48,7 +57,12 @@
                     }
                     data2 = data1;
                     $("#SchoolCount").text(data1.SchoolCount);
+                    $("#PrimeryCount").text(data1.PrimarySchoolCount);
+                    $("#MiddleCount").text(data1.MiddleSchoolCount);
+                    $("#SecondaryCount").text(data1.SeconderySchoolCount);
                     $("#StudentCount").text(data1.StudentCount);
+                    $("#MaleStudentCount").text(data1.MaleStudentCount);
+                    $("#FemaleStudentCount").text(data1.FemaleStudentCount);
                     $("#VolunteerCount").text(data1.VolunteerCount);
                     $("#SessionCount").text(data1.SessionCount);
                     $("#PartnerCount").text(data1.PartnerCount);
@@ -93,6 +107,16 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="form-group col-sm-6">
+
+                                    <label for="country">@Coordinator.City</label>
+                                    @Html.DropDownList("City", (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control", @Id = "city" })
+                                </div>
+                                <div class="form-group col-sm-6">
+
+                                </div>
+                            </div>
+                            <div class="row">
 
                                 <table class="table table-hover table-outline mb-0">
                                     <thead class="thead-default">
@@ -117,7 +141,39 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.Primary</td>
+                                            <td>
+                                                <span id="PrimeryCount"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.Middle</td>
+                                            <td>
+                                                <span id="MiddleCount"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.Secondary</td>
+                                            <td>
+                                                <span id="SecondaryCount"></span>
 
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td class="text-center">
                                                 <div class="avatar">
@@ -129,9 +185,34 @@
                                                 <span id="StudentCount"></span>
 
                                             </td>
-                                        </tr>
+                                        </tr>   
+                                        
                                         <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofMaleStudents</td>
+                                            <td>
+                                                <span id="MaleStudentCount"></span>
 
+                                            </td>
+                                        </tr>   
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar">
+                                                    <img src="~/img/avatars/session.png" class="img-avatar">
+                                                </div>
+                                            </td>
+                                            <td>@Reports.NumberofFemaleStudents</td>
+                                            <td>
+                                                <span id="FemaleStudentCount"></span>
+
+                                            </td>
+                                        </tr>   
+                                                                          
                                         <tr>
                                             <td class="text-center">
                                                 <div class="avatar">
@@ -143,7 +224,7 @@
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        
 
                                         <tr>
                                             <td class="text-center">
@@ -156,7 +237,7 @@
                                                 <span id="SessionCount"></span>
                                             </td>
                                         </tr>
-                                        <tr>
+                                       
 
                                         <tr>
                                             <td class="text-center">
@@ -169,8 +250,7 @@
                                                 <span id="PartnerCount"></span>
                                             </td>
                                         </tr>
-                                        <tr>
-
+                                     
                                         <tr>
                                             <td class="text-center">
                                                 <div class="avatar">
@@ -183,7 +263,7 @@
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                      
 
                                         <tr>
                                             <td class="text-center">
@@ -196,7 +276,7 @@
                                                 <span id="EvaluationPreCount"></span>
                                             </td>
                                         </tr>
-                                        <tr>
+                                      
 
                                         <tr>
                                             <td class="text-center">
@@ -223,7 +303,7 @@
 
                                             </td>
                                         </tr>*@
-                                        <tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>

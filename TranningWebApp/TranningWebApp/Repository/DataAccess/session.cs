@@ -46,8 +46,8 @@ namespace TranningWebApp.Repository.DataAccess
         public bool VolunteerReceiveSessionDetailInEmail { get; set; }
         public bool VolunteerMarkedStudentAttendenceInSession { get; set; } 
         public string StudentEvaluationCatagory { get; set; }
-        public bool IsVolunteerCertificateGenerated { get; set; }
-
+        public bool IsVolunteerCertificateGenerated { get; set; }  
+        public Nullable<int> Country { get; set; }
     
         public virtual school school { get; set; }
         public virtual volunteer_profile volunteer_profile { get; set; }
@@ -63,5 +63,6 @@ namespace TranningWebApp.Repository.DataAccess
         public virtual ICollection<session_participant> session_participant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<session_time> session_time { get; set; }
+        public virtual lk_country lk_country { get; set; }
     }
 }

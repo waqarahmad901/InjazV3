@@ -18,6 +18,7 @@ namespace TranningWebApp.Repository.DataAccess
         public lk_country()
         {
             this.funder_profile = new HashSet<funder_profile>();
+            this.sessions = new HashSet<session>();
         }
     
         public int Id { get; set; }
@@ -26,5 +27,7 @@ namespace TranningWebApp.Repository.DataAccess
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<funder_profile> funder_profile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<session> sessions { get; set; }
     }
 }

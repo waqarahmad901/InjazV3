@@ -146,7 +146,7 @@ namespace TranningWebApp.Repository
             model.SecondaryMaleCount = result.Where(x =>
             (x.TypeOfSchool == "Male") &&
             (x.StageOfSchool == "Secondary"))
-            .Sum(x=>x.participantCount);
+            .Sum(x => x.participantCount);
 
             model.SecondaryFemaleCount = result.Where(x =>
             (x.TypeOfSchool == "Female") &&
@@ -249,109 +249,125 @@ namespace TranningWebApp.Repository
 
         }
 
-        public GeneralReportModel GetGeneralReport(string fromDate, string toDate)
+        public GeneralReportModel GetGeneralReport(string fromDate, string toDate, string city)
         {
             DateTime dateFrom = string.IsNullOrEmpty(fromDate) ? DateTime.Now : DateTime.Parse(fromDate);
             DateTime dateto = string.IsNullOrEmpty(toDate) ? DateTime.Now : DateTime.Parse(toDate);
             dateto = dateto.AddDays(1);
             GeneralReportModel model = new GeneralReportModel();
 
-            model.SchoolCount = Context.schools.Where(x =>
+            var schools = Context.schools.Where(x =>
             (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto && x.Status == "Approved")
-            ).ToList().Count();
+            (x.CreatedAt < dateto && x.Status == "Approved") &&
+            (city == "" || x.City == city));
 
-            model.StudentCount = Context.participant_profile.Where(x =>
-            (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
+            model.SchoolCount = schools.Count();
+            model.PrimarySchoolCount = schools.Where(x => x.StageOfSchool == "Primary").Count();
+            model.SeconderySchoolCount = schools.Where(x => x.StageOfSchool == "Secondary").Count();
+            model.MiddleSchoolCount = schools.Where(x => x.StageOfSchool == "Middle").Count();
+
+            var students = Context.participant_profile.Where(x =>
+             (x.CreatedAt >= dateFrom) &&
+             (x.CreatedAt < dateto) &&
+             (city == "" || x.City == city));
+
+            model.StudentCount = students.Count();
+            model.MaleStudentCount = students.Select(x => x.Gender == "Male").Count();
+            model.FemaleStudentCount = students.Select(x => x.Gender == "Female").Count();
 
             model.VolunteerCount = Context.volunteer_profile.Where(x =>
             (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
+            (x.CreatedAt < dateto) &&
+            (city == "" || x.City == city)
+            ).Count();
 
             model.SessionCount = Context.sessions.Where(x =>
             (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
+            (x.CreatedAt < dateto) &&
+            (city == "" || x.City == city)
+            ).Count();
 
             model.PartnerCount = Context.funder_profile.Where(x =>
             (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
+            (x.CreatedAt < dateto) &&
+            (city == "" || x.City == city)
+            ).Count();
 
             model.CoordinatorCount = Context.coordinator_profile.Where(x =>
             (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
+            (x.CreatedAt < dateto) &&
+            (city == "" || x.school.City == city)
+            ).Count();
 
-            var resultCPpre = Context.evaluation_cp_pre.Where(x =>
-            (x.CreateAt >= dateFrom) &&
-            (x.CreateAt < dateto)
-            ).ToList().Count();
 
-            var resultMurshadeepre = Context.evaluation_murshadee_before.Where(x =>
-            (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
-
-            var resultPFpre = Context.evaluation_pf_pre.Where(x =>
-            (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
-
-            var resultSafeerpre = Context.evaluation_safeer_pre.Where(x =>
-          (x.CreatedAt >= dateFrom) &&
-          (x.CreatedAt < dateto)
-          ).ToList().Count();
-
-            var resultSYCpre1 = Context.evaluation_syc_pre_part1.Where(x =>
-         (x.CreatedAt >= dateFrom) &&
-         (x.CreatedAt < dateto)
-         ).ToList().Count();
-
-            var resultPFpre2 = Context.evaluation_syc_pre_part2.Where(x =>
-         (x.CreatedAt >= dateFrom) &&
-         (x.CreatedAt < dateto)
-         ).ToList().Count();
+            var resultCPpre = (from e in Context.evaluation_cp_pre
+                               join s in Context.sessions on e.SessionId equals s.Id
+                               where ((e.CreateAt >= dateFrom && e.CreateAt < dateto)
+                               && (city == "" || s.City == city))
+                               select e).Count();
+            var resultMurshadeepre = (from e in Context.evaluation_murshadee_before
+                                      join s in Context.sessions on e.SessionId equals s.Id
+                                      where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                      && (city == "" || s.City == city))
+                                      select e).Count();
+            var resultPFpre = (from e in Context.evaluation_pf_pre
+                               join s in Context.sessions on e.SessionId equals s.Id
+                               where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                               && (city == "" || s.City == city))
+                               select e).Count();
+            var resultSafeerpre = (from e in Context.evaluation_safeer_pre
+                                   join s in Context.sessions on e.SessionId equals s.Id
+                                   where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                   && (city == "" || s.City == city))
+                                   select e).Count();
+            var resultSYCpre1 = (from e in Context.evaluation_syc_pre_part1
+                                 join s in Context.sessions on e.SessionId equals s.Id
+                                 where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                 && (city == "" || s.City == city))
+                                 select e).Count();
+            var resultPFpre2 = (from e in Context.evaluation_syc_pre_part2
+                                join s in Context.sessions on e.SessionId equals s.Id
+                                where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                && (city == "" || s.City == city))
+                                select e).Count();
 
 
             model.EvaluationPreCount = resultCPpre + resultMurshadeepre + resultPFpre + resultSafeerpre + resultSYCpre1 + resultPFpre2;
 
 
-            var resultCPpost = Context.evaluation_cp_post.Where(x =>
-          (x.CreatedAt >= dateFrom) &&
-          (x.CreatedAt < dateto)
-          ).ToList().Count();
-
-            var resultMurshadeepost = Context.evaluation_murshadee_after.Where(x =>
-            (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
-
-            var resultPFpost = Context.evaluation_pf_post.Where(x =>
-            (x.CreatedAt >= dateFrom) &&
-            (x.CreatedAt < dateto)
-            ).ToList().Count();
-
-            var resultSafeerpost = Context.evaluation_safeer_post.Where(x =>
-          (x.CreatedAt >= dateFrom) &&
-          (x.CreatedAt < dateto)
-          ).ToList().Count();
-
-            var resultSYCpost1 = Context.evaluation_syc_post_part1.Where(x =>
-         (x.CreatedAT >= dateFrom) &&
-         (x.CreatedAT < dateto)
-         ).ToList().Count();
-
-            var resultPFpost2 = Context.evaluation_syc_post_part2.Where(x =>
-         (x.CreatedAt >= dateFrom) &&
-         (x.CreatedAt < dateto)
-         ).ToList().Count();
-
+            var resultCPpost = (from e in Context.evaluation_cp_post
+                                join s in Context.sessions on e.SessionId equals s.Id
+                                where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                && (city == "" || s.City == city))
+                                select e).Count();
+            var resultMurshadeepost = (from e in Context.evaluation_murshadee_after
+                                       join s in Context.sessions on e.SessionId equals s.Id
+                                       where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                       && (city == "" || s.City == city))
+                                       select e).Count();
+            var resultPFpost = (from e in Context.evaluation_pf_post
+                                join s in Context.sessions on e.SessionId equals s.Id
+                                where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                && (city == "" || s.City == city))
+                                select e).Count();
+            var resultSafeerpost = (from e in Context.evaluation_safeer_post
+                                    join s in Context.sessions on e.SessionId equals s.Id
+                                    where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                    && (city == "" || s.City == city))
+                                    select e).Count();
+            var resultSYCpost1 = (from e in Context.evaluation_syc_post_part1
+                                  join s in Context.sessions on e.SessionId equals s.Id
+                                  where ((e.CreatedAT >= dateFrom && e.CreatedAT < dateto)
+                                  && (city == "" || s.City == city))
+                                  select e).Count();
+            var resultPFpost2 = (from e in Context.evaluation_syc_post_part2
+                                 join s in Context.sessions on e.SessionId equals s.Id
+                                 where ((e.CreatedAt >= dateFrom && e.CreatedAt < dateto)
+                                 && (city == "" || s.City == city))
+                                 select e).Count();
             model.EvaluationPostCount = resultCPpost + resultMurshadeepost + resultPFpost + resultSafeerpost + resultSYCpost1 + resultPFpost2;
             model.CitiesCount = Context.lk_city.Count();
+
             return model;
 
         }

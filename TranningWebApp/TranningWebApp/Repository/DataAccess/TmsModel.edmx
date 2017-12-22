@@ -2123,6 +2123,7 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="ProposedEndDateTime" Type="datetime" />
           <Property Name="ActualEndDateTime" Type="datetime" />
+          <Property Name="Country" Type="int" />
         </EntityType>
         <EntityType Name="session_evaluationform_photo">
           <Key>
@@ -2443,6 +2444,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_session_lk_country">
+          <End Role="lk_country" Type="Self.lk_country" Multiplicity="0..1" />
+          <End Role="session" Type="Self.session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lk_country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_session_participant_participant_profile">
           <End Role="participant_profile" Type="Self.participant_profile" Multiplicity="1" />
           <End Role="session_participant" Type="Self.session_participant" Multiplicity="*" />
@@ -2653,6 +2666,10 @@
             <End Role="session" EntitySet="session" />
             <End Role="session_evaluationform_photo" EntitySet="session_evaluationform_photo" />
           </AssociationSet>
+          <AssociationSet Name="FK_session_lk_country" Association="Self.FK_session_lk_country">
+            <End Role="lk_country" EntitySet="lk_country" />
+            <End Role="session" EntitySet="session" />
+          </AssociationSet>
           <AssociationSet Name="FK_session_participant_participant_profile" Association="Self.FK_session_participant_participant_profile">
             <End Role="participant_profile" EntitySet="participant_profile" />
             <End Role="session_participant" EntitySet="session_participant" />
@@ -2791,6 +2808,7 @@
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Iso2" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="funder_profile" Relationship="TrainingProjectModel.FK_funder_profile_lu_country" FromRole="lk_country" ToRole="funder_profile" />
+          <NavigationProperty Name="sessions" Relationship="TrainingProjectModel.FK_session_lk_country" FromRole="lk_country" ToRole="session" />
         </EntityType>
         <EntityType Name="lk_role">
           <Key>
@@ -2973,6 +2991,8 @@
           <Property Name="ProposedEndDateTime" Type="DateTime" Precision="3" />
           <Property Name="ActualEndDateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="session_time" Relationship="TrainingProjectModel.FK_session_time_session" FromRole="session" ToRole="session_time" />
+          <Property Name="Country" Type="Int32" />
+          <NavigationProperty Name="lk_country" Relationship="TrainingProjectModel.FK_session_lk_country" FromRole="session" ToRole="lk_country" />
         </EntityType>
         <EntityType Name="session_evaluationform_photo">
           <Key>
@@ -3245,6 +3265,10 @@
           <AssociationSet Name="FK_session_time_session" Association="TrainingProjectModel.FK_session_time_session">
             <End Role="session" EntitySet="sessions" />
             <End Role="session_time" EntitySet="session_time" />
+          </AssociationSet>
+          <AssociationSet Name="FK_session_lk_country" Association="TrainingProjectModel.FK_session_lk_country">
+            <End Role="lk_country" EntitySet="lk_country" />
+            <End Role="session" EntitySet="sessions" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_session_school">
@@ -5449,6 +5473,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_session_lk_country">
+          <End Type="TrainingProjectModel.lk_country" Role="lk_country" Multiplicity="0..1" />
+          <End Type="TrainingProjectModel.session" Role="session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lk_country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5671,6 +5707,7 @@
           <EntitySetMapping Name="sessions">
             <EntityTypeMapping TypeName="TrainingProjectModel.session">
               <MappingFragment StoreEntitySet="session">
+                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="ActualEndDateTime" ColumnName="ActualEndDateTime" />
                 <ScalarProperty Name="ProposedEndDateTime" ColumnName="ProposedEndDateTime" />
                 <ScalarProperty Name="City" ColumnName="City" />

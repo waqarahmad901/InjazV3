@@ -204,11 +204,15 @@ $("form button[type=submit]").click(function () {
         $('.date-islamic').calendarsPicker({
             calendar: $.calendars.instance('islamic'),
             dateFormat: 'yyyy/mm/dd',
-            onSelect: function (dates) {
+            onSelect: function (dates) { 
+              
                 var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
                 var control = $(this);
                 $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Gregorian&dateLangCulture=en-us", function (res) {
                     control.parent().parent().find('.date').val(res);
+                    if ($(control).hasClass("startDateIslamic") || $(control).hasClass("enddateIslamic")) {
+                        renderTimeControl && renderTimeControl();
+                    }
                 });
             }
         });
@@ -216,8 +220,11 @@ $("form button[type=submit]").click(function () {
         $('.date').calendarsPicker({
             calendar: $.calendars.instance('gregorian'),
             dateFormat: 'dd/mm/yyyy',
-            onSelect: function (dates) {
-                // $('.date-islamic').val(writeIslamicDate(dates[0]._day, dates[0]._month - 1, dates[0]._year);
+            onSelect: function (dates) { 
+                if ($(this).hasClass("startDate") || $(this).hasClass("enddate"))
+                {
+                    renderTimeControl && renderTimeControl(); 
+                }
                 var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
                 var control = $(this);
                 $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Hijri&dateLangCulture=en-us", function (res) {
@@ -326,6 +333,91 @@ function makeTable(container, data) {
     return $("#table").append(table);
 }
 
+function renderTimeControl() {
+    debugger;
+    var startDate = $(".startDate").val();
+    var endDate = $(".enddate").val();
+    arr_dateText = startDate.split("/");
+    day = arr_dateText[0];
+    month = arr_dateText[1];
+    year = arr_dateText[2];
+
+    var dateStart = new Date();
+    dateStart.setFullYear(year, month - 1, day);
+
+    arr_dateText = endDate.split("/");
+
+    day = arr_dateText[0];
+    month = arr_dateText[1];
+    year = arr_dateText[2];
+
+    var dateEnd = new Date();
+    dateEnd.setFullYear(year, month - 1, day);
+
+    if (dateStart > dateEnd) {
+        alert("Date is not set propely");
+    }
+
+    var dateDiff = date_diff_indays(dateStart, dateEnd);
+
+    $("#timeControl > div").not(".firstRow").remove();
+
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+                     "July", "August", "September", "October", "November", "December"
+    ];
+    var newDate = dateStart;
+    for (i = 0; i <= dateDiff; i++) {
+        var html = "<div class='form-group col-sm-12'>";
+        html += "  <div class='col-sm-2' style='padding:0px'>"
+        html += "<input type='checkbox' id = 'procheck_" + i + "'  name = 'procheck_" + i + "' onchange = 'changeTimeCheck(this,\"proFromTime_\",\"proToTime_\"," + i + ")'/>"
+        html += "</div>"
+        html += "  <div class='col-sm-2' style='padding:0px'>"
+        html += newDate.getDate() + " " + monthNames[newDate.getMonth()]
+        html += "</div>"
+        html += "<div class='col-sm-4'>"
+        html += "<input type='textbox' name='proFromTime_" + i + "' class='form-control timepicker' data-provide='timepicker'/>"
+        html += "</div>"
+        html += "<div class='col-sm-4'>"
+        html += "<input type='textbox' class='form-control timepicker' name='proToTime_" + i + "' data-provide='timepicker'/>"
+        html += " </div> "
+        html += " </div> "
+
+        $("#timeControl").append(html);
+
+        newDate.setDate(dateStart.getDate() + 1);
+    }
+    $('.timepicker').timepicker({
+        timeFormat: 'h:mm p',
+        interval: 15,
+        minTime: '10',
+        maxTime: '6:00pm',
+        defaultTime: '10',
+        startTime: '10:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
+
+}
+
+var date_diff_indays = function (date1, date2) {
+    dt1 = new Date(date1);
+    dt2 = new Date(date2);
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+}
+
+
+function changeTimeCheck(checkbox,from,to, index)
+{
+    debugger;
+    if (checkbox.checked == true) {
+        $('input[name*="' + from + index + '"]').attr('disabled', 'disabled');
+        $('input[name*="' + to + index + '"]').attr('disabled', 'disabled');
+    } else {
+        $('input[name*="' + from + index + '"]').removeAttr('disabled');
+        $('input[name*="' + to + index + '"]').removeAttr('disabled');
+    }
+}
  
 
 
