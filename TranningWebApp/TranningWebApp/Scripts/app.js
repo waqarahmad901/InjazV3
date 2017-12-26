@@ -211,7 +211,10 @@ $("form button[type=submit]").click(function () {
                 $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Gregorian&dateLangCulture=en-us", function (res) {
                     control.parent().parent().find('.date').val(res);
                     if ($(control).hasClass("startDateIslamic") || $(control).hasClass("enddateIslamic")) {
-                        renderTimeControl && renderTimeControl();
+                        renderTimeControl("startDate", "enddate");
+                    }
+                    if ($(control).hasClass("actualstartislamic") || $(control).hasClass("actualendislamic")) {
+                        renderTimeControl("actualstart","actualend");
                     }
                 });
             }
@@ -223,7 +226,10 @@ $("form button[type=submit]").click(function () {
             onSelect: function (dates) { 
                 if ($(this).hasClass("startDate") || $(this).hasClass("enddate"))
                 {
-                    renderTimeControl && renderTimeControl(); 
+                    renderTimeControl("startDate", "enddate");
+                }
+                if ($(this).hasClass("actualstart") || $(this).hasClass("actualend")) {
+                    renderTimeControl("actualstart", "actualend");
                 }
                 var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
                 var control = $(this);
@@ -333,10 +339,11 @@ function makeTable(container, data) {
     return $("#table").append(table);
 }
 
-function renderTimeControl() {
+function renderTimeControl(startclass,endclass) {
     debugger;
-    var startDate = $(".startDate").val();
-    var endDate = $(".enddate").val();
+    var startDate = $("." +startclass).val();
+    var endDate = $("." + endclass).val();
+    var type = "actualstart" ? "act" : "pro";
     arr_dateText = startDate.split("/");
     day = arr_dateText[0];
     month = arr_dateText[1];
@@ -360,29 +367,29 @@ function renderTimeControl() {
 
     var dateDiff = date_diff_indays(dateStart, dateEnd);
 
-    $("#timeControl > div").not(".firstRow").remove();
+    $("#" + type + "timeControl > div").not(".firstRow").remove();
 
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-                     "July", "August", "September", "October", "November", "December"
+    var monthNames = ["Jan", "Feb", "Mar", "Apl", "May", "Jun",
+                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
     var newDate = dateStart;
     for (i = 0; i <= dateDiff; i++) {
         var html = "<div class='form-group col-sm-12'>";
         html += "  <div class='col-sm-2' style='padding:0px'>"
-        html += "<input type='checkbox' name = 'procheck_" + i + "' onchange = 'changeTimeCheck(this,\"proFromTime_\",\"proToTime_\"," + i + ")'/>"
+        html += "<input type='checkbox' name = '" + type + "check_" + i + "' onchange = 'changeTimeCheck(this,\"proFromTime_\",\"proToTime_\"," + i + ")'/>"
         html += "</div>"
         html += "  <div class='col-sm-2' style='padding:0px'>"
         html += newDate.getDate() + " " + monthNames[newDate.getMonth()]
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='text' name='proFromTime_" + i + "' class='form-control timepicker' data-provide='timepicker'/>"
+        html += "<input type='text' name='" + type + "FromTime_" + i + "' class='form-control timepicker' value='10:00 AM' data-provide='timepicker'/>"
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='text' class='form-control timepicker' name='proToTime_" + i + "' data-provide='timepicker'/>"
+        html += "<input type='text' class='form-control timepicker' name='" + type + "ToTime_" + i + "' value='11:00 AM' data-provide='timepicker'/>"
         html += " </div> "
         html += " </div> "
 
-        $("#timeControl").append(html);
+        $("#" + type + "timeControl").append(html);
 
         newDate.setDate(dateStart.getDate() + 1);
     }

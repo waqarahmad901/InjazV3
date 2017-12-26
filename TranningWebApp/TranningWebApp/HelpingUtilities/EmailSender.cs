@@ -47,39 +47,43 @@ namespace TmsWebApp.HelpingUtilities
             }
         }
 
-        public static void SendSupportEmail(string message, string receiverAddress,string attachmentFilename = null)
+        public static void SendSupportEmail(string message, string receiverAddress, string attachmentFilename = null)
         {
             try
             {
-                SmtpClient Client = new SmtpClient(ConfigurationManager.AppSettings["SMTPHost"]);
-                System.Net.Mail.MailMessage msg = new MailMessage();
-                msg.IsBodyHtml = true;
-                msg.Body = message;
-                msg.Subject = "Injaz Support Message ";
-                msg.From = new MailAddress(ConfigurationManager.AppSettings["SMTPSupport"]);
-                msg.To.Add(receiverAddress);
-
-                if (attachmentFilename != null)
+                string isEmailSet = ConfigurationManager.AppSettings["IsEmailSent"];
+                if (string.IsNullOrEmpty(isEmailSet) || bool.Parse(isEmailSet))
                 {
-                    Attachment attachment = new Attachment(attachmentFilename);
-                    
-                    msg.Attachments.Add(attachment);
-                }
+                    SmtpClient Client = new SmtpClient(ConfigurationManager.AppSettings["SMTPHost"]);
+                    System.Net.Mail.MailMessage msg = new MailMessage();
+                    msg.IsBodyHtml = true;
+                    msg.Body = message;
+                    msg.Subject = "Injaz Support Message ";
+                    msg.From = new MailAddress(ConfigurationManager.AppSettings["SMTPSupport"]);
+                    msg.To.Add(receiverAddress);
 
-                Client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SMTPUserName"], ConfigurationManager.AppSettings["SMTPPassword"]);
-                //Client.Host = ConfigurationManager.AppSettings["SMTPHost"];
-                Client.Port = Int32.Parse(ConfigurationManager.AppSettings["SMTPPort"]);
-                Client.EnableSsl = ConfigurationManager.AppSettings["SMTPEnableSSL"].ToLower() == "true";
-                
-                Client.Send(msg);
-                Client.Dispose();
-               
+                    if (attachmentFilename != null)
+                    {
+                        Attachment attachment = new Attachment(attachmentFilename);
+
+                        msg.Attachments.Add(attachment);
+                    }
+
+                    Client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SMTPUserName"], ConfigurationManager.AppSettings["SMTPPassword"]);
+                    //Client.Host = ConfigurationManager.AppSettings["SMTPHost"];
+                    Client.Port = Int32.Parse(ConfigurationManager.AppSettings["SMTPPort"]);
+                    Client.EnableSsl = ConfigurationManager.AppSettings["SMTPEnableSSL"].ToLower() == "true";
+
+                    Client.Send(msg);
+                    Client.Dispose();
+
+                }
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
                 throw ex;
-            }
+            } 
         }
 
         private static void Send(MailMessage Email)

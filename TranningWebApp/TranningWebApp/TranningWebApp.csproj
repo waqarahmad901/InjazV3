@@ -1110,6 +1110,7 @@
     <Content Include="Uploads\DocumentLibrary\DefaultDocument\StudentList.xlsx" />
     <Content Include="Views\EmailTemplate\VolunteerRegister.cshtml" />
     <Content Include="Views\EmailTemplate\VolunteerApproved.cshtml" />
+    <Content Include="Views\Session\_SessionTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

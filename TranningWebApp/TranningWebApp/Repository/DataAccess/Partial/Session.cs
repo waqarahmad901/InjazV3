@@ -102,6 +102,17 @@ namespace TranningWebApp.Repository.DataAccess
 
         }
 
+        public string ActualEndDateStringIslamic
+        {
+            get
+            {
+                if (ActualEndDateTime != null)
+                    return Util.DateConversion(ActualEndDateTime.Value.ToString("dd/MM/yyyy"), "Hijri", "en-us");
+                return "";
+            }
+
+        }
+
         public Nullable<System.DateTime> ActualEndDateTime { get; set; }
     }
 }

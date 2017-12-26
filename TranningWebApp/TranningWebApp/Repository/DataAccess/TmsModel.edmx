@@ -2131,8 +2131,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SessionId" Type="int" Nullable="false" />
-          <Property Name="ProposedStartTime" Type="time" Precision="7" />
-          <Property Name="ProposedEndTime" Type="time" Precision="7" />
+          <Property Name="ActualStartTime" Type="time" Precision="7" />
+          <Property Name="ActualEndTime" Type="time" Precision="7" />
+          <Property Name="IsHoliday" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="session_evaluationform_photo">
@@ -2183,6 +2184,7 @@
           <Property Name="SessionId" Type="int" Nullable="false" />
           <Property Name="ProposedStartTime" Type="time" Precision="7" />
           <Property Name="ProposedEndTime" Type="time" Precision="7" />
+          <Property Name="IsHoliday" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -3018,8 +3020,8 @@
           <Property Name="ActualEndDateTime" Type="DateTime" Precision="3" />
           <Property Name="Country" Type="Int32" />
           <NavigationProperty Name="lk_country" Relationship="TrainingProjectModel.FK_session_lk_country" FromRole="session" ToRole="lk_country" />
-          <NavigationProperty Name="session_actual_time" Relationship="TrainingProjectModel.FK_session_actual_time_session" FromRole="session" ToRole="session_actual_time" />
           <NavigationProperty Name="session_proposed_time" Relationship="TrainingProjectModel.FK_session_time_session" FromRole="session" ToRole="session_proposed_time" />
+          <NavigationProperty Name="session_actual_time" Relationship="TrainingProjectModel.FK_session_actual_time_session" FromRole="session" ToRole="session_actual_time" />
         </EntityType>
         <EntityType Name="session_evaluationform_photo">
           <Key>
@@ -3292,15 +3294,15 @@
             <End Role="lk_country" EntitySet="lk_country" />
             <End Role="session" EntitySet="sessions" />
           </AssociationSet>
-          <EntitySet Name="session_actual_time" EntityType="TrainingProjectModel.session_actual_time" />
           <EntitySet Name="session_proposed_time" EntityType="TrainingProjectModel.session_proposed_time" />
-          <AssociationSet Name="FK_session_actual_time_session" Association="TrainingProjectModel.FK_session_actual_time_session">
-            <End Role="session" EntitySet="sessions" />
-            <End Role="session_actual_time" EntitySet="session_actual_time" />
-          </AssociationSet>
           <AssociationSet Name="FK_session_time_session" Association="TrainingProjectModel.FK_session_time_session">
             <End Role="session" EntitySet="sessions" />
             <End Role="session_proposed_time" EntitySet="session_proposed_time" />
+          </AssociationSet>
+          <EntitySet Name="session_actual_time" EntityType="TrainingProjectModel.session_actual_time" />
+          <AssociationSet Name="FK_session_actual_time_session" Association="TrainingProjectModel.FK_session_actual_time_session">
+            <End Role="session" EntitySet="sessions" />
+            <End Role="session_actual_time" EntitySet="session_actual_time" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_session_school">
@@ -5493,17 +5495,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="session_actual_time">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SessionId" Type="Int32" Nullable="false" />
-          <Property Name="ProposedStartTime" Type="Time" Precision="7" />
-          <Property Name="ProposedEndTime" Type="Time" Precision="7" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="session" Relationship="TrainingProjectModel.FK_session_actual_time_session" FromRole="session_actual_time" ToRole="session" />
-        </EntityType>
         <EntityType Name="session_proposed_time">
           <Key>
             <PropertyRef Name="Id" />
@@ -5512,8 +5503,33 @@
           <Property Name="SessionId" Type="Int32" Nullable="false" />
           <Property Name="ProposedStartTime" Type="Time" Precision="7" />
           <Property Name="ProposedEndTime" Type="Time" Precision="7" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="session" Relationship="TrainingProjectModel.FK_session_time_session" FromRole="session_proposed_time" ToRole="session" />
+          <Property Name="IsHoliday" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_session_time_session">
+          <End Type="TrainingProjectModel.session" Role="session" Multiplicity="1" />
+          <End Type="TrainingProjectModel.session_proposed_time" Role="session_proposed_time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session_proposed_time">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="session_actual_time">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionId" Type="Int32" Nullable="false" />
+          <Property Name="ActualStartTime" Type="Time" Precision="7" />
+          <Property Name="ActualEndTime" Type="Time" Precision="7" />
+          <Property Name="IsHoliday" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="session" Relationship="TrainingProjectModel.FK_session_actual_time_session" FromRole="session_actual_time" ToRole="session" />
         </EntityType>
         <Association Name="FK_session_actual_time_session">
           <End Type="TrainingProjectModel.session" Role="session" Multiplicity="1" />
@@ -5523,18 +5539,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="session_actual_time">
-              <PropertyRef Name="SessionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_session_time_session">
-          <End Type="TrainingProjectModel.session" Role="session" Multiplicity="1" />
-          <End Type="TrainingProjectModel.session_proposed_time" Role="session_proposed_time" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="session">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="session_proposed_time">
               <PropertyRef Name="SessionId" />
             </Dependent>
           </ReferentialConstraint>
@@ -7851,10 +7855,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="session_actual_time">
-            <EntityTypeMapping TypeName="TrainingProjectModel.session_actual_time">
-              <MappingFragment StoreEntitySet="session_actual_time">
+          <EntitySetMapping Name="session_proposed_time">
+            <EntityTypeMapping TypeName="TrainingProjectModel.session_proposed_time">
+              <MappingFragment StoreEntitySet="session_proposed_time">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsHoliday" ColumnName="IsHoliday" />
                 <ScalarProperty Name="ProposedEndTime" ColumnName="ProposedEndTime" />
                 <ScalarProperty Name="ProposedStartTime" ColumnName="ProposedStartTime" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
@@ -7862,12 +7867,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="session_proposed_time">
-            <EntityTypeMapping TypeName="TrainingProjectModel.session_proposed_time">
-              <MappingFragment StoreEntitySet="session_proposed_time">
+          <EntitySetMapping Name="session_actual_time">
+            <EntityTypeMapping TypeName="TrainingProjectModel.session_actual_time">
+              <MappingFragment StoreEntitySet="session_actual_time">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ProposedEndTime" ColumnName="ProposedEndTime" />
-                <ScalarProperty Name="ProposedStartTime" ColumnName="ProposedStartTime" />
+                <ScalarProperty Name="IsHoliday" ColumnName="IsHoliday" />
+                <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+                <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

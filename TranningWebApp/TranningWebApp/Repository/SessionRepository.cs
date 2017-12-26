@@ -33,6 +33,20 @@ namespace TranningWebApp.Repository
             return Context.sessions.Where(x => x.RowGUID == id).First();
         }
 
+        public bool RemoveAllPropesedTimes(int sessionId)
+        {
+            var list = Context.session_proposed_time.Where(x => x.SessionId == sessionId).ToList();
+            Context.session_proposed_time.RemoveRange(list);
+            return true; 
+        }
+
+        public bool RemoveAllActualTimes(int sessionId)
+        {
+            var list = Context.session_actual_time.Where(x => x.SessionId == sessionId).ToList();
+            Context.session_actual_time.RemoveRange(list);
+            return true;
+        }
+
         //Create a new collection
         public void Post(session entity)
         {

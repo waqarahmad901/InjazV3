@@ -149,3 +149,11 @@ html[dir="rtl"] svg rect {
 .multiselect-native-select {
     display: none;
 }
+
+
+.sessionTime {
+    background-color:#f5f5f5; 
+    width:100%; 
+    border:1px solid rgba(0, 0, 0, 0.15); 
+    padding-top:10px
+}

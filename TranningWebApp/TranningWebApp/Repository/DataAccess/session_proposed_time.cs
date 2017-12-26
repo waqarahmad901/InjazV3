@@ -18,6 +18,7 @@ namespace TranningWebApp.Repository.DataAccess
         public int SessionId { get; set; }
         public Nullable<System.TimeSpan> ProposedStartTime { get; set; }
         public Nullable<System.TimeSpan> ProposedEndTime { get; set; }
+        public bool IsHoliday { get; set; }
         public bool IsActive { get; set; }
     
         public virtual session session { get; set; }

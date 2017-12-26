@@ -1,0 +1,91 @@
+﻿@model TranningWebApp.Repository.DataAccess.session
+@{
+    string type = ViewData["type"].ToString();
+    string addtionalclass = ViewData["addtionalclass"].ToString();
+ } 
+<div id="@(type + "timeControl")" class="pull-left sessionTime ">
+    <div class="form-group firstRow col-sm-12">
+        <div class="col-sm-2" style="padding:0px">
+            <b>Holiday</b>
+        </div>
+        <div class="col-sm-2" style="padding:0px">
+            <b>Day</b>
+        </div>
+        <div class="col-sm-4">
+            <b>From</b>
+        </div>
+        <div class="col-sm-4">
+            <b>To</b>
+        </div>
+    </div>
+    @{
+        int dateDiff = 0;
+        if (type == "pro")
+        {
+            dateDiff = (Model.ProposedEndDateTime - Model.ProposedDateTime).Value.Days;
+        }
+        else
+        {
+            dateDiff = (Model.ActualEndDateTime - Model.ActualDateTime).Value.Days;
+        } 
+    }
+
+    @for (int i = 0; i <= dateDiff; i++)
+    {
+        string displayFromTime = "10:00 AM";
+        string displayToTime = "11:00 AM";
+        bool isHoliday = false;
+        string readonlyS = "";
+        TimeSpan timespan = TimeSpan.MinValue;
+        if (Model.Id > 0)
+        {
+            if (type == "pro")
+            {
+                timespan = Model.session_proposed_time.ElementAt(i).ProposedStartTime.Value;
+            }
+            else
+            {
+                timespan = Model.session_actual_time.ElementAt(i).ActualStartTime.Value;
+            }
+            DateTime time = DateTime.Today.Add(timespan);
+            displayFromTime = time.ToString("hh:mm tt");
+            if (type == "pro")
+            {
+                timespan = Model.session_proposed_time.ElementAt(i).ProposedEndTime.Value;
+            }
+            else
+            {
+                timespan = Model.session_actual_time.ElementAt(i).ActualEndTime.Value;
+            }
+            time = DateTime.Today.Add(timespan);
+            displayToTime = time.ToString("hh:mm tt");
+            if (type == "pro")
+            {
+                isHoliday = Model.session_proposed_time.ElementAt(i).IsHoliday;
+            }
+            else
+            {
+                isHoliday = Model.session_actual_time.ElementAt(i).IsHoliday;
+
+            }
+            readonlyS = isHoliday ? "readonly" : "";
+        }
+        <div class='form-group col-sm-12'>
+            <div class='col-sm-2' style='padding:0px'>
+                <input type='checkbox' name='@(type+"check_"+i)'checked="@isHoliday" class="@addtionalclass" onchange="changeTimeCheck(this,'@(type+"FromTime_")','@(type+"ToTime_")', @i)" />
+            </div>
+            <div class='col-sm-2' style='padding:0px'>
+                @Model.ProposedDateTime.AddDays(i).ToString("dd MMM")
+            </div>
+            <div class='col-sm-4'>
+                <input type='text' name='@(type+"FromTime_"+i)' class='form-control timepicker @addtionalclass' value="@displayFromTime" @readonlyS />
+            </div>
+            <div class='col-sm-4'>
+                <input type='text' class='form-control timepicker @addtionalclass' name='@(type+"ToTime_"+i)' value="@displayToTime"  @readonlyS />
+            </div>
+        </div>
+    }
+
+
+</div>
+

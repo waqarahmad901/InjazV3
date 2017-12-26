@@ -53,18 +53,18 @@ namespace TmsWebApp.Controllers
             }
 
             var cu = Session["user"] as ContextUser;
-           
+
             int corSchoolId = 0;
-            if (cu.EnumRole != EnumUserRole.Volunteer) 
+            if (cu.EnumRole != EnumUserRole.Volunteer)
                 corSchoolId = new CoordinatorRepository().GetSchoolIdByUserId(cu.OUser.Id);
             var participantId = 0;
             if (cu.EnumRole == EnumUserRole.Participant)
             {
-                participantId = new ParticipiantRepository().GetByUserId(cu.OUser.Id).Id; 
+                participantId = new ParticipiantRepository().GetByUserId(cu.OUser.Id).Id;
             }
             session = repository.Get().Where(x =>
             {
-                return  ((filter == null || x.ProgramName.ToLower().Contains(filter.ToLower())
+                return ((filter == null || x.ProgramName.ToLower().Contains(filter.ToLower())
                                                   || (x.school != null && (x.school.SchoolName.ToLower().Contains(filter.ToLower()) ||
                                                                            x.school.City.ToLower().Contains(filter.ToLower())))
                                                  )
@@ -76,15 +76,15 @@ namespace TmsWebApp.Controllers
                                                           ((x.VolunteerId == null && x.Status == "Approved") ||
                                                            (x.VolunteerId.HasValue && x.VolunteerId.Value == cu.OUser.Id && (x.Status == "Approved" || x.Status == "Occured"))))
                                                       || (cu.EnumRole == EnumUserRole.Coordinator && x.SchoolID == corSchoolId))));
-            }); 
+            });
             //Sorting order
             session = session.OrderByDescending(x => x.CreatedAt);
             ViewBag.Count = session.Count();
-           
+
             return View(session.ToPagedList(page, pageSize));
         }
 
-     
+
         public ActionResult Edit(Guid? id, int page = 1)
         {
             SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "0" };
@@ -99,8 +99,8 @@ namespace TmsWebApp.Controllers
             volunteer.Insert(0, defaultselect);
             ViewBag.volunteer = volunteer;
 
-            var certificatesVolunteer = new CertificateRepository().Get().Where(x=>x.TypeCertificate == "Volunteer").Select(x =>
-            new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
+            var certificatesVolunteer = new CertificateRepository().Get().Where(x => x.TypeCertificate == "Volunteer").Select(x =>
+              new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
             certificatesVolunteer.Insert(0, defaultselect);
             ViewBag.certificatesVolunteer = certificatesVolunteer;
 
@@ -109,11 +109,11 @@ namespace TmsWebApp.Controllers
             certificatesStudent.Insert(0, defaultselect);
             ViewBag.certificatesStudent = certificatesStudent;
 
-            var evaluationCatagory = new EvaluationFormRepository().Get().GroupBy(x=>x.Catagory).Select(x=>x.First()).Select(x =>
-                new SelectListItem { Text = x.Catagory, Value = x.Catagory + "" }).ToList();
+            var evaluationCatagory = new EvaluationFormRepository().Get().GroupBy(x => x.Catagory).Select(x => x.First()).Select(x =>
+                    new SelectListItem { Text = x.Catagory, Value = x.Catagory + "" }).ToList();
             evaluationCatagory.Insert(0, defaultselect);
             ViewBag.evaluationCatagory = evaluationCatagory;
-             
+
             var cu = Session["user"] as ContextUser;
 
             session sessionModel;
@@ -122,7 +122,7 @@ namespace TmsWebApp.Controllers
                 sessionModel = new session();
                 sessionModel.IsActive = true;
                 sessionModel.PropesedDateString = DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy");
-                sessionModel.ProposedDateTime = DateTime.Now.AddMonths(1); 
+                sessionModel.ProposedDateTime = DateTime.Now.AddMonths(1);
                 sessionModel.ProposedEndDateTime = DateTime.Now.AddMonths(1).AddDays(3);
             }
             else
@@ -131,6 +131,23 @@ namespace TmsWebApp.Controllers
                 sessionModel = sessionRepo.GetByRowId(id.Value);
                 sessionModel.PropesedDateString = sessionModel.ProposedDateTime.ToString("dd/MM/yyyy");
                 sessionModel.EnumSessionStatus = (SessionStatus)Enum.Parse(typeof(SessionStatus), sessionModel.Status);
+                if (sessionModel.ActualDateTime == null && cu.EnumRole == EnumUserRole.Coordinator && sessionModel.EnumSessionStatus == SessionStatus.Pending)
+                {
+                    sessionModel.ActualDateTime = sessionModel.ProposedDateTime;
+                    sessionModel.ActualDateString = sessionModel.ProposedDateTime.ToString("dd/MM/yyyy");
+                    sessionModel.ActualEndDateTime = sessionModel.ProposedEndDateTime;
+                    foreach (var item in sessionModel.session_proposed_time)
+                    {
+                        sessionModel.session_actual_time.Add(new session_actual_time
+                        {
+                            ActualEndTime = item.ProposedEndTime,
+                            ActualStartTime = item.ProposedStartTime,
+                            IsActive = item.IsActive,
+                            IsHoliday = item.IsHoliday
+
+                        });
+                    }
+                }
                 if (sessionModel.ActualDateTime != null)
                 {
                     sessionModel.ActualDateString = sessionModel.ActualDateTime.Value.ToString("dd/MM/yyyy");
@@ -143,7 +160,7 @@ namespace TmsWebApp.Controllers
                     if (!string.IsNullOrEmpty(eve_cat))
                     {
                         int participantId = new ParticipiantRepository().GetByUserId(cu.OUser.Id).Id;
-                        var sParticipant = sessionModel.session_participant.Where(x=>x.ParticipantID == participantId).First();
+                        var sParticipant = sessionModel.session_participant.Where(x => x.ParticipantID == participantId).First();
                         sessionModel.EvaluationFormFilled = (sParticipant.IsPreEvaluated ?? false) && (sParticipant.IsPostEvaluated ?? false);
                         sessionModel.IsPreFilledByStudent = (sParticipant.IsPreEvaluated ?? false);
                         sessionModel.IsPostFilledByStudent = (sParticipant.IsPostEvaluated ?? false);
@@ -164,7 +181,7 @@ namespace TmsWebApp.Controllers
                 var session_photo = sessionModel.session_photo.Select(x => x.FilePath).ToArray();
                 sessionModel.SessionImageLink = string.Join(",", session_photo) + ",";
 
-                sessionModel.PagedParticipants = sessionModel.session_participant.Select(x => x.participant_profile).OrderByDescending(x=>x.CreatedAt).ToPagedList(page, 5);
+                sessionModel.PagedParticipants = sessionModel.session_participant.Select(x => x.participant_profile).OrderByDescending(x => x.CreatedAt).ToPagedList(page, 5);
                 ViewBag.Count = sessionModel.session_participant.Count();
                 ViewBag.IsSessionEnabledForVolunteer = true;
             }
@@ -184,7 +201,7 @@ namespace TmsWebApp.Controllers
             return View(sessionModel);
         }
 
-        private bool CheckIsEvaluationFilled(string eveCat, int participantId,int sessionid)
+        private bool CheckIsEvaluationFilled(string eveCat, int participantId, int sessionid)
         {
             bool isPrefilled = false;
             bool isPostfilled = false;
@@ -215,7 +232,7 @@ namespace TmsWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(session session,FormCollection collection)
+        public ActionResult Edit(session session, FormCollection collection)
         {
             var sessionRepo = new SessionRepository();
             session oSession = null;
@@ -228,17 +245,17 @@ namespace TmsWebApp.Controllers
                 oSession.CreatedAt = DateTime.Now;
                 oSession.CreatedBy = cu.OUser.Id;
                 oSession.Status = SessionStatus.Pending.ToString();
-                
+
             }
             else
             {
                 oSession = sessionRepo.Get(session.Id);
                 oSession.UpdatedAt = DateTime.Now;
                 oldActualDate = oSession.ActualDateTime;
-               // oSession.UpdatedBy = int.Parse(sid);
+                // oSession.UpdatedBy = int.Parse(sid);
             }
-             var currentStatus = (SessionStatus)Enum.Parse(typeof(SessionStatus), oSession.Status);
-         
+            var currentStatus = (SessionStatus)Enum.Parse(typeof(SessionStatus), oSession.Status);
+
 
             if (cu.EnumRole == EnumUserRole.SuperAdmin && currentStatus == SessionStatus.Pending)
             {
@@ -274,14 +291,16 @@ namespace TmsWebApp.Controllers
 
                 int days = (oSession.ProposedEndDateTime - oSession.ProposedDateTime).Value.Days;
 
+                if (oSession.Id > 0)
+                    sessionRepo.RemoveAllPropesedTimes(oSession.Id);
                 for (int i = 0; i <= days; i++)
                 {
-                    DateTime fromTime = DateTime.ParseExact(collection["proFromTime_" + i].ToString(),"hh:mm tt", CultureInfo.InvariantCulture);
-                    DateTime toTime = DateTime.ParseExact(collection["proToTime_" + i].ToString(),"hh:mm tt", CultureInfo.InvariantCulture);
+                    DateTime fromTime = DateTime.ParseExact(collection["proFromTime_" + i].ToString(), "hh:mm tt", CultureInfo.InvariantCulture);
+                    DateTime toTime = DateTime.ParseExact(collection["proToTime_" + i].ToString(), "hh:mm tt", CultureInfo.InvariantCulture);
                     oSession.session_proposed_time.Add(
                         new session_proposed_time
                         {
-                            IsActive = collection["procheck_" + i] == "on" ? false : true,
+                            IsHoliday = collection["procheck_" + i] == "on" ? true : false,
                             ProposedStartTime = fromTime.TimeOfDay,
                             ProposedEndTime = toTime.TimeOfDay,
                         }
@@ -294,10 +313,50 @@ namespace TmsWebApp.Controllers
                 oSession.VolunteerCertificate = session.VolunteerCertificate == 0 ? null : session.VolunteerCertificate;
                 oSession.StudentEvaluationCatagory = session.StudentEvaluationCatagory;
             }
+            if (cu.EnumRole == EnumUserRole.Coordinator && currentStatus == SessionStatus.Pending)
+            {
+                oSession.ActualEndDateTime = session.ActualEndDateTime;
+                oSession.ActualDateTime = session.ActualDateTime;
+
+                int days = (session.ActualEndDateTime - session.ActualDateTime).Value.Days;
+
+                if (oSession.Id > 0)
+                    sessionRepo.RemoveAllActualTimes(oSession.Id);
+                for (int i = 0; i <= days; i++)
+                {
+                    DateTime fromTime = DateTime.ParseExact(collection["actFromTime_" + i].ToString(), "hh:mm tt", CultureInfo.InvariantCulture);
+                    DateTime toTime = DateTime.ParseExact(collection["actToTime_" + i].ToString(), "hh:mm tt", CultureInfo.InvariantCulture);
+                    oSession.session_actual_time.Add(
+                        new session_actual_time
+                        {
+                            IsHoliday = collection["actcheck_" + i] == "on" ? true : false,
+                            ActualStartTime = fromTime.TimeOfDay,
+                            ActualEndTime = toTime.TimeOfDay,
+                        });
+                }
+                // check date and time change by admin
+                bool isNotChange = CheckNotAnyChageInAdminAndCoordinatorTime(oSession);
+                if (isNotChange)
+                {
+                    if (oSession.Status != SessionStatus.Approved.ToString())
+                        SendEmailNotificationsApprovedByAdmin(oSession);
+                    oSession.Status = SessionStatus.Approved.ToString();
+                    oSession.ApprovedByAdmin = true;
+                  
+                }
+                else
+                {
+                    if (oSession.Status != SessionStatus.DateChanges.ToString())
+                        SendEmailNotificationDateChanged(oSession);
+                    oSession.Status = SessionStatus.DateChanges.ToString();
+
+                }
+
+            }
             if (session.ActualDateString != null)
                 oSession.ActualDateTime = DateTime.ParseExact(session.ActualDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             if (currentStatus == SessionStatus.DateChanges)
-            { 
+            {
                 if (session.SendKitByMailCourier && !oSession.SendKitByMailCourier)
                 {
                     var cor = oSession.school.coordinator_profile.First();
@@ -320,7 +379,7 @@ namespace TmsWebApp.Controllers
             }
             if (cu.EnumRole == EnumUserRole.Coordinator && (currentStatus == SessionStatus.Approved || currentStatus == SessionStatus.Rejected))
             {
-              
+
                 if (session.ConfirmKitReceivedBySchool && !oSession.ConfirmKitReceivedBySchool)
                 {
                     var cor = oSession.school.coordinator_profile.First();
@@ -340,29 +399,14 @@ namespace TmsWebApp.Controllers
                 }
                 oSession.ConfirmKitReceivedBySchool = session.ConfirmKitReceivedBySchool;
             }
-            if (currentStatus == SessionStatus.Pending && oSession.ActualDateTime != null)
-            {
-                if (oSession.ProposedDateTime.Date == oSession.ActualDateTime.Value.Date)
-                {
-                    if (oSession.Status != SessionStatus.Approved.ToString())
-                        SendEmailNotificationsApprovedByAdmin(oSession);
-                    oSession.Status = SessionStatus.Approved.ToString();
-                    oSession.ApprovedByAdmin = true; 
-                }
-                else
-                {
-                    if (oSession.Status != SessionStatus.DateChanges.ToString())
-                        SendEmailNotificationDateChanged(oSession);
-                    oSession.Status = SessionStatus.DateChanges.ToString(); 
-                }
-            }
+
             if (currentStatus == SessionStatus.Approved && oldActualDate != null && oSession.ActualDateTime != oldActualDate)
             {
                 if (oSession.Status != SessionStatus.Approved.ToString())
                     SendEmailNotificationDateChanged(oSession);
                 oSession.Status = SessionStatus.DateChanges.ToString();
                 oSession.ApprovedByAdmin = false;
-                 
+
             }
             if (session.SubmitButton != null)
             {
@@ -371,7 +415,7 @@ namespace TmsWebApp.Controllers
                     if (oSession.Status != SessionStatus.Approved.ToString())
                         SendEmailNotificationsApprovedByAdmin(oSession);
                     oSession.Status = SessionStatus.Approved.ToString();
-                    oSession.ApprovedByAdmin = true; 
+                    oSession.ApprovedByAdmin = true;
 
                 }
                 if (session.SubmitButton == "submitpre")
@@ -379,7 +423,7 @@ namespace TmsWebApp.Controllers
                     int participantId = new ParticipiantRepository().GetByUserId(cu.OUser.Id).Id;
                     string eve_cat = oSession.StudentEvaluationCatagory;
                     string form = new EvaluationFormRepository().Get().First(x => x.Catagory == eve_cat && x.SubCatagory == "pre").FormPath;
-                    return RedirectToAction(form, "EvaluationForm",new {participantid = participantId,sessionid =  oSession.Id});
+                    return RedirectToAction(form, "EvaluationForm", new { participantid = participantId, sessionid = oSession.Id });
                 }
                 if (session.SubmitButton == "submitpost")
                 {
@@ -393,7 +437,7 @@ namespace TmsWebApp.Controllers
                     //oSession.MarkedCompletedByVolunteer = true;
                     var volunteer = new VolunteerRepository().GetByGoogleId(cu.GoogleId) ?? new VolunteerRepository().GetByLinkedInId(cu.GoogleId);
                     oSession.VolunteerId = volunteer.Id;
-                      
+
                     var user = new AccountRepository().Get(oSession.CreatedBy);
                     var bogusController = Util.CreateController<EmailTemplateController>();
                     EmailTemplateModel emodel =
@@ -409,9 +453,9 @@ namespace TmsWebApp.Controllers
                     EmailSender.SendSupportEmail(body, user.Email);
                 }
                 if (session.SubmitButton == "confirm")
-                { 
+                {
                     return RedirectToAction("StudentAttendense", new { sessionId = oSession.RowGUID });
-                     
+
                 }
                 if (session.SubmitButton == "reject")
                 {
@@ -432,7 +476,7 @@ namespace TmsWebApp.Controllers
                 {
                     var participant = new ParticipiantRepository().GetByUserId(cu.OUser.Id);
                     string certificatePath = null;
-                    
+
                     List<PdfCoordinatesModel> pdfCoordinates = null;
                     if (cu.EnumRole == EnumUserRole.Participant)
                     {
@@ -449,7 +493,7 @@ namespace TmsWebApp.Controllers
                     {
                         switch (pc.CertifiacteData)
                         {
-                         
+
                             case CertificateEnum.NameOfStudent:
                                 pc.Text = participant.Name + " " + participant.FatherName + " " + participant.Family;
                                 break;
@@ -457,7 +501,7 @@ namespace TmsWebApp.Controllers
                                 pc.Text = oSession.school.coordinator_profile.First().CoordinatorName;
                                 break;
                             case CertificateEnum.ProgrammYear:
-                                pc.Text = DateTime.Now.Year +"";
+                                pc.Text = DateTime.Now.Year + "";
                                 break;
                             case CertificateEnum.TranningDate:
                                 pc.Text = Util.DateConversion(oSession.ActualDateTime.Value.ToShortDateString(), "Hijri", "en-us");
@@ -482,7 +526,7 @@ namespace TmsWebApp.Controllers
 
                 }
             }
-            oSession.IsActive = session.IsActive;
+            //oSession.IsActive = session.IsActive;
             if (session.Id == 0)
             {
                 sessionRepo.Post(oSession);
@@ -492,9 +536,30 @@ namespace TmsWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        private bool CheckNotAnyChageInAdminAndCoordinatorTime(session oSession)
+        {
+            bool isStartChange = oSession.ProposedDateTime == oSession.ActualDateTime;
+            bool isEndChange = oSession.ProposedEndDateTime == oSession.ActualEndDateTime;
+            if (isStartChange && isEndChange)
+            {
+                for (int i = 0; i < oSession.session_actual_time.Count; i++)
+                {
+                    // any change detect in holiday, from and to time
+                    if (!(oSession.session_actual_time.ElementAt(i).IsHoliday == oSession.session_proposed_time.ElementAt(i).IsHoliday)
+                       && (oSession.session_actual_time.ElementAt(i).ActualEndTime == oSession.session_proposed_time.ElementAt(i).ProposedEndTime)
+                        && (oSession.session_actual_time.ElementAt(i).ActualStartTime == oSession.session_proposed_time.ElementAt(i).ProposedStartTime))
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            return true;
+        }
+
         private static void SendEmailNotificationDateChanged(session oSession)
         {
-           
+
             var cor = oSession.school.coordinator_profile.First();
             var user = new AccountRepository().Get(oSession.CreatedBy);
             var bogusController = Util.CreateController<EmailTemplateController>();
@@ -559,7 +624,7 @@ namespace TmsWebApp.Controllers
         public ActionResult FeedBack(int sessionId, int participantId)
         {
             var feedback = new SessionRepository().Get(sessionId).session_participant.Where(x => x.ParticipantID == participantId).First().FeedBack;
-            var sessionFeedBack = new SessionFeedBack {FeedBack = feedback, ParticipantId = participantId, SessionId = sessionId };
+            var sessionFeedBack = new SessionFeedBack { FeedBack = feedback, ParticipantId = participantId, SessionId = sessionId };
             return View(sessionFeedBack);
 
         }
@@ -627,16 +692,16 @@ namespace TmsWebApp.Controllers
         public ActionResult RequestSession()
         {
             var cu = Session["user"] as ContextUser;
-            int participantId = new ParticipiantRepository().GetByUserId(cu.OUser.Id).Id; 
+            int participantId = new ParticipiantRepository().GetByUserId(cu.OUser.Id).Id;
             var repository = new SessionRepository();
-            var oSession = repository.Get().Where(x=>x.Status == "Approved").ToList(); 
+            var oSession = repository.Get().Where(x => x.Status == "Approved").ToList();
             foreach (var item in oSession)
             {
                 if (item.session_participant.Any(x => x.ParticipantID == participantId))
                 {
-                    item.IsSelected = true; 
+                    item.IsSelected = true;
                 }
-            } 
+            }
             return View(oSession);
         }
         [HttpPost]
@@ -675,7 +740,7 @@ namespace TmsWebApp.Controllers
                 new EmailTemplateModel
                 {
                     Title = "Notification: Approved By Admin.",
-                    SessionTitle = oSession.ProgramName ,
+                    SessionTitle = oSession.ProgramName,
                     CoordinatorName = cor.CoordinatorName,
                     User = cor.user.FirstName
                 };

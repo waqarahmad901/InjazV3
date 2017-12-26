@@ -14,7 +14,10 @@
         bindTimePicker();
         if (role.toLocaleLowerCase() == "coordinator") {
             if ("@Model.Status" == "Pending") {
-                $('input').not("#@Html.IdFor(x=>x.ActualDateString)").not("#@Html.IdFor(x=>x.ActualDateStringStringIslamic)").not("#@Html.IdFor(x=>x.Id)").attr("disabled", "disabled");
+                $('input')
+                    .not(".actualdate")
+                    .not("#@Html.IdFor(x=>x.Id)")
+                    .attr("disabled", "disabled");
                 $(".check").parent().hide();
                 bindDatedLocal();
             }
@@ -89,7 +92,7 @@
     function bindDatedLocal() {
         $("#@Html.IdFor(x => x.ActualDateStringStringIslamic)").calendarsPicker({
             calendar: $.calendars.instance('islamic'),
-            dateFormat: 'MM d, yyyy',
+            dateFormat: 'yyyy/mm/dd',
             onSelect: function (dates) {
                 var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
                 var control = $(this);
@@ -245,116 +248,67 @@
                                     <label style="font-style: italic">@Coordinator.Gorgian</label>
                                     @Html.TextBoxFor(m => m.PropesedDateString, new { @class = "form-control date startDate", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
                                     @Html.ValidationMessageFor(m => m.PropesedDateString, "", new { @class = "text-danger" })
-
-
                                 </div>
                                 <div class="form-group col-sm-6" style="margin-top:0.5%">
                                     <label style="width: 100%"></label>
                                     <label style="font-style: italic">@SessionX.Hijri</label>
                                     @Html.TextBoxFor(m => m.PropesedDateStringIslamic, new { @class = "form-control date-islamic startDateIslamic", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
                                     @Html.ValidationMessageFor(m => m.PropesedDateStringIslamic, "", new { @class = "text-danger" })
-
-
                                 </div>
-                            </div>
-
+                            </div> 
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label style="width: 100%">Propsed End Date</label>
                                     <label style="font-style: italic">@Coordinator.Gorgian</label>
                                     @Html.TextBoxFor(m => m.ProposedEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date enddate" })
-                                    @Html.ValidationMessageFor(m => m.ProposedEndDateTime, "", new { @class = "text-danger" })
-
-
+                                    @Html.ValidationMessageFor(m => m.ProposedEndDateTime, "", new { @class = "text-danger" }) 
                                 </div>
                                 <div class="form-group col-sm-6" style="margin-top:0.5%">
                                     <label style="width: 100%"></label>
                                     <label style="font-style: italic">@SessionX.Hijri</label>
                                     @Html.TextBoxFor(m => m.PropesedEndDateStringIslamic, new { @class = "form-control date-islamic enddateIslamic" })
-                                    @Html.ValidationMessageFor(m => m.PropesedEndDateStringIslamic, "", new { @class = "text-danger" })
-
-
+                                    @Html.ValidationMessageFor(m => m.PropesedEndDateStringIslamic, "", new { @class = "text-danger" })        
                                 </div>
-                            </div>
-
-                            <div id="timeControl" style="background-color:#ddd; width:100%" class="pull-left">
-                                <div class="form-group firstRow col-sm-12">
-                                    <div class="col-sm-2" style="padding:0px">
-                                        Holiday
-                                    </div>
-                                    <div class="col-sm-2" style="padding:0px">
-                                        Day
-                                    </div>
-                                    <div class="col-sm-4">
-                                        From
-                                    </div>
-                                    <div class="col-sm-4">
-                                        To
-                                    </div>
-                                </div>
-                                @{
-                                    int dateDiff = (Model.ProposedEndDateTime - Model.ProposedDateTime).Value.Days;
-                                }
-
-                                @for (int i = 0; i <= dateDiff; i++)
-                                {
-                                    string displayFromTime = "10:00 AM";
-                                    string displayToTime = "11:00 AM";
-                                    bool isActive = false;
-                                    string readonlyS = "";
-                                    if (Model.Id > 0)
-                                    {
-                                        TimeSpan timespan = Model.session_proposed_time.ElementAt(i).ProposedStartTime.Value;
-                                        DateTime time = DateTime.Today.Add(timespan);
-                                        displayFromTime = time.ToString("hh:mm tt");
-
-                                        timespan = Model.session_proposed_time.ElementAt(i).ProposedEndTime.Value;
-                                        time = DateTime.Today.Add(timespan);
-                                        displayToTime = time.ToString("hh:mm tt");
-                                        isActive = Model.session_proposed_time.ElementAt(i).IsActive;
-                                        readonlyS = isActive ? "readonly" : "";
-                                    }
-                                    <div class='form-group col-sm-12'>
-                                        <div class='col-sm-2' style='padding:0px'>
-                                            <input type='checkbox' name='procheck_@i' checked="@isActive" onchange="changeTimeCheck(this,'proFromTime_','proToTime_', @i)" />
-                                        </div>
-                                        <div class='col-sm-2' style='padding:0px'>
-                                            @Model.ProposedDateTime.AddDays(i).ToString("dd MMM")
-                                        </div>
-                                        <div class='col-sm-4'>
-                                            <input type='text' name='proFromTime_@i' class='form-control timepicker' value="@displayFromTime" data-provide='timepicker' @readonlyS/>
-                                        </div>
-                                        <div class='col-sm-4'>
-                                            <input type='text' class='form-control timepicker' name='proToTime_@i' value="@displayToTime" data-provide='timepicker' @readonlyS/>
-                                        </div>
-                                    </div>
-                                }
-                            
-
-                            </div>
-
-
-                            @if (Model.Id > 0)
-                            {
-
-                                <div class="row">
+                            </div> 
+                           @Html.Partial("_SessionTime", Model, new ViewDataDictionary { { "type", "pro" }, { "addtionalclass", "" } })
+                           @if (Model.Id > 0)
+                            { 
+                                <div class="row" style="width:100%">
                                     <div class="form-group col-sm-6">
                                         <label style="width: 100%">@SessionX.RequestedDate</label>
                                         <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                        @Html.TextBoxFor(m => m.ActualDateString, new { @class = "form-control date-1", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
-                                        @Html.ValidationMessageFor(m => m.ActualDateString, "", new { @class = "text-danger" })
+                                        @Html.TextBoxFor(m => m.ActualDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualstart", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                        @Html.ValidationMessageFor(m => m.ActualDateTime, "", new { @class = "text-danger" })
+                                         
+                                    </div>
+                                    <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                        <label style="width: 100%"></label>
+                                        <label style="font-style: italic">@SessionX.Hijri</label>
+                                        @Html.TextBoxFor(m => m.ActualDateStringStringIslamic, new { @class = "form-control date-islamic-1 actualdate actualstartislamic", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                        @Html.ValidationMessageFor(m => m.ActualDateStringStringIslamic, "", new { @class = "text-danger" })
+                                         
+                                    </div>
+                                </div>
+
+                                <div class="row" style="width:100%">
+                                    <div class="form-group col-sm-6">
+                                        <label style="width: 100%">@SessionX.RequestedDate</label>
+                                        <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                        @Html.TextBoxFor(m => m.ActualEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date actualdate actualend", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                        @Html.ValidationMessageFor(m => m.ActualEndDateTime, "", new { @class = "text-danger" })
 
 
                                     </div>
                                     <div class="form-group col-sm-6" style="margin-top:0.5%">
                                         <label style="width: 100%"></label>
                                         <label style="font-style: italic">@SessionX.Hijri</label>
-                                        @Html.TextBoxFor(m => m.ActualDateStringStringIslamic, new { @class = "form-control date-islamic-1", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
-                                        @Html.ValidationMessageFor(m => m.ActualDateStringStringIslamic, "", new { @class = "text-danger" })
+                                        @Html.TextBoxFor(m => m.ActualEndDateStringIslamic, new { @class = "form-control date-islamic actualdate actualendislamic", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                        @Html.ValidationMessageFor(m => m.ActualEndDateStringIslamic, "", new { @class = "text-danger" })
 
 
                                     </div>
                                 </div>
+                                @Html.Partial("_SessionTime", Model, new ViewDataDictionary { { "type", "act"}, {"addtionalclass","actualdate" } })
                                 if (Model.ChangeDateVisible)
                                 {
                                     <button type="button" class="btn btn-sm btn-primary pull-right" onclick="changeDate()">@SessionX.ChangeDate</button>
