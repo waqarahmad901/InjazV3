@@ -163,15 +163,20 @@
                                         { cssClass = "danger"; }
                                         if (item.Status == SessionStatus.Occured.ToString())
                                         { cssClass = "info"; }
-                                        if (item.Status == SessionStatus.DateChanges.ToString())
+                                        if (item.Status == SessionStatus.DateChanges.ToString() || item.Status == SessionStatus.StudentChanges.ToString())
                                         { cssClass = "ready"; }
-
                                     }
-                                    <td><span class="badge badge-@cssClass">@item.Status</span></td>
-
-                                    @if (cu.EnumRole == EnumUserRole.SuperAdmin)
+                                    @if (item.Status == SessionStatus.DateChanges.ToString() && item.NumberOfStudents != item.NumberOfActualStudents)
                                     {
-                                        if (item.IsActive)
+                                    <td><span class="badge badge-@cssClass" style="margin-right:5px">@item.Status</span><span class="badge badge-@cssClass">StudnetChanges</span> </td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="badge badge-@cssClass">@item.Status</span></td> 
+                                    }
+                                    @*@if (cu.EnumRole == EnumUserRole.SuperAdmin)
+                                    {*@
+                                        @if (item.IsActive)
                                         {
                                         <td><span class="badge badge-success">@General.Active</span></td>
                                         }
@@ -179,13 +184,13 @@
                                         {
                                         <td><span class="badge badge-default">@General.InActive</span></td>
                                         }
-                                    }
+                                    @*}
                                     else
                                     {
                                         <td></td>
-                                    }
+                                    }*@
                                     <td>
-                                        @if (!(cu.EnumRole == EnumUserRole.Coordinator && item.Status == SessionStatus.DateChanges.ToString()) && item.Status != SessionStatus.Rejected.ToString())
+                                        @if (!(cu.EnumRole == EnumUserRole.Coordinator && (item.Status == SessionStatus.DateChanges.ToString() || item.Status == SessionStatus.StudentChanges.ToString())) && item.Status != SessionStatus.Rejected.ToString())
                                         {
                                             <a href="@Url.Action("Edit", new { id = item.RowGUID })" title="Edit"><i class="fa fa-pencil"></i></a>
                                             if (cu.EnumRole == EnumUserRole.SuperAdmin)

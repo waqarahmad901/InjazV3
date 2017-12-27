@@ -2119,6 +2119,7 @@
           <Property Name="StudentEvaluationCatagory" Type="nvarchar" MaxLength="50" />
           <Property Name="IsVolunteerCertificateGenerated" Type="bit" Nullable="false" />
           <Property Name="NumberOfStudents" Type="int" Nullable="false" />
+          <Property Name="NumberOfActualStudents" Type="int" Nullable="false" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="ProposedEndDateTime" Type="datetime" />
@@ -3022,6 +3023,7 @@
           <NavigationProperty Name="lk_country" Relationship="TrainingProjectModel.FK_session_lk_country" FromRole="session" ToRole="lk_country" />
           <NavigationProperty Name="session_proposed_time" Relationship="TrainingProjectModel.FK_session_time_session" FromRole="session" ToRole="session_proposed_time" />
           <NavigationProperty Name="session_actual_time" Relationship="TrainingProjectModel.FK_session_actual_time_session" FromRole="session" ToRole="session_actual_time" />
+          <Property Name="NumberOfActualStudents" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="session_evaluationform_photo">
           <Key>
@@ -5765,6 +5767,7 @@
           <EntitySetMapping Name="sessions">
             <EntityTypeMapping TypeName="TrainingProjectModel.session">
               <MappingFragment StoreEntitySet="session">
+                <ScalarProperty Name="NumberOfActualStudents" ColumnName="NumberOfActualStudents" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="ActualEndDateTime" ColumnName="ActualEndDateTime" />
                 <ScalarProperty Name="ProposedEndDateTime" ColumnName="ProposedEndDateTime" />

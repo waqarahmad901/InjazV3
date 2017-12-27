@@ -85,8 +85,10 @@ namespace TranningWebApp.Repository.DataAccess
             }
         }
         public bool RequestThisSession => VolunteerId != null;
+        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
 
         public int NumberOfStudents { get; set; }
+        public int NumberOfActualStudents { get; set; }
         public string Gender { get; set; }
         public string City { get; set; }
         public Nullable<System.DateTime> ProposedEndDateTime { get; set; }

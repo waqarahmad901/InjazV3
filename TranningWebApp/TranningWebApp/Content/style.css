@@ -4277,6 +4277,7 @@ tbody.collapse.show {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
+  border-radius:2px;
 }
 
 .badge:empty {

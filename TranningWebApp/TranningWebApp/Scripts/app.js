@@ -343,7 +343,7 @@ function renderTimeControl(startclass,endclass) {
     debugger;
     var startDate = $("." +startclass).val();
     var endDate = $("." + endclass).val();
-    var type = "actualstart" ? "act" : "pro";
+    var type = startclass.indexOf("actual") > -1 ? "act" : "pro";
     arr_dateText = startDate.split("/");
     day = arr_dateText[0];
     month = arr_dateText[1];
@@ -376,7 +376,7 @@ function renderTimeControl(startclass,endclass) {
     for (i = 0; i <= dateDiff; i++) {
         var html = "<div class='form-group col-sm-12'>";
         html += "  <div class='col-sm-2' style='padding:0px'>"
-        html += "<input type='checkbox' name = '" + type + "check_" + i + "' onchange = 'changeTimeCheck(this,\"proFromTime_\",\"proToTime_\"," + i + ")'/>"
+        html += "<input type='checkbox' name = '" + type + "check_" + i + "' onchange = \"changeTimeCheck(this,'" + type + "FromTime_','" + type + "ToTime_'," + i + ")\"/>"
         html += "</div>"
         html += "  <div class='col-sm-2' style='padding:0px'>"
         html += newDate.getDate() + " " + monthNames[newDate.getMonth()]

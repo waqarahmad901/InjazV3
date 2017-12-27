@@ -70,7 +70,7 @@
             }
             readonlyS = isHoliday ? "readonly" : "";
         }
-        <div class='form-group col-sm-12'>
+        <div class='form-group col-sm-12 @addtionalclass'>
             <div class='col-sm-2' style='padding:0px'>
                 <input type='checkbox' name='@(type+"check_"+i)'checked="@isHoliday" class="@addtionalclass" onchange="changeTimeCheck(this,'@(type+"FromTime_")','@(type+"ToTime_")', @i)" />
             </div>

@@ -124,6 +124,8 @@ namespace TmsWebApp.Controllers
                 sessionModel.PropesedDateString = DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy");
                 sessionModel.ProposedDateTime = DateTime.Now.AddMonths(1);
                 sessionModel.ProposedEndDateTime = DateTime.Now.AddMonths(1).AddDays(3);
+                sessionModel.NumberOfStudents = 20;
+                sessionModel.Country = 1192;
             }
             else
             {
@@ -131,11 +133,12 @@ namespace TmsWebApp.Controllers
                 sessionModel = sessionRepo.GetByRowId(id.Value);
                 sessionModel.PropesedDateString = sessionModel.ProposedDateTime.ToString("dd/MM/yyyy");
                 sessionModel.EnumSessionStatus = (SessionStatus)Enum.Parse(typeof(SessionStatus), sessionModel.Status);
-                if (sessionModel.ActualDateTime == null && cu.EnumRole == EnumUserRole.Coordinator && sessionModel.EnumSessionStatus == SessionStatus.Pending)
+                if (sessionModel.ActualDateTime == null && sessionModel.EnumSessionStatus == SessionStatus.Pending)
                 {
                     sessionModel.ActualDateTime = sessionModel.ProposedDateTime;
                     sessionModel.ActualDateString = sessionModel.ProposedDateTime.ToString("dd/MM/yyyy");
                     sessionModel.ActualEndDateTime = sessionModel.ProposedEndDateTime;
+                    sessionModel.NumberOfActualStudents = sessionModel.NumberOfStudents;
                     foreach (var item in sessionModel.session_proposed_time)
                     {
                         sessionModel.session_actual_time.Add(new session_actual_time
@@ -264,6 +267,7 @@ namespace TmsWebApp.Controllers
                 oSession.Gender = session.Gender;
                 oSession.City = session.City;
                 oSession.Country = session.Country;
+                oSession.NumberOfStudents = session.NumberOfStudents;
 
                 if (oSession.SchoolID == null && session.SchoolID != null && session.SchoolID.Value != 0)
                 {
@@ -334,28 +338,32 @@ namespace TmsWebApp.Controllers
                             ActualEndTime = toTime.TimeOfDay,
                         });
                 }
+                oSession.NumberOfActualStudents = session.NumberOfActualStudents;
                 // check date and time change by admin
-                bool isNotChange = CheckNotAnyChageInAdminAndCoordinatorTime(oSession);
-                if (isNotChange)
+                bool isChangeDate = CheckAnyChageInAdminAndCoordinatorTime(oSession);
+          
+                if (isChangeDate)
+                {
+                    if (oSession.Status != SessionStatus.DateChanges.ToString())
+                        SendEmailNotificationDateChanged(oSession);
+                    oSession.Status = SessionStatus.DateChanges.ToString(); 
+                }
+                else if (oSession.NumberOfStudents != oSession.NumberOfActualStudents)
+                {
+                    oSession.Status = SessionStatus.StudentChanges.ToString();
+                }
+                else
                 {
                     if (oSession.Status != SessionStatus.Approved.ToString())
                         SendEmailNotificationsApprovedByAdmin(oSession);
                     oSession.Status = SessionStatus.Approved.ToString();
                     oSession.ApprovedByAdmin = true;
-                  
-                }
-                else
-                {
-                    if (oSession.Status != SessionStatus.DateChanges.ToString())
-                        SendEmailNotificationDateChanged(oSession);
-                    oSession.Status = SessionStatus.DateChanges.ToString();
-
                 }
 
             }
             if (session.ActualDateString != null)
                 oSession.ActualDateTime = DateTime.ParseExact(session.ActualDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            if (currentStatus == SessionStatus.DateChanges)
+            if (currentStatus == SessionStatus.DateChanges || currentStatus == SessionStatus.StudentChanges)
             {
                 if (session.SendKitByMailCourier && !oSession.SendKitByMailCourier)
                 {
@@ -526,7 +534,7 @@ namespace TmsWebApp.Controllers
 
                 }
             }
-            //oSession.IsActive = session.IsActive;
+            oSession.IsActive = session.IsActive;
             if (session.Id == 0)
             {
                 sessionRepo.Post(oSession);
@@ -536,25 +544,30 @@ namespace TmsWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        private bool CheckNotAnyChageInAdminAndCoordinatorTime(session oSession)
+        private bool CheckAnyChageInAdminAndCoordinatorTime(session oSession)
         {
-            bool isStartChange = oSession.ProposedDateTime == oSession.ActualDateTime;
-            bool isEndChange = oSession.ProposedEndDateTime == oSession.ActualEndDateTime;
-            if (isStartChange && isEndChange)
+            bool isStarNotChange = oSession.ProposedDateTime == oSession.ActualDateTime;
+            bool isEndNotChange = oSession.ProposedEndDateTime == oSession.ActualEndDateTime;
+            //Any change detect in from and two date
+            if (isStarNotChange && isEndNotChange)
             {
                 for (int i = 0; i < oSession.session_actual_time.Count; i++)
                 {
                     // any change detect in holiday, from and to time
-                    if (!(oSession.session_actual_time.ElementAt(i).IsHoliday == oSession.session_proposed_time.ElementAt(i).IsHoliday)
+                    if (!((oSession.session_actual_time.ElementAt(i).IsHoliday == oSession.session_proposed_time.ElementAt(i).IsHoliday)
                        && (oSession.session_actual_time.ElementAt(i).ActualEndTime == oSession.session_proposed_time.ElementAt(i).ProposedEndTime)
-                        && (oSession.session_actual_time.ElementAt(i).ActualStartTime == oSession.session_proposed_time.ElementAt(i).ProposedStartTime))
+                        && (oSession.session_actual_time.ElementAt(i).ActualStartTime == oSession.session_proposed_time.ElementAt(i).ProposedStartTime)))
                     {
-                        return false;
+                        return true;
                     }
 
                 }
             }
-            return true;
+            else
+            {
+                return true;
+            }
+            return false;
         }
 
         private static void SendEmailNotificationDateChanged(session oSession)
@@ -578,8 +591,8 @@ namespace TmsWebApp.Controllers
         public ActionResult StudentAttendense(Guid sessionId)
         {
             var sessionRepo = new SessionRepository();
-            var students = sessionRepo.GetByRowId(sessionId).session_participant.Select(x => x.participant_profile).ToList();
-            return View(students);
+            var session = sessionRepo.GetByRowId(sessionId) ;
+            return View(session);
         }
         [HttpPost]
         public ActionResult StudentAttendense(List<participant_profile> participants)

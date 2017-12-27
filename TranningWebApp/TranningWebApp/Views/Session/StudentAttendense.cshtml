@@ -1,4 +1,4 @@
-﻿@model List<TranningWebApp.Repository.DataAccess.participant_profile>
+﻿@model  TranningWebApp.Repository.DataAccess.session
 @using TranningWebApp.Resource
 @{
     ViewBag.Title = "StudentAttendense";
@@ -26,40 +26,16 @@
 
     <div class="container-fluid">
         <div class="animated fadeIn">
+            <div class="row">
 
-            <div class="col-sm-6">
-                @using (Html.BeginForm("StudentAttendense", "Session", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    <div class="card">
-                        <div class="card-header">
-                            <input type="checkbox" onclick="checkAllClick()" id="checkall" style="margin-right:5px"/>
-                            <strong class="text-primary">@SessionX.MarkStudentAttendense</strong>
-                        </div>
-                        <div class="card-block">
-                            @for(int i = 0; i< Model.Count; i++ )
-                            { 
-                            <div class="form-group">
-                               @Html.CheckBoxFor(x=>Model[i].IsSelected, new { @style = "margin-top:5px", @class = "check" })
-                               <label style="margin-left:10px">@(Model[i].Name + " "+ Model[i].FatherName + " " + Model[i].Family)</label>
-                            </div>
-                            @Html.HiddenFor(x=> Model[i].Id)
-                            }
-                        </div>
-                        <input type="hidden" name="sessionid" value="@sessionId" />
-                        <div class="card-footer">
-                            @if (Model.Count == 0)
-                            {
-                                <button type="submit" class="btn btn-sm btn-primary pull-right" disabled><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
+                <table class="table table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                        <tr>
 
-                            }
-                            else
-                            {
-                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
-                            }
-                        </div>
-                        
-                    </div>
-                }
+                            </tr>
+                        </thead>
+                    </table>
+
             </div>
         </div>
     </div>

@@ -23,6 +23,7 @@ namespace TmsWebApp.Common
         Approved,
         Rejected,
         DateChanges,
+        StudentChanges,
         Occured,
         Complete
     }
