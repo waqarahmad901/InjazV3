@@ -2,15 +2,17 @@
 @using TranningWebApp.Resource
 @{
     ViewBag.Title = "StudentAttendense";
-    string sessionId = Request.QueryString["sessionId"];
+    DateTime startDay = Model.ActualDateTime.Value;
+
 }
 <script type="text/javascript">
 
     function checkAllClick() {
+        debugger;
         if (document.getElementById('checkall').checked) {
-            $('.check').prop('checked', true);
+            $('input[type="checkbox"').prop('checked', true);
         } else {
-            $('.check').prop('checked', false);
+            $('input[type="checkbox"').prop('checked', false);
         }
     }
 
@@ -26,17 +28,64 @@
 
     <div class="container-fluid">
         <div class="animated fadeIn">
-            <div class="row">
+            @using (Html.BeginForm("StudentAttendense", "Session", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken();
+                <div class="card">
+                    <div class="card">
+                        <div class="card-header">
 
-                <table class="table table-hover table-outline mb-0">
-                    <thead class="thead-default">
-                        <tr>
 
-                            </tr>
-                        </thead>
-                    </table>
+                            <input type="checkbox" id="checkall" onchange="checkAllClick()" />  <strong class="text-primary">  @SessionX.MarkStudentAttendense</strong>
 
-            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-hover table-outline mb-0">
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th>Student Name</th>
+                                        @for (int i = 0; i < Model.session_actual_time.Count; i++)
+                                        {
+                                            bool isHoliday = Model.session_actual_time.ElementAt(i).IsHoliday;
+                                            DateTime currentDay = startDay.AddDays(i);
+                                            if (!isHoliday)
+                                            {
+                                                TimeSpan timespanStart = Model.session_actual_time.ElementAt(i).ActualStartTime.Value;
+                                                TimeSpan timespanEnd = Model.session_actual_time.ElementAt(i).ActualEndTime.Value;
+                                                string startTime = DateTime.Today.Add(timespanStart).ToString("hh:mm tt");
+                                                string endTime = DateTime.Today.Add(timespanEnd).ToString("hh:mm tt");
+                                                <th>@(currentDay.ToString("dd MMM") + " (" + startTime + " - " + endTime + " )")</th>
+                                            }
+                                        }
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.session_participant)
+                                    {
+                                        <tr>
+                                            <td>@(item.participant_profile.Name + " " + item.participant_profile.FatherName + " " + item.participant_profile.Family)</td>
+                                            @for (int i = 0; i < Model.session_actual_time.Count; i++)
+                                            {
+                                                bool isHoliday = Model.session_actual_time.ElementAt(i).IsHoliday;
+                                                int id = Model.session_actual_time.ElementAt(i).Id;
+                                                if (!isHoliday)
+                                                {
+                                                    <td><input type="checkbox" name="@(item.ParticipantID +"-" +id)" /></td>
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="approved"><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </main>
