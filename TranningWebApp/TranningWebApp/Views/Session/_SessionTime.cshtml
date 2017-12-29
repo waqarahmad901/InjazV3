@@ -6,8 +6,9 @@
 <div id="@(type + "timeControl")" class="pull-left sessionTime ">
     <div class="form-group firstRow col-sm-12">
         <div class="col-sm-2" style="padding:0px">
-            <b>Holiday</b>
+            <input type="checkbox" />
         </div>
+        
         <div class="col-sm-2" style="padding:0px">
             <b>Day</b>
         </div>
@@ -74,8 +75,9 @@
             <div class='col-sm-2' style='padding:0px'>
                 <input type='checkbox' name='@(type+"check_"+i)'checked="@isHoliday" class="@addtionalclass" onchange="changeTimeCheck(this,'@(type+"FromTime_")','@(type+"ToTime_")', @i)" />
             </div>
+          
             <div class='col-sm-2' style='padding:0px'>
-                @Model.ProposedDateTime.AddDays(i).ToString("dd MMM")
+                @(Model.ProposedDateTime.AddDays(i).DayOfWeek.ToString().Substring(0, 3) + ", "+ Model.ProposedDateTime.AddDays(i).ToString("dd MMM"))
             </div>
             <div class='col-sm-4'>
                 <input type='text' name='@(type+"FromTime_"+i)' class='form-control timepicker @addtionalclass' value="@displayFromTime" @readonlyS />

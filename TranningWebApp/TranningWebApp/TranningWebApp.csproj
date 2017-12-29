@@ -365,6 +365,9 @@
     <Compile Include="Repository\DataAccess\session_actual_time.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\DataAccess\session_actual_time_attendance.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\DataAccess\session_evaluationform_photo.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>

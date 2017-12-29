@@ -236,4 +236,41 @@ namespace TranningWebApp.Repository
             }
         }
     }
-}
+
+    public class SessionActualTimeAttendenceRepository : IRepository<session_actual_time_attendance, int>
+    {
+        //The dendency for the DbContext specified the current class. 
+        public TrainingProjectEntities Context { get; set; } = new TrainingProjectEntities();
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<session_actual_time_attendance> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public session_actual_time_attendance Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Post(session_actual_time_attendance entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PostAll(List<session_actual_time_attendance> list)
+        {
+            Context.session_actual_time_attendance.AddRange(list);
+            Context.SaveChanges();
+        }
+
+        public void Put(int id, session_actual_time_attendance entity)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    }

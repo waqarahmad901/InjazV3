@@ -14,6 +14,12 @@ namespace TranningWebApp.Repository.DataAccess
     
     public partial class session_actual_time
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public session_actual_time()
+        {
+            this.session_actual_time_attendance = new HashSet<session_actual_time_attendance>();
+        }
+    
         public int Id { get; set; }
         public int SessionId { get; set; }
         public Nullable<System.TimeSpan> ActualStartTime { get; set; }
@@ -22,5 +28,7 @@ namespace TranningWebApp.Repository.DataAccess
         public bool IsActive { get; set; }
     
         public virtual session session { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<session_actual_time_attendance> session_actual_time_attendance { get; set; }
     }
 }

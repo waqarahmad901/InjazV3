@@ -2137,6 +2137,14 @@
           <Property Name="IsHoliday" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="session_actual_time_attendance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantId" Type="int" Nullable="false" />
+          <Property Name="SessionActualTimeId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="session_evaluationform_photo">
           <Key>
             <PropertyRef Name="Id" />
@@ -2420,6 +2428,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_session_actual_time_attendance_participant_profile">
+          <End Role="participant_profile" Type="Self.participant_profile" Multiplicity="1" />
+          <End Role="session_actual_time_attendance" Type="Self.session_actual_time_attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="participant_profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session_actual_time_attendance">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_session_actual_time_attendance_session_actual_time">
+          <End Role="session_actual_time" Type="Self.session_actual_time" Multiplicity="1" />
+          <End Role="session_actual_time_attendance" Type="Self.session_actual_time_attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="session_actual_time">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session_actual_time_attendance">
+              <PropertyRef Name="SessionActualTimeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_session_actual_time_session">
           <End Role="session" Type="Self.session" Multiplicity="1" />
           <End Role="session_actual_time" Type="Self.session_actual_time" Multiplicity="*" />
@@ -2631,6 +2663,7 @@
           <EntitySet Name="school" EntityType="Self.school" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="session" EntityType="Self.session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="session_actual_time" EntityType="Self.session_actual_time" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="session_actual_time_attendance" EntityType="Self.session_actual_time_attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="session_evaluationform_photo" EntityType="Self.session_evaluationform_photo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="session_evaluationform_result" EntityType="Self.session_evaluationform_result" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="session_participant" EntityType="Self.session_participant" Schema="dbo" store:Type="Tables" />
@@ -2678,6 +2711,14 @@
           <AssociationSet Name="FK_school_user" Association="Self.FK_school_user">
             <End Role="user" EntitySet="user" />
             <End Role="school" EntitySet="school" />
+          </AssociationSet>
+          <AssociationSet Name="FK_session_actual_time_attendance_participant_profile" Association="Self.FK_session_actual_time_attendance_participant_profile">
+            <End Role="participant_profile" EntitySet="participant_profile" />
+            <End Role="session_actual_time_attendance" EntitySet="session_actual_time_attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_session_actual_time_attendance_session_actual_time" Association="Self.FK_session_actual_time_attendance_session_actual_time">
+            <End Role="session_actual_time" EntitySet="session_actual_time" />
+            <End Role="session_actual_time_attendance" EntitySet="session_actual_time_attendance" />
           </AssociationSet>
           <AssociationSet Name="FK_session_actual_time_session" Association="Self.FK_session_actual_time_session">
             <End Role="session" EntitySet="session" />
@@ -2923,6 +2964,7 @@
           <NavigationProperty Name="session_participant" Relationship="TrainingProjectModel.FK_session_participant_participant_profile" FromRole="participant_profile" ToRole="session_participant" />
           <Property Name="Family" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="FatherName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="session_actual_time_attendance" Relationship="TrainingProjectModel.FK_session_actual_time_attendance_participant_profile" FromRole="participant_profile" ToRole="session_actual_time_attendance" />
         </EntityType>
         <EntityType Name="school">
           <Key>
@@ -3305,6 +3347,15 @@
           <AssociationSet Name="FK_session_actual_time_session" Association="TrainingProjectModel.FK_session_actual_time_session">
             <End Role="session" EntitySet="sessions" />
             <End Role="session_actual_time" EntitySet="session_actual_time" />
+          </AssociationSet>
+          <EntitySet Name="session_actual_time_attendance" EntityType="TrainingProjectModel.session_actual_time_attendance" />
+          <AssociationSet Name="FK_session_actual_time_attendance_participant_profile" Association="TrainingProjectModel.FK_session_actual_time_attendance_participant_profile">
+            <End Role="participant_profile" EntitySet="participant_profile" />
+            <End Role="session_actual_time_attendance" EntitySet="session_actual_time_attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_session_actual_time_attendance_session_actual_time" Association="TrainingProjectModel.FK_session_actual_time_attendance_session_actual_time">
+            <End Role="session_actual_time" EntitySet="session_actual_time" />
+            <End Role="session_actual_time_attendance" EntitySet="session_actual_time_attendance" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_session_school">
@@ -5532,6 +5583,7 @@
           <Property Name="IsHoliday" Type="Boolean" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="session" Relationship="TrainingProjectModel.FK_session_actual_time_session" FromRole="session_actual_time" ToRole="session" />
+          <NavigationProperty Name="session_actual_time_attendance" Relationship="TrainingProjectModel.FK_session_actual_time_attendance_session_actual_time" FromRole="session_actual_time" ToRole="session_actual_time_attendance" />
         </EntityType>
         <Association Name="FK_session_actual_time_session">
           <End Type="TrainingProjectModel.session" Role="session" Multiplicity="1" />
@@ -5542,6 +5594,40 @@
             </Principal>
             <Dependent Role="session_actual_time">
               <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="session_actual_time_attendance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantId" Type="Int32" Nullable="false" />
+          <Property Name="SessionActualTimeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="participant_profile" Relationship="TrainingProjectModel.FK_session_actual_time_attendance_participant_profile" FromRole="session_actual_time_attendance" ToRole="participant_profile" />
+          <NavigationProperty Name="session_actual_time" Relationship="TrainingProjectModel.FK_session_actual_time_attendance_session_actual_time" FromRole="session_actual_time_attendance" ToRole="session_actual_time" />
+        </EntityType>
+        <Association Name="FK_session_actual_time_attendance_participant_profile">
+          <End Type="TrainingProjectModel.participant_profile" Role="participant_profile" Multiplicity="1" />
+          <End Type="TrainingProjectModel.session_actual_time_attendance" Role="session_actual_time_attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="participant_profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session_actual_time_attendance">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_session_actual_time_attendance_session_actual_time">
+          <End Type="TrainingProjectModel.session_actual_time" Role="session_actual_time" Multiplicity="1" />
+          <End Type="TrainingProjectModel.session_actual_time_attendance" Role="session_actual_time_attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="session_actual_time">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="session_actual_time_attendance">
+              <PropertyRef Name="SessionActualTimeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7878,6 +7964,15 @@
                 <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
                 <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="session_actual_time_attendance">
+            <EntityTypeMapping TypeName="TrainingProjectModel.session_actual_time_attendance">
+              <MappingFragment StoreEntitySet="session_actual_time_attendance">
+                <ScalarProperty Name="SessionActualTimeId" ColumnName="SessionActualTimeId" />
+                <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

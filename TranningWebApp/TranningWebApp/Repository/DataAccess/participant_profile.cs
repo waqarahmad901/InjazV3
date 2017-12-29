@@ -18,6 +18,7 @@ namespace TranningWebApp.Repository.DataAccess
         public participant_profile()
         {
             this.session_participant = new HashSet<session_participant>();
+            this.session_actual_time_attendance = new HashSet<session_actual_time_attendance>();
         }
 
         public int Id { get; set; }
@@ -45,5 +46,8 @@ namespace TranningWebApp.Repository.DataAccess
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<session_participant> session_participant { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<session_actual_time_attendance> session_actual_time_attendance { get; set; }
+
     }
 }

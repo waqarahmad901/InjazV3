@@ -317,7 +317,7 @@ namespace TmsWebApp.Controllers
                 oSession.VolunteerCertificate = session.VolunteerCertificate == 0 ? null : session.VolunteerCertificate;
                 oSession.StudentEvaluationCatagory = session.StudentEvaluationCatagory;
             }
-            if (cu.EnumRole == EnumUserRole.Coordinator && currentStatus == SessionStatus.Pending)
+            if (cu.EnumRole == EnumUserRole.Coordinator && session.ActualDateTime != null)
             {
                 oSession.ActualEndDateTime = session.ActualEndDateTime;
                 oSession.ActualDateTime = session.ActualDateTime;
@@ -338,6 +338,7 @@ namespace TmsWebApp.Controllers
                             ActualEndTime = toTime.TimeOfDay,
                         });
                 }
+                if(session.NumberOfActualStudents != 0)
                 oSession.NumberOfActualStudents = session.NumberOfActualStudents;
                 // check date and time change by admin
                 bool isChangeDate = CheckAnyChageInAdminAndCoordinatorTime(oSession);
@@ -348,7 +349,7 @@ namespace TmsWebApp.Controllers
                         SendEmailNotificationDateChanged(oSession);
                     oSession.Status = SessionStatus.DateChanges.ToString(); 
                 }
-                else if (oSession.NumberOfStudents != oSession.NumberOfActualStudents)
+                else if (oSession.NumberOfStudents != oSession.NumberOfActualStudents )
                 {
                     oSession.Status = SessionStatus.StudentChanges.ToString();
                 }
@@ -595,21 +596,22 @@ namespace TmsWebApp.Controllers
             return View(session);
         }
         [HttpPost]
-        public ActionResult StudentAttendense(List<participant_profile> participants)
-        {
-            var sessionRepo = new SessionRepository();
-            Guid sessionId = Guid.Parse(Request.Form["sessionid"]);
-            if (participants == null || participants.Count == 0)
+        public ActionResult StudentAttendense(FormCollection collection)
+        { 
+            List<session_actual_time_attendance> lActualTime = new List<session_actual_time_attendance>();
+            foreach (var item in collection.AllKeys)
             {
-                return RedirectToAction("Index");
+                bool isChecked = collection[item] == "on";
+                if (isChecked)
+                {
+                    string[] values = item.Split('-');
+                    lActualTime.Add(new session_actual_time_attendance { ParticipantId = int.Parse(values[0]), SessionActualTimeId = int.Parse(values[1]) });
+                }
             }
-            int[] selectedParticipant = participants.Where(x => x.IsSelected).Select(x => x.Id).ToArray();
-            var session = sessionRepo.GetByRowId(sessionId);
-            var sessionParticipants = session.session_participant.Where(x => selectedParticipant.Contains(x.ParticipantID)).ToList();
-
-            sessionParticipants.ForEach(x => x.VolunteerMarkedAttendence = true);
-
+            new SessionActualTimeAttendenceRepository().PostAll(lActualTime);
+            var sessionRepo = new SessionRepository();
             // send email to coordinator
+            var session = sessionRepo.GetByRowId(Guid.Parse(collection["RowGUID"]));
             var corEmail = session.school.coordinator_profile.First().CoordinatorEmail;
             var bogusController = Util.CreateController<EmailTemplateController>();
             EmailTemplateModel emodel =

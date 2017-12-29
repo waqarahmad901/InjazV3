@@ -67,6 +67,9 @@
         <AssociationConnector Association="TrainingProjectModel.FK_session_time_session" />
         <EntityTypeShape EntityType="TrainingProjectModel.session_actual_time" Width="1.5" PointX="5" PointY="39.625" />
         <AssociationConnector Association="TrainingProjectModel.FK_session_actual_time_session" />
+        <EntityTypeShape EntityType="TrainingProjectModel.session_actual_time_attendance" Width="1.5" PointX="10" PointY="25.5" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_actual_time_attendance_participant_profile" />
+        <AssociationConnector Association="TrainingProjectModel.FK_session_actual_time_attendance_session_actual_time" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
