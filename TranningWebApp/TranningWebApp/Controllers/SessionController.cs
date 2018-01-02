@@ -89,15 +89,7 @@ namespace TmsWebApp.Controllers
         {
             SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "0" };
 
-            var school = new SchoolRepository().Get().Select(x =>
-             new SelectListItem { Text = x.SchoolName, Value = x.Id + "" }).ToList();
-            school.Insert(0, defaultselect);
-            ViewBag.school = school;
-
-            var volunteer = new VolunteerRepository().GetApprovedVolunteer().Select(x =>
-             new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
-            volunteer.Insert(0, defaultselect);
-            ViewBag.volunteer = volunteer;
+           
 
             var certificatesVolunteer = new CertificateRepository().Get().Where(x => x.TypeCertificate == "Volunteer").Select(x =>
               new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
@@ -201,7 +193,29 @@ namespace TmsWebApp.Controllers
                        new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
             ViewBag.countries = countries;
 
+            var school = new SchoolRepository().GetByFilters(sessionModel.City, sessionModel.TargetGroup, sessionModel.Gender).Select(x =>
+            new SelectListItem { Text = x.SchoolName, Value = x.Id + "" }).ToList();
+            school.Insert(0, defaultselect);
+            ViewBag.school = school;
+
+            var gender = string.IsNullOrEmpty(sessionModel.Gender) ? "Male" : sessionModel.Gender;
+            var city = string.IsNullOrEmpty(sessionModel.City) ? "Jeddah" : sessionModel.City;
+            var volunteer = new VolunteerRepository().GetApprovedVolunteer().Where(x=>x.Gender== gender && x.City == city).Select(x =>
+            new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
+            volunteer.Insert(0, defaultselect);
+            ViewBag.volunteer = volunteer;
+
             return View(sessionModel);
+        }
+
+        public ActionResult GetSchoolsVolunteerByFilter(string city, string tg, string gender)
+        {
+            var school = new SchoolRepository().GetByFilters(city, tg, gender).Select(x =>
+             new SelectListItem { Text = x.SchoolName, Value = x.Id + "" }).ToList();
+            var volunteer = new VolunteerRepository().GetApprovedVolunteer().Where(x => x.City == city && x.Gender == gender).Select(x =>
+             new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
+            var result = new { volunteers = volunteer, schools = school };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         private bool CheckIsEvaluationFilled(string eveCat, int participantId, int sessionid)
@@ -304,7 +318,7 @@ namespace TmsWebApp.Controllers
                     oSession.session_proposed_time.Add(
                         new session_proposed_time
                         {
-                            IsHoliday = collection["procheck_" + i] == "on" ? true : false,
+                            IsActive = collection["procheck_" + i] == "on" ? true : false,
                             ProposedStartTime = fromTime.TimeOfDay,
                             ProposedEndTime = toTime.TimeOfDay,
                         }
@@ -333,23 +347,23 @@ namespace TmsWebApp.Controllers
                     oSession.session_actual_time.Add(
                         new session_actual_time
                         {
-                            IsHoliday = collection["actcheck_" + i] == "on" ? true : false,
+                            IsActive = collection["actcheck_" + i] == "on" ? true : false,
                             ActualStartTime = fromTime.TimeOfDay,
                             ActualEndTime = toTime.TimeOfDay,
                         });
                 }
-                if(session.NumberOfActualStudents != 0)
-                oSession.NumberOfActualStudents = session.NumberOfActualStudents;
+                if (session.NumberOfActualStudents != 0)
+                    oSession.NumberOfActualStudents = session.NumberOfActualStudents;
                 // check date and time change by admin
                 bool isChangeDate = CheckAnyChageInAdminAndCoordinatorTime(oSession);
-          
+
                 if (isChangeDate)
                 {
                     if (oSession.Status != SessionStatus.DateChanges.ToString())
                         SendEmailNotificationDateChanged(oSession);
-                    oSession.Status = SessionStatus.DateChanges.ToString(); 
+                    oSession.Status = SessionStatus.DateChanges.ToString();
                 }
-                else if (oSession.NumberOfStudents != oSession.NumberOfActualStudents )
+                else if (oSession.NumberOfStudents != oSession.NumberOfActualStudents)
                 {
                     oSession.Status = SessionStatus.StudentChanges.ToString();
                 }
@@ -554,8 +568,8 @@ namespace TmsWebApp.Controllers
             {
                 for (int i = 0; i < oSession.session_actual_time.Count; i++)
                 {
-                    // any change detect in holiday, from and to time
-                    if (!((oSession.session_actual_time.ElementAt(i).IsHoliday == oSession.session_proposed_time.ElementAt(i).IsHoliday)
+                    // any change detect in active, from and to time
+                    if (!((oSession.session_actual_time.ElementAt(i).IsActive == oSession.session_proposed_time.ElementAt(i).IsActive)
                        && (oSession.session_actual_time.ElementAt(i).ActualEndTime == oSession.session_proposed_time.ElementAt(i).ProposedEndTime)
                         && (oSession.session_actual_time.ElementAt(i).ActualStartTime == oSession.session_proposed_time.ElementAt(i).ProposedStartTime)))
                     {
@@ -592,12 +606,12 @@ namespace TmsWebApp.Controllers
         public ActionResult StudentAttendense(Guid sessionId)
         {
             var sessionRepo = new SessionRepository();
-            var session = sessionRepo.GetByRowId(sessionId) ;
+            var session = sessionRepo.GetByRowId(sessionId);
             return View(session);
         }
         [HttpPost]
         public ActionResult StudentAttendense(FormCollection collection)
-        { 
+        {
             List<session_actual_time_attendance> lActualTime = new List<session_actual_time_attendance>();
             foreach (var item in collection.AllKeys)
             {

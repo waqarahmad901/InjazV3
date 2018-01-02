@@ -372,20 +372,30 @@ function renderTimeControl(startclass,endclass) {
     var monthNames = ["Jan", "Feb", "Mar", "Apl", "May", "Jun",
                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
+
+    var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri","Sat"]; 
+
     var newDate = dateStart;
     for (i = 0; i <= dateDiff; i++) {
+        var checked = "checked";
+        var readonly = '';
+        if (weekdays[newDate.getDay()] == "Fri" || weekdays[newDate.getDay()] == "Sat")
+        {
+            checked = "";
+            readonly = 'readonly';
+        }
         var html = "<div class='form-group col-sm-12'>";
         html += "  <div class='col-sm-2' style='padding:0px'>"
-        html += "<input type='checkbox' name = '" + type + "check_" + i + "' onchange = \"changeTimeCheck(this,'" + type + "FromTime_','" + type + "ToTime_'," + i + ")\"/>"
+        html += "<input type='checkbox' name = '" + type + "check_" + i + "' "+checked+" onchange = \"changeTimeCheck(this,'" + type + "FromTime_','" + type + "ToTime_'," + i + ")\"/>"
         html += "</div>"
         html += "  <div class='col-sm-2' style='padding:0px'>"
-        html += newDate.getDate() + " " + monthNames[newDate.getMonth()]
+        html += weekdays[newDate.getDay()] + ", " + newDate.getDate() + " " + monthNames[newDate.getMonth()]
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='text' name='" + type + "FromTime_" + i + "' class='form-control timepicker' value='10:00 AM' data-provide='timepicker'/>"
+        html += "<input type='text' name='" + type + "FromTime_" + i + "' class='form-control timepicker' value='10:00 AM' data-provide='timepicker' "+readonly+"/>"
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='text' class='form-control timepicker' name='" + type + "ToTime_" + i + "' value='11:00 AM' data-provide='timepicker'/>"
+        html += "<input type='text' class='form-control timepicker' name='" + type + "ToTime_" + i + "' value='11:00 AM' data-provide='timepicker' " + readonly + "/>"
         html += " </div> "
         html += " </div> "
 
@@ -421,7 +431,7 @@ var date_diff_indays = function (date1, date2) {
 function changeTimeCheck(checkbox,from,to, index)
 {
     debugger;
-    if (checkbox.checked == true) {
+    if (checkbox.checked == false) {
         $('input[name*="' + from + index + '"]').attr('readonly', 'readonly');
         $('input[name*="' + to + index + '"]').attr('readonly', 'readonly');
     } else {

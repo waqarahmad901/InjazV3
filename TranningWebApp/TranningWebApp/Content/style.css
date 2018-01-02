@@ -11657,10 +11657,10 @@ header.navbar .dropdown-item {
 .social-box ul li {
   display: block;
   float: left;
-  width: 50%;
+  width: 33%;
 }
 
-.social-box ul li:first-child {
+.social-box ul li:first-child,.social-box ul li:nth-child(2)  {
   border-right: 1px solid #cfd8dc;
 }
 

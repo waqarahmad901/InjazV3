@@ -16,14 +16,15 @@
             if ("@Model.Status" == "Pending") {
                 $('input')
                     .not(".actualdate")
-                     .not("#NumberOfActualStudents")
+                    .not("#NumberOfActualStudents")
                     .not("#@Html.IdFor(x=>x.Id)")
+                    .not("#@Html.IdFor(x=>x.IsActive)")
                     .attr("disabled", "disabled");
                 $(".check").parent().hide();
                 bindDatedLocal();
             }
             if ("@Model.Status" == "Approved") {
-                $('input').not("#@Html.IdFor(x=>x.Id)").attr("disabled", "disabled");
+                $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.IsActive)").attr("disabled", "disabled");
                 if ("@Model.SendKitByMailCourier" == "True") {
                     $("#@Html.IdFor(x=>x.ConfirmKitReceivedBySchool)").removeAttr("disabled");
                 }
@@ -42,7 +43,7 @@
         }
         if (role.toLocaleLowerCase() == "superadmin") {
             if ("@Model.Status" == "DateChanges" || "@Model.Status" == "StudentChanges") {
-                $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.SendKitByMailCourier)").attr("disabled", "disabled");
+                $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.IsActive)").not("#@Html.IdFor(x=>x.SendKitByMailCourier)").attr("disabled", "disabled");
                 $('select').attr("disabled", "disabled");
                 $("#@Html.IdFor(x=>x.ConfirmKitReceivedBySchool)").parent().hide();
                 $("#@Html.IdFor(x=>x.ApprovedByAdmin)").parent().hide();
@@ -55,18 +56,18 @@
                 $(".check").parent().hide();
             }
             if ("@Model.Status" == "Approved") {
-                $('input').not("#@Html.IdFor(x => x.Id)").attr("disabled", "disabled");
+                $('input').not("#@Html.IdFor(x => x.Id)").not("#@Html.IdFor(x=>x.IsActive)").attr("disabled", "disabled");
                 $('select').attr("disabled", "disabled");
                 $("#@Html.IdFor(x => x.SessionOccured)").parent().hide();
                 $("#@Html.IdFor(x => x.MarkedCompletedByVolunteer)").parent().hide();
             }
             if ("@Model.Status" == "Occured") {
-                $('input').not("#@Html.IdFor(x=>x.Id)").attr("disabled", "disabled");
+                $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.IsActive)").attr("disabled", "disabled");
                 $('select').attr("disabled", "disabled");
             }
         }
         if (role.toLocaleLowerCase() == "volunteer") {
-            $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x => x.RequestThisSession)").attr("disabled", "disabled");
+            $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.IsActive)").not("#@Html.IdFor(x => x.RequestThisSession)").attr("disabled", "disabled");
             $('select').attr("disabled", "disabled");
             $("#@Html.IdFor(x=>x.ConfirmKitReceivedBySchool)").parent().hide();
             $("#@Html.IdFor(x=>x.ApprovedByAdmin)").parent().hide();
@@ -78,14 +79,14 @@
             }
         }
         if (role.toLocaleLowerCase() == "participant") {
-            $('input').not("#@Html.IdFor(x=>x.Id)").attr("disabled", "disabled");
+            $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.IsActive)").attr("disabled", "disabled");
             $('select').attr("disabled", "disabled");
             $(".check").parent().hide();
         }
 
     });
     function changeDate() {
-        $(".actualdate").removeAttr("disabled"); 
+        $(".actualdate").removeAttr("disabled");
         bindDatedLocal();
     }
 
@@ -94,7 +95,7 @@
             calendar: $.calendars.instance('islamic'),
             dateFormat: 'yyyy/mm/dd',
             onSelect: function (dates) {
-               
+
                 var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
                 var control = $(this);
                 $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Gregorian&dateLangCulture=en-us", function (res) {
@@ -113,11 +114,35 @@
                 var control = $(this);
                 $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Hijri&dateLangCulture=en-us", function (res) {
                     control.parent().parent().find(".date-islamic-1").val(res);
-                   
+
                 });
 
             }
         });
+    }
+
+    function getFilterSchoolAndVolunteer()
+    {
+        var city = $("#City").val();
+        var gender = $("#Gender").val();
+        var tg = $("#TargetGroup").val();
+
+        $.get("/Session/GetSchoolsVolunteerByFilter?city=" + city + "&tg=" + tg + "&gender=" + gender, function (res) {
+            debugger;
+            var sel = "@General.Select";
+            $("#VolunteerId option").remove();
+            $("#VolunteerId").append("<option value=''>" + sel + "</option>");
+            $.each(res.volunteers, function (index, item) {
+                $("#VolunteerId").append("<option value='" + item.Value + "'>" + item.Text + "</option>");
+            });
+
+            $("#SchoolID option").remove();
+            $("#SchoolID").append("<option value=''>" +sel +"</option>");
+            $.each(res.schools, function (index, item) {
+                $("#SchoolID").append("<option value='" + item.Value + "'>" + item.Text + "</option>");
+            });
+
+        })
     }
 
 
@@ -184,15 +209,20 @@
 
                                 <div class="form-group col-sm-6">
                                     <label for="mobile">@SessionX.TargetGroup </label>
-                                    @Html.TextBoxFor(m => m.TargetGroup, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.TargetGroup, "", new { @class = "text-danger" })
-
+                                    @Html.DropDownListFor(m=>m.TargetGroup, new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Selected = true, Text = General.Primary, Value =  "Primary"},
+                                            new SelectListItem { Selected = false, Text = General.Middle, Value= "Middle"},
+                                            new SelectListItem { Selected = false, Text = General.Secondary, Value= "Secondary"}
+                                         }, new { @class = "form-control" , onchange = "getFilterSchoolAndVolunteer()" })
+                                    @Html.ValidationMessageFor(m => m.TargetGroup, "", new { @class = "text-danger"  })
                                 </div>
+                              
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label>@Volunteer.Gender</label>
-                                    @Html.DropDownListFor(m => m.Gender, (List<SelectListItem>)ViewBag.genderdd, new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.Gender, (List<SelectListItem>)ViewBag.genderdd, new { @class = "form-control" ,onchange = "getFilterSchoolAndVolunteer()" })
                                     @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
                                 </div>
                              
@@ -204,7 +234,7 @@
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label for="country">@Coordinator.City</label>
-                                    @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control" , onchange = "getFilterSchoolAndVolunteer()" })
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="country">@SessionX.School</label>
@@ -241,7 +271,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label style="width: 100%">@SessionX.SchoolProposedDate</label>
+                                        <label style="width: 100%">Start Date</label>
                                         <label style="font-style: italic">@Coordinator.Gorgian</label>
                                         @Html.TextBoxFor(m => m.PropesedDateString, new { @class = "form-control date startDate", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
                                         @Html.ValidationMessageFor(m => m.PropesedDateString, "", new { @class = "text-danger" })
@@ -255,7 +285,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label style="width: 100%">Propsed End Date</label>
+                                        <label style="width: 100%">End Date</label>
                                         <label style="font-style: italic">@Coordinator.Gorgian</label>
                                         @Html.TextBoxFor(m => m.ProposedEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date enddate" })
                                         @Html.ValidationMessageFor(m => m.ProposedEndDateTime, "", new { @class = "text-danger" })

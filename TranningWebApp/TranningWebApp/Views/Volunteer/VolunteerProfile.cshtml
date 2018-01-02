@@ -169,6 +169,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label>@Volunteer.TypeOfAccount</label>
+                                @Html.DropDownList("CompanyName", new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text= Volunteer.Company, Value = "Company" },
+                                            new SelectListItem{ Text=Volunteer.Individual , Value = "Individual" },
+                                         }, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
                                 <label>@Volunteer.Photo</label>
                                 <input type="file" name="file" id="profile-img">
                                 <hr>
@@ -206,14 +214,6 @@
                         </div>
                         <div class="card-block">
 
-                            <div class="form-group">
-                                <label>@Volunteer.TypeOfAccount</label>
-                              @Html.DropDownList("CompanyName", new List<SelectListItem>
-                                        {
-                                            new SelectListItem{ Text= Volunteer.Company, Value = "Company" },
-                                            new SelectListItem{ Text=Volunteer.Individual , Value = "Individual" },
-                                         }, new { @class = "form-control" })
-                            </div>
 
                             <div class="form-group">
                                 <label>@Volunteer.VolunteerExpriences</label>

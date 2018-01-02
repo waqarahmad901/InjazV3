@@ -3,10 +3,23 @@
     string type = ViewData["type"].ToString();
     string addtionalclass = ViewData["addtionalclass"].ToString();
  } 
+<script type="text/javascript">
+    function checkchange(obj)
+    {
+        var allCheckBoxs = $(obj).parent().parent().parent().find("input[type='checkbox']").not(".first");
+        debugger;
+        if($(obj).is(":checked"))
+            allCheckBoxs.prop("checked",true);
+        else
+            allCheckBoxs.prop("checked", false);
+        allCheckBoxs.trigger('change');
+         
+    }
+</script>
 <div id="@(type + "timeControl")" class="pull-left sessionTime ">
     <div class="form-group firstRow col-sm-12">
         <div class="col-sm-2" style="padding:0px">
-            <input type="checkbox" />
+            <input type="checkbox" onchange="checkchange(this)" checked class="@addtionalclass first"/>
         </div>
         
         <div class="col-sm-2" style="padding:0px">
@@ -35,8 +48,8 @@
     {
         string displayFromTime = "10:00 AM";
         string displayToTime = "11:00 AM";
-        bool isHoliday = false;
-        string readonlyS = "";
+        bool isActive = true;
+        string readonlyS = ""; 
         TimeSpan timespan = TimeSpan.MinValue;
         if (Model.Id > 0)
         {
@@ -62,18 +75,27 @@
             displayToTime = time.ToString("hh:mm tt");
             if (type == "pro")
             {
-                isHoliday = Model.session_proposed_time.ElementAt(i).IsHoliday;
+                isActive = Model.session_proposed_time.ElementAt(i).IsActive;
             }
             else
             {
-                isHoliday = Model.session_actual_time.ElementAt(i).IsHoliday;
+                isActive = Model.session_actual_time.ElementAt(i).IsActive;
 
             }
-            readonlyS = isHoliday ? "readonly" : "";
+
+            readonlyS = isActive ? "" : "readonly";
+        }
+        else
+        {
+            if (Model.ProposedDateTime.AddDays(i).DayOfWeek == DayOfWeek.Friday || Model.ProposedDateTime.AddDays(i).DayOfWeek == DayOfWeek.Saturday)
+            {
+                isActive = false;
+                readonlyS = "readonly";
+            }
         }
         <div class='form-group col-sm-12 @addtionalclass'>
             <div class='col-sm-2' style='padding:0px'>
-                <input type='checkbox' name='@(type+"check_"+i)'checked="@isHoliday" class="@addtionalclass" onchange="changeTimeCheck(this,'@(type+"FromTime_")','@(type+"ToTime_")', @i)" />
+                <input type='checkbox' name='@(type+"check_"+i)'checked="@isActive" class="@addtionalclass" onchange="changeTimeCheck(this,'@(type+"FromTime_")','@(type+"ToTime_")', @i)" />
             </div>
           
             <div class='col-sm-2' style='padding:0px'>
