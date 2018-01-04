@@ -31,5 +31,15 @@ namespace TranningWebApp.Repository.DataAccess
             }
 
         }
+        public string OtDateIslamicEnd
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(OTDateEnd?.ToShortDateString()))
+                    return Util.DateConversion(OTDateEnd.Value.ToString("dd/MM/yyyy"), "Hijri", "en-us");
+                return "";
+            }
+
+        }
     }
 }

@@ -1992,13 +1992,16 @@
           <Property Name="Subject" Type="nvarchar" MaxLength="200" />
           <Property Name="ContactPersonName" Type="nvarchar" MaxLength="200" />
           <Property Name="ContactPersonPhone" Type="varchar" MaxLength="30" />
-          <Property Name="SchoolId" Type="int" />
-          <Property Name="SchoolName" Type="nvarchar" MaxLength="256" />
-          <Property Name="SessionId" Type="int" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
+          <Property Name="Region" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="VolunteersIds" Type="nvarchar" MaxLength="500" />
+          <Property Name="OTDateEnd" Type="datetime" />
+          <Property Name="SchoolIds" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="participant_profile">
           <Key>
@@ -2368,30 +2371,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_orientation_training_school">
-          <End Role="school" Type="Self.school" Multiplicity="0..1" />
-          <End Role="orientation_training" Type="Self.orientation_training" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="school">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="orientation_training">
-              <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orientation_training_session">
-          <End Role="session" Type="Self.session" Multiplicity="0..1" />
-          <End Role="orientation_training" Type="Self.orientation_training" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="session">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="orientation_training">
-              <PropertyRef Name="SessionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_participant_profile_school">
           <End Role="school" Type="Self.school" Multiplicity="0..1" />
           <End Role="participant_profile" Type="Self.participant_profile" Multiplicity="*" />
@@ -2692,14 +2671,6 @@
             <End Role="user" EntitySet="user" />
             <End Role="funder_profile" EntitySet="funder_profile" />
           </AssociationSet>
-          <AssociationSet Name="FK_orientation_training_school" Association="Self.FK_orientation_training_school">
-            <End Role="school" EntitySet="school" />
-            <End Role="orientation_training" EntitySet="orientation_training" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orientation_training_session" Association="Self.FK_orientation_training_session">
-            <End Role="session" EntitySet="session" />
-            <End Role="orientation_training" EntitySet="orientation_training" />
-          </AssociationSet>
           <AssociationSet Name="FK_participant_profile_school" Association="Self.FK_participant_profile_school">
             <End Role="school" EntitySet="school" />
             <End Role="participant_profile" EntitySet="participant_profile" />
@@ -2899,28 +2870,6 @@
           <Property Name="FrindlyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="users" Relationship="TrainingProjectModel.FK_user_lk_role1" FromRole="lk_role" ToRole="user" />
         </EntityType>
-        <EntityType Name="orientation_training">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RowGuid" Type="Guid" Nullable="false" />
-          <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OTDateTime" Type="DateTime" Precision="3" />
-          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPersonName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPersonPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="7" />
-          <Property Name="SchoolId" Type="Int32" />
-          <Property Name="SchoolName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="SessionId" Type="Int32" />
-          <NavigationProperty Name="school" Relationship="TrainingProjectModel.FK_orientation_training_school" FromRole="orientation_training" ToRole="school" />
-          <NavigationProperty Name="session" Relationship="TrainingProjectModel.FK_orientation_training_session" FromRole="orientation_training" ToRole="session" />
-          <NavigationProperty Name="volunteer_profile" Relationship="TrainingProjectModel.FK_volunteer_profile_orientation_training" FromRole="orientation_training" ToRole="volunteer_profile" />
-        </EntityType>
         <EntityType Name="participant_profile">
           <Key>
             <PropertyRef Name="Id" />
@@ -3004,7 +2953,6 @@
           <NavigationProperty Name="coordinator_profile" Relationship="Self.FK_coordinator_profile_school" FromRole="school" ToRole="coordinator_profile" />
           <NavigationProperty Name="sessions" Relationship="TrainingProjectModel.FK_session_school" FromRole="school" ToRole="session" />
           <NavigationProperty Name="participant_profile" Relationship="TrainingProjectModel.FK_participant_profile_school" FromRole="school" ToRole="participant_profile" />
-          <NavigationProperty Name="orientation_training" Relationship="TrainingProjectModel.FK_orientation_training_school" FromRole="school" ToRole="orientation_training" />
           <Property Name="DocumentPath" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="user" Relationship="TrainingProjectModel.FK_school_user" FromRole="school" ToRole="user" />
@@ -3046,7 +2994,6 @@
           <Property Name="VolunteerMarkedStudentAttendenceInSession" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="school" Relationship="TrainingProjectModel.FK_session_school" FromRole="session" ToRole="school" />
           <NavigationProperty Name="volunteer_profile" Relationship="TrainingProjectModel.FK_session_volunteer_profile" FromRole="session" ToRole="volunteer_profile" />
-          <NavigationProperty Name="orientation_training" Relationship="TrainingProjectModel.FK_orientation_training_session" FromRole="session" ToRole="orientation_training" />
           <NavigationProperty Name="session_evaluationform_photo" Relationship="TrainingProjectModel.FK_session_evaluationform_photo_session" FromRole="session" ToRole="session_evaluationform_photo" />
           <NavigationProperty Name="session_photo" Relationship="TrainingProjectModel.FK_session_photo_session" FromRole="session" ToRole="session_photo" />
           <Property Name="StudentCertificate" Type="Int32" />
@@ -3153,7 +3100,6 @@
           <Property Name="ApprovedAtLevel2Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ApprovedAtLevel3Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="OTId" Type="Int32" />
-          <NavigationProperty Name="orientation_training" Relationship="TrainingProjectModel.FK_volunteer_profile_orientation_training" FromRole="volunteer_profile" ToRole="orientation_training" />
           <Property Name="OTAcceptedByVolunteer" Type="Boolean" Nullable="false" />
           <Property Name="OTAttendenceForVolunteer" Type="Boolean" Nullable="false" />
           <Property Name="OTIdAssigner" Type="Int32" />
@@ -3170,6 +3116,7 @@
           <Property Name="SecondName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="ThirdName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="orientation_training" Relationship="TrainingProjectModel.FK_volunteer_profile_orientation_training" FromRole="volunteer_profile" ToRole="orientation_training" />
         </EntityType>
         <Association Name="FK_adminuser_lk_role">
           <End Role="lk_role" Type="Self.lk_role" Multiplicity="1" />
@@ -3212,7 +3159,6 @@
           <EntitySet Name="coordinator_profile" EntityType="Self.coordinator_profile" />
           <EntitySet Name="lk_country" EntityType="Self.lk_country" />
           <EntitySet Name="lk_role" EntityType="Self.lk_role" />
-          <EntitySet Name="orientation_training" EntityType="Self.orientation_training" />
           <EntitySet Name="participant_profile" EntityType="Self.participant_profile" />
           <EntitySet Name="schools" EntityType="Self.school" />
           <EntitySet Name="sessions" EntityType="Self.session" />
@@ -3245,14 +3191,6 @@
             <End Role="school" EntitySet="schools" />
             <End Role="participant_profile" EntitySet="participant_profile" />
           </AssociationSet>
-          <AssociationSet Name="FK_orientation_training_school" Association="TrainingProjectModel.FK_orientation_training_school">
-            <End Role="school" EntitySet="schools" />
-            <End Role="orientation_training" EntitySet="orientation_training" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orientation_training_session" Association="TrainingProjectModel.FK_orientation_training_session">
-            <End Role="session" EntitySet="sessions" />
-            <End Role="orientation_training" EntitySet="orientation_training" />
-          </AssociationSet>
           <AssociationSet Name="FK_session_evaluationform_photo_session" Association="TrainingProjectModel.FK_session_evaluationform_photo_session">
             <End Role="session" EntitySet="sessions" />
             <End Role="session_evaluationform_photo" EntitySet="session_evaluationform_photo" />
@@ -3260,10 +3198,6 @@
           <AssociationSet Name="FK_session_photo_session" Association="TrainingProjectModel.FK_session_photo_session">
             <End Role="session" EntitySet="sessions" />
             <End Role="session_photo" EntitySet="session_photo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_volunteer_profile_orientation_training" Association="TrainingProjectModel.FK_volunteer_profile_orientation_training">
-            <End Role="orientation_training" EntitySet="orientation_training" />
-            <End Role="volunteer_profile" EntitySet="volunteer_profile" />
           </AssociationSet>
           <EntitySet Name="certificates" EntityType="TrainingProjectModel.certificate" />
           <AssociationSet Name="FK_session_certificate" Association="TrainingProjectModel.FK_session_certificate">
@@ -3357,6 +3291,11 @@
             <End Role="session_actual_time" EntitySet="session_actual_time" />
             <End Role="session_actual_time_attendance" EntitySet="session_actual_time_attendance" />
           </AssociationSet>
+          <EntitySet Name="orientation_training" EntityType="TrainingProjectModel.orientation_training" />
+          <AssociationSet Name="FK_volunteer_profile_orientation_training" Association="TrainingProjectModel.FK_volunteer_profile_orientation_training">
+            <End Role="orientation_training" EntitySet="orientation_training" />
+            <End Role="volunteer_profile" EntitySet="volunteer_profile" />
+          </AssociationSet>
           </EntityContainer>
         <Association Name="FK_session_school">
           <End Type="TrainingProjectModel.school" Role="school" Multiplicity="0..1" />
@@ -3394,30 +3333,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_orientation_training_school">
-          <End Type="TrainingProjectModel.school" Role="school" Multiplicity="0..1" />
-          <End Type="TrainingProjectModel.orientation_training" Role="orientation_training" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="school">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="orientation_training">
-              <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orientation_training_session">
-          <End Type="TrainingProjectModel.session" Role="session" Multiplicity="0..1" />
-          <End Type="TrainingProjectModel.orientation_training" Role="orientation_training" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="session">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="orientation_training">
-              <PropertyRef Name="SessionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_session_evaluationform_photo_session">
           <End Type="TrainingProjectModel.session" Role="session" Multiplicity="1" />
           <End Type="TrainingProjectModel.session_evaluationform_photo" Role="session_evaluationform_photo" Multiplicity="*" />
@@ -3439,18 +3354,6 @@
             </Principal>
             <Dependent Role="session_photo">
               <PropertyRef Name="SessionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_volunteer_profile_orientation_training">
-          <End Type="TrainingProjectModel.orientation_training" Role="orientation_training" Multiplicity="0..1" />
-          <End Type="TrainingProjectModel.volunteer_profile" Role="volunteer_profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="orientation_training">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="volunteer_profile">
-              <PropertyRef Name="OTId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5631,6 +5534,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="orientation_training">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RowGuid" Type="Guid" Nullable="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OTDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="7" />
+          <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VolunteersIds" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="OTDateEnd" Type="DateTime" Precision="3" />
+          <Property Name="SchoolIds" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="volunteer_profile" Relationship="TrainingProjectModel.FK_volunteer_profile_orientation_training" FromRole="orientation_training" ToRole="volunteer_profile" />
+        </EntityType>
+        <Association Name="FK_volunteer_profile_orientation_training">
+          <End Type="TrainingProjectModel.orientation_training" Role="orientation_training" Multiplicity="0..1" />
+          <End Type="TrainingProjectModel.volunteer_profile" Role="volunteer_profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orientation_training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="volunteer_profile">
+              <PropertyRef Name="OTId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5740,26 +5678,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="RowGuid" ColumnName="RowGuid" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="orientation_training">
-            <EntityTypeMapping TypeName="TrainingProjectModel.orientation_training">
-              <MappingFragment StoreEntitySet="orientation_training">
-                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
-                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RowGuid" ColumnName="RowGuid" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="OTDateTime" ColumnName="OTDateTime" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
-                <ScalarProperty Name="ContactPersonPhone" ColumnName="ContactPersonPhone" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7973,6 +7891,29 @@
               <MappingFragment StoreEntitySet="session_actual_time_attendance">
                 <ScalarProperty Name="SessionActualTimeId" ColumnName="SessionActualTimeId" />
                 <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orientation_training">
+            <EntityTypeMapping TypeName="TrainingProjectModel.orientation_training">
+              <MappingFragment StoreEntitySet="orientation_training">
+                <ScalarProperty Name="SchoolIds" ColumnName="SchoolIds" />
+                <ScalarProperty Name="OTDateEnd" ColumnName="OTDateEnd" />
+                <ScalarProperty Name="VolunteersIds" ColumnName="VolunteersIds" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ContactPersonPhone" ColumnName="ContactPersonPhone" />
+                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="OTDateTime" ColumnName="OTDateTime" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="RowGuid" ColumnName="RowGuid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

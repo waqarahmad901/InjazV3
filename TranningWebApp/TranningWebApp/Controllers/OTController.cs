@@ -77,6 +77,14 @@ namespace TmsWebApp.Controllers
                 var otRepo = new OTRepository();
                 otModel = otRepo.GetByRowId(id.Value);
             }
+            var cities = new CityRepository().Get().Distinct().Select(x =>
+                new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+            ViewBag.citiesdd = cities;
+            ViewBag.genderdd = new List<SelectListItem>
+                {
+                    new SelectListItem { Selected = true, Text = General.Male, Value =  "Male"},
+                new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
+                };
             return View(otModel);
         }
         [HttpPost]
@@ -105,9 +113,7 @@ namespace TmsWebApp.Controllers
             ot.OTDateTime = profile.OTDateTime;
             ot.ContactPersonName = profile.ContactPersonName;
             ot.ContactPersonPhone = profile.ContactPersonPhone;
-            ot.SchoolId = profile.SchoolId == 0 ? null : profile.SchoolId;
-
-            ot.SessionId = profile.SessionId == 0 ? null : profile.SessionId;
+         
             if (profile.Id == 0)
             {
                 otRepo.Post(ot);

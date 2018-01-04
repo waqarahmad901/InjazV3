@@ -15,7 +15,7 @@
         else
         {
             <li class="breadcrumb-item active"> @OT.AddnewOT</li>
-        }  
+        }
 
     </ol>
 
@@ -23,10 +23,10 @@
         <div class="animated fadeIn">
             <div class="col-sm-6">
                 @using (Html.BeginForm("Edit", "OT", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+                {
                     @Html.ValidationSummary(true)
                     <div class="card">
-                        <div class="card-header"> 
+                        <div class="card-header">
                             @if (Model.Id > 0)
                             {
                                 <strong class="text-primary"><i class="icon-plus"></i> @General.Edit @Menu.OTs</strong>
@@ -37,62 +37,101 @@
                             }
                         </div>
                         <div class="card-block">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name">Programm Name</label>
+                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name">Region</label>
+                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="country">@Coordinator.City</label>
+                                    @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control", onchange = "getFilterSchoolAndVolunteer()" })
+
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>@Volunteer.Gender</label>
+                                    @Html.DropDownListFor(m => m.Gender, (List<SelectListItem>)ViewBag.genderdd, new { @class = "form-control", onchange = "getFilterSchoolAndVolunteer()" })
+                                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label for="name">@OT.Location</label>
+                                <label for="name">Map Location</label>
                                 @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
 
                             </div>
-                            <div class="form-group">
-                                <label for="name">@Supervisor.SubjectfromOT</label>
-                                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
-
+                            <div class="form-group" style="margin-bottom:0px">
+                                <label for="name">Volunteer List</label>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-sm-6" >
-                                    <label style="width: 100%">@OT.OTDate</label>
-                                    <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                    @Html.TextBoxFor(m => m.OTDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
-                                    @Html.ValidationMessageFor(m => m.OTDateTime, "", new { @class = "text-danger" })
+                                <div class="form-group row sessionTime" style="margin-left:0px; min-height:100px">
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" />
+                                        <span>Day</span>
+                                    </div>
 
                                 </div>
-                                <div class="form-group col-sm-6" style="margin-top:0.5%">
-                                    <label style="width: 100%"></label>
-                                    <label style="font-style: italic">@OT.Hijri</label>
-                                    @Html.TextBoxFor(m => m.OtDateIslamic, new { @class = "form-control date-islamic" })
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label style="width: 100%">Start Date</label>
+                                        <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                        @Html.TextBoxFor(m => m.OTDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
+                                        @Html.ValidationMessageFor(m => m.OTDateTime, "", new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                        <label style="width: 100%"></label>
+                                        <label style="font-style: italic">@OT.Hijri</label>
+                                        @Html.TextBoxFor(m => m.OtDateIslamic, new { @class = "form-control date-islamic" })
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="mobile">@OT.ContactPersonName</label>
-                                @Html.TextBoxFor(m => m.ContactPersonName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.ContactPersonName, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group">
-                                <label for="mobile">@OT.ContactPersonPhone</label>
-                                @Html.TextBoxFor(m => m.ContactPersonPhone, new { @class = "form-control phone",@maxlength = 10  })
-                                @Html.ValidationMessageFor(m => m.ContactPersonPhone, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group">
-                                <label for="mobile">@OT.School</label>
-                                @Html.DropDownListFor(m => m.SchoolId, (List<SelectListItem>)ViewBag.school, new { @class = "form-control" })
-                            </div>
-
-                            <div class="form-group">
-                                <label for="mobile">@OT.Session</label>
-                                @Html.DropDownListFor(m => m.SessionId, (List<SelectListItem>)ViewBag.session, new { @class = "form-control" })
-                            </div>
 
 
-                            @if (Model != null && Model.Id > 0)
-                            {
-                                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
-                                @Html.HiddenFor(Model => Model.SchoolName)
 
-                            }
-                        </div>             <div class="card-footer">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label style="width: 100%">End Date</label>
+                                        <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                        @Html.TextBoxFor(m => m.OTDateEnd, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
+                                        @Html.ValidationMessageFor(m => m.OTDateEnd, "", new { @class = "text-danger" })
+
+
+                                    </div>
+                                    <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                        <label style="width: 100%"></label>
+                                        <label style="font-style: italic">@OT.Hijri</label>
+                                        @Html.TextBoxFor(m => m.OtDateIslamicEnd, new { @class = "form-control date-islamic" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">@OT.ContactPersonName</label>
+                                    @Html.TextBoxFor(m => m.ContactPersonName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ContactPersonName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="mobile">@OT.ContactPersonPhone</label>
+                                    @Html.TextBoxFor(m => m.ContactPersonPhone, new { @class = "form-control phone", @maxlength = 10 })
+                                    @Html.ValidationMessageFor(m => m.ContactPersonPhone, "", new { @class = "text-danger" })
+                                </div>
+
+
+
+                                @if (Model != null && Model.Id > 0)
+                                {
+                                    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+
+                                }
+                            </div>             <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
                         </div>
 

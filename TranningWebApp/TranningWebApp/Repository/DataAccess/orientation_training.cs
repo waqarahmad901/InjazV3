@@ -11,7 +11,7 @@ namespace TranningWebApp.Repository.DataAccess
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class orientation_training
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,19 +19,20 @@ namespace TranningWebApp.Repository.DataAccess
         {
             this.volunteer_profile = new HashSet<volunteer_profile>();
         }
-
+    
         public int Id { get; set; }
-        public System.Guid RowGuid { get; set; }
+        public System.Guid RowGuid { get; set; } 
         public int CreatedBy { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
-        public Nullable<int> SchoolId { get; set; }
-        public string SchoolName { get; set; }
-        public Nullable<int> SessionId { get; set; }
-
-        public virtual school school { get; set; }
-        public virtual session session { get; set; }
+        public string Region { get; set; }
+        public string City { get; set; }
+        public string Gender { get; set; }
+        public string VolunteersIds { get; set; }
+        public Nullable<System.DateTime> OTDateEnd { get; set; }
+        public string SchoolIds { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<volunteer_profile> volunteer_profile { get; set; }
     }
