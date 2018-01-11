@@ -93,7 +93,21 @@ namespace TranningWebApp.Repository
                 Context.SaveChanges();
             }
         }
-        
-     
+
+        public bool RemoveAllTimes(int id)
+        {
+            var list = Context.ot_time.Where(x => x.OTId == id).ToList();
+            Context.ot_time.RemoveRange(list);
+            return true;
+        }
+
+        public bool IsOtOccures(orientation_training ot)
+        {
+            var volIds = ot.VolunteersIds != null ? ot.VolunteersIds.Split(',').Select(y => int.Parse(y)).ToList() : new List<int>() ;
+            if (volIds.Count == 0)
+                return false;
+            var volunteers = Context.volunteer_profile.Where(x => volIds.Contains(x.Id)).Select(x => x.OTAttendenceForVolunteer).ToList();
+            return !volunteers.Any(x => x == false);
+        }
     }
 }

@@ -162,11 +162,17 @@
   <data name="Region" xml:space="preserve">
     <value>Region</value>
   </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>Specialization</value>
+  </data>
   <data name="Telephone" xml:space="preserve">
     <value>Telephone</value>
   </data>
   <data name="TypeOfAccount" xml:space="preserve">
     <value>Type Of Account</value>
+  </data>
+  <data name="Universities" xml:space="preserve">
+    <value>Universities</value>
   </data>
   <data name="VolunteerExpriences" xml:space="preserve">
     <value>Volunteer Expriences with INJAZ</value>

@@ -13,9 +13,13 @@ namespace TranningWebApp.Models
         public int ParticipantEnrolledCount { get; set; }
         public int ParticipantCertificateCount { get; set; }
         public int volunteerPendingCount { get; set; }
+        public int volunteerRejectedCount { get; set; }
         public int volunteerAvailableCount { get; set; }
         public int SessionPendingCount { get; set; }
         public int SessionActiveCount { get; set; }
+        public int SessionOccuredCount { get; set; }
+        public int SchoolInitialCount { get; set; }
+        public int ParticipantInProgressCount { get; set; }
 
         public List<SessionClander> Sessions { get; set; }
 

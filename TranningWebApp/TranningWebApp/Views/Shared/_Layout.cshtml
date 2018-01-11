@@ -90,14 +90,15 @@
             baseUrl = removeURLParam(baseUrl, "filter");
             baseUrl = removeURLParam(baseUrl, "page"); 
             baseUrl = removeURLParam(baseUrl, "archive");
+            var furl = '';
             if (isarchived) {
-                window.location.href = baseUrl + (baseUrl.indexOf('?') > -1 ? "&" : "?") + "filter=" + search + "&page=" + page + "&archive=" + guid;
+                furl = baseUrl + (baseUrl.indexOf('?') > -1 ? "&" : "?") + "filter=" + search + "&page=" + page + "&archive=" + guid;
             }
             else {
-                window.location.href = baseUrl + (baseUrl.indexOf('?') > -1 ? "&" : "?") + "filter=" + search + "&page=" + page;
+                furl = baseUrl + (baseUrl.indexOf('?') > -1 ? "&" : "?") + "filter=" + search + "&page=" + page;
 
             }
-
+            window.location.href = furl;
         }
 
         function removeURLParam(url, param) {

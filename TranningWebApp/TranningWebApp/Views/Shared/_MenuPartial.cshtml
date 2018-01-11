@@ -2,10 +2,10 @@
 @using TranningWebApp.Common
 @using TranningWebApp.Resource
  @{
-     var currentUrl = Request.Url?.AbsolutePath.Split('/')[1];
+     var currentUrl = Request.Url.ToString();
 
      var user = Session["user"] as ContextUser;
-     
+
      bool isShow = false;
      bool isShowSubCoordiinator = true;
      if (Request.IsAuthenticated && user != null)
@@ -33,7 +33,7 @@
              var repository = new TranningWebApp.Repository.CoordinatorRepository();
              isShowSubCoordiinator = repository.GetByUserId(user.OUser.Id).ParentId == null;
          }
-     } 
+     }
  }
 
 <div class="sidebar">
@@ -48,7 +48,7 @@
                 <a class="nav-link" href="@Url.Action("Index", "Funder")"><i class="fa fa-credit-card"></i> @Menu.Funders</a>
             </li>
             <li class="nav-item @(@currentUrl.Contains("Supervisor") ? "active" : "")">
-                <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "approved" })"><i class="icon-user-following"></i> @Menu.Volunteer</a>
+                <a class="nav-link" href="@Url.Action("Index", "Supervisor", new { status = "approved" })"><i class="icon-user-following"></i> @Menu.Volunteer</a>
             </li>
             <li class="nav-item @(@currentUrl.Contains("Coordinator") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Coordinator")"><i class="fa fa-building-o"></i> @Menu.SchoolCoordinators</a>
@@ -80,8 +80,11 @@
         else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Coordinator)
         {
             <ul class="nav">
-                <li class="nav-item @(@currentUrl.Contains("Session") ? "active" : "")">
-                    <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+                <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session",new {menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("sessionindex") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session",new {menu = "sessionindex" })"><i class="icon-calendar"></i> @Menu.Session</a>
                 </li>
                 <li class="nav-item @(@currentUrl.Contains("SchoolLocation") && currentUrl.Contains("Coordinator") ? "active" : "")" >
                     <a class="nav-link" href="@Url.Action("SchoolLocation", "Coordinator")"><i class="icon-calendar"></i> @Menu.SchoolLocations</a>
@@ -99,8 +102,11 @@
             <ul class="nav">
                 @if (isShow)
                 {
-                    <li class="nav-item @(@currentUrl.Contains("Session/Index") ? "active" : "")">
-                        <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+                    <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("Index", "Session",new {menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
+                    </li>
+                    <li class="nav-item @(@currentUrl.Contains("sessionindex") ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("Index", "Session",new {menu = "sessionindex" })"><i class="icon-calendar"></i> @Menu.Session</a>
                     </li>
                     <li class="nav-item @(@currentUrl.Contains("Session/RequestSession") ? "active" : "")">
                         <a class="nav-link" href="@Url.Action("RequestSession", "Session")"><i class="icon-calendar"></i> @Menu.RequestSession</a>
@@ -110,13 +116,22 @@
         }
         else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Volunteer)
         {
-            <ul class="nav"> 
-                @if (isShow)
-                {
-                <li class="nav-item @(@currentUrl.Contains("Session") ? "active" : "")">
-                    <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
+            <ul class="nav">  
+            @if (isShow)
+            {
+                <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session", new { menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
                 </li>
-                }
+                <li class="nav-item @(@currentUrl.Contains("sessionindex") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session", new { menu = "sessionindex" })"><i class="icon-calendar"></i> @Menu.Session</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("status=marked") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session", new { status = "marked" })"><i class="icon-calendar"></i> Marked</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("status=notmarked") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index", "Session", new { status = "notmarked" })"><i class="icon-calendar"></i> Not Marked</a>
+                </li>
+            }
             </ul>
 
         }
@@ -125,8 +140,11 @@
             || user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver3))
         {
             <ul class="nav">
-                <li class="nav-item @(@currentUrl.Contains("pending") ? "active" : "")">
-                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "pending" })"><i class="fa fa-clock-o"></i> @Menu.Requested</a>
+                <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "pending" ,menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
+                </li>
+                <li class="nav-item @(@currentUrl.Contains("supindex") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "pending", menu = "supindex" })"><i class="fa fa-clock-o"></i> @Menu.Requested</a>
                 </li>
                 <li class="nav-item @(@currentUrl.Contains("approved") ? "active" : "")">
                     <a class="nav-link" href="@Url.Action("Index","Supervisor",new {status = "approved" })"><i class="fa fa-check-square-o"></i> @Menu.Accepted</a>
@@ -142,8 +160,11 @@
         else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Funder)
         {
             <ul class="nav"> 
+                <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
+                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
+                </li>
                 <li class="nav-item @(@currentUrl.Equals("Report") ? "active" : "")">
-                    <a class="nav-link" href="@Url.Action("Index", "Report")"><i class="icon-doc"></i> @Menu.Reports</a>
+                    <a class="nav-link" href="@Url.Action("Index", "Report",new {menu = "report" })"><i class="icon-doc"></i> @Menu.Reports</a>
                 </li> 
             </ul> 
         }

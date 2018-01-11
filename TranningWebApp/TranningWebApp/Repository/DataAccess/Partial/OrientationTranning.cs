@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using TmsWebApp.HelpingUtilities;
 
 namespace TranningWebApp.Repository.DataAccess
@@ -40,6 +41,19 @@ namespace TranningWebApp.Repository.DataAccess
                 return "";
             }
 
+        }
+
+        public List<SelectListItem> Volunteers { get; set; }
+        public List<SelectListItem> Schools { get; set; }
+
+        public int NumberOfAttendene {
+            get { return string.IsNullOrEmpty(VolunteersIds) ? 0 : VolunteersIds.Split(',').Count(); }
+        }
+
+        public bool IsOTOccured
+        {
+            get;
+            set;
         }
     }
 }

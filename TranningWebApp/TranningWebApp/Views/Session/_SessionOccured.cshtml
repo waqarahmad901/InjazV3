@@ -314,9 +314,12 @@
         </div>
         <div class="card-block">
             <div class="col-sm-12" style="margin-bottom:10px">
-                <button type="button" id="addstudent" class="btn btn-sm btn-primary pull-right"  data-loading-text="<i class='fa fa-plus'></i> @SessionX.AddStudent <i class='fa fa-spinner fa-spin'></i>" name="SubmitButton" onclick="participantClick(@null)"><i class="fa fa-plus"></i> @SessionX.AddStudent </button>
-                @*<button type="button" class="btn btn-sm btn-primary pull-right" name="SubmitButton" style="margin-right:5%" value="approved"><i class="fa fa-dot-circle-o"></i> Add In Bulk</button>*@
-                <button type="button" id="excelclick" class="btn btn-sm btn-primary pull-right" name="SubmitButton" data-loading-text="<i class='fa fa-upload'></i> @SessionX.UploadExcel <i class='fa fa-spinner fa-spin'></i>" style="margin-right:5%" value="approved" onclick="excelClick()"><i class="fa fa-upload"></i> @SessionX.UploadExcel </button>
+                @if (Model.session_participant.Count() < Model.NumberOfActualStudents)
+                {
+                    <button type="button" id="addstudent" class="btn btn-sm btn-primary pull-right"  data-loading-text="<i class='fa fa-plus'></i> @SessionX.AddStudent <i class='fa fa-spinner fa-spin'></i>" name="SubmitButton" onclick="participantClick(@null)"><i class="fa fa-plus"></i> @SessionX.AddStudent </button>
+                    @*<button type="button" class="btn btn-sm btn-primary pull-right" name="SubmitButton" style="margin-right:5%" value="approved"><i class="fa fa-dot-circle-o"></i> Add In Bulk</button>*@
+                    <button type="button" id="excelclick" class="btn btn-sm btn-primary pull-right" name="SubmitButton" data-loading-text="<i class='fa fa-upload'></i> @SessionX.UploadExcel <i class='fa fa-spinner fa-spin'></i>" style="margin-right:5%" value="approved" onclick="excelClick()"><i class="fa fa-upload"></i> @SessionX.UploadExcel </button>
+                }
                 <a class="btn btn-sm btn-primary pull-right" style="margin-right:5%" href="~/Uploads/DocumentLibrary/DefaultDocument/StudentList.xlsx" name="SubmitButton"><i class="fa fa-download"></i> @SessionX.DownloadExcel</a>
             </div>
             <table class="table table-hover table-outline mb-0">
@@ -324,7 +327,7 @@
                     <tr>
                         <th>@SessionX.StudentName</th>
                         <th>@SessionX.Phone</th>
-                        <th>@General.Email</th>
+                        <th>@Volunteer.NationalId</th>
                         <th></th>
                     </tr>
                     @foreach (var item in Model.PagedParticipants)
@@ -332,7 +335,7 @@
                         <tr>
                             <td>@(item.Name + " " + item.FatherName + " " + item.Family)</td>
                             <td>@item.Mobile</td>
-                            <td>@item.Email</td>
+                            <td>@item.NationalID</td>
                             <td><a href="#" onclick="participantClick('@item.RowGuid')" title="Edit"><i class="fa fa-pencil"></i></a></td>
                         </tr>
                     }

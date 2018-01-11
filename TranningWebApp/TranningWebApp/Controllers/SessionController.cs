@@ -29,7 +29,7 @@ namespace TmsWebApp.Controllers
     public class SessionController : BaseController
     {
         // GET: Funder
-        public ActionResult Index(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null)
+        public ActionResult Index(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null,string status = null)
         {
             ViewBag.searchQuery = string.IsNullOrEmpty(filter) ? "" : filter.Trim();
             ViewBag.showArchived = (archived ?? "") == "on";
@@ -79,6 +79,15 @@ namespace TmsWebApp.Controllers
             });
             //Sorting order
             session = session.OrderByDescending(x => x.CreatedAt);
+            if (status == "marked")
+            {
+                session = session.Where(x => x.VolunteerMarkedStudentAttendenceInSession).ToList();
+            }
+            if (status == "notmarked")
+            {
+                session = session.Where(x => !x.VolunteerMarkedStudentAttendenceInSession).ToList();
+
+            }
             ViewBag.Count = session.Count();
 
             return View(session.ToPagedList(page, pageSize));

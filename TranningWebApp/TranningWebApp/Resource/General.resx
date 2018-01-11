@@ -411,4 +411,22 @@
   <data name="UniversitiesName" xml:space="preserve">
     <value>Universities Name</value>
   </data>
+  <data name="Initial" xml:space="preserve">
+    <value>Initial</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>In-Progress</value>
+  </data>
+  <data name="Issued" xml:space="preserve">
+    <value>Issued</value>
+  </data>
+  <data name="Occured" xml:space="preserve">
+    <value>Occured</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
 </root>

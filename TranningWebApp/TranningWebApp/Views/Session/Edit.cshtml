@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label style="width: 100%">Start Date</label>
+                                        <label style="width: 100%">@OT.StartDate</label>
                                         <label style="font-style: italic">@Coordinator.Gorgian</label>
                                         @Html.TextBoxFor(m => m.PropesedDateString, new { @class = "form-control date startDate", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
                                         @Html.ValidationMessageFor(m => m.PropesedDateString, "", new { @class = "text-danger" })
@@ -285,7 +285,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label style="width: 100%">End Date</label>
+                                        <label style="width: 100%">@OT.EndDate</label>
                                         <label style="font-style: italic">@Coordinator.Gorgian</label>
                                         @Html.TextBoxFor(m => m.ProposedEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date enddate" })
                                         @Html.ValidationMessageFor(m => m.ProposedEndDateTime, "", new { @class = "text-danger" })
@@ -299,21 +299,21 @@
                                 </div>
                                 @Html.Partial("_SessionTime", Model, new ViewDataDictionary { { "type", "pro" }, { "addtionalclass", "" } })
                                 <div class="form-group">
-                                    <label for="mobile">Number of Students </label>
+                                    <label for="mobile">@SessionX.NumberofStudents </label>
                                     @Html.TextBoxFor(m => m.NumberOfStudents, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.NumberOfStudents, "", new { @class = "text-danger" })
                                 </div>
                                 @if (Model.Id > 0)
                                 {
                                     <div class="form-group">
-                                        <label for="mobile">Number of Actual Students </label>
+                                        <label for="mobile">@SessionX.NumberofActualStudents </label>
                                         @Html.TextBoxFor(m => m.NumberOfActualStudents, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.NumberOfActualStudents, "", new { @class = "text-danger" })
                                     </div>
 
                                     <div class="row" style="width:100%">
                                         <div class="form-group col-sm-6">
-                                            <label style="width: 100%">Requested Start Date</label>
+                                            <label style="width: 100%">@SessionX.RequestedStartDate</label>
                                             <label style="font-style: italic">@Coordinator.Gorgian</label>
                                             @Html.TextBoxFor(m => m.ActualDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualstart", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
                                             @Html.ValidationMessageFor(m => m.ActualDateTime, "", new { @class = "text-danger" })
@@ -334,7 +334,7 @@
 
                                     <div class="row" style="width:100%">
                                         <div class="form-group col-sm-6">
-                                            <label style="width: 100%">Requested End Date</label>
+                                            <label style="width: 100%">@SessionX.RequestedEndDate</label>
                                             <label style="font-style: italic">@Coordinator.Gorgian</label>
                                             @Html.TextBoxFor(m => m.ActualEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualend", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
                                             @Html.ValidationMessageFor(m => m.ActualEndDateTime, "", new { @class = "text-danger" })

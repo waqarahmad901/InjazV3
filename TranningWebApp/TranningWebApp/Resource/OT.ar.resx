@@ -159,4 +159,31 @@
   <data name="Subject" xml:space="preserve">
     <value>اسم الملتقى التدريبي</value>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>يوم</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاريخ الانتهاء</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>من عند</value>
+  </data>
+  <data name="MapLocation" xml:space="preserve">
+    <value>خريطة الموقع</value>
+  </data>
+  <data name="ProgrammName" xml:space="preserve">
+    <value>اسم البرنامج</value>
+  </data>
+  <data name="SchoolList" xml:space="preserve">
+    <value>قائمة المدارس</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>تاريخ البدء</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>إلى</value>
+  </data>
+  <data name="VolunteerList" xml:space="preserve">
+    <value>قائمة المتطوعين</value>
+  </data>
 </root>

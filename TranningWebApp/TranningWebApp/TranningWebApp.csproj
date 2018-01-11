@@ -342,6 +342,9 @@
     <Compile Include="Repository\DataAccess\orientation_training.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\DataAccess\ot_time.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\DataAccess\Partial\certificate.cs" />
     <Compile Include="Repository\DataAccess\Partial\CoordinatorProfile.cs" />
     <Compile Include="Repository\DataAccess\Partial\FunderProfile.cs" />
@@ -986,7 +989,9 @@
     <Content Include="Uploads\ImageLibrary\f0c5cd99-b3cc-4dcd-b7d3-2042c11c4b56.jpg" />
     <Content Include="Uploads\ImageLibrary\f8e71693-44fe-482e-8981-c4b6b370f41f.jpg" />
     <Content Include="Uploads\ImageLibrary\fe224dbc-7ef5-4024-9231-003f548f5d98.jpg" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1114,6 +1119,7 @@
     <Content Include="Views\EmailTemplate\VolunteerRegister.cshtml" />
     <Content Include="Views\EmailTemplate\VolunteerApproved.cshtml" />
     <Content Include="Views\Session\_SessionTime.cshtml" />
+    <Content Include="Views\OT\_OTTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -363,6 +363,10 @@ namespace TranningWebApp.Repository
         {
             return Context.users.Any(x => x.Email.ToLower().Equals(email.ToLower()));
         }
+        public bool EmailNationalIdExist(string nationalID)
+        {
+            return Context.participant_profile.Any(x => x.NationalID.ToLower().Equals(nationalID.ToLower()));
+        }
         public bool UserExist(string username)
         {
             return Context.users.Any(x => x.Username.ToLower().Equals(username.ToLower()));

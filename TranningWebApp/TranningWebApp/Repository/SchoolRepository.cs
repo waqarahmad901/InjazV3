@@ -25,6 +25,14 @@ namespace TranningWebApp.Repository
             return Context.schools.Where(x=>x.City == city && x.StageOfSchool == stageOfSchool && x.TypeOfSchool == typeOfSchool).ToList();
         }
 
+        public IEnumerable<school> GetByFilters(string city, string typeOfSchool)
+        {
+            city = string.IsNullOrEmpty(city) ? "Jeddah" : city;
+            typeOfSchool = string.IsNullOrEmpty(typeOfSchool) ? "Male" : typeOfSchool;
+            
+
+            return Context.schools.Where(x => x.City == city && x.TypeOfSchool == typeOfSchool).ToList();
+        }
 
         //Get Specific collection based on Id
         public school Get(int id)

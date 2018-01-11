@@ -162,11 +162,17 @@
   <data name="Region" xml:space="preserve">
     <value>المنطقة</value>
   </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>تخصص</value>
+  </data>
   <data name="Telephone" xml:space="preserve">
     <value>رقم الهاتف</value>
   </data>
   <data name="TypeOfAccount" xml:space="preserve">
     <value>نوعية الحساب</value>
+  </data>
+  <data name="Universities" xml:space="preserve">
+    <value>الجامعات</value>
   </data>
   <data name="VolunteerExpriences" xml:space="preserve">
     <value>الخبرات  التطوعية مع إنجاز</value>

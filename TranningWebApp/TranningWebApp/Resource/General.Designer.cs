@@ -367,6 +367,24 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initial.
+        /// </summary>
+        public static string Initial {
+            get {
+                return ResourceManager.GetString("Initial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In-Progress.
+        /// </summary>
+        public static string InProgress {
+            get {
+                return ResourceManager.GetString("InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We&apos;ve just sent you instructions on.
         /// </summary>
         public static string InstractionOption {
@@ -381,6 +399,15 @@ namespace TranningWebApp.Resource {
         public static string invalidmsg {
             get {
                 return ResourceManager.GetString("invalidmsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Issued.
+        /// </summary>
+        public static string Issued {
+            get {
+                return ResourceManager.GetString("Issued", resourceCulture);
             }
         }
         
@@ -520,6 +547,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occured.
+        /// </summary>
+        public static string Occured {
+            get {
+                return ResourceManager.GetString("Occured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Students.
         /// </summary>
         public static string Participants {
@@ -651,6 +687,15 @@ namespace TranningWebApp.Resource {
         public static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejected.
+        /// </summary>
+        public static string Rejected {
+            get {
+                return ResourceManager.GetString("Rejected", resourceCulture);
             }
         }
         
@@ -822,6 +867,15 @@ namespace TranningWebApp.Resource {
         public static string ThirdName {
             get {
                 return ResourceManager.GetString("ThirdName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         

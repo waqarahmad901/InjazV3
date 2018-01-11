@@ -23,8 +23,8 @@
                                 <span>@General.Approved</span>
                             </li>
                             <li>
-                                <strong>3</strong>
-                                <span>Occured</span>
+                                <strong>@Model.SessionOccuredCount</strong>
+                                <span>@General.Occured</span>
                             </li>
                         </ul>
                     </div>
@@ -36,11 +36,11 @@
                         <i class="icon-user-following bg-info bg-success"></i>
                         <ul>
                             <li>
-                                <strong>@Model.volunteerPendingCount</strong>
-                                <span>Rejected</span>
+                                <strong>@Model.volunteerRejectedCount</strong>
+                                <span>@General.Rejected</span>
                             </li>
                             <li>
-                                <strong>6</strong>
+                                <strong>@Model.volunteerPendingCount</strong>
                                 <span>@General.Pending</span>
                             </li>
                             <li>
@@ -58,16 +58,16 @@
                         <ul>
                             
                             <li>
-                                <strong>@Model.ParticipantCertificateCount</strong>
-                                <span>In-Progress</span>
+                                <strong>@Model.ParticipantInProgressCount</strong>
+                                <span>@General.InProgress</span>
                             </li>
                             <li>
-                                <strong>37</strong>
-                                <span>Issued</span>
+                                <strong>@Model.ParticipantCertificateCount</strong>
+                                <span>@General.Issued</span>
                             </li>
                             <li>
                                 <strong>@Model.ParticipantEnrolledCount</strong>
-                                <span>Total</span>
+                                <span>@General.Total</span>
                             </li>
                         </ul>
                     </div>
@@ -79,8 +79,8 @@
                         <i class="fa fa-building-o bg-info bg-purple"></i>
                         <ul>
                             <li>
-                                <strong>7</strong>
-                                <span>Initial</span>
+                                <strong>@Model.SchoolInitialCount</strong>
+                                <span>@General.Initial</span>
                             </li>
                             <li>
                                 <strong>@Model.SchoolPendingCount</strong>

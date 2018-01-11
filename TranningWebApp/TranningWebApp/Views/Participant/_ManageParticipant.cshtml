@@ -85,7 +85,7 @@
                 <label for="phone",@maxlength = 10 >@Participant.NationalId</label>
                 @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control", @maxlength = 10 })
                 @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger" })
-
+                <span class="text-danger field-validation-error" id="nidvalidation" data-valmsg-for="FunderEmail" data-valmsg-replace="true" style="display:none"><span for="FunderEmail" class="">National Id Already Exist</span></span>
 
 
 
@@ -180,12 +180,16 @@
                 url : "/Participant/CheckEmail",
                 type : "get",
                 async: false,
-                data : {  email: $("#email").val()  },
+                data: { email: $("#email").val(), nid: $("#NationalID").val() },
                 success:function (data, status) {
                     $('#submitgbutton').button('reset');
-                    if (data == true) {
+                    if (data.email == true) {
                         $("#emailvalidation").show();
                         
+                    }
+                    else if (data.nid == true) {
+                        $("#nidvalidation").show();
+
                     }
                     else {
                         debugger;

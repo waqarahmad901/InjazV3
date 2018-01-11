@@ -35,12 +35,15 @@
                                 <i class="icon-people"></i>
                             </th>
                             <th>@OT.Subject <i class="fa fa-sort"></i></th>
-                            <th>@OT.Location</th>
+                            
                             <th>@OT.OTDate</th>
-                            <th>@OT.SchoolName</th>
+                            <th>@Volunteer.City</th>
+                            <th>@Volunteer.Gender</th>
                             <th>@OT.ContactPerson</th>
                             <th>@OT.ContactPersonMobile</th>
-                            <th>@OT.Session</th>
+                            <th>Number Of attendene</th>
+                            <th>OT Status</th>
+                            <th>Status</th>
                             <th>@General.EditDetails</th>
                         </tr>
                     </thead>
@@ -57,7 +60,7 @@
                                 <td>
                                     <div>@item.Subject</div>
                                 </td>
-                                @{ 
+                                @*@{ 
                                     Uri uriResult;
                                     bool result = Uri.TryCreate(item.Location, UriKind.Absolute, out uriResult)
                                         && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
@@ -74,14 +77,31 @@
                                 else
                                 {
                                 <td>@item.Location</td>
-                                }
+                                }*@
                                 <td>@item.OTDateTime.Value.ToString("dd/MM/yyyy")</td>
-                                <td>asd</td>
+                                <td>@item.City</td>
+                                <td>@item.Gender</td>
                                 <td>@item.ContactPersonName</td>
                                 <td>@item.ContactPersonPhone</td>
-                                <td>sads</td>
+                                <td>@item.NumberOfAttendene</td>
+                                @if (item.IsOTOccured)
+                                {
+                                <td>Occured</td>
+                                }
+                                else
+                                {
+                                    <td>Not Occured</td>
+                                }
+                                @if (item.IsActive)
+                                {
+                                    <td><span class="badge badge-success">@General.Active</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="badge badge-default">@General.InActive</span></td>
 
-                                <td><a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a> <a href="" title="Archive"><i class="fa fa-archive"></i></a></td>
+                                }
+                                <td><a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a> <a href="" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a></td>
                             </tr>
                         }
                         }

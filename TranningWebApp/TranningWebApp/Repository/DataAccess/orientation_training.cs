@@ -18,6 +18,7 @@ namespace TranningWebApp.Repository.DataAccess
         public orientation_training()
         {
             this.volunteer_profile = new HashSet<volunteer_profile>();
+            this.ot_time = new HashSet<ot_time>();
         }
     
         public int Id { get; set; }
@@ -32,8 +33,11 @@ namespace TranningWebApp.Repository.DataAccess
         public string VolunteersIds { get; set; }
         public Nullable<System.DateTime> OTDateEnd { get; set; }
         public string SchoolIds { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<volunteer_profile> volunteer_profile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ot_time> ot_time { get; set; }
     }
 }

@@ -95,10 +95,13 @@ namespace TmsWebApp.Controllers
             return View(participaintModel);
         }
         [HttpGet]
-        public ActionResult CheckEmail(string email)
+        public ActionResult CheckEmail(string email,string nid)
         {
             var accountRepo = new AccountRepository();
-            return Json(accountRepo.EmailExist(email), JsonRequestBehavior.AllowGet);
+            bool isEmailExist = accountRepo.EmailExist(email);
+            bool isNIDExist = accountRepo.EmailNationalIdExist(nid);
+
+            return Json(new {email= isEmailExist, nid = isNIDExist }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult Edit(participant_profile profile)
@@ -283,7 +286,7 @@ namespace TmsWebApp.Controllers
         public ActionResult UploadExcel(ExcelModel model, HttpPostedFileBase file)
         {
 
-            var rowuid = new SessionRepository().Get(model.SessionId).RowGUID;
+            var session = new SessionRepository().Get(model.SessionId);
             try
             {
                 string fileName = "~/Uploads/" + file.FileName;
@@ -315,7 +318,14 @@ namespace TmsWebApp.Controllers
                    string error = ValidateParticipantRecords(profileList);
                     if (error != null)
                     {
-                        return RedirectToAction("Edit", "Session", new { id = rowuid, excelerror = true, error = error });
+                        return RedirectToAction("Edit", "Session", new { id = session.RowGUID, excelerror = true, error = error });
+                    }
+
+                    if (session.session_participant.Count + profileList.Count > session.NumberOfActualStudents)
+                    {
+                       
+                            return RedirectToAction("Edit", "Session", new { id = session.RowGUID, excelerror = true, error = "Students is not allowed more than " + (session.NumberOfActualStudents - session.session_participant.Count) });
+                        
                     }
                 }
                 foreach (var profile in profileList)
@@ -393,7 +403,7 @@ namespace TmsWebApp.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Edit", "Session", new { id = rowuid, excelerror = true, error = Participant.UploadError });
+                return RedirectToAction("Edit", "Session", new { id = session.RowGUID, excelerror = true, error = Participant.UploadError });
                 throw ex;
             }
             return RedirectToAction("Index", "Session");

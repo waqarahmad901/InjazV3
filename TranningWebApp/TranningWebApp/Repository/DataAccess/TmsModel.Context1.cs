@@ -62,5 +62,6 @@ namespace TranningWebApp.Repository.DataAccess
         public virtual DbSet<session_actual_time> session_actual_time { get; set; }
         public virtual DbSet<session_actual_time_attendance> session_actual_time_attendance { get; set; }
         public virtual DbSet<orientation_training> orientation_training { get; set; }
+        public virtual DbSet<ot_time> ot_time { get; set; }
     }
 }

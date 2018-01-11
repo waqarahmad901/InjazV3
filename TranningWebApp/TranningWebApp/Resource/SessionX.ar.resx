@@ -285,4 +285,16 @@
   <data name="MarkStudentAttendense" xml:space="preserve">
     <value>وضع علامة على حضور الطالب</value>
   </data>
+  <data name="NumberofActualStudents" xml:space="preserve">
+    <value>عدد الطلاب الفعليين</value>
+  </data>
+  <data name="NumberofStudents" xml:space="preserve">
+    <value>عدد الطلاب</value>
+  </data>
+  <data name="RequestedEndDate" xml:space="preserve">
+    <value>تاريخ الانتهاء المطلوب</value>
+  </data>
+  <data name="RequestedStartDate" xml:space="preserve">
+    <value>تاريخ البدء المطلوب</value>
+  </data>
 </root>

@@ -1,8 +1,53 @@
 ﻿@using TranningWebApp.Resource
 @model TranningWebApp.Repository.DataAccess.orientation_training
-
+<script src="~/Scripts/jquery.timepicker.min.js"></script>
+<link href="~/Content/jquery.timepicker.min.css" rel="stylesheet" />
 <main class="main">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bindTimePicker();
+        })
+        function checkchangeSchool(obj) {
+            var allCheckBoxs = $(".schoolcheck");
+            debugger;
+            if ($(obj).is(":checked"))
+                allCheckBoxs.prop("checked", true);
+            else
+                allCheckBoxs.prop("checked", false); 
+        }
+        function checkchangeVolunteer(obj) {
+            var allCheckBoxs = $(".volcheck");
+            
+            if ($(obj).is(":checked"))
+                allCheckBoxs.prop("checked", true);
+            else
+                allCheckBoxs.prop("checked", false);
+            
+        }
+        function getFilterSchoolAndVolunteer() {
+            var city = $("#City").val();
+            var gender = $("#Gender").val();
+          
 
+            $.get("/OT/GetSchoolsVolunteerByFilter?city=" + city + "&gender=" + gender, function (res) {
+                debugger;
+                
+                $(".voldiv").html(''); 
+                $.each(res.volunteers, function (index, item) {
+                    $(".voldiv").append("<input id='Volunteers_" + index + "__Value' name='Volunteers[" + index + "].Value' type='hidden' value='" + item.Value + "'>");
+                    $(".voldiv").append("<div class='col-sm-3'><input class='volcheck' data-val='true' data-val-required='The Selected field is required.' id='Volunteers_" + index + "__Selected' name='Volunteers[" + index + "].Selected' type='checkbox' value='true'><input name='Volunteers[" + index + "].Selected' type='hidden' value='false'><span style='margin-left:5px'>" + item.Text + "</span></div>");
+                });
+
+                $(".schooldiv").html(''); 
+                $.each(res.schools, function (index, item) {
+                    $(".schooldiv").append("<input id='Schools_" + index + "__Value' name='Schools[" + index + "].Value' type='hidden' value='" + item.Value + "'>");
+                    $(".schooldiv").append("<div class='col-sm-3'><input class='schoolcheck' data-val='true' data-val-required='The Selected field is required.' id='Schools_" + index + "__Selected' name='Schools[" + index + "].Selected' type='checkbox' value='true'><input name='Schools[" + index + "].Selected' type='hidden' value='false'><span style='margin-left:5px'>" + item.Text + "</span></div>");
+                });
+
+
+            })
+        }
+    </script>
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">@General.Home</li>
@@ -39,14 +84,15 @@
                         <div class="card-block">
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label for="name">Programm Name</label>
+                                    <label for="name">@OT.ProgrammName</label>
                                     @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
 
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="name">Region</label>
-                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                                    <label for="mobile">@Coordinator.Region</label>
+                                    @Html.DropDownListFor(m => m.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Region, "", new { @class = "text-danger" })
 
                                 </div>
                             </div>
@@ -64,74 +110,98 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="name">Map Location</label>
+                                <label for="name">@OT.MapLocation</label>
                                 @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
 
                             </div>
                             <div class="form-group" style="margin-bottom:0px">
-                                <label for="name">Volunteer List</label>
+                                <div>
+                                    <input type="checkbox" style="margin-top:2px" onchange="checkchangeVolunteer(this)" />
+                                    <label for="name">@OT.VolunteerList</label>
+                                </div>
                             </div>
-                                <div class="form-group row sessionTime" style="margin-left:0px; min-height:100px">
-                                    <div class="col-sm-3">
-                                        <input type="checkbox" />
-                                        <span>Day</span>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <label style="width: 100%">Start Date</label>
-                                        <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                        @Html.TextBoxFor(m => m.OTDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
-                                        @Html.ValidationMessageFor(m => m.OTDateTime, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <div class="form-group col-sm-6" style="margin-top:0.5%">
-                                        <label style="width: 100%"></label>
-                                        <label style="font-style: italic">@OT.Hijri</label>
-                                        @Html.TextBoxFor(m => m.OtDateIslamic, new { @class = "form-control date-islamic" })
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <label style="width: 100%">End Date</label>
-                                        <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                        @Html.TextBoxFor(m => m.OTDateEnd, "{0:dd/MM/yyyy}", new { @class = "form-control date" })
-                                        @Html.ValidationMessageFor(m => m.OTDateEnd, "", new { @class = "text-danger" })
-
-
-                                    </div>
-                                    <div class="form-group col-sm-6" style="margin-top:0.5%">
-                                        <label style="width: 100%"></label>
-                                        <label style="font-style: italic">@OT.Hijri</label>
-                                        @Html.TextBoxFor(m => m.OtDateIslamicEnd, new { @class = "form-control date-islamic" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="mobile">@OT.ContactPersonName</label>
-                                    @Html.TextBoxFor(m => m.ContactPersonName, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.ContactPersonName, "", new { @class = "text-danger" })
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="mobile">@OT.ContactPersonPhone</label>
-                                    @Html.TextBoxFor(m => m.ContactPersonPhone, new { @class = "form-control phone", @maxlength = 10 })
-                                    @Html.ValidationMessageFor(m => m.ContactPersonPhone, "", new { @class = "text-danger" })
-                                </div>
-
-
-
-                                @if (Model != null && Model.Id > 0)
+                            <div class="form-group row sessionTime voldiv" style="margin-left:0px; min-height:100px">
+                                @for (int i = 0; i < Model.Volunteers.Count; i++)
                                 {
-                                    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
-
-
+                                    @Html.HiddenFor(it => Model.Volunteers[i].Value)
+                                <div class="col-sm-3">
+                                   @Html.CheckBoxFor(it => it.Volunteers[i].Selected,new {@class="volcheck" })
+                                    <span>@Model.Volunteers[i].Text</span>
+                                </div>
                                 }
-                            </div>             <div class="card-footer">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@OT.StartDate</label>
+                                    <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                    @Html.TextBoxFor(m => m.OTDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date startDate" })
+                                    @Html.ValidationMessageFor(m => m.OTDateTime, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                    <label style="width: 100%"></label>
+                                    <label style="font-style: italic">@OT.Hijri</label>
+                                    @Html.TextBoxFor(m => m.OtDateIslamic, new { @class = "form-control date-islamic startDateIslamic" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label style="width: 100%">@OT.EndDate</label>
+                                    <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                    @Html.TextBoxFor(m => m.OTDateEnd, "{0:dd/MM/yyyy}", new { @class = "form-control date enddate" })
+                                    @Html.ValidationMessageFor(m => m.OTDateEnd, "", new { @class = "text-danger" })
+
+
+                                </div>
+                                <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                    <label style="width: 100%"></label>
+                                    <label style="font-style: italic">@OT.Hijri</label>
+                                    @Html.TextBoxFor(m => m.OtDateIslamicEnd, new { @class = "form-control date-islamic enddateIslamic" })
+                                </div>
+                            </div>
+                            @Html.Partial("_OTTime", Model, new ViewDataDictionary { { "type", "pro" }, { "addtionalclass", "" } })
+
+
+                            <div class="form-group">
+                                <label for="mobile">@OT.ContactPersonName</label>
+                                @Html.TextBoxFor(m => m.ContactPersonName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ContactPersonName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mobile">@OT.ContactPersonPhone</label>
+                                @Html.TextBoxFor(m => m.ContactPersonPhone, new { @class = "form-control phone", @maxlength = 10 })
+                                @Html.ValidationMessageFor(m => m.ContactPersonPhone, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group" style="margin-bottom:0px">
+                                <div>
+                                    <input type="checkbox" style="margin-top:2px" onchange="checkchangeSchool(this)" />
+                                    <label for="name">@OT.SchoolList</label>
+                                </div>
+                            </div>
+                            <div class="form-group row sessionTime schooldiv" style="margin-left:0px; min-height:100px">
+                                @for (int i = 0; i < Model.Schools.Count; i++)
+                                {
+                                    @Html.HiddenFor(it => Model.Schools[i].Value)
+                                    <div class="col-sm-3">
+                                        @Html.CheckBoxFor(it => it.Schools[i].Selected, new { @class = "schoolcheck" })
+                                        <span>@Model.Schools[i].Text</span>
+                                    </div>
+                                }
+                            </div>
+
+                            @if (Model != null && Model.Id > 0)
+                            {
+                                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+
+                            }
+                        </div>             <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i> @General.Submit</button>
                         </div>
 

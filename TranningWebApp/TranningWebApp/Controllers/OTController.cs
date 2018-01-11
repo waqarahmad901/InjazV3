@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -22,7 +23,7 @@ namespace TmsWebApp.Controllers
     public class OTController : BaseController
     {
         // GET: OT
-        public ActionResult Index(string sortOrder, string filter, string archived, int page = 1)
+        public ActionResult Index(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null)
         {
 
             ViewBag.searchQuery = string.IsNullOrEmpty(filter) ? "" : filter;
@@ -31,11 +32,16 @@ namespace TmsWebApp.Controllers
             page = page > 0 ? page : 1;
             int pageSize = 0;
             pageSize = pageSize > 0 ? pageSize : 10;
-
-            ViewBag.CurrentSort = sortOrder;
-
-            IEnumerable<orientation_training> ots;
             var repository = new OTRepository();
+            ViewBag.CurrentSort = sortOrder;
+            if (archive != null)
+            {
+                var ot = repository.GetByRowId(archive.Value);
+                ot.IsActive = !ot.IsActive;
+                repository.Put(ot.Id, ot);
+            }
+            IEnumerable<orientation_training> ots;
+          
 
             if (string.IsNullOrEmpty(filter))
             {
@@ -48,6 +54,12 @@ namespace TmsWebApp.Controllers
             //Sorting order
             ots = ots.OrderByDescending(x => x.CreatedAt);
             ViewBag.Count = ots.Count();
+
+            foreach (var item in ots)
+            {
+                item.IsOTOccured = repository.IsOtOccures(item);
+            }
+
 
             return View(ots.ToPagedList(page, pageSize));
         }
@@ -70,6 +82,8 @@ namespace TmsWebApp.Controllers
             if (id == null)
             {
                 otModel = new orientation_training();
+                otModel.OTDateTime = DateTime.Now.AddMonths(1);
+                otModel.OTDateEnd = DateTime.Now.AddMonths(1).AddDays(3);
 
             }
             else
@@ -85,10 +99,39 @@ namespace TmsWebApp.Controllers
                     new SelectListItem { Selected = true, Text = General.Male, Value =  "Male"},
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
                 };
+            var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
+        new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "" }).ToList();
+            ViewBag.distictdd = distict;
+
+            int[] otVolunteers = !string.IsNullOrEmpty(otModel.VolunteersIds) ? otModel.VolunteersIds.Split(',').Select(x=>int.Parse(x)).ToArray() : new int[] { };
+            int[] otSchools = !string.IsNullOrEmpty(otModel.SchoolIds ) ? otModel.SchoolIds.Split(',').Select(x => int.Parse(x)).ToArray() : new int[] { };
+
+            string city = string.IsNullOrEmpty(otModel.City) ? "Jeddah" : otModel.City;
+            string gender = string.IsNullOrEmpty(otModel.Gender) ? "Male" : otModel.Gender;
+
+            otModel.Volunteers = new VolunteerRepository().GetApprovedVolunteer().Where(x=>x.City == city && x.Gender == gender).Select(x =>
+            new SelectListItem { Text = x.VolunteerName, Value = x.Id + "",Selected = otVolunteers.Contains(x.Id) }).ToList();
+
+            otModel.Schools = new SchoolRepository().GetByFilters(otModel.City, otModel.Gender).Select(x =>
+            new SelectListItem { Text = x.SchoolName, Value = x.Id + "", Selected = otSchools.Contains(x.Id) }).ToList();
+
+
+
             return View(otModel);
         }
+
+        public ActionResult GetSchoolsVolunteerByFilter(string city, string gender)
+        {
+            var school = new SchoolRepository().GetByFilters(city, gender).Select(x =>
+             new SelectListItem { Text = x.SchoolName, Value = x.Id + "" }).ToList();
+            var volunteer = new VolunteerRepository().GetApprovedVolunteer().Where(x => x.City == city && x.Gender == gender).Select(x =>
+             new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
+            var result = new { volunteers = volunteer, schools = school };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
-        public ActionResult Edit(orientation_training profile)
+        public ActionResult Edit(orientation_training profile,FormCollection collection)
         {
             var otRepo = new OTRepository();
             orientation_training ot = null;
@@ -111,9 +154,34 @@ namespace TmsWebApp.Controllers
             ot.Location = profile.Location;
             ot.Subject = profile.Subject;
             ot.OTDateTime = profile.OTDateTime;
+            ot.OTDateEnd = profile.OTDateEnd;
+            ot.Region = profile.Region;
+            ot.Gender = profile.Gender;
+            ot.City = profile.City;
+            ot.SchoolIds = profile.Schools != null ? string.Join(",", profile.Schools.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
+            ot.VolunteersIds = profile.Volunteers != null ? string.Join(",", profile.Volunteers.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
             ot.ContactPersonName = profile.ContactPersonName;
             ot.ContactPersonPhone = profile.ContactPersonPhone;
-         
+
+            int days = (profile.OTDateEnd - profile.OTDateTime).Value.Days;
+
+            if (ot.Id > 0)
+                otRepo.RemoveAllTimes(ot.Id);
+            for (int i = 0; i <= days; i++)
+            {
+                DateTime fromTime = DateTime.ParseExact(collection["proFromTime_" + i].ToString(), "hh:mm tt", CultureInfo.InvariantCulture);
+                DateTime toTime = DateTime.ParseExact(collection["proToTime_" + i].ToString(), "hh:mm tt", CultureInfo.InvariantCulture);
+                ot.ot_time.Add(
+                    new ot_time
+                    {
+                        IsActive = collection["procheck_" + i] == "on" ? true : false,
+                        ActualStartTime = fromTime.TimeOfDay,
+                        ActualEndTime = toTime.TimeOfDay,
+                    }
+                    );
+            }
+
+
             if (profile.Id == 0)
             {
                 otRepo.Post(ot);

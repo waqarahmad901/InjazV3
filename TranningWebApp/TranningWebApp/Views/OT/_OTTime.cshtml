@@ -1,4 +1,4 @@
-﻿@model TranningWebApp.Repository.DataAccess.session
+﻿@model TranningWebApp.Repository.DataAccess.orientation_training
 @using TranningWebApp.Resource;
 @{
     string type = ViewData["type"].ToString();
@@ -35,14 +35,9 @@
     </div>
     @{
         int dateDiff = 0;
-        if (type == "pro")
-        {
-            dateDiff = (Model.ProposedEndDateTime - Model.ProposedDateTime).Value.Days;
-        }
-        else
-        {
-            dateDiff = (Model.ActualEndDateTime - Model.ActualDateTime).Value.Days;
-        } 
+         
+            dateDiff = (Model.OTDateEnd - Model.OTDateTime).Value.Days;
+         
     }
 
     @for (int i = 0; i <= dateDiff; i++)
@@ -54,41 +49,25 @@
         TimeSpan timespan = TimeSpan.MinValue;
         if (Model.Id > 0)
         {
-            if (type == "pro")
-            {
-                timespan = Model.session_proposed_time.ElementAt(i).ProposedStartTime.Value;
-            }
-            else
-            {
-                timespan = Model.session_actual_time.ElementAt(i).ActualStartTime.Value;
-            }
+            
+                timespan = Model.ot_time.ElementAt(i).ActualStartTime.Value;
+            
+           
             DateTime time = DateTime.Today.Add(timespan);
             displayFromTime = time.ToString("hh:mm tt");
-            if (type == "pro")
-            {
-                timespan = Model.session_proposed_time.ElementAt(i).ProposedEndTime.Value;
-            }
-            else
-            {
-                timespan = Model.session_actual_time.ElementAt(i).ActualEndTime.Value;
-            }
+           
+                timespan = Model.ot_time.ElementAt(i).ActualEndTime.Value;
+            
             time = DateTime.Today.Add(timespan);
             displayToTime = time.ToString("hh:mm tt");
-            if (type == "pro")
-            {
-                isActive = Model.session_proposed_time.ElementAt(i).IsActive;
-            }
-            else
-            {
-                isActive = Model.session_actual_time.ElementAt(i).IsActive;
-
-            }
-
+           
+                isActive = Model.ot_time.ElementAt(i).IsActive;
+             
             readonlyS = isActive ? "" : "readonly";
         }
         else
         {
-            if (Model.ProposedDateTime.AddDays(i).DayOfWeek == DayOfWeek.Friday || Model.ProposedDateTime.AddDays(i).DayOfWeek == DayOfWeek.Saturday)
+            if (Model.OTDateTime?.AddDays(i).DayOfWeek == DayOfWeek.Friday || Model.OTDateTime?.AddDays(i).DayOfWeek == DayOfWeek.Saturday)
             {
                 isActive = false;
                 readonlyS = "readonly";
@@ -100,7 +79,7 @@
             </div>
           
             <div class='col-sm-2' style='padding:0px'>
-                @(Model.ProposedDateTime.AddDays(i).DayOfWeek.ToString().Substring(0, 3) + ", "+ Model.ProposedDateTime.AddDays(i).ToString("dd MMM"))
+                @(Model.OTDateTime?.AddDays(i).DayOfWeek.ToString().Substring(0, 3) + ", "+ Model.OTDateTime?.AddDays(i).ToString("dd MMM"))
             </div>
             <div class='col-sm-4'>
                 <input type='text' name='@(type+"FromTime_"+i)' class='form-control timepicker @addtionalclass' value="@displayFromTime" @readonlyS />

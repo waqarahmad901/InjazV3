@@ -232,6 +232,24 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Actual Students.
+        /// </summary>
+        public static string NumberofActualStudents {
+            get {
+                return ResourceManager.GetString("NumberofActualStudents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Students.
+        /// </summary>
+        public static string NumberofStudents {
+            get {
+                return ResourceManager.GetString("NumberofStudents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -291,6 +309,24 @@ namespace TranningWebApp.Resource {
         public static string RequestedDate {
             get {
                 return ResourceManager.GetString("RequestedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested End Date.
+        /// </summary>
+        public static string RequestedEndDate {
+            get {
+                return ResourceManager.GetString("RequestedEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested Start Date.
+        /// </summary>
+        public static string RequestedStartDate {
+            get {
+                return ResourceManager.GetString("RequestedStartDate", resourceCulture);
             }
         }
         

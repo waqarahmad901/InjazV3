@@ -196,6 +196,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specialization.
+        /// </summary>
+        public static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telephone.
         /// </summary>
         public static string Telephone {
@@ -210,6 +219,15 @@ namespace TranningWebApp.Resource {
         public static string TypeOfAccount {
             get {
                 return ResourceManager.GetString("TypeOfAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Universities.
+        /// </summary>
+        public static string Universities {
+            get {
+                return ResourceManager.GetString("Universities", resourceCulture);
             }
         }
         

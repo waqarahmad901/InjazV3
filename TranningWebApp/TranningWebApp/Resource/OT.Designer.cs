@@ -106,6 +106,33 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hijri.
         /// </summary>
         public static string Hijri {
@@ -120,6 +147,15 @@ namespace TranningWebApp.Resource {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Location.
+        /// </summary>
+        public static string MapLocation {
+            get {
+                return ResourceManager.GetString("MapLocation", resourceCulture);
             }
         }
         
@@ -151,11 +187,29 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Programm Name.
+        /// </summary>
+        public static string ProgrammName {
+            get {
+                return ResourceManager.GetString("ProgrammName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to School.
         /// </summary>
         public static string School {
             get {
                 return ResourceManager.GetString("School", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to School List.
+        /// </summary>
+        public static string SchoolList {
+            get {
+                return ResourceManager.GetString("SchoolList", resourceCulture);
             }
         }
         
@@ -178,11 +232,38 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OT Name.
         /// </summary>
         public static string Subject {
             get {
                 return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volunteer List.
+        /// </summary>
+        public static string VolunteerList {
+            get {
+                return ResourceManager.GetString("VolunteerList", resourceCulture);
             }
         }
     }

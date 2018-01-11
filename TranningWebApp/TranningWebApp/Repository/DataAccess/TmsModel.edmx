@@ -2002,6 +2002,18 @@
           <Property Name="VolunteersIds" Type="nvarchar" MaxLength="500" />
           <Property Name="OTDateEnd" Type="datetime" />
           <Property Name="SchoolIds" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ot_time">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OTId" Type="int" Nullable="false" />
+          <Property Name="ActualStartTime" Type="time" Precision="7" />
+          <Property Name="ActualEndTime" Type="time" Precision="7" />
+          <Property Name="IsHoliday" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="participant_profile">
           <Key>
@@ -2371,6 +2383,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ot_time_orientation_training">
+          <End Role="orientation_training" Type="Self.orientation_training" Multiplicity="1" />
+          <End Role="ot_time" Type="Self.ot_time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orientation_training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ot_time">
+              <PropertyRef Name="OTId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_participant_profile_school">
           <End Role="school" Type="Self.school" Multiplicity="0..1" />
           <End Role="participant_profile" Type="Self.participant_profile" Multiplicity="*" />
@@ -2638,6 +2662,7 @@
           <EntitySet Name="lk_evaluation_form" EntityType="Self.lk_evaluation_form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_role" EntityType="Self.lk_role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="orientation_training" EntityType="Self.orientation_training" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ot_time" EntityType="Self.ot_time" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="participant_profile" EntityType="Self.participant_profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="school" EntityType="Self.school" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="session" EntityType="Self.session" Schema="dbo" store:Type="Tables" />
@@ -2670,6 +2695,10 @@
           <AssociationSet Name="FK_funder_profile_user" Association="Self.FK_funder_profile_user">
             <End Role="user" EntitySet="user" />
             <End Role="funder_profile" EntitySet="funder_profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ot_time_orientation_training" Association="Self.FK_ot_time_orientation_training">
+            <End Role="orientation_training" EntitySet="orientation_training" />
+            <End Role="ot_time" EntitySet="ot_time" />
           </AssociationSet>
           <AssociationSet Name="FK_participant_profile_school" Association="Self.FK_participant_profile_school">
             <End Role="school" EntitySet="school" />
@@ -3295,6 +3324,11 @@
           <AssociationSet Name="FK_volunteer_profile_orientation_training" Association="TrainingProjectModel.FK_volunteer_profile_orientation_training">
             <End Role="orientation_training" EntitySet="orientation_training" />
             <End Role="volunteer_profile" EntitySet="volunteer_profile" />
+          </AssociationSet>
+          <EntitySet Name="ot_time" EntityType="TrainingProjectModel.ot_time" />
+          <AssociationSet Name="FK_ot_time_orientation_training" Association="TrainingProjectModel.FK_ot_time_orientation_training">
+            <End Role="orientation_training" EntitySet="orientation_training" />
+            <End Role="ot_time" EntitySet="ot_time" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_session_school">
@@ -5556,6 +5590,8 @@
           <Property Name="OTDateEnd" Type="DateTime" Precision="3" />
           <Property Name="SchoolIds" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="volunteer_profile" Relationship="TrainingProjectModel.FK_volunteer_profile_orientation_training" FromRole="orientation_training" ToRole="volunteer_profile" />
+          <NavigationProperty Name="ot_time" Relationship="TrainingProjectModel.FK_ot_time_orientation_training" FromRole="orientation_training" ToRole="ot_time" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_volunteer_profile_orientation_training">
           <End Type="TrainingProjectModel.orientation_training" Role="orientation_training" Multiplicity="0..1" />
@@ -5565,6 +5601,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="volunteer_profile">
+              <PropertyRef Name="OTId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ot_time">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OTId" Type="Int32" Nullable="false" />
+          <Property Name="ActualStartTime" Type="Time" Precision="7" />
+          <Property Name="ActualEndTime" Type="Time" Precision="7" />
+          <Property Name="IsHoliday" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="orientation_training" Relationship="TrainingProjectModel.FK_ot_time_orientation_training" FromRole="ot_time" ToRole="orientation_training" />
+        </EntityType>
+        <Association Name="FK_ot_time_orientation_training">
+          <End Type="TrainingProjectModel.orientation_training" Role="orientation_training" Multiplicity="1" />
+          <End Type="TrainingProjectModel.ot_time" Role="ot_time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orientation_training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ot_time">
               <PropertyRef Name="OTId" />
             </Dependent>
           </ReferentialConstraint>
@@ -7898,6 +7958,7 @@
           <EntitySetMapping Name="orientation_training">
             <EntityTypeMapping TypeName="TrainingProjectModel.orientation_training">
               <MappingFragment StoreEntitySet="orientation_training">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="SchoolIds" ColumnName="SchoolIds" />
                 <ScalarProperty Name="OTDateEnd" ColumnName="OTDateEnd" />
                 <ScalarProperty Name="VolunteersIds" ColumnName="VolunteersIds" />
@@ -7914,6 +7975,18 @@
                 <ScalarProperty Name="OTDateTime" ColumnName="OTDateTime" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="RowGuid" ColumnName="RowGuid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ot_time">
+            <EntityTypeMapping TypeName="TrainingProjectModel.ot_time">
+              <MappingFragment StoreEntitySet="ot_time">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsHoliday" ColumnName="IsHoliday" />
+                <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+                <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+                <ScalarProperty Name="OTId" ColumnName="OTId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

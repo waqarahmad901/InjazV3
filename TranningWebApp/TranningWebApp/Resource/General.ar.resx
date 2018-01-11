@@ -399,4 +399,22 @@
   <data name="TSignin" xml:space="preserve">
     <value>تسجيل الدخول</value>
   </data>
+  <data name="Initial" xml:space="preserve">
+    <value>مبدئي</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>في تَقَدم</value>
+  </data>
+  <data name="Issued" xml:space="preserve">
+    <value>نشر</value>
+  </data>
+  <data name="Occured" xml:space="preserve">
+    <value>حدث</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>مرفوض</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>مجموع</value>
+  </data>
 </root>
