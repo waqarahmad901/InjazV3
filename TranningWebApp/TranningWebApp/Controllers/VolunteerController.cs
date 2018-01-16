@@ -30,7 +30,7 @@ namespace TmsWebApp.Controllers
         }
         public ActionResult VolunteerProfile()
         {
-           
+
             volunteer_profile oVolunteer = null;
             var cu = Session["user"] as ContextUser;
             var repository = new VolunteerRepository();
@@ -52,7 +52,7 @@ namespace TmsWebApp.Controllers
                     oVolunteer.LinkedIn = cu.ProfileUrl;
                 }
                 oVolunteer.GoogleSigninId = cu.GoogleId;
-                oVolunteer.LinkedInSignInId = cu.LinkedInId; 
+                oVolunteer.LinkedInSignInId = cu.LinkedInId;
             }
             else
             {
@@ -63,13 +63,21 @@ namespace TmsWebApp.Controllers
                     new SelectListItem { Selected = true, Text = General.Male, Value =  "Male"},
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
                 };
-            var cities = new CityRepository().Get().Distinct().Select(x =>
-                  new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
-            ViewBag.citiesdd = cities;
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
-            new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "" }).ToList();
+           new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
             ViewBag.distictdd = distict;
-
+            if (oVolunteer.Region == null)
+            {
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
+                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                ViewBag.citiesdd = cities;
+            }
+            else
+            {
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == oVolunteer.Region).Select(x =>
+                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                ViewBag.citiesdd = cities;
+            }
             if (oVolunteer.Id == 0)
             {
                 oVolunteer.VolExp = "";
@@ -79,105 +87,110 @@ namespace TmsWebApp.Controllers
                 oVolunteer.VolExp = !string.IsNullOrEmpty(oVolunteer.VolunteerExperince1) ? "Yes" : "No";
             oVolunteer.SelectedExp = !string.IsNullOrEmpty(oVolunteer.VolunteerExperince1) ? oVolunteer.VolunteerExperince1.Split(',') : new string[] { };
             return View(oVolunteer);
-             
-    }
-    [HttpPost]
-    public ActionResult VolunteerProfile(volunteer_profile volunteer, HttpPostedFileBase file)
-    {
-        var cu = Session["user"] as ContextUser;
-        var repository = new VolunteerRepository();
+        }
+        public ActionResult GetFilterCities(string region)
+        {
+           var cities = new CityRepository().Get().Distinct().Where(x => x.Region == region).Select(x =>
+                                   new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult VolunteerProfile(volunteer_profile volunteer, HttpPostedFileBase file)
+        {
+            var cu = Session["user"] as ContextUser;
+            var repository = new VolunteerRepository();
             volunteer_profile oVolunteer = null;
-            if(cu != null)
-            oVolunteer = repository.GetByGoogleId(cu.GoogleId) ?? repository.GetByLinkedInId(cu.LinkedInId);
+            if (cu != null)
+                oVolunteer = repository.GetByGoogleId(cu.GoogleId) ?? repository.GetByLinkedInId(cu.LinkedInId);
 
-        if (oVolunteer == null)
-        {
-            oVolunteer = new volunteer_profile();
-            oVolunteer.CreatedAt = DateTime.Now;
-            oVolunteer.CreatedBy = 1;
-            oVolunteer.FirstLogin = true;
-            oVolunteer.RowGuid = Guid.NewGuid();
-        }
-        else
-        {
-            oVolunteer.UpdatedAt = DateTime.Now;
-            oVolunteer.UpdatedBy = 1;
-        }
-        oVolunteer.NationalID = volunteer.NationalID;
-        oVolunteer.VolunteerName = volunteer.VolunteerName;
-        oVolunteer.SecondName = volunteer.SecondName;
-        oVolunteer.ThirdName = volunteer.ThirdName;
-        oVolunteer.LastName = volunteer.LastName;
-        oVolunteer.GoogleSigninId = cu != null ? cu.GoogleId : "";
-        oVolunteer.LinkedInSignInId = cu != null ? cu.LinkedInId : "";
-        oVolunteer.VolunteerEmail = volunteer.VolunteerEmail;
-        oVolunteer.VolunteerMobile = volunteer.VolunteerMobile;
-        oVolunteer.Gender = volunteer.Gender;
-        oVolunteer.DateOfBirth = volunteer.DateOfBirth;
-        oVolunteer.AcademicQualification = volunteer.AcademicQualification;
-        oVolunteer.AcademicQualification1 = volunteer.AcademicQualification1;
-        oVolunteer.AcademicQualification2 = volunteer.AcademicQualification2;
-        oVolunteer.CompanyName = volunteer.CompanyName;
-        oVolunteer.VolunteerExperince1 = volunteer.VolExp == "Yes" ? string.Join(",",volunteer.SelectedExp == null ? new string[] { } : volunteer.SelectedExp) : "";
-        oVolunteer.Telephone = volunteer.Telephone;
-        oVolunteer.Region = volunteer.Region;
-        oVolunteer.City = volunteer.City;
-        oVolunteer.VolunteerActivity1 = volunteer.VolunteerActivity1;
-        oVolunteer.VolunteerActivity2 = volunteer.VolunteerActivity2;
-        oVolunteer.VolunteerActivity3 = volunteer.VolunteerActivity3;
-        oVolunteer.HasTOTCertificate = volunteer.HasTOTCertificate;
-        oVolunteer.OtherCertificate1 = volunteer.OtherCertificate1;
-        oVolunteer.OtherCertificate2 = volunteer.OtherCertificate2;
-        oVolunteer.OtherCertificate3 = volunteer.OtherCertificate3;
-        oVolunteer.City = volunteer.City;
-        if (file != null)
-        {
-            string fileName = "~/Uploads/ImageLibrary/" + Guid.NewGuid() + Path.GetExtension(file.FileName);
-            string filePath = Server.MapPath(fileName);
-            file.SaveAs(filePath);
-            oVolunteer.PhotoPath = fileName;
-        }
-        oVolunteer.LinkedIn = volunteer.LinkedIn;
-        oVolunteer.IsProfileComplete = true;
-        if (oVolunteer.Id > 0)
-        {
-            repository.Put(oVolunteer.Id, oVolunteer);
-        }
-        else
-        {
-            var userRole = new RoleRepository().Get().Where(x => x.Code == (int)EnumUserRole.Volunteer)
-                    .FirstOrDefault();
-            string password = Membership.GeneratePassword(8, 4);
-            oVolunteer.user = new user()
+            if (oVolunteer == null)
             {
-                RowGuid = Guid.NewGuid(),
-                Email = oVolunteer.VolunteerEmail,
-                Username = oVolunteer.VolunteerEmail,
-                RegistrationDate = DateTime.Now,
-                FirstName = oVolunteer.VolunteerName,
-                RoleId = userRole.Id,
-                CreatedAt = DateTime.Now,
-                ValidFrom = DateTime.Now,
-                FirstLogin = false,
-                IsMobileVerified = false,
-                IsEmailVerified = false,
-                CreatedBy = cu != null ? cu.OUser.Id : 0,
-                Password = EncryptionKeys.Encrypt(password)
-            };
-            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
-            var bogusController = Util.CreateController<EmailTemplateController>();
-            EmailTemplateModel emodel =
-                new EmailTemplateModel
+                oVolunteer = new volunteer_profile();
+                oVolunteer.CreatedAt = DateTime.Now;
+                oVolunteer.CreatedBy = 1;
+                oVolunteer.FirstLogin = true;
+                oVolunteer.RowGuid = Guid.NewGuid();
+            }
+            else
+            {
+                oVolunteer.UpdatedAt = DateTime.Now;
+                oVolunteer.UpdatedBy = 1;
+            }
+            oVolunteer.NationalID = volunteer.NationalID;
+            oVolunteer.VolunteerName = volunteer.VolunteerName;
+            oVolunteer.SecondName = volunteer.SecondName;
+            oVolunteer.ThirdName = volunteer.ThirdName;
+            oVolunteer.LastName = volunteer.LastName;
+            oVolunteer.GoogleSigninId = cu != null ? cu.GoogleId : "";
+            oVolunteer.LinkedInSignInId = cu != null ? cu.LinkedInId : "";
+            oVolunteer.VolunteerEmail = volunteer.VolunteerEmail;
+            oVolunteer.VolunteerMobile = volunteer.VolunteerMobile;
+            oVolunteer.Gender = volunteer.Gender;
+            oVolunteer.DateOfBirth = volunteer.DateOfBirth;
+            oVolunteer.AcademicQualification = volunteer.AcademicQualification;
+            oVolunteer.AcademicQualification1 = volunteer.AcademicQualification1;
+            oVolunteer.AcademicQualification2 = volunteer.AcademicQualification2;
+            oVolunteer.CompanyName = volunteer.CompanyName;
+            oVolunteer.VolunteerExperince1 = volunteer.VolExp == "Yes" ? string.Join(",", volunteer.SelectedExp == null ? new string[] { } : volunteer.SelectedExp) : "";
+            oVolunteer.Telephone = volunteer.Telephone;
+            oVolunteer.Region = volunteer.Region;
+            oVolunteer.City = volunteer.City;
+            oVolunteer.VolunteerActivity1 = volunteer.VolunteerActivity1;
+            oVolunteer.VolunteerActivity2 = volunteer.VolunteerActivity2;
+            oVolunteer.VolunteerActivity3 = volunteer.VolunteerActivity3;
+            oVolunteer.HasTOTCertificate = volunteer.HasTOTCertificate;
+            oVolunteer.OtherCertificate1 = volunteer.OtherCertificate1;
+            oVolunteer.OtherCertificate2 = volunteer.OtherCertificate2;
+            oVolunteer.OtherCertificate3 = volunteer.OtherCertificate3;
+            oVolunteer.City = volunteer.City;
+            if (file != null)
+            {
+                string fileName = "~/Uploads/ImageLibrary/" + Guid.NewGuid() + Path.GetExtension(file.FileName);
+                string filePath = Server.MapPath(fileName);
+                file.SaveAs(filePath);
+                oVolunteer.PhotoPath = fileName;
+            }
+            oVolunteer.LinkedIn = volunteer.LinkedIn;
+            oVolunteer.IsProfileComplete = true;
+            if (oVolunteer.Id > 0)
+            {
+                repository.Put(oVolunteer.Id, oVolunteer);
+            }
+            else
+            {
+                var userRole = new RoleRepository().Get().Where(x => x.Code == (int)EnumUserRole.Volunteer)
+                        .FirstOrDefault();
+                string password = Membership.GeneratePassword(8, 4);
+                oVolunteer.user = new user()
                 {
-                    Title = "Volunteer Registration",
-                    RedirectUrl = url,
-                    VolunteerName = oVolunteer.VolunteerName
+                    RowGuid = Guid.NewGuid(),
+                    Email = oVolunteer.VolunteerEmail,
+                    Username = oVolunteer.VolunteerEmail,
+                    RegistrationDate = DateTime.Now,
+                    FirstName = oVolunteer.VolunteerName,
+                    RoleId = userRole.Id,
+                    CreatedAt = DateTime.Now,
+                    ValidFrom = DateTime.Now,
+                    FirstLogin = false,
+                    IsMobileVerified = false,
+                    IsEmailVerified = false,
+                    CreatedBy = cu != null ? cu.OUser.Id : 0,
+                    Password = EncryptionKeys.Encrypt(password)
                 };
-            string body =
-                Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRegister", emodel);
-            EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Registration",
+                        RedirectUrl = url,
+                        VolunteerName = oVolunteer.VolunteerName
+                    };
+                string body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRegister", emodel);
+                EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
 
-            repository.Post(oVolunteer);
+                repository.Post(oVolunteer);
 
                 cu = new ContextUser
                 {
@@ -188,7 +201,7 @@ namespace TmsWebApp.Controllers
                         Id = oVolunteer.UserId
                     },
                     EnumRole = EnumUserRole.Volunteer,
-                    FullName =  "",
+                    FullName = "",
                     ProfileUrl = ""
                 };
                 Session["user"] = cu;
@@ -196,10 +209,10 @@ namespace TmsWebApp.Controllers
 
             }
             if (Request["editprofile"] != null)
-            return RedirectToAction("VolunteerProfile", new { editprofile = true });
+                return RedirectToAction("VolunteerProfile", new { editprofile = true });
 
-        return RedirectToAction("VolunteerProfile");
+            return RedirectToAction("VolunteerProfile");
 
+        }
     }
-}
 }

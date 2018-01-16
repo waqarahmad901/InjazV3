@@ -24,6 +24,19 @@
 
             }
         });
+
+
+    function getFilterCities() {
+        var region = $("#Region").val();
+     
+        $.get("/Volunteer/GetFilterCities?region=" + region, function (res) {
+            debugger;
+            $("#City option").remove();
+            $.each(res, function (index, item) {
+                $("#City").append("<option value='" + item.Value + "'>" + item.Text + "</option>");
+            });
+        })
+    }
 </script>
 
 <main class="main">
@@ -264,7 +277,7 @@
 
                             <div class="form-group">
                                 <label for="mobile">@Coordinator.Region</label>
-                                @Html.DropDownListFor(m => m.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control", @onchange = "getFilterCities()" })
                                 @Html.ValidationMessageFor(m => m.Region, "", new { @class = "text-danger" })
                             </div>
 

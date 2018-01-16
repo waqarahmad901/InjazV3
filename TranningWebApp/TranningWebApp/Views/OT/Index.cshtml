@@ -101,7 +101,7 @@
                                     <td><span class="badge badge-default">@General.InActive</span></td>
 
                                 }
-                                <td><a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a> <a href="" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a></td>
+                                <td><a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a> <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a></td>
                             </tr>
                         }
                         }

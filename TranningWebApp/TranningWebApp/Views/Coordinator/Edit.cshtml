@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="mobile">@Coordinator.Region</label>
-                                @Html.DropDownListFor(m => m.school.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.school.Region, (List<SelectListItem>)ViewBag.distictdd, new { @class = "form-control",@onchange= "getFilterCities()" })
                                 @Html.ValidationMessageFor(m => m.school.Region, "", new { @class = "text-danger" })
 
                             </div>
@@ -182,6 +182,21 @@
     if (isCoordinator == "True")
     {
         $("#@Html.IdFor(x=>x.school.SchoolName), #@Html.IdFor(x=>x.school.City), #@Html.IdFor(x => x.school.District), #@Html.IdFor(x => x.school.Region)").attr('disabled', 'disabled');
+    }
+
+    function getFilterCities() {
+        var region = $("#@Html.IdFor(x => x.school.Region)").val();
+
+        $.get("/Volunteer/GetFilterCities?region=" + region, function (res) {
+            debugger;
+            $("#@Html.IdFor(x => x.school.City) option").remove();
+            $.each(res, function (index, item) {
+                $("#@Html.IdFor(x => x.school.City)").append("<option value='" + item.Value + "'>" + item.Text + "</option>");
+            });
+           
+        })
+
+
     }
 
 </script>

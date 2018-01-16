@@ -91,16 +91,25 @@ namespace TmsWebApp.Controllers
                 var otRepo = new OTRepository();
                 otModel = otRepo.GetByRowId(id.Value);
             }
-            var cities = new CityRepository().Get().Distinct().Select(x =>
-                new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
-            ViewBag.citiesdd = cities;
+            if (otModel.Region == null)
+            {
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
+                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                ViewBag.citiesdd = cities;
+            }
+            else
+            {
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == otModel.Region).Select(x =>
+                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                ViewBag.citiesdd = cities;
+            }
             ViewBag.genderdd = new List<SelectListItem>
                 {
                     new SelectListItem { Selected = true, Text = General.Male, Value =  "Male"},
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
                 };
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
-        new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "" }).ToList();
+        new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
             ViewBag.distictdd = distict;
 
             int[] otVolunteers = !string.IsNullOrEmpty(otModel.VolunteersIds) ? otModel.VolunteersIds.Split(',').Select(x=>int.Parse(x)).ToArray() : new int[] { };
