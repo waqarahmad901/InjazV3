@@ -214,7 +214,7 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type Of Account.
+        ///   Looks up a localized string similar to Type of Account.
         /// </summary>
         public static string TypeOfAccount {
             get {

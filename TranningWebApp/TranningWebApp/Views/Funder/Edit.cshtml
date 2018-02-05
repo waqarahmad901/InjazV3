@@ -91,16 +91,17 @@
 
                         </div>
 
-                        <div class="form-group">
-                            <label for="country">@Coordinator.City</label>
-                            @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control" })
-
-                        </div>
+                       
 
                         <div class="form-group">
 
                             <label for="country">@General.Country</label>
                             @Html.DropDownListFor(m => m.Country, (List<SelectListItem>)ViewBag.countries, new { @class = "form-control", @onchange = "changecountry(this)" })
+
+                        </div>
+                        <div class="form-group">
+                            <label for="country">@Coordinator.City</label>
+                            @Html.DropDownListFor(m => m.City, (List<SelectListItem>)ViewBag.citiesdd, new { @class = "form-control" })
 
                         </div>
                         <div class="form-group">

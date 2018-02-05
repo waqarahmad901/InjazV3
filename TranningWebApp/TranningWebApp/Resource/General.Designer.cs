@@ -196,7 +196,7 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright Injaz Saudi © 2017..
+        ///   Looks up a localized string similar to Copyright Injaz Saudi © 2018..
         /// </summary>
         public static string Copyright {
             get {

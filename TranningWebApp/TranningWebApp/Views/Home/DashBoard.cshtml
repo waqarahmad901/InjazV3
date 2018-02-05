@@ -9,8 +9,8 @@
         <div class="animated fadeIn">
             <div class="row py-3">
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="social-box bg-info">
+                <div class="col-md-3 col-sm-6" >
+                    <div class="social-box bg-info" onclick="location.href='@Url.Action("Index","Session")'" style="cursor:pointer">
                         <small class="text-uppercase font-weight-bold ">@General.Sessions</small>
                         <i class="icon-calendar bg-info"></i>
                         <ul>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-md-3 col-sm-6">
-                    <div class="social-box bg-info bg-success">
+                    <div class="social-box bg-info bg-success" onclick="location.href='@Url.Action("Index","Supervisor",new {status = "approved" })'" style="cursor:pointer">
                         <small class="text-uppercase font-weight-bold ">@General.Volunteers</small>
                         <i class="icon-user-following bg-info bg-success"></i>
                         <ul>
@@ -52,9 +52,9 @@
                 </div>
 
                 <div class="col-md-3 col-sm-6">
-                    <div class="social-box bg-info bg-warning">
+                    <div class="social-box bg-info bg-warning" onclick="location.href='@Url.Action("Index","Participant")'" style="cursor:pointer">
                         <small class="text-uppercase font-weight-bold ">@General.Participants</small>
-                        <i class="icon-people bg-info bg-warning"></i>
+                        <i class="icon-people bg-info bg-warning" ></i>
                         <ul>
                             
                             <li>
@@ -74,9 +74,9 @@
                 </div>
 
                 <div class="col-md-3 col-sm-6">
-                    <div class="social-box bg-info bg-purple">
+                    <div class="social-box bg-info bg-purple" onclick="location.href='@Url.Action("Index","Coordinator")'" style="cursor:pointer">
                         <small class="text-uppercase font-weight-bold ">@General.Schools</small>
-                        <i class="fa fa-building-o bg-info bg-purple"></i>
+                        <i class="fa fa-building-o bg-info bg-purple" ></i>
                         <ul>
                             <li>
                                 <strong>@Model.SchoolInitialCount</strong>

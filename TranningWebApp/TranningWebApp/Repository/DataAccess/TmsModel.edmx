@@ -1981,6 +1981,22 @@
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="FrindlyName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="lk_specialization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name_Arabic" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="lk_universtie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name_Arabic" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="orientation_training">
           <Key>
             <PropertyRef Name="Id" />
@@ -2661,6 +2677,8 @@
           <EntitySet Name="lk_country" EntityType="Self.lk_country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_evaluation_form" EntityType="Self.lk_evaluation_form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_role" EntityType="Self.lk_role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_specialization" EntityType="Self.lk_specialization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_universtie" EntityType="Self.lk_universtie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="orientation_training" EntityType="Self.orientation_training" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ot_time" EntityType="Self.ot_time" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="participant_profile" EntityType="Self.participant_profile" Schema="dbo" store:Type="Tables" />
@@ -3330,6 +3348,8 @@
             <End Role="orientation_training" EntitySet="orientation_training" />
             <End Role="ot_time" EntitySet="ot_time" />
           </AssociationSet>
+          <EntitySet Name="lk_specialization" EntityType="TrainingProjectModel.lk_specialization" />
+          <EntitySet Name="lk_universtie" EntityType="TrainingProjectModel.lk_universtie" />
           </EntityContainer>
         <Association Name="FK_session_school">
           <End Type="TrainingProjectModel.school" Role="school" Multiplicity="0..1" />
@@ -5629,6 +5649,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="lk_specialization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name_Arabic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lk_universtie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name_Arabic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7987,6 +8023,24 @@
                 <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
                 <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
                 <ScalarProperty Name="OTId" ColumnName="OTId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_specialization">
+            <EntityTypeMapping TypeName="TrainingProjectModel.lk_specialization">
+              <MappingFragment StoreEntitySet="lk_specialization">
+                <ScalarProperty Name="Name_Arabic" ColumnName="Name_Arabic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_universtie">
+            <EntityTypeMapping TypeName="TrainingProjectModel.lk_universtie">
+              <MappingFragment StoreEntitySet="lk_universtie">
+                <ScalarProperty Name="Name_Arabic" ColumnName="Name_Arabic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

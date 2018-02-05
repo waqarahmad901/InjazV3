@@ -18,9 +18,11 @@ using TranningWebApp.Repository.Lookup;
 
 namespace TmsWebApp.Controllers
 {
+    [RoutePrefix("Partner")]
     [AuthorizeUser(AccessLevel = "SuperAdmin,Funder")]
     public class FunderController : BaseController
     {
+        [Route("Index")]
         // GET: Funder
         public ActionResult Index(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null)
         { 
@@ -62,7 +64,7 @@ namespace TmsWebApp.Controllers
              
             return View(funders.ToPagedList(page, pageSize));
         }
-
+       [Route("Edit")]
         public ActionResult Edit(Guid? id)
         { 
             funder_profile funderModel = null;
@@ -88,7 +90,8 @@ namespace TmsWebApp.Controllers
             }
             return View(funderModel);
         }
-       [HttpPost]
+        [Route("Edit")]
+        [HttpPost]
         public ActionResult Edit(funder_profile profile)
         {
             var funderRepo = new FunderRepository();

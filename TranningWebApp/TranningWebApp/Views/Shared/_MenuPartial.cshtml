@@ -44,10 +44,10 @@
             <li class="nav-item @(@currentUrl.Contains("DashBoard") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("DashBoard", "Home")"><i class="icon-grid"></i> @Menu.Dashboard</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Funder") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Partner") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Funder")"><i class="fa fa-credit-card"></i> @Menu.Funders</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Supervisor") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Volunteer") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Supervisor", new { status = "approved" })"><i class="icon-user-following"></i> @Menu.Volunteer</a>
             </li>
             <li class="nav-item @(@currentUrl.Contains("Coordinator") ? "active" : "")">

@@ -339,6 +339,12 @@
     <Compile Include="Repository\DataAccess\lk_role.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\DataAccess\lk_specialization.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DataAccess\lk_universtie.cs">
+      <DependentUpon>TmsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\DataAccess\orientation_training.cs">
       <DependentUpon>TmsModel.tt</DependentUpon>
     </Compile>
@@ -416,6 +422,8 @@
     </Compile>
     <Compile Include="Repository\EvaluationFormRepository.cs" />
     <Compile Include="Repository\FunderRepository.cs" />
+    <Compile Include="Repository\Lookup\UniversityRepository.cs" />
+    <Compile Include="Repository\Lookup\SpecializationRepository.cs" />
     <Compile Include="Repository\Lookup\CityRepository.cs" />
     <Compile Include="Repository\Lookup\EvaluationFormRepository.cs" />
     <Compile Include="Repository\Lookup\CountryRepository.cs" />

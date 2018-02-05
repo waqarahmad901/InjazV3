@@ -157,46 +157,33 @@
                             }
                         </div>
                    </div>
-                   
                 }
             </div>
 
         </div>
     </div>
 </main>
-
 <script type="text/javascript">
     function channge(obj) {
-        //$.get("/Home/ChnageCity",
-        //    function(res) {
-
-        //    });
         var val = $(obj).val();
         $.get("/Home/GetDistrict/" + val,
             function (res) {
                 $("#@Html.IdFor(x=>x.school.Region)").val(res);
             });
-
     }
     var isCoordinator = "@(cu.EnumRole == TmsWebApp.Common.EnumUserRole.Coordinator)";
     if (isCoordinator == "True")
     {
         $("#@Html.IdFor(x=>x.school.SchoolName), #@Html.IdFor(x=>x.school.City), #@Html.IdFor(x => x.school.District), #@Html.IdFor(x => x.school.Region)").attr('disabled', 'disabled');
     }
-
     function getFilterCities() {
         var region = $("#@Html.IdFor(x => x.school.Region)").val();
-
         $.get("/Volunteer/GetFilterCities?region=" + region, function (res) {
             debugger;
             $("#@Html.IdFor(x => x.school.City) option").remove();
             $.each(res, function (index, item) {
                 $("#@Html.IdFor(x => x.school.City)").append("<option value='" + item.Value + "'>" + item.Text + "</option>");
             });
-           
-        })
-
-
+         })
     }
-
 </script>

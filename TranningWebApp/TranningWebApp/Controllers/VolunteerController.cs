@@ -19,7 +19,7 @@ using TranningWebApp.Resource;
 
 namespace TmsWebApp.Controllers
 {
-
+   
     // [AuthorizeUser(AccessLevel = "Volunteer")]
     public class VolunteerController : BaseController
     {
@@ -66,6 +66,14 @@ namespace TmsWebApp.Controllers
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
            new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
             ViewBag.distictdd = distict;
+            HttpCookie lanCookie = Request.Cookies["lan"];
+            var lan = lanCookie == null ? "en" : lanCookie.Value;
+            var specilization = new SpecializationRepository().Get().Select(x =>
+                            new SelectListItem { Text = (lan == "ar" ? x.Name_Arabic : x.Name), Value = x.Name + "" }).ToList();
+            ViewBag.specialization = specilization;
+            var universites = new UniversityRepository().Get().Select(x =>
+                             new SelectListItem { Text = (lan == "ar" ? x.Name_Arabic : x.Name), Value = x.Name + "" }).ToList();
+            ViewBag.universites = universites;
             if (oVolunteer.Region == null)
             {
                 var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
@@ -90,8 +98,8 @@ namespace TmsWebApp.Controllers
         }
         public ActionResult GetFilterCities(string region)
         {
-           var cities = new CityRepository().Get().Distinct().Where(x => x.Region == region).Select(x =>
-                                   new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+            var cities = new CityRepository().Get().Distinct().Where(x => x.Region == region).Select(x =>
+                                    new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
             return Json(cities, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

@@ -178,19 +178,11 @@
                             </div>
                             <div class="form-group">
                                 <label>@Volunteer.Specialization</label>
-                                @Html.DropDownListFor(m => m.AcademicQualification1, new List<SelectListItem>
-                                        {
-                                            new SelectListItem{ Text= General.Select, Value = "" },
-                                            new SelectListItem{ Text= General.Diploma, Value = "Diploma" }
-                                         }, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.AcademicQualification1, (List<SelectListItem>)ViewBag.specialization, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>@Volunteer.Universities</label>
-                                @Html.DropDownListFor(m => m.AcademicQualification2, new List<SelectListItem>
-                                        {
-                                            new SelectListItem{ Text= General.Select, Value = "" },
-                                            new SelectListItem{ Text= General.Diploma, Value = "Diploma" }
-                                         }, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.AcademicQualification2, (List<SelectListItem>)ViewBag.universites, new { @class = "form-control" })
                             </div>
 
 

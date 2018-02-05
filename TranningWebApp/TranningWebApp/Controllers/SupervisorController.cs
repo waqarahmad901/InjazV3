@@ -13,11 +13,14 @@ using TranningWebApp.Controllers;
 using TranningWebApp.Repository;
 using TranningWebApp.Repository.DataAccess;
 
+
 namespace TmsWebApp.Controllers
 {
+    [RoutePrefix("Volunteer")]
     [AuthorizeUser(AccessLevel = "SuperAdmin,Approver1,Approver2,Approver3,Volunteer")]
     public class SupervisorController : BaseController
     {
+        [Route("Index")]
         public ActionResult Index( string status = "pending", int page = 1, Guid? archive = null)
         {
             IEnumerable<volunteer_profile> volunteers;
@@ -40,6 +43,7 @@ namespace TmsWebApp.Controllers
 
             return View(volunteers.ToPagedList(page, pageSize));
         }
+        [Route("Edit")]
         [HttpGet]
         public ActionResult Edit(Guid id)
         {
@@ -77,6 +81,7 @@ namespace TmsWebApp.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Route("Edit")]
 
         [HttpPost]
         public ActionResult Edit(volunteer_profile volunteer)
