@@ -205,22 +205,16 @@
                     var filesize = file.size;
 
                     if ((Extenstion == "jpg" || Extenstion == "png" || Extenstion == "doc" || Extenstion == "pdf" || Extenstion == "jpeg") && (filesize <= 2000000)) {
-
-                        //$('#EvaluationImageLink')[0].value +=  file.name + ", ";
-
+ 
                     }
                     else {
                         this.removeFile(file);
-                        //swal({ title: "File Not Supported!", type: "warning", confirmButtonColor: "#31B0D5", confirmButtonText: "OK" },
-                        //                function () {
-                        //                    return false;
-                        //                });
+                         
                         $("#dropzoneFormIdentification").css("border", "4px solid red");
                         $('#identification-photo-error').html("File Not Supported!");
                         $('#identification-photo-error').css("display", "block");
                     }
-                });
-
+                }); 
                 this.on("success", function (file, response) {
                     debugger;
                     var imagePathArray = $('#EvaluationImageLink')[0].value.split(",");
@@ -231,25 +225,16 @@
                     });
                     for (i = 0; i < imagePathArray.length; i++) {
                         var imageName = imagePathArray[i].trim();
-                        if (imageName != "" && response.Message.lastIndexOf(imageName) != -1) {
-
+                        if (imageName != "" && response.Message.lastIndexOf(imageName) != -1) { 
                             $('#EvaluationImageLink')[0].value = $('#EvaluationImageLink')[0].value.replace(imageName + ",", "").trim();
                             break;
                         }
-                    }
-
-                    $('#EvaluationImageLink')[0].value += response.Message + ", ";
-
-                    //  document.getElementById('ProfileImageLink').value = file.name;
-                    
-                });
-
+                    } 
+                    $('#EvaluationImageLink')[0].value += response.Message + ", "; 
+                    //  document.getElementById('ProfileImageLink').value = file.name; 
+                }); 
             }
-        };
-
-
-        
-
+        }; 
     });
 
 

@@ -22,6 +22,10 @@
                  isShow = repository.GetByLinkedInId(user.LinkedInId) != null && repository.GetByLinkedInId(user.LinkedInId).OTAttendenceForVolunteer;
 
              }
+             if (!isShow)
+             {
+                 isShow = repository.Get(user.OUser.Id).OTAttendenceForVolunteer;
+             }
          }
          if (user.EnumRole == TmsWebApp.Common.EnumUserRole.Participant)
          {
@@ -44,34 +48,37 @@
             <li class="nav-item @(@currentUrl.Contains("DashBoard") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("DashBoard", "Home")"><i class="icon-grid"></i> @Menu.Dashboard</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Partner") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Partner") && !currentUrl.Contains("Report") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Funder")"><i class="fa fa-credit-card"></i> @Menu.Funders</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Volunteer") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("approved")&& !currentUrl.Contains("Report") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Supervisor", new { status = "approved" })"><i class="icon-user-following"></i> @Menu.Volunteer</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Coordinator") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("rejected")&& !currentUrl.Contains("Report") ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Supervisor", new { status = "rejected" })"><i class="icon-user-following"></i> @Menu.Rejected</a>
+            </li>
+            <li class="nav-item @(@currentUrl.Contains("Coordinator") && !currentUrl.Contains("Report")? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Coordinator")"><i class="fa fa-building-o"></i> @Menu.SchoolCoordinators</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Participant") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Participant") && !currentUrl.Contains("Report")? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Participant")"><i class="icon-people"></i> @Menu.Participant</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Session") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Session")&& !currentUrl.Contains("Report") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Session")"><i class="icon-calendar"></i> @Menu.Session</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("OT") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("OT")&& !currentUrl.Contains("Report") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "OT")"><i class="fa fa-building-o"></i> @Menu.OTs</a>
             </li>
-            <li class="nav-item @(@currentUrl.Contains("Certificate") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Certificate") && !currentUrl.Contains("Report")? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Certificate")"><i class="icon-calendar"></i> @Menu.Certificate</a>
             </li>
-            <li class="nav-item @(@currentUrl.Equals("Account") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Account") && !currentUrl.Contains("Report")? "active" : "")">
                 <a class="nav-link"href="@Url.Action("UserList", "Account")"><i class="icon-calendar"></i> @Menu.Accounts</a>
             </li>
-            <li class="nav-item @(@currentUrl.Equals("EvaluationResult") || currentUrl.Equals("EvaluationForm") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("EvaluationResult") || currentUrl.Equals("EvaluationForm") ? "active" : "")">
                 <a class="nav-link"href="@Url.Action("Index", "EvaluationResult")"><i class="icon-calendar"></i> @Menu.EvaluationResults</a>
             </li>
-            <li class="nav-item @(@currentUrl.Equals("Report") ? "active" : "")">
+            <li class="nav-item @(@currentUrl.Contains("Report") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("Index", "Report")"><i class="icon-doc"></i> @Menu.Reports</a>
             </li>
 

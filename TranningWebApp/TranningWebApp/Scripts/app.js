@@ -1,24 +1,24 @@
-/*****
+﻿/*****
 * CONFIGURATION
 */
-    //Main navigation
-    $.navigation = $('nav > ul.nav');
+//Main navigation
+$.navigation = $('nav > ul.nav');
 
-  $.panelIconOpened = 'icon-arrow-up';
-  $.panelIconClosed = 'icon-arrow-down';
+$.panelIconOpened = 'icon-arrow-up';
+$.panelIconClosed = 'icon-arrow-down';
 
-  //Default colours
-  $.brandPrimary =  '#20a8d8';
-  $.brandSuccess =  '#4dbd74';
-  $.brandInfo =     '#63c2de';
-  $.brandWarning =  '#f8cb00';
-  $.brandDanger =   '#f86c6b';
+//Default colours
+$.brandPrimary = '#20a8d8';
+$.brandSuccess = '#4dbd74';
+$.brandInfo = '#63c2de';
+$.brandWarning = '#f8cb00';
+$.brandDanger = '#f86c6b';
 
-  $.grayDark =      '#2a2c36';
-  $.gray =          '#55595c';
-  $.grayLight =     '#818a91';
-  $.grayLighter =   '#d1d4d7';
-  $.grayLightest =  '#f8f9fa';
+$.grayDark = '#2a2c36';
+$.gray = '#55595c';
+$.grayLight = '#818a91';
+$.grayLighter = '#d1d4d7';
+$.grayLightest = '#f8f9fa';
 
 'use strict';
 
@@ -26,171 +26,207 @@
 * MAIN NAVIGATION
 */
 
-$(document).ready(function($){
+$(document).ready(function ($) {
 
-  // Add class .active to current link
-  $.navigation.find('a').each(function(){
+    // Add class .active to current link
+    $.navigation.find('a').each(function () {
 
-    var cUrl = String(window.location).split('?')[0];
+        var cUrl = String(window.location).split('?')[0];
 
-    if (cUrl.substr(cUrl.length - 1) == '#') {
-      cUrl = cUrl.slice(0,-1);
-    }
+        if (cUrl.substr(cUrl.length - 1) == '#') {
+            cUrl = cUrl.slice(0, -1);
+        }
 
-    if ($($(this))[0].href==cUrl) {
-      $(this).addClass('active');
+        if ($($(this))[0].href == cUrl) {
+            $(this).addClass('active');
 
-      $(this).parents('ul').add(this).each(function(){
-        $(this).parent().addClass('open');
-      });
-    }
+            $(this).parents('ul').add(this).each(function () {
+                $(this).parent().addClass('open');
+            });
+        }
 
-    //var countryData = $.fn.intlTelInput.getCountryData();  
-    //  $.each(countryData, function (i, country) {
-    //      console.log("insert into lk_country values('" + country.name + "','" + country.iso2 + "')");
-    //  });
+        //var countryData = $.fn.intlTelInput.getCountryData();  
+        //  $.each(countryData, function (i, country) {
+        //      console.log("insert into lk_country values('" + country.name + "','" + country.iso2 + "')");
+        //  });
 
-      
-  });
-  var telInput = $(".phone");
+
+    });
+    var telInput = $(".phone");
 
     // initialise plugin
-  telInput.intlTelInput({
-      initialCountry: "sa",
-     // utilsScript: "/Scripts/utils.js",
-      separateDialCode: true
-  });
+    telInput.intlTelInput({
+        initialCountry: "sa",
+        // utilsScript: "/Scripts/utils.js",
+        separateDialCode: true
+    });
 
 
-  $("form").unbind('submit').submit(function (e) {
-      if ($(this).valid()) {
-          debugger;
-          if ($(".voldate").val() != undefined && $(".voldate").val() != "")
-          {
-              var val = $(".voldate").val();
-              var dateOfBirth = val;
-              var arr_dateText = dateOfBirth.split("/");
-              day = arr_dateText[0];
-              month = arr_dateText[1];
-              year = arr_dateText[2];
+    $("form").unbind('submit').submit(function (e) {
+        if ($(this).valid()) {
+            
 
-              var mydate = new Date();
-              mydate.setFullYear(year, month - 1, day);
+            if ($(".volname").val() != undefined && $(".volname").val() != "") {
+                var isValidate = true;
+                $.each($(".volname"), function (index, item) {
+                    var input = $(item).val();
+                    if (input != "") {
+                        if (lan == undefined || lan == "en") {
+                            if (!(/^[a-zA-Z]+$/.test(input))) {
+                                $(".volvalidation").html("<span for='volname' style='color:red'>Name is not in correct format</span>");
+                                isValidate = false;
+                                return false;
+                            }
+                            else {
+                                $(".volvalidation").html("");
+                            }
+                        }
+                        else {
+                            if ((/^[a-zA-Z]+$/.test(input))) {
+                                $(".volvalidation").html("<span for='volname' style='color:red'>الاسم ليس بالتنسيق الصحيح</span>");
+                                isValidate = false;
 
-              var maxDate = new Date();
-              maxDate.setFullYear(maxDate.getFullYear() - 10);
+                                return false;
+                            } else {
+                                $(".volvalidation").html("");
+                            }
+                        }
+                    }
 
-              if (maxDate < mydate) {
-                  
-                  $(".voldate").next().html("<span for='DateOfBirth' class=''>Sorry, only persons over the age of 10 can be covered</span>")
-                  return false;
-              }
-              return true;
-             
-          }
-          if ($(".coorddocument").val() == "")
-          {
-              alert("Please upload document");
-              return false;
-          }
-          for (var i = 0; i < $(".phone").length; i++) {
-              var phoneNo = $($(".phone")[i]).intlTelInput("getNumber");
-              if(phoneNo != "")
-              $($(".phone")[i]).val(phoneNo);
-          };
+                })
+                if (!isValidate)
+                    return false;
+            }
+            if ($(".voldate").val() != undefined && $(".voldate").val() != "") {
 
-          $("button[type=submit][clicked=true]").button('loading');
-      } else
-          return false;
-    
-  });
+                var val = $(".voldate").val();
+                var dateOfBirth = val;
+                var arr_dateText = dateOfBirth.split("/");
+                day = arr_dateText[0];
+                month = arr_dateText[1];
+                year = arr_dateText[2];
+
+                var mydate = new Date();
+                mydate.setFullYear(year, month - 1, day);
+
+                var maxDate = new Date();
+                maxDate.setFullYear(maxDate.getFullYear() - 16);
+
+                if (maxDate < mydate) {
+                    if (lan == undefined || lan == "en") {
+                        $(".voldate").next().html("<span for='DateOfBirth' class=''>Sorry, only persons over the age of 16 can be covered</span>")
+                    }
+                    else {
+                        $(".voldate").next().html("<span for='DateOfBirth' class=''>عذرًا ، لا يمكن تغطية سوى الأشخاص الذين تزيد أعمارهم عن 16 عامًا</span>")
+                    }
+                    return false;
+                }
+                isValidate = true;
+
+            }
+            if ($(".coorddocument").val() == "") {
+                alert("Please upload document");
+                return false;
+            }
+            for (var i = 0; i < $(".phone").length; i++) {
+
+                var phoneNo = $($(".phone")[i]).intlTelInput("getNumber");
+                if (phoneNo != "")
+                    $($(".phone")[i]).val(phoneNo);
+            };
+
+            $("button[type=submit][clicked=true]").button('loading');
+        } else
+            return false;
+
+    });
     bindDates();
 
-  //$(".date").datepicker({
-  //    format: 'dd/mm/yyyy',
-  //    todayHighlight: true
-  //}).on('changeDate', function (e) {
-  //    $(this).datepicker('hide');
-  //}); 
-     // By pass date validation. 
-  $.validator.addMethod('date',
-  function (value, element) {
-      if (this.optional(element)) {
-          return true;
-      } 
-      var ok = true;
-       
-      return ok;
-  });
- 
-  // Dropdown Menu
-  $.navigation.on('click', 'a', function(e){
+    //$(".date").datepicker({
+    //    format: 'dd/mm/yyyy',
+    //    todayHighlight: true
+    //}).on('changeDate', function (e) {
+    //    $(this).datepicker('hide');
+    //}); 
+    // By pass date validation. 
+    $.validator.addMethod('date',
+    function (value, element) {
+        if (this.optional(element)) {
+            return true;
+        }
+        var ok = true;
 
-    if ($.ajaxLoad) {
-      e.preventDefault();
+        return ok;
+    });
+
+    // Dropdown Menu
+    $.navigation.on('click', 'a', function (e) {
+
+        if ($.ajaxLoad) {
+            e.preventDefault();
+        }
+
+        if ($(this).hasClass('nav-dropdown-toggle')) {
+            $(this).parent().toggleClass('open');
+            resizeBroadcast();
+        }
+
+    });
+
+    function resizeBroadcast() {
+
+        var timesRun = 0;
+        var interval = setInterval(function () {
+            timesRun += 1;
+            if (timesRun === 5) {
+                clearInterval(interval);
+            }
+            window.dispatchEvent(new Event('resize'));
+        }, 62.5);
     }
 
-    if ($(this).hasClass('nav-dropdown-toggle')) {
-      $(this).parent().toggleClass('open');
-      resizeBroadcast();
-    }
+    /* ---------- Main Menu Open/Close, Min/Full ---------- */
+    $('.navbar-toggler').click(function () {
 
-  });
+        if ($(this).hasClass('sidebar-toggler')) {
+            $('body').toggleClass('sidebar-hidden');
+            resizeBroadcast();
+        }
 
-  function resizeBroadcast() {
+        if ($(this).hasClass('sidebar-minimizer')) {
+            $('body').toggleClass('sidebar-compact');
+            resizeBroadcast();
+        }
 
-    var timesRun = 0;
-    var interval = setInterval(function(){
-      timesRun += 1;
-      if(timesRun === 5){
-        clearInterval(interval);
-      }
-      window.dispatchEvent(new Event('resize'));
-    }, 62.5);
-  }
+        if ($(this).hasClass('aside-menu-toggler')) {
+            $('body').toggleClass('aside-menu-hidden');
+            resizeBroadcast();
+        }
 
-  /* ---------- Main Menu Open/Close, Min/Full ---------- */
-  $('.navbar-toggler').click(function(){
+        if ($(this).hasClass('mobile-sidebar-toggler')) {
+            $('body').toggleClass('sidebar-mobile-show');
+            resizeBroadcast();
+        }
 
-    if ($(this).hasClass('sidebar-toggler')) {
-      $('body').toggleClass('sidebar-hidden');
-      resizeBroadcast();
-    }
+    });
 
-    if ($(this).hasClass('sidebar-minimizer')) {
-      $('body').toggleClass('sidebar-compact');
-      resizeBroadcast();
-    }
+    $('.sidebar-close').click(function () {
+        $('body').toggleClass('sidebar-opened').parent().toggleClass('sidebar-opened');
+    });
 
-    if ($(this).hasClass('aside-menu-toggler')) {
-      $('body').toggleClass('aside-menu-hidden');
-      resizeBroadcast();
-    }
-
-    if ($(this).hasClass('mobile-sidebar-toggler')) {
-      $('body').toggleClass('sidebar-mobile-show');
-      resizeBroadcast();
-    }
-
-  });
-
-  $('.sidebar-close').click(function(){
-    $('body').toggleClass('sidebar-opened').parent().toggleClass('sidebar-opened');
-  });
-
-  /* ---------- Disable moving to top ---------- */
-  $('a[href="#"][data-top!=true]').click(function(e){
-    e.preventDefault();
-  });
-  $("input:text,form").attr("autocomplete", "kuchbee");
+    /* ---------- Disable moving to top ---------- */
+    $('a[href="#"][data-top!=true]').click(function (e) {
+        e.preventDefault();
+    });
+    $("input:text,form").attr("autocomplete", "kuchbee");
 
 
-  $('button[type="submit"]').each(function (index, ele) {
-      var $this = $(this);
-      var value = "<i class='fa fa-dot-circle-o'></i>"+$this.text() +" <i class='fa fa-spinner fa-spin'></i>";
-     
-      $this.attr('data-loading-text', value);
-  })
+    $('button[type="submit"]').each(function (index, ele) {
+        var $this = $(this);
+        var value = "<i class='fa fa-dot-circle-o'></i>" + $this.text() + " <i class='fa fa-spinner fa-spin'></i>";
+
+        $this.attr('data-loading-text', value);
+    })
 
 });
 
@@ -200,85 +236,84 @@ $("form button[type=submit]").click(function () {
     $(this).attr("clicked", "true");
 });
 
-    function bindDates() {
-        $('.date-islamic').calendarsPicker({
-            calendar: $.calendars.instance('islamic'),
-            dateFormat: 'yyyy/mm/dd',
-            onSelect: function (dates) { 
-              
-                var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
-                var control = $(this);
-                $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Gregorian&dateLangCulture=en-us", function (res) {
-                    control.parent().parent().find('.date').val(res);
-                    if ($(control).hasClass("startDateIslamic") || $(control).hasClass("enddateIslamic")) {
-                        renderTimeControl("startDate", "enddate");
-                    }
-                    if ($(control).hasClass("actualstartislamic") || $(control).hasClass("actualendislamic")) {
-                        renderTimeControl("actualstart","actualend");
-                    }
-                });
-            }
-        });
+function bindDates() {
+    $('.date-islamic').calendarsPicker({
+        calendar: $.calendars.instance('islamic'),
+        dateFormat: 'yyyy/mm/dd',
+        onSelect: function (dates) {
 
-        $('.date').calendarsPicker({
-            calendar: $.calendars.instance('gregorian'),
-            dateFormat: 'dd/mm/yyyy',
-            onSelect: function (dates) { 
-                if ($(this).hasClass("startDate") || $(this).hasClass("enddate"))
-                {
+            var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
+            var control = $(this);
+            $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Gregorian&dateLangCulture=en-us", function (res) {
+                control.parent().parent().find('.date').val(res);
+                if ($(control).hasClass("startDateIslamic") || $(control).hasClass("enddateIslamic")) {
                     renderTimeControl("startDate", "enddate");
                 }
-                if ($(this).hasClass("actualstart") || $(this).hasClass("actualend")) {
+                if ($(control).hasClass("actualstartislamic") || $(control).hasClass("actualendislamic")) {
                     renderTimeControl("actualstart", "actualend");
                 }
-                var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
-                var control = $(this);
-                $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Hijri&dateLangCulture=en-us", function (res) {
-                    control.parent().parent().find('.date-islamic').val(res);
-                });
+            });
+        }
+    });
 
+    $('.date').calendarsPicker({
+        calendar: $.calendars.instance('gregorian'),
+        dateFormat: 'dd/mm/yyyy',
+        onSelect: function (dates) {
+            if ($(this).hasClass("startDate") || $(this).hasClass("enddate")) {
+                renderTimeControl("startDate", "enddate");
             }
-        });
+            if ($(this).hasClass("actualstart") || $(this).hasClass("actualend")) {
+                renderTimeControl("actualstart", "actualend");
+            }
+            var dateselect = dates[0]._day + "-" + dates[0]._month + "-" + dates[0]._year;
+            var control = $(this);
+            $.get("/Home/ConvertDateCalendar?dateConv=" + dateselect + "&calendar=Hijri&dateLangCulture=en-us", function (res) {
+                control.parent().parent().find('.date-islamic').val(res);
+            });
 
-    }
+        }
+    });
+
+}
 /****
 * CARDS ACTIONS
 */
 
-$(document).on('click', '.card-actions a', function(e){
-  e.preventDefault();
+$(document).on('click', '.card-actions a', function (e) {
+    e.preventDefault();
 
-  if ($(this).hasClass('btn-close')) {
-    $(this).parent().parent().parent().fadeOut();
-  } else if ($(this).hasClass('btn-minimize')) {
-    var $target = $(this).parent().parent().next('.card-block');
-    if (!$(this).hasClass('collapsed')) {
-      $('i',$(this)).removeClass($.panelIconOpened).addClass($.panelIconClosed);
-    } else {
-      $('i',$(this)).removeClass($.panelIconClosed).addClass($.panelIconOpened);
+    if ($(this).hasClass('btn-close')) {
+        $(this).parent().parent().parent().fadeOut();
+    } else if ($(this).hasClass('btn-minimize')) {
+        var $target = $(this).parent().parent().next('.card-block');
+        if (!$(this).hasClass('collapsed')) {
+            $('i', $(this)).removeClass($.panelIconOpened).addClass($.panelIconClosed);
+        } else {
+            $('i', $(this)).removeClass($.panelIconClosed).addClass($.panelIconOpened);
+        }
+
+    } else if ($(this).hasClass('btn-setting')) {
+        $('#myModal').modal('show');
     }
-
-  } else if ($(this).hasClass('btn-setting')) {
-    $('#myModal').modal('show');
-  }
 
 });
 
 function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function init(url) {
 
-  /* ---------- Tooltip ---------- */
-  $('[rel="tooltip"],[data-rel="tooltip"]').tooltip({"placement":"bottom",delay: { show: 400, hide: 200 }});
+    /* ---------- Tooltip ---------- */
+    $('[rel="tooltip"],[data-rel="tooltip"]').tooltip({ "placement": "bottom", delay: { show: 400, hide: 200 } });
 
-  /* ---------- Popover ---------- */
-  $('[rel="popover"],[data-rel="popover"],[data-toggle="popover"]').popover();
+    /* ---------- Popover ---------- */
+    $('[rel="popover"],[data-rel="popover"],[data-toggle="popover"]').popover();
 
 }
 
-$(".comment").click(function(){
+$(".comment").click(function () {
     $(this).next(".comment-box").toggle();
 });
 
@@ -326,22 +361,25 @@ function PopupCenter(url, title, w, h) {
 
 
 function makeTable(container, data) {
-   
+
+    debugger;
+    $('table').remove();
+
     var table = $("<table/>").addClass('table table-hover table-outline mb-0');
     $.each(data, function (rowIndex, r) {
         var row = $("<tr/>");
         $.each(r, function (colIndex, c) {
             var w = (100 / r.length) + '%';
-            row.append($("<t" + (rowIndex == 0 ? "h" : "d") + " style='width: "+ w +"'/>").text(c));
+            row.append($("<t" + (rowIndex == 0 ? "h" : "d") + " style='width: " + w + "'/>").text(c));
         });
         table.append(row);
     });
     return $("#table").append(table);
 }
 
-function renderTimeControl(startclass,endclass) {
+function renderTimeControl(startclass, endclass) {
     debugger;
-    var startDate = $("." +startclass).val();
+    var startDate = $("." + startclass).val();
     var endDate = $("." + endclass).val();
     var type = startclass.indexOf("actual") > -1 ? "act" : "pro";
     arr_dateText = startDate.split("/");
@@ -373,26 +411,25 @@ function renderTimeControl(startclass,endclass) {
                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-    var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri","Sat"]; 
+    var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     var newDate = dateStart;
     for (i = 0; i <= dateDiff; i++) {
         var checked = "checked";
         var readonly = '';
-        if (weekdays[newDate.getDay()] == "Fri" || weekdays[newDate.getDay()] == "Sat")
-        {
+        if (weekdays[newDate.getDay()] == "Fri" || weekdays[newDate.getDay()] == "Sat") {
             checked = "";
             readonly = 'readonly';
         }
         var html = "<div class='form-group col-sm-12'>";
         html += "  <div class='col-sm-2' style='padding:0px'>"
-        html += "<input type='checkbox' name = '" + type + "check_" + i + "' "+checked+" onchange = \"changeTimeCheck(this,'" + type + "FromTime_','" + type + "ToTime_'," + i + ")\"/>"
+        html += "<input type='checkbox' name = '" + type + "check_" + i + "' " + checked + " onchange = \"changeTimeCheck(this,'" + type + "FromTime_','" + type + "ToTime_'," + i + ")\"/>"
         html += "</div>"
         html += "  <div class='col-sm-2' style='padding:0px'>"
         html += weekdays[newDate.getDay()] + ", " + newDate.getDate() + " " + monthNames[newDate.getMonth()]
         html += "</div>"
         html += "<div class='col-sm-4'>"
-        html += "<input type='text' name='" + type + "FromTime_" + i + "' class='form-control timepicker' value='10:00 AM' data-provide='timepicker' "+readonly+"/>"
+        html += "<input type='text' name='" + type + "FromTime_" + i + "' class='form-control timepicker' value='10:00 AM' data-provide='timepicker' " + readonly + "/>"
         html += "</div>"
         html += "<div class='col-sm-4'>"
         html += "<input type='text' class='form-control timepicker' name='" + type + "ToTime_" + i + "' value='11:00 AM' data-provide='timepicker' " + readonly + "/>"
@@ -407,13 +444,12 @@ function renderTimeControl(startclass,endclass) {
 
 }
 
-function bindTimePicker()
-{
+function bindTimePicker() {
     $('.timepicker').timepicker({
         timeFormat: 'hh:mm p',
         interval: 15,
         minTime: '10',
-        maxTime: '6:00pm', 
+        maxTime: '6:00pm',
         startTime: '10:00',
         dynamic: false,
         dropdown: true,
@@ -428,8 +464,7 @@ var date_diff_indays = function (date1, date2) {
 }
 
 
-function changeTimeCheck(checkbox,from,to, index)
-{
+function changeTimeCheck(checkbox, from, to, index) {
     debugger;
     if (checkbox.checked == false) {
         $('input[name*="' + from + index + '"]').attr('readonly', 'readonly');
@@ -439,6 +474,6 @@ function changeTimeCheck(checkbox,from,to, index)
         $('input[name*="' + to + index + '"]').removeAttr('readonly');
     }
 }
- 
+
 
 

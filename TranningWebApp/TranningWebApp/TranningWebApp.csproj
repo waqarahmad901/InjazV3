@@ -1128,6 +1128,8 @@
     <Content Include="Views\EmailTemplate\VolunteerApproved.cshtml" />
     <Content Include="Views\Session\_SessionTime.cshtml" />
     <Content Include="Views\OT\_OTTime.cshtml" />
+    <Content Include="Views\EmailTemplate\SchoolProfile.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerRejected.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

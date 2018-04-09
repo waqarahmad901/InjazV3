@@ -46,16 +46,17 @@
                                     <th>@Volunteer.AcademicQualifications</th>
                                     <th>@General.MobileNo</th>
 
-                                    @if (status == "pending" || string.IsNullOrEmpty(status))
+                                    @if (status == "pending" || string.IsNullOrEmpty(status) || (status == "rejected"))
                                     {
                                         <th>@Supervisor.RequestStatus</th>
                                     }
+
                                     @if (status == "rejected")
                                     {
                                         <th>@General.RejectedBy</th>
 
                                     }
-                                    @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                    @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status == "approved")
                                     {
                                         <th>@Supervisor.OTAttendence</th>
                                         <th>@Coordinator.Status</th>
@@ -86,11 +87,18 @@
                                             <td>@item.HasTOTCertificate</td>
                                             <td>@item.AcademicQualification</td>
                                             <td>@item.VolunteerMobile</td>
-                                            @if (status == "pending" || string.IsNullOrEmpty(status))
+                                            @if (status == "pending" || string.IsNullOrEmpty(status) || (status == "rejected"))
                                             {
                                                 <td>
-                                                    <a href="@Url.Action("ApproveRejectByCustomUrl", new {rowGuid = item.RowGuid, reqStatus = "approved" ,comment=""})">@Supervisor.Approve</a> &nbsp; &nbsp; &nbsp;
-                                                    <a href="#" onclick="openModel('@item.RowGuid')">@Supervisor.Reject</a>
+                                                    @if (status == "rejected")
+                                                    {
+                                                        <a href="@Url.Action("ApproveRejectByCustomUrl", new { rowGuid = item.RowGuid, reqStatus = "approved", comment = "" })">@Supervisor.Approve</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Action("ApproveRejectByCustomUrl", new { rowGuid = item.RowGuid, reqStatus = "approved", comment = "" })">@Supervisor.Approve</a>
+                                                        <a href="#" onclick="openModel('@item.RowGuid')">@Supervisor.Reject</a>
+                                                    }
                                                 </td>
                                             }
                                             @if (status == "rejected")
@@ -98,7 +106,7 @@
                                                 <td>@item.RejectedBy</td>
 
                                             }
-                                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status != "rejected")
                                             {
                                                 if (item.OTAttendenceForVolunteer)
                                                 {
@@ -111,7 +119,7 @@
                                                 }
                                             }
 
-                                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+                                            @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status != "rejected")
                                             {
                                                 if (item.IsActive != null && item.IsActive.Value)
                                                 {
@@ -123,8 +131,9 @@
                                                 }
                                             }
                                             <td>
-                                                <a href="@Url.Action("Edit",new {id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a>
-                                                @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin)
+
+                                                <a href="@Url.Action("Edit", new { id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status != "rejected")
                                                 {
                                                     <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a>
                                                 }
@@ -166,9 +175,9 @@
                 <div class="card-block">
                     <div class="form-group">
                         <label class="lbl">@Supervisor.Comments</label>
-                        <textarea  class = "form-control" rows="5" id="txtComment"></textarea>
-                        </div>
+                        <textarea class="form-control" rows="5" id="txtComment"></textarea>
                     </div>
+                </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-sm btn-danger pull-right" onclick="rejectvolun()"><i class="fa fa-times"></i> @Supervisor.Reject</button>
                 </div>
@@ -179,16 +188,14 @@
 <script type="text/javascript">
     var rowId = "";
     function openModel(rowId) {
-        if ("@dir" === "rtl")
-        {
+        if ("@dir" === "rtl") {
             $(".lbl").css("float", "right");
         }
         this.rowId = rowId;
         var excelModel = $('[data-remodal-id=modal]').remodal();
         excelModel.open();
     }
-    function rejectvolun()
-    {
+    function rejectvolun() {
         debugger;
         window.location.href = "/Supervisor/ApproveRejectByCustomUrl?rowGuid=" + rowId + "&reqStatus=reject&comment=" + $("#txtComment").val();
     }

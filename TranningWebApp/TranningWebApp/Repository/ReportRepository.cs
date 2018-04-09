@@ -242,9 +242,9 @@ namespace TranningWebApp.Repository
             ).ToList();
 
             TotalCourseByStageDataModel model = new TotalCourseByStageDataModel();
-            model.SecondaryCount = result.Where(x => x.school.StageOfSchool == "Secondary").Count();
-            model.MiddleCount = result.Where(x => x.school.StageOfSchool == "Middle").Count();
-            model.PrimaryCount = result.Where(x => x.school.StageOfSchool == "Primary").Count();
+            model.SecondaryCount = result.Where(x => x.school != null && x.school.StageOfSchool == "Secondary").Count();
+            model.MiddleCount = result.Where(x => x.school != null && x.school.StageOfSchool == "Middle").Count();
+            model.PrimaryCount = result.Where(x => x.school != null && x.school.StageOfSchool == "Primary").Count();
             return model;
 
         }

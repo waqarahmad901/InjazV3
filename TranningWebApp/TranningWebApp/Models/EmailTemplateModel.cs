@@ -19,6 +19,7 @@ namespace TmsWebApp.Models
         public string OTSubject { get; set; }
         public string ParticipantName { get; set; }
         public string FunderName { get; set; }
+        public string Comment { get; set; }
 
     }
 }

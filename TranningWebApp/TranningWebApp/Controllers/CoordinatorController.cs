@@ -141,10 +141,11 @@ namespace TmsWebApp.Controllers
             user ouser = null;
             if (profile.Id == 0)
             {
+                
                 if (accountRepo.EmailExist(profile.CoordinatorEmail))
                 {
-
-                    if (coordinator.school == null || coordinator.school.Region == null)
+                    coordinator = coordinatorRepo.GetByEmail(profile.CoordinatorEmail);
+                    if (coordinator == null || coordinator.school == null || coordinator.school.Region == null)
                     {
                         var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
                                new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
@@ -281,6 +282,16 @@ namespace TmsWebApp.Controllers
             EmailSender.SendSupportEmail(body, coordinator.CoordinatorEmail);
         }
 
+        private static void NewSchoolEmail(coordinator_profile coordinator)
+        {
+            var userPro = new AccountRepository().Get(coordinator.school.CreatedBy);
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "School Profile Completed", RedirectUrl = url, UserName = userPro.Username,CoordinatorName = coordinator.school.SchoolName};
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "SchoolProfile", model);
+            EmailSender.SendSupportEmail(body, userPro.Email);
+        }
+
         private void SchoolRegistrationEmail(coordinator_profile coordinator)
         {
             string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Coordinator/Register/" + coordinator.RowGuid;
@@ -367,6 +378,9 @@ namespace TmsWebApp.Controllers
             };
             SetRegisterDD();
             ViewBag.CompleteFirstTime = true;
+
+            NewSchoolEmail(coordinator);
+
             return RedirectToAction("Edit",new {id = coordinator.RowGuid });
         }
 

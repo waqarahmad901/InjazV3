@@ -429,4 +429,7 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="MobileAlreadyValidation" xml:space="preserve">
+    <value>Mobile Number Already Exist.</value>
+  </data>
 </root>

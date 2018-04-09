@@ -232,6 +232,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to your request has been successfully sent and you will be prepared at the Training Forum to be nominated to the school by the system administrator.
+        /// </summary>
+        public static string volacceptmsg {
+            get {
+                return ResourceManager.GetString("volacceptmsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Volunteer Expriences with INJAZ.
         /// </summary>
         public static string VolunteerExpriences {

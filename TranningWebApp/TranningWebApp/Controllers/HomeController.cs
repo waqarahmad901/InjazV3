@@ -161,6 +161,12 @@ namespace TmsWebApp.Controllers
             return Json(repo.GetByCity(id).Region, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult validatevolmobile(string VolunteerMobile)
+       {
+            var repo = new VolunteerRepository();
+            return Json(!repo.ValidateMobileNumber(VolunteerMobile), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult ChanngeProfile()
         {
             var cu = Session["user"] as ContextUser;

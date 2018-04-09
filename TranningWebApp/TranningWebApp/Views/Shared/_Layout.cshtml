@@ -54,7 +54,7 @@
     <script src="~/Scripts/intlTelInput.js"></script>
     <script src="~/Scripts/bootstrap-filestyle.min.js"></script>
     <script type="text/javascript">
-
+        var lan = "@lan";
         var baseUrl = "@Request.Url.PathAndQuery.Replace("amp", "").Replace("&amp", "")";
 
         $(document).on("keypress", "#search", function (e) {

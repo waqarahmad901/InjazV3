@@ -41,6 +41,11 @@ namespace TranningWebApp.Repository
             return Context.coordinator_profile.FirstOrDefault(x => x.SchoolId == id);
         }
 
+        public coordinator_profile GetByEmail(string email)
+        {
+            return Context.coordinator_profile.FirstOrDefault(x => x.CoordinatorEmail == email);
+        }
+
 
         //Create a new collection
         public void Post(coordinator_profile entity)

@@ -213,7 +213,11 @@ namespace TmsWebApp.Controllers
             new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
             volunteer.Insert(0, defaultselect);
             ViewBag.volunteer = volunteer;
-
+            if (sessionModel.ProposedEndDateTime == null)
+            { 
+                sessionModel.ProposedEndDateTime = sessionModel.ProposedDateTime.AddDays(3);
+                sessionModel.ActualEndDateTime = sessionModel.ActualDateTime?.AddDays(3);
+            }
             return View(sessionModel);
         }
 
@@ -527,10 +531,10 @@ namespace TmsWebApp.Controllers
                         {
 
                             case CertificateEnum.NameOfStudent:
-                                pc.Text = participant.Name + " " + participant.FatherName + " " + participant.Family;
+                                pc.Text = participant != null? ( participant.Name + " " + participant.FatherName + " " + participant.Family) : "";
                                 break;
                             case CertificateEnum.NameOfCoordinator:
-                                pc.Text = oSession.school.coordinator_profile.First().CoordinatorName;
+                                pc.Text = oSession.school.coordinator_profile != null ? oSession.school.coordinator_profile.First().CoordinatorName : "";
                                 break;
                             case CertificateEnum.ProgrammYear:
                                 pc.Text = DateTime.Now.Year + "";
@@ -542,7 +546,7 @@ namespace TmsWebApp.Controllers
                                 pc.Text = ConfigurationManager.AppSettings["TranningHours"];
                                 break;
                             case CertificateEnum.NameOfVolunteer:
-                                pc.Text = oSession.volunteer_profile.VolunteerName;
+                                pc.Text = oSession.volunteer_profile != null ?  oSession.volunteer_profile.VolunteerName : "";
                                 break;
                         }
                     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
 using PagedList;
 using TmsWebApp.Common;
@@ -27,7 +28,7 @@ namespace TmsWebApp.Controllers
             var repository = new VolunteerRepository();
 
             var cu = Session["user"] as ContextUser;
-            volunteers = repository.Get(cu.EnumRole, status);
+            volunteers = repository.Get(cu.EnumRole, status).OrderByDescending(x=>x.CreatedAt);
             ViewBag.Count = volunteers.Count();
 
             if (archive != null)
@@ -65,6 +66,10 @@ namespace TmsWebApp.Controllers
             if (reqStatus == "approved")
             {
                 ApprovedBylevel(new volunteer_profile { }, repository, oVolunteer, cu);
+        //        if (cu.EnumRole == EnumUserRole.SuperAdmin)
+                {
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
             }
             else
             {
@@ -78,6 +83,9 @@ namespace TmsWebApp.Controllers
                     oVolunteer.ApprovedAtLevel3Comments = comment;
 
                 repository.Put(oVolunteer.Id, oVolunteer);
+
+                SendRejectedMailToVolunteer(oVolunteer, cu);
+
             }
             return RedirectToAction("Index");
         }
@@ -98,6 +106,10 @@ namespace TmsWebApp.Controllers
                 oVolunteer.ApprovedAtLevel3Comments = volunteer.ApprovedAtLevel3Comments;
 
                 repository.Put(oVolunteer.Id, oVolunteer);
+                
+
+                SendRejectedMailToVolunteer(oVolunteer, cu);
+
                 return RedirectToAction("Index");
             }
             if (volunteer.SubmitButton == "otdate")
@@ -132,7 +144,7 @@ namespace TmsWebApp.Controllers
 
                 oVolunteer.OTAcceptedByVolunteer = volunteer.OTAcceptedByVolunteer;
                 repository.Put(oVolunteer.Id, oVolunteer);
-                return RedirectToAction("Edit", oVolunteer.RowGuid);
+                return Redirect("/Volunteer/Edit?id=" + oVolunteer.RowGuid);
             }
             if (volunteer.SubmitButton == "otattendense")
             {
@@ -144,8 +156,40 @@ namespace TmsWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        private void SendRejectedMailToVolunteer(volunteer_profile oVolunteer, ContextUser cu)
+        {
+
+            string comment = "";
+            if (cu.EnumRole == EnumUserRole.Approver1)
+                comment = oVolunteer.ApprovedAtLevel1Comments;
+            if (cu.EnumRole == EnumUserRole.Approver2)
+                comment = oVolunteer.ApprovedAtLevel2Comments;
+            if (cu.EnumRole == EnumUserRole.Approver3)
+                comment = oVolunteer.ApprovedAtLevel3Comments;
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel emodel =
+                new EmailTemplateModel
+                {
+                    Title = "Volunteer Rejected",
+                    RedirectUrl = url,
+                    VolunteerName = oVolunteer.VolunteerName ,
+                    Comment = comment
+                };
+            string body =
+                Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRejected", emodel);
+            EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+        }
+
         private static void ApprovedBylevel(volunteer_profile volunteer, VolunteerRepository repository, volunteer_profile oVolunteer, ContextUser cu)
         {
+
+            if (cu.EnumRole == EnumUserRole.SuperAdmin)
+            {
+                oVolunteer.RejectedBy = null;
+                oVolunteer.IsRejected = false;
+            }
             if (cu.EnumRole == EnumUserRole.Approver1)
             {
                 oVolunteer.IsApprovedAtLevel1 = true;
@@ -155,9 +199,13 @@ namespace TmsWebApp.Controllers
             {
                 oVolunteer.IsApprovedAtLevel2 = true;
                 oVolunteer.ApprovedAtLevel2Comments = volunteer.ApprovedAtLevel2Comments;
+                oVolunteer.RejectedBy = null;
+                oVolunteer.IsRejected = false;
             }
             if (cu.EnumRole == EnumUserRole.Approver3)
             {
+                oVolunteer.RejectedBy = null;
+                oVolunteer.IsRejected = false;
                 oVolunteer.IsApprovedAtLevel3 = true;
                 oVolunteer.ApprovedAtLevel3Comments = volunteer.ApprovedAtLevel3Comments;
                 string password = EncryptionKeys.Decrypt(oVolunteer.user.Password);

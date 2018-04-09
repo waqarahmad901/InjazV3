@@ -131,6 +131,9 @@ namespace TranningWebApp.Repository
             }
         }
 
-
+        internal bool ValidateMobileNumber(string mobNumber)
+        {
+            return Context.volunteer_profile.Any(x => x.VolunteerMobile == mobNumber);
+        }
     }
 }

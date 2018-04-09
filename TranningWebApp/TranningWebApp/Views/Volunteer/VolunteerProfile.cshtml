@@ -99,18 +99,18 @@
                                     <label for="name">@Participant.FullName</label>
                                 </div>
                                 <div class="col-sm-3" style="padding:0px">
-                                    @Html.TextBoxFor(m => m.VolunteerName, new { @class = "form-control", @placeholder = General.FirstName })
+                                    @Html.TextBoxFor(m => m.VolunteerName, new { @class = "form-control volname", @placeholder = General.FirstName })
                                 </div>
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = General.SecondName })
+                                    @Html.TextBoxFor(m => m.SecondName, new { @class = "form-control volname", @placeholder = General.SecondName })
                                 </div>
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(m => m.ThirdName, new { @class = "form-control", @placeholder = General.ThirdName })
+                                    @Html.TextBoxFor(m => m.ThirdName, new { @class = "form-control volname", @placeholder = General.ThirdName })
                                 </div>
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = General.LastName })
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control volname", @placeholder = General.LastName })
                                 </div>
-                                @Html.ValidationMessageFor(m => m.VolunteerName, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.VolunteerName, "", new { @class = "text-danger volvalidation" })
                                 
                             </div>
                             <div class="form-group">
@@ -123,8 +123,8 @@
 
                             <div class="form-group">
                                 <label>@General.MobileNo.</label>
-                                @Html.TextBoxFor(m => m.VolunteerMobile, new { @class = "form-control phone",@maxlength = 10  })
-                                @Html.ValidationMessageFor(m => m.VolunteerMobile, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.VolunteerMobile, new { @class = "form-control phone volmobile",@maxlength = 10  })
+                                @Html.ValidationMessageFor(m => m.VolunteerMobile, "", new { @class = "text-danger validatemob" })
 
 
                             </div>

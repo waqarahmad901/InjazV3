@@ -466,6 +466,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mobile Number Already Exist..
+        /// </summary>
+        public static string MobileAlreadyValidation {
+            get {
+                return ResourceManager.GetString("MobileAlreadyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile is empty at line.
         /// </summary>
         public static string Mobileempty {

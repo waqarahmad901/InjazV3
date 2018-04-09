@@ -52,7 +52,7 @@
         bool isActive = true;
         string readonlyS = ""; 
         TimeSpan timespan = TimeSpan.MinValue;
-        if (Model.Id > 0)
+        if (Model.Id > 0 && Model.session_proposed_time.Count > 0)
         {
             if (type == "pro")
             {

@@ -417,4 +417,7 @@
   <data name="Total" xml:space="preserve">
     <value>مجموع</value>
   </data>
+  <data name="MobileAlreadyValidation" xml:space="preserve">
+    <value>رقم الجوال موجود بالفعل</value>
+  </data>
 </root>
