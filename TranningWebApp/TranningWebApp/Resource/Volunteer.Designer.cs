@@ -248,5 +248,14 @@ namespace TranningWebApp.Resource {
                 return ResourceManager.GetString("VolunteerExpriences", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for approval from system administrator.
+        /// </summary>
+        public static string WaitApproval {
+            get {
+                return ResourceManager.GetString("WaitApproval", resourceCulture);
+            }
+        }
     }
 }

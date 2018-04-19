@@ -180,4 +180,7 @@
   <data name="VolunteerExpriences" xml:space="preserve">
     <value>Volunteer Expriences with INJAZ</value>
   </data>
+  <data name="WaitApproval" xml:space="preserve">
+    <value>Wait for approval from system administrator</value>
+  </data>
 </root>

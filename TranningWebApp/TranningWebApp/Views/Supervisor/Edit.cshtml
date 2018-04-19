@@ -27,6 +27,19 @@
             <div class="col-sm-6">
                 @using (Html.BeginForm("Edit", "Supervisor", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
+                    if (cu.EnumRole == EnumUserRole.Volunteer && Model.orientation_training == null)
+                    {
+
+                    <div class="col-sm-12">
+
+                        <div class="card" style="border:1px solid red">
+
+                            <div class="card-block">
+                                <label>@Volunteer.WaitApproval</label>
+                            </div>
+                        </div>
+                    </div>
+                    }
                     <div class="card">
                         <div class="card-header">
                             <strong class="text-primary">@Supervisor.VolunteersApproval</strong>

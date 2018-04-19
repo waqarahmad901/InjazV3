@@ -24,7 +24,7 @@
              }
              if (!isShow)
              {
-                 isShow = repository.Get(user.OUser.Id).OTAttendenceForVolunteer;
+                 isShow = repository.Get(user.OUser.Id) != null && repository.Get(user.OUser.Id).OTAttendenceForVolunteer;
              }
          }
          if (user.EnumRole == TmsWebApp.Common.EnumUserRole.Participant)

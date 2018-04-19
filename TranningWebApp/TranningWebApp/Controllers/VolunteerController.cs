@@ -48,7 +48,25 @@ namespace TmsWebApp.Controllers
                 {
                     oVolunteer = new volunteer_profile();
                     oVolunteer.VolunteerEmail = cu.OUser.Email;
-                    oVolunteer.VolunteerName = cu.FullName;
+                    if (cu.FullName.Split(' ').Length > 3)
+                    {
+                        oVolunteer.VolunteerName = cu.FullName.Split(' ')[0];
+                        oVolunteer.SecondName = cu.FullName.Split(' ')[1];
+                        oVolunteer.ThirdName = cu.FullName.Split(' ')[2];
+                        oVolunteer.LastName = cu.FullName.Split(' ')[3];
+                    }
+                    if (cu.FullName.Split(' ').Length > 2)
+                    {
+                        oVolunteer.VolunteerName = cu.FullName.Split(' ')[0];
+                        oVolunteer.SecondName = cu.FullName.Split(' ')[1];
+                        oVolunteer.ThirdName = cu.FullName.Split(' ')[2]; 
+                    }
+                    if (cu.FullName.Split(' ').Length > 1)
+                    {
+                        oVolunteer.VolunteerName = cu.FullName.Split(' ')[0];
+                        oVolunteer.SecondName = cu.FullName.Split(' ')[1]; 
+                    }
+                    oVolunteer.CompanyName = "Individual";
                     oVolunteer.LinkedIn = cu.ProfileUrl;
                 }
                 oVolunteer.GoogleSigninId = cu.GoogleId;

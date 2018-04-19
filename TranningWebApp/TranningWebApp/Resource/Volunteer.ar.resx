@@ -183,4 +183,7 @@
   <data name="Volunteers" xml:space="preserve">
     <value>المتطوعين</value>
   </data>
+  <data name="WaitApproval" xml:space="preserve">
+    <value>انتظر الموافقة من مسؤول النظام</value>
+  </data>
 </root>

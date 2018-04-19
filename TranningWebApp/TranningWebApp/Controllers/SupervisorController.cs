@@ -118,6 +118,17 @@ namespace TmsWebApp.Controllers
                 oVolunteer.OTId = volunteer.OTId;
                 oVolunteer.OTIdAssigner = cu.OUser.Id;
                 repository.Put(oVolunteer.Id, oVolunteer);
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Approved", 
+                        VolunteerName = oVolunteer.VolunteerName 
+                    };
+                string body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerApproved", emodel);
+                EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
                 return RedirectToAction("Index", new { status = "approved" });
             }
             if (volunteer.SubmitButton == "accept")
@@ -161,25 +172,26 @@ namespace TmsWebApp.Controllers
 
             string comment = "";
             if (cu.EnumRole == EnumUserRole.Approver1)
-                comment = oVolunteer.ApprovedAtLevel1Comments;
+            {
+                comment = oVolunteer.ApprovedAtLevel1Comments; 
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Rejected",
+                        RedirectUrl = url,
+                        VolunteerName = oVolunteer.VolunteerName,
+                        Comment = comment
+                    };
+                string body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRejected", emodel);
+                EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+            }
             if (cu.EnumRole == EnumUserRole.Approver2)
                 comment = oVolunteer.ApprovedAtLevel2Comments;
             if (cu.EnumRole == EnumUserRole.Approver3)
                 comment = oVolunteer.ApprovedAtLevel3Comments;
-
-            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
-            var bogusController = Util.CreateController<EmailTemplateController>();
-            EmailTemplateModel emodel =
-                new EmailTemplateModel
-                {
-                    Title = "Volunteer Rejected",
-                    RedirectUrl = url,
-                    VolunteerName = oVolunteer.VolunteerName ,
-                    Comment = comment
-                };
-            string body =
-                Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRejected", emodel);
-            EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
         }
 
         private static void ApprovedBylevel(volunteer_profile volunteer, VolunteerRepository repository, volunteer_profile oVolunteer, ContextUser cu)
@@ -221,7 +233,7 @@ namespace TmsWebApp.Controllers
                         Password = password
                     };
                 string body =
-                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerApproved", emodel);
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerCreated", emodel);
                 EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
             }
             repository.Put(oVolunteer.Id, oVolunteer);
