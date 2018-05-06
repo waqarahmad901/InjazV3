@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -558,6 +559,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="Content\flags.min.css" />
+    <Content Include="Content\flags.png" />
     <Content Include="Content\jquery.timepicker.min.css" />
     <Content Include="img\ok-128.png" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />

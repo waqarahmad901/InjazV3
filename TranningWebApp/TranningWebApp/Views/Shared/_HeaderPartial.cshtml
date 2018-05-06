@@ -24,7 +24,14 @@
         
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-language"></i>
+                @if (lan == "en")
+                {
+                    <img src="blank.gif" class="flag flag-us" /><span style="margin-left:5px">@lan</span>
+                }
+                else
+                {
+                    <img src="blank.gif" class="flag flag-sa" /><span style="margin-right:5px">@lan</span>
+                }
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 
