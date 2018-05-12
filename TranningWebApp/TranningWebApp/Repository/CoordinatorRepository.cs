@@ -17,9 +17,23 @@ namespace TranningWebApp.Repository
             return Context.coordinator_profile.ToList();
         }
 
+        public IEnumerable<coordinator_profile> GetByFilter(string filter)
+        {
+            return Context.coordinator_profile.
+                Where(x => string.IsNullOrEmpty(filter)
+                || x.school.Status.ToLower().Equals(filter.ToLower())
+                || x.school.SchoolName.Contains(filter)
+                || x.school.Region.Contains(filter)
+                || x.school.City.Contains(filter)
+                || x.school.District.Contains(filter)
+                || x.CoordinatorEmail.Contains(filter)
+
+                ).ToList();
+        }
+
         public IEnumerable<coordinator_profile> GetSubCoordinator(int parentId)
         {
-            return Context.coordinator_profile.Where(x=>x.ParentId == parentId).ToList();
+            return Context.coordinator_profile.Where(x => x.ParentId == parentId).ToList();
         }
 
         public coordinator_profile GetByRowId(Guid id)
@@ -56,7 +70,7 @@ namespace TranningWebApp.Repository
 
         public List<school> GetAllSchools()
         {
-            return Context.schools.ToList(); 
+            return Context.schools.ToList();
         }
 
 
@@ -69,7 +83,7 @@ namespace TranningWebApp.Repository
 
         public int GetSchoolIdByUserId(int userId)
         {
-            if(Context.coordinator_profile.Any(x => x.CoordinatorUserID == userId))
+            if (Context.coordinator_profile.Any(x => x.CoordinatorUserID == userId))
             {
                 var coordinatorProfile = Context.coordinator_profile.FirstOrDefault(x => x.CoordinatorUserID == userId);
                 if (coordinatorProfile != null)

@@ -27,10 +27,10 @@ namespace TranningWebApp.Repository
 
             var participant = Context.participant_profile.ToList();
             model.ParticipantEnrolledCount = participant.Count;
-            model.ParticipantCertificateCount = participant.Sum(y => y.session_participant.Where(x => x.IsCertificateGenerated != null && x.IsCertificateGenerated.Value).Count());
+            model.ParticipantCertificateCount = participant.Sum(y => y.session_participant.GroupBy(z=>z.ParticipantID).Where(x => x.Where(t=>t.IsCertificateGenerated != null && t.IsCertificateGenerated.Value).Any()).Count());
             model.ParticipantInProgressCount = model.ParticipantEnrolledCount - model.ParticipantCertificateCount;
 
-            var school = Context.schools.ToList();
+            var school = Context.coordinator_profile.Select(x=>x.school).ToList();
             model.SchoolApprovedCount = school.Where(x=>x.Status == "Approved").Count();
             model.SchoolPendingCount = school.Where(x => x.Status == "Pending").Count();
             model.SchoolInitialCount = school.Where(x => x.Status == "Initial").Count();

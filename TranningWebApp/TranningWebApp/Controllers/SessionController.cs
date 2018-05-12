@@ -29,7 +29,7 @@ namespace TmsWebApp.Controllers
     public class SessionController : BaseController
     {
         // GET: Funder
-        public ActionResult Index(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null,string status = null)
+        public ActionResult Index(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null, string status = null)
         {
             ViewBag.searchQuery = string.IsNullOrEmpty(filter) ? "" : filter.Trim();
             ViewBag.showArchived = (archived ?? "") == "on";
@@ -65,8 +65,11 @@ namespace TmsWebApp.Controllers
             session = repository.Get().Where(x =>
             {
                 return ((filter == null || x.ProgramName.ToLower().Contains(filter.ToLower())
+                                            || x.TargetGroup.ToLower().Contains(filter.ToLower())
+                                            || (x.volunteer_profile != null && x.volunteer_profile.VolunteerName.ToLower().Contains(filter.ToLower()))
                                                   || (x.school != null && (x.school.SchoolName.ToLower().Contains(filter.ToLower()) ||
-                                                                           x.school.City.ToLower().Contains(filter.ToLower())))
+                                                 x.school.City.ToLower().Contains(filter.ToLower())))
+                                                 || x.Status.ToLower().Contains(filter.ToLower())
                                                  )
                                                  && ((cu.EnumRole == EnumUserRole.SuperAdmin
                                                       || (cu.EnumRole == EnumUserRole.Participant && x.session_participant
@@ -98,7 +101,7 @@ namespace TmsWebApp.Controllers
         {
             SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "0" };
 
-           
+
 
             var certificatesVolunteer = new CertificateRepository().Get().Where(x => x.TypeCertificate == "Volunteer").Select(x =>
               new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
@@ -209,12 +212,12 @@ namespace TmsWebApp.Controllers
 
             var gender = string.IsNullOrEmpty(sessionModel.Gender) ? "Male" : sessionModel.Gender;
             var city = string.IsNullOrEmpty(sessionModel.City) ? "Jeddah" : sessionModel.City;
-            var volunteer = new VolunteerRepository().GetApprovedVolunteer().Where(x=>x.Gender== gender && x.City == city).Select(x =>
-            new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
+            var volunteer = new VolunteerRepository().GetApprovedVolunteer().Where(x => x.Gender == gender && x.City == city).Select(x =>
+               new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
             volunteer.Insert(0, defaultselect);
             ViewBag.volunteer = volunteer;
             if (sessionModel.ProposedEndDateTime == null)
-            { 
+            {
                 sessionModel.ProposedEndDateTime = sessionModel.ProposedDateTime.AddDays(3);
                 sessionModel.ActualEndDateTime = sessionModel.ActualDateTime?.AddDays(3);
             }
@@ -531,7 +534,7 @@ namespace TmsWebApp.Controllers
                         {
 
                             case CertificateEnum.NameOfStudent:
-                                pc.Text = participant != null? ( participant.Name + " " + participant.FatherName + " " + participant.Family) : "";
+                                pc.Text = participant != null ? (participant.Name + " " + participant.FatherName + " " + participant.Family) : "";
                                 break;
                             case CertificateEnum.NameOfCoordinator:
                                 pc.Text = oSession.school.coordinator_profile != null ? oSession.school.coordinator_profile.First().CoordinatorName : "";
@@ -546,7 +549,7 @@ namespace TmsWebApp.Controllers
                                 pc.Text = ConfigurationManager.AppSettings["TranningHours"];
                                 break;
                             case CertificateEnum.NameOfVolunteer:
-                                pc.Text = oSession.volunteer_profile != null ?  oSession.volunteer_profile.VolunteerName : "";
+                                pc.Text = oSession.volunteer_profile != null ? oSession.volunteer_profile.VolunteerName : "";
                                 break;
                         }
                     }

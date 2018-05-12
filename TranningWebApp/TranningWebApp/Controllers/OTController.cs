@@ -19,7 +19,7 @@ using TranningWebApp.Resource;
 
 namespace TmsWebApp.Controllers
 {
-    [AuthorizeUser(AccessLevel = "SuperAdmin")]
+    [AuthorizeUser(AccessLevel = "SuperAdmin,Approver1,Approver2")]
     public class OTController : BaseController
     {
         // GET: OT

@@ -57,7 +57,7 @@ namespace TmsWebApp.Controllers
             }
             else
             {
-                Profile = string.IsNullOrEmpty(filter) ? repository.Get() : repository.Get().Where(x => x.school.SchoolName.Contains(filter));
+                Profile = repository.GetByFilter(filter);
             }
             //Sorting order
             Profile = Profile.OrderByDescending(x => x.CreatedAt);

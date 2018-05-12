@@ -22,15 +22,15 @@ namespace TmsWebApp.Controllers
     public class SupervisorController : BaseController
     {
         [Route("Index")]
-        public ActionResult Index( string status = "pending", int page = 1, Guid? archive = null)
+        public ActionResult Index( string status = "pending", int page = 1, Guid? archive = null,string filter=null)
         {
             IEnumerable<volunteer_profile> volunteers;
             var repository = new VolunteerRepository();
 
             var cu = Session["user"] as ContextUser;
-            volunteers = repository.Get(cu.EnumRole, status).OrderByDescending(x=>x.CreatedAt);
+            volunteers = repository.Get(cu.EnumRole, status,filter).OrderByDescending(x=>x.CreatedAt);
             ViewBag.Count = volunteers.Count();
-
+            
             if (archive != null)
             {
                 var volunteer = repository.GetbyGuid(archive.Value);
@@ -41,7 +41,7 @@ namespace TmsWebApp.Controllers
             page = page > 0 ? page : 1;
             int pageSize = 0;
             pageSize = pageSize > 0 ? pageSize : 10;
-
+            ViewBag.searchQuery = filter;
             return View(volunteers.ToPagedList(page, pageSize));
         }
         [Route("Edit")]
