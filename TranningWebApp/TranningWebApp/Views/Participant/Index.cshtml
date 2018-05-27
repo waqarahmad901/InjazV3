@@ -64,7 +64,7 @@
                                 <td>@item.Email</td>
                                 <td>@item.City</td>
                                 <td>@(item.school != null ? item.school.SchoolName : "")</td>
-                                <td>@(item.session_participant.Count > 0 ? item.session_participant.Select(x => x.session).Last().volunteer_profile.VolunteerName : "")</td>
+                                <td>@(item.session_participant.Count > 0 && item.session_participant.Select(x => x.session).Last().volunteer_profile != null ? item.session_participant.Select(x => x.session).Last().volunteer_profile.VolunteerName : "")</td>
 
                                 <td>@(item.session_participant.Count > 0 ? item.session_participant.Select(x => x.session).Last().ProgramName : "")</td>
                            

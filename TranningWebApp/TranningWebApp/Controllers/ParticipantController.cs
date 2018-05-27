@@ -62,13 +62,13 @@ namespace TmsWebApp.Controllers
             {
                 participiant = repository.GetAll().Where(x => x.Name.ToLower
                 ().Contains(filter.ToLower()) || x.NationalID.Contains(filter)
-                || x.Name.ToLower().Contains(filter.ToLower())
+              
                 || x.Mobile.ToLower().Contains(filter.ToLower())
                 || x.Email.ToLower().Contains(filter.ToLower())
                 || (x.City != null && x.City.ToLower().Contains(filter.ToLower()))
                 || (x.school != null && x.school.SchoolName.ToLower().Contains(filter.ToLower()))
                 || (x.session_participant.Any() && x.session_participant.Select(y => y.session).Last().ProgramName.ToLower().Contains(filter.ToLower()))
-                || (x.session_participant.Any() && x.session_participant.Select(y => y.session).Last().volunteer_profile.VolunteerName.ToLower().Contains(filter.ToLower()))
+                || (x.session_participant.Any() && x.session_participant.Select(y => y.session).Last().volunteer_profile != null && x.session_participant.Select(y => y.session).Last().volunteer_profile.VolunteerName.ToLower().Contains(filter.ToLower()))
                 || (filter == "issued" && x.session_participant.Where(y => y.IsCertificateGenerated != null && y.IsCertificateGenerated.Value).Any())
                 || (filter == "inprogress" && x.session_participant.Where(y => y.IsCertificateGenerated == null).Any())
                 );
