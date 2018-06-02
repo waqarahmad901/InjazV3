@@ -662,6 +662,8 @@ namespace TmsWebApp.Controllers
             EmailSender.SendSupportEmail(body, adminEmail);
             session.VolunteerMarkedStudentAttendenceInSession = true;
             session.MarkedCompletedByVolunteer = true;
+            int[] attendedParticipants = lActualTime.Select(x => x.ParticipantId).ToArray();
+            session.session_participant.Where(x => attendedParticipants.Contains(x.ParticipantID)).ToList().ForEach(x => x.VolunteerMarkedAttendence = true);
             sessionRepo.Put(session.Id, session);
             return RedirectToAction("Index");
         }

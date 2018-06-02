@@ -205,7 +205,7 @@
     <value>المرشد الطلابي للمدرسة</value>
   </data>
   <data name="SchoolGeoLocation" xml:space="preserve">
-    <value> الموقع الجغرافي للمدرسة</value>
+    <value>(ادخل جوجل خريطة الموقع) الموقع الجغرافي للمدرسة</value>
   </data>
   <data name="SchoolGoogleAccount" xml:space="preserve">
     <value>رابط حساب  Google</value>

@@ -205,7 +205,7 @@
     <value>School Coordinator</value>
   </data>
   <data name="SchoolGeoLocation" xml:space="preserve">
-    <value>School Geo Location</value>
+    <value>School Geo Location (Enter google map url)</value>
   </data>
   <data name="SchoolGoogleAccount" xml:space="preserve">
     <value>School Google Account</value>
