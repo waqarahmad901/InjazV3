@@ -261,7 +261,7 @@ namespace TranningWebApp.Repository
             (x.CreatedAt < dateto && x.Status == "Approved") &&
             (city == "" || x.City == city));
 
-            model.SchoolCount = schools.Count();
+            model.SchoolCount = schools.Where(x=>x.StageOfSchool != null).Count();
             model.PrimarySchoolCount = schools.Where(x => x.StageOfSchool == "Primary").Count();
             model.SeconderySchoolCount = schools.Where(x => x.StageOfSchool == "Secondary").Count();
             model.MiddleSchoolCount = schools.Where(x => x.StageOfSchool == "Middle").Count();

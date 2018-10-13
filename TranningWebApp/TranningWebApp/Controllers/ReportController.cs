@@ -245,7 +245,8 @@ namespace TranningWebApp.Controllers
                     Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
                     null;
             string fontFilePath = Server.MapPath("~/fonts/Arabic Fonts/trado.ttf");
-            var filePath = pdf.GeneratePdf(image, title, parameters.ToList(), results.ToList(), cultureName, fontFilePath);
+            string pdfPath = Server.MapPath("~/Uploads/pdfs");
+            var filePath = pdf.GeneratePdf(image, title, parameters.ToList(), results.ToList(), cultureName, fontFilePath, pdfPath);
             return Json(filePath);
         }
 

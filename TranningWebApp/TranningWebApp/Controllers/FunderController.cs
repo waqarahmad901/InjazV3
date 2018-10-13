@@ -56,7 +56,13 @@ namespace TmsWebApp.Controllers
             }
             else
             {
-                funders = repository.Get().Where(x => x.FunderName.ToLower().Contains(filter.ToLower()) );
+                string firstName = filter.Split(' ')[0];
+                string fatherName = filter.Split(' ').Length > 1 ? filter.Split(' ')[1] : "";
+                string familyName = filter.Split(' ').Length > 2?  filter.Split(' ')[2] : "";
+                funders = repository.Get().Where(x => x.FunderName.ToLower().Contains(filter.ToLower()) ||
+                (x.FatherName != null && fatherName != "" && x.FatherName.ToLower().Contains(fatherName.ToLower())) ||
+                (x.FaimlyName != null && familyName != "" && x.FaimlyName.ToLower().Contains(familyName.ToLower()))
+                );
             }  
             //Sorting order
             funders = funders.OrderByDescending(x => x.CreatedAt);

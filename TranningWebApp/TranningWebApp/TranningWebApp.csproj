@@ -602,23 +602,6 @@
     <Content Include="fonts\Simple-Line-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\Session\SessionEvaluation\aa.png" />
-    <Content Include="Images\Session\SessionEvaluation\img.png" />
-    <Content Include="Images\Session\SessionEvaluation\Screenshot %281%29.png" />
-    <Content Include="Images\Session\SessionEvaluation\Screenshot %282%29.png" />
-    <Content Include="Images\Session\SessionEvaluation\Screenshot %283%29.png" />
-    <Content Include="Images\Session\SessionEvaluation\Screenshot %284%29.png" />
-    <Content Include="Images\Session\SessionEvaluation\TMS process.jpg" />
-    <Content Include="Images\Session\SessionEvaluation\w2p icons.png" />
-    <Content Include="Images\Session\SessionEvaluation\WIN_20160717_11_49_33_Pro.jpg" />
-    <Content Include="Images\Session\SessionEvaluation\_95424360_a96505f9-5129-4c5d-9923-0e2b58fcdce0.jpg" />
-    <Content Include="Images\Session\SessionPhoto\aa.png" />
-    <Content Include="Images\Session\SessionPhoto\Screenshot %282%29.png" />
-    <Content Include="Images\Session\SessionPhoto\Screenshot %283%29.png" />
-    <Content Include="Images\Session\SessionPhoto\Screenshot %284%29.png" />
-    <Content Include="Images\Session\SessionPhoto\TMS INJAZ %284%29.jpg" />
-    <Content Include="Images\Session\SessionPhoto\TMS process.jpg" />
-    <Content Include="Images\Session\SessionPhoto\_95424360_a96505f9-5129-4c5d-9923-0e2b58fcdce0.jpg" />
     <Content Include="img\avatars\1_old.jpg" />
     <Content Include="img\avatars\2.jpg" />
     <Content Include="img\avatars\3.jpg" />
@@ -971,35 +954,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Uploads\ImageLibrary\006de5fc-626d-4fc9-89e3-8122c427d3f4.png" />
-    <Content Include="Uploads\ImageLibrary\010d7d84-bd40-4d4f-ad33-71437d82dc2e.jpg" />
-    <Content Include="Uploads\ImageLibrary\13bc8c73-bc9c-465f-ac5b-58abffe8cd96.png" />
-    <Content Include="Uploads\ImageLibrary\13c28da0-1f0d-4ac6-a77b-357934f9778b.jpg" />
-    <Content Include="Uploads\ImageLibrary\21e495a9-bb56-4ecf-968d-6df90690c02d.jpg" />
-    <Content Include="Uploads\ImageLibrary\2b194fab-c102-4e9c-b8dd-c897bcb2320c.jpg" />
-    <Content Include="Uploads\ImageLibrary\2e36405e-5e90-4eb5-8fad-a52ddf09eefe.jpg" />
-    <Content Include="Uploads\ImageLibrary\40131b07-8186-46b1-8ec3-275c066b36b0.jpg" />
-    <Content Include="Uploads\ImageLibrary\4533e653-73ff-470e-a032-188aa2afde72.jpg" />
-    <Content Include="Uploads\ImageLibrary\47748003-fddc-415b-8764-3cad793f712a.jpg" />
-    <Content Include="Uploads\ImageLibrary\4c4faabc-b67c-49a8-abd1-50b95abcb8c1.jpg" />
-    <Content Include="Uploads\ImageLibrary\4cbdbb8b-4948-4490-847d-57006bc5340f.jpg" />
-    <Content Include="Uploads\ImageLibrary\50c75c6e-9544-4608-9381-2be509aeef7b.jpg" />
-    <Content Include="Uploads\ImageLibrary\58a60e4b-a6e9-49e8-943f-340b5ad268ef.jpg" />
-    <Content Include="Uploads\ImageLibrary\5a2cd454-d6cc-490d-aa6e-2fca0a2b6fff.jpg" />
-    <Content Include="Uploads\ImageLibrary\5c197360-9fd6-4301-87e9-35042035b5aa.jpg" />
-    <Content Include="Uploads\ImageLibrary\5eae841b-112b-48c1-9480-2e07ad3e8aaa.jpg" />
-    <Content Include="Uploads\ImageLibrary\69dd7503-b2d3-4283-af0f-2ef1e3786997.jpg" />
-    <Content Include="Uploads\ImageLibrary\6bc983b7-0700-4c4b-b711-9d97257ed895.jpg" />
-    <Content Include="Uploads\ImageLibrary\9df15b69-8843-436f-8048-9781af9ad891.jpg" />
-    <Content Include="Uploads\ImageLibrary\cc255c6d-308c-4af8-aac1-dff6a4b6cb9e.jpg" />
-    <Content Include="Uploads\ImageLibrary\db53270f-5b18-4eeb-889a-092304530f92.jpg" />
-    <Content Include="Uploads\ImageLibrary\de21f1d4-e578-4790-9852-bae2364beb90.jpg" />
-    <Content Include="Uploads\ImageLibrary\e71b16d6-f946-4466-ada8-79d02ec85789.jpg" />
-    <Content Include="Uploads\ImageLibrary\ec2bd759-270c-4fe0-a5c1-3a582b8488b2.jpg" />
-    <Content Include="Uploads\ImageLibrary\ef745ddc-4f07-4083-b5a5-22de2e871f34.png" />
-    <Content Include="Uploads\ImageLibrary\f0c5cd99-b3cc-4dcd-b7d3-2042c11c4b56.jpg" />
-    <Content Include="Uploads\ImageLibrary\f8e71693-44fe-482e-8981-c4b6b370f41f.jpg" />
-    <Content Include="Uploads\ImageLibrary\fe224dbc-7ef5-4024-9231-003f548f5d98.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1036,8 +990,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Uploads\CertificateLibrary\CP Certificate Volunteer 2016.pdf" />
-    <Content Include="Uploads\CertificateLibrary\SYC Certificates - Student.pdf" />
     <Content Include="Views\Account\UpdatePassword.cshtml" />
     <Content Include="Views\Certificate\Edit.cshtml" />
     <Content Include="Views\Certificate\Index.cshtml" />
@@ -1070,7 +1022,6 @@
     <Content Include="Views\Volunteer\Index.cshtml" />
     <Content Include="Views\Volunteer\VolunteerProfile.cshtml" />
     <Content Include="Views\EvaluationForm\Index.cshtml" />
-    <Content Include="Uploads\DocumentLibrary\DefaultDocument\CoordinatorRegister.docx" />
     <Content Include="Views\Coordinator\SchoolLocation.cshtml" />
     <Content Include="Views\Participant\_UploadExcel.cshtml" />
     <Content Include="Views\EmailTemplate\ResetPassword.cshtml" />
@@ -1126,7 +1077,6 @@
     <Content Include="Views\EvaluationForm\CoordinatorForm.cshtml" />
     <Content Include="Views\Session\RequestSession.cshtml" />
     <Content Include="Views\EmailTemplate\ParticipantProfile.cshtml" />
-    <Content Include="Uploads\DocumentLibrary\DefaultDocument\StudentList.xlsx" />
     <Content Include="Views\EmailTemplate\VolunteerRegister.cshtml" />
     <Content Include="Views\EmailTemplate\VolunteerCreated.cshtml" />
     <Content Include="Views\Session\_SessionTime.cshtml" />
@@ -1137,6 +1087,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Session\SessionEvaluation\" />
+    <Folder Include="Images\Session\SessionPhoto\" />
+    <Folder Include="Uploads\CertificateLibrary\" />
+    <Folder Include="Uploads\DocumentLibrary\DefaultDocument\" />
+    <Folder Include="Uploads\ImageLibrary\" />
+    <Folder Include="Uploads\pdfs\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

@@ -49,7 +49,8 @@ namespace TmsWebApp.Controllers
             }
             else
             {
-                ots = repository.Get().Where(x => x.Subject.Contains(filter));
+               
+                ots = repository.Get().Where(x => x.Subject != null && x.Subject.ToLower().Contains(filter.ToLower()));
             }
             //Sorting order
             ots = ots.OrderByDescending(x => x.CreatedAt);

@@ -12,15 +12,15 @@ namespace TranningWebApp.Pdf_Generation
 {
     public class pdfGenerator
     {
-        public string GeneratePdf(string pdfData, string title = null, List<string> parameters = null, List<string> results = null,string culture ="en",string fontFilePath = "")
+        public string GeneratePdf(string pdfData, string title = null, List<string> parameters = null, List<string> results = null,string culture ="en",string fontFilePath = "",string pdfPath= "")
         {
             //string newFile = System.Web.HttpContext.Current.Server.MapPath("Content/pdf");
-            string newFile = Path.Combine(HttpRuntime.AppDomainAppPath, "Content\\pdf");
-            if (!Directory.Exists(newFile))
+             
+            if (!Directory.Exists(pdfPath))
             {
-                Directory.CreateDirectory(newFile);
+                Directory.CreateDirectory(pdfPath);
             }
-            newFile = System.IO.Path.Combine(newFile, Guid.NewGuid().ToString() + "-Certificate.pdf");
+            pdfPath = System.IO.Path.Combine(pdfPath, Guid.NewGuid().ToString() + "-pdf.pdf");
 
             byte[] GraphImage = Convert.FromBase64String(pdfData);
             Image Image = null;
@@ -32,7 +32,7 @@ namespace TranningWebApp.Pdf_Generation
             Document doc = new Document();
 
 
-            FileStream fs = new FileStream(newFile, FileMode.Create, FileAccess.Write);
+            FileStream fs = new FileStream(pdfPath, FileMode.Create, FileAccess.Write);
             PdfWriter writer = PdfWriter.GetInstance(doc, fs);
 
             doc.Open();
@@ -126,7 +126,7 @@ namespace TranningWebApp.Pdf_Generation
             fs.Close();
 
 
-            return newFile;
+            return pdfPath;
         }
 
     }
