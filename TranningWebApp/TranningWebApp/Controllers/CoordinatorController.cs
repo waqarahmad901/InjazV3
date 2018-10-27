@@ -213,7 +213,7 @@ namespace TmsWebApp.Controllers
                     coordinator.ParentId = su.OUser.coordinator_profile.First().Id;
                     coordinator.SchoolId = su.OUser.coordinator_profile.First().school.Id;
                     //coordinator.school.Status = "Approved";
-                     coordinator.CoordinatorName = su.OUser.coordinator_profile.First().CoordinatorName;
+                    // coordinator.CoordinatorName = su.OUser.coordinator_profile.First().CoordinatorName;
 
                 }
 
@@ -282,7 +282,7 @@ namespace TmsWebApp.Controllers
             EmailSender.SendSupportEmail(body, coordinator.CoordinatorEmail);
         }
 
-        private static void NewSchoolEmail(coordinator_profile coordinator)
+        private static void NewSchoolEmailAdmin(coordinator_profile coordinator)
         {
             var userPro = new AccountRepository().Get(coordinator.school.CreatedBy);
             string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
@@ -291,7 +291,15 @@ namespace TmsWebApp.Controllers
             string body = Util.RenderViewToString(bogusController.ControllerContext, "SchoolProfile", model);
             EmailSender.SendSupportEmail(body, userPro.Email);
         }
-
+        private static void NewSchoolEmailCoordinator(coordinator_profile coordinator)
+        {
+            var userPro = new AccountRepository().Get(coordinator.school.CreatedBy);
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "School Profile Completed", RedirectUrl = url, UserName = userPro.Username, CoordinatorName = coordinator.school.SchoolName };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "SchoolProfileCoordinator", model);
+            EmailSender.SendSupportEmail(body, coordinator.CoordinatorEmail);
+        }
         private void SchoolRegistrationEmail(coordinator_profile coordinator)
         {
             string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Coordinator/Register/" + coordinator.RowGuid;
@@ -379,7 +387,8 @@ namespace TmsWebApp.Controllers
             SetRegisterDD();
             ViewBag.CompleteFirstTime = true;
 
-            NewSchoolEmail(coordinator);
+            NewSchoolEmailAdmin(coordinator);
+            NewSchoolEmailCoordinator(coordinator);
 
             return RedirectToAction("Edit",new {id = coordinator.RowGuid });
         }

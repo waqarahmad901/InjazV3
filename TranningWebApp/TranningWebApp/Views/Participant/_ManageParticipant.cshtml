@@ -85,9 +85,6 @@
                 <label for="phone",@maxlength = 10 >@Participant.NationalId</label>
                 @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control", @maxlength = 10 })
                 @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger" })
-                <span class="text-danger field-validation-error" id="nidvalidation" data-valmsg-for="FunderEmail" data-valmsg-replace="true" style="display:none"><span for="FunderEmail" class="">National Id Already Exist</span></span>
-
-
 
             </div>
 

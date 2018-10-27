@@ -51,10 +51,13 @@ namespace TmsWebApp.Controllers
             var repository = new VolunteerRepository();
             var volunteer = repository.GetbyGuid(id);
             volunteer.OTDateString = volunteer.OTDateTime != null ? volunteer.OTDateTime.Value.ToShortDateString() : null;
-            var Ots = new OTRepository().Get().Select(x =>
+            var Ots = new OTRepository().Get();
+
+            var Ots1 = Ots.Select(x =>
              new SelectListItem { Text = x.Subject + " - " + (x.OTDateTime != null ? x.OTDateTime.Value.ToShortDateString() : null), Value = x.Id + "" }).ToList();
-            
-            ViewBag.Otsdd = Ots;
+            if (volunteer.orientation_training == null)
+                volunteer.OTId = Ots.Last().Id;
+            ViewBag.Otsdd = Ots1;
             return View(volunteer);
         }
 
@@ -219,6 +222,7 @@ namespace TmsWebApp.Controllers
                 oVolunteer.RejectedBy = null;
                 oVolunteer.IsRejected = false;
                 oVolunteer.IsApprovedAtLevel3 = true;
+
                 oVolunteer.ApprovedAtLevel3Comments = volunteer.ApprovedAtLevel3Comments;
                 string password = EncryptionKeys.Decrypt(oVolunteer.user.Password);
                 string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";

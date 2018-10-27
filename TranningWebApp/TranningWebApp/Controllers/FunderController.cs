@@ -149,8 +149,9 @@ namespace TmsWebApp.Controllers
                     IsEmailVerified = false,
                     CreatedBy = cu.OUser.Id,
 
-                    Password = EncryptionKeys.Encrypt(profile.Password)
-        };   
+        };
+            funder.Password = EncryptionKeys.Encrypt(profile.Password);
+            
             funder.FunderName = profile.FunderName;
             funder.FatherName = profile.FatherName;
             funder.FaimlyName = profile.FaimlyName;

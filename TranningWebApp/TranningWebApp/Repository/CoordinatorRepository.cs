@@ -21,6 +21,7 @@ namespace TranningWebApp.Repository
         {
             return Context.coordinator_profile.
                 Where(x => string.IsNullOrEmpty(filter)
+                && x.ParentId == null
                 || x.school.Status.ToLower().Equals(filter.ToLower())
                 || x.school.SchoolName.Contains(filter)
                 || x.school.Region.Contains(filter)

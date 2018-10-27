@@ -5,11 +5,13 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using TmsWebApp.Common;
 using TmsWebApp.HelpingUtilities;
+using TmsWebApp.Models;
 using TranningWebApp.Common;
 using TranningWebApp.Controllers;
 using TranningWebApp.Repository;
@@ -170,6 +172,14 @@ namespace TmsWebApp.Controllers
             ot.City = profile.City;
             ot.SchoolIds = profile.Schools != null ? string.Join(",", profile.Schools.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
             ot.VolunteersIds = profile.Volunteers != null ? string.Join(",", profile.Volunteers.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
+
+            foreach (var item in ot.VolunteersIds.Split(','))
+            {
+               var vol = new VolunteerRepository().Get(int.Parse(item));
+               OTLinkWithVolunteerEmail(vol, ot.Subject);
+
+            }
+
             ot.ContactPersonName = profile.ContactPersonName;
             ot.ContactPersonPhone = profile.ContactPersonPhone;
 
@@ -200,6 +210,17 @@ namespace TmsWebApp.Controllers
                 otRepo.Put(ot.Id, ot);
             return RedirectToAction("Index");
         }
+
+        private static void OTLinkWithVolunteerEmail(volunteer_profile volunteer,string OTName)
+        {
+           
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with volunteer", RedirectUrl = url, VolunteerName = volunteer.VolunteerName ,OTName = OTName};
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLinkWithVolunteer", model);
+            EmailSender.SendSupportEmail(body, volunteer.VolunteerEmail);
+        }
+
         public ActionResult Delete(int id)
         {
             var repository = new OTRepository();

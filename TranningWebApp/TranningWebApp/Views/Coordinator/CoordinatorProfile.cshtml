@@ -51,7 +51,7 @@
                                 @Html.ValidationMessageFor(m => m.CoordinatorName, "", new { @class = "text-danger" })
 
                             </div>
-                            
+
 
                             <div class="form-group">
                                 <label>@Coordinator.Emailaddress</label>
@@ -80,7 +80,7 @@
 
                             <div class="form-group">
                                 <label>@General.MobileNo</label>
-                                @Html.TextBoxFor(m => m.CoordinatorMobile, new { @class = "form-control phone",@maxlength = 10  })
+                                @Html.TextBoxFor(m => m.CoordinatorMobile, new { @class = "form-control phone", @maxlength = 10 })
                                 @Html.ValidationMessageFor(m => m.CoordinatorMobile, "", new { @class = "text-danger" })
                             </div>
 
@@ -93,7 +93,7 @@
 
                             <div class="form-group">
                                 <label>@Participant.NationalId</label>
-                                @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control",@maxlength = 10 })
+                                @Html.TextBoxFor(m => m.NationalID, new { @class = "form-control", @maxlength = 10 })
                                 @Html.ValidationMessageFor(m => m.NationalID, "", new { @class = "text-danger" })
                             </div>
 
@@ -113,10 +113,16 @@
 
                             <div class="form-group">
                                 <label>@Volunteer.AcademicQualifications</label>
-                                @Html.TextBoxFor(m => m.AcademicQualification, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.AcademicQualification, new List<SelectListItem>
+                                                                       {
+                                                                           new SelectListItem{ Text= General.Select, Value = "" },
+                                                                           new SelectListItem{ Text= General.Diploma, Value = "Diploma" },
+                                                                           new SelectListItem{ Text=General.Bachelor , Value = "Bachelor" },
+                                                                           new SelectListItem{ Text=General.HigherDiploma , Value = "HigherDiploma" },
+                                                                           new SelectListItem{ Text=General.Fellowship , Value = "Fellowship" },
+                                                                           new SelectListItem{ Text=General.PHD , Value = "PHD" },
+                                                                        }, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.AcademicQualification, "", new { @class = "text-danger" })
-                                @Html.TextBoxFor(m => m.AcademicQualification2, new { @class = "form-control", @style = "margin-top:5px" })
-                                @Html.TextBoxFor(m => m.AcademicQualification3, new { @class = "form-control", @style = "margin-top:5px" })
                             </div>
 
                             <div class="form-group">
@@ -126,28 +132,31 @@
                                 <img src="@imagePath" id="profile-img-tag" width="150" height="150" />
 
                                 <script type="text/javascript">
-                                        function readURL(input) {
-                                            if (input.files && input.files[0]) {
-                                                var reader = new FileReader();
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
 
-                                                reader.onload = function (e) {
-                                                    $('#profile-img-tag').attr('src', e.target.result);
-                                                }
-                                                reader.readAsDataURL(input.files[0]);
+                                            reader.onload = function (e) {
+                                                $('#profile-img-tag').attr('src', e.target.result);
                                             }
+                                            reader.readAsDataURL(input.files[0]);
                                         }
-                                        $("#profile-img").change(function () {
-                                            readURL(this);
-                                        });
+                                    }
+                                    $("#profile-img").change(function () {
+                                        readURL(this);
+                                    });
                                 </script>
                             </div>
 
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-dot-circle-o"></i>@Coordinator.Submit</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
 
-                    <div class="card">
+                    <div class="card" style="display:none">
                         <div class="card-header">
                             <strong class="text-primary">@Coordinator.Otherdetails</strong>
                         </div>

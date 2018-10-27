@@ -891,7 +891,7 @@ namespace TmsWebApp.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-        [Authorize]
+        [AuthorizeUser(AccessLevel = "SuperAdmin")]
         public ActionResult UserList(string sortOrder, string filter, string archived, int page = 1, Guid? archive = null)
         {
 

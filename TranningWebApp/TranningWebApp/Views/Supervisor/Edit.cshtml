@@ -185,9 +185,9 @@
                             {
                                 <div class="form-group">
                                     <label class="form-form-control-label">@Supervisor.SetOT</label>
-                                    @Html.DropDownListFor(m => m.OTId, (List<SelectListItem>)ViewBag.Otsdd, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.DropDownListFor(m => m.OTId, (List<SelectListItem>)ViewBag.Otsdd, new { @class = "form-control", @disabled = "disabled"  })
                                 </div>
-                                @Html.CheckBoxFor(x => x.OTAcceptedByVolunteer, new { @style = "margin-top:5px" })
+                                @Html.CheckBoxFor(x => x.OTAcceptedByVolunteer, new { @style = "margin-top:5px", @onchange = "OTAcceptedByVolunteerChange(this)" })
                                 <label style="margin-left:10px">@Supervisor.Accecptedbyvolunteer </label>
                             }
 
@@ -226,7 +226,7 @@
                             else
                             {
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="accept"><i class="fa fa-check-square-o"></i> @Supervisor.Accept</button>
+                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="accept" id="acceptbtn" disabled><i class="fa fa-check-square-o"></i> @Supervisor.Accept</button>
                             </div>
                             }
                         }
@@ -268,5 +268,38 @@
             document.getElementById("approveBtn").setAttribute("disabled", "disabled");
         }
     }
+    function OTAcceptedByVolunteerChange(checkbox)
+    {
+        if (checkbox.checked == true) {
+            document.getElementById("acceptbtn").removeAttribute("disabled");
+        } else {
+            document.getElementById("acceptbtn").setAttribute("disabled", "disabled");
+        }
+    }
 
+    (function () {
+        var previous;
+
+        $("#OTId").on('focus', function () {
+            // Store the current value on focus and on change
+            previous = this.value;
+        }).change(function () {
+            // Do something with the previous value after the change
+            var val = $("#OTId option:selected").text().split("-")[1].split('/');
+
+            var f = new Date(val[2], val[1] - 1, val[0]);
+
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+           
+            if (f < today) {
+                alert("OT date is grater than today date");
+                this.value = previous;
+                return false;
+            } 
+            previous = this.value;
+        });
+    })();
+   
+   
 </script>

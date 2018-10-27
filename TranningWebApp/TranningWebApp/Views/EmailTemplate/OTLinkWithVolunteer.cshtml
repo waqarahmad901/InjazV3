@@ -1,0 +1,24 @@
+﻿
+@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    Dear
+    <br />
+    <br />
+    This is to inform you that the OT <b>@Model.OTName</b> has been assign to you. 
+    <br />
+    <br />
+    Regards
+    <br />
+    Administrator
+    <br />
+    @Model.UserName
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

@@ -195,8 +195,16 @@
 
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label for="phone" ,@maxlength=10>@SessionX.ProgramName</label>
-                                    @Html.TextBoxFor(m => m.ProgramName, new { @class = "form-control" })
+                                    <label for="phone" ,@maxlength=10>@SessionX.ProgramName</label> 
+                                    @Html.DropDownListFor(m => m.ProgramName, new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Selected = true, Text = "PF", Value =  "PF"},
+                                            new SelectListItem { Selected = false, Text = "Safeer", Value= "Safeer"},
+                                            new SelectListItem { Selected = false, Text = "SYC", Value= "SYC"},
+                                            new SelectListItem { Selected = false, Text = "CP", Value= "CP"},
+                                            new SelectListItem { Selected = false, Text = "LP", Value= "LP"},
+                                            new SelectListItem { Selected = false, Text = "Murshidy", Value= "Murshidy"}
+                                         }, new { @class = "form-control"})
                                     @Html.ValidationMessageFor(m => m.ProgramName, "", new { @class = "text-danger" })
 
                                 </div>
