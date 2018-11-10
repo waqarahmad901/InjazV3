@@ -826,15 +826,29 @@ namespace TmsWebApp.Controllers
         public ActionResult UpdatePassword()
         {
             ResetPasswordViewModel model = new ResetPasswordViewModel();
+            var partnerid = Request["partnerid"];
+            if (partnerid != null)
+                TempData["partnerId"] =  partnerid;
             return View(model);
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult UpdatePassword(ResetPasswordViewModel model)
+        public ActionResult UpdatePassword(ResetPasswordViewModel model,int? id = null)
         {
             var su = Session["user"] as ContextUser;
             var repository = new AccountRepository();
-            if (su != null)
+            
+            var partnerid = TempData["partnerid"].ToString();
+            if (partnerid != null)
+            {
+                var FunderUserID = new FunderRepository().GetByRowId(Guid.Parse(partnerid)).FunderUserID;
+                var user = repository.Get(FunderUserID);
+                user.Password = EncryptionKeys.Encrypt(model.Password);
+                user.FirstLogin = true;
+                repository.Put(user.Id, user);
+                su.OUser = null;
+            }
+            if (su.OUser != null)
             {
                 var user = repository.Get(su.OUser.Id);
                 user.Password = EncryptionKeys.Encrypt(model.Password);

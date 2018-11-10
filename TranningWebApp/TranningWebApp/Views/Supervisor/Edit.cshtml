@@ -27,7 +27,7 @@
             <div class="col-sm-6">
                 @using (Html.BeginForm("Edit", "Supervisor", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    if (cu.EnumRole == EnumUserRole.Volunteer && Model.orientation_training == null)
+                    if (cu.EnumRole == EnumUserRole.Volunteer && (Model.IsApprovedAtLevel3 == null || Model.IsApprovedAtLevel3.Value == false))
                     {
 
                     <div class="col-sm-12">
@@ -225,9 +225,11 @@
                             }
                             else
                             {
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="accept" id="acceptbtn" disabled><i class="fa fa-check-square-o"></i> @Supervisor.Accept</button>
-                            </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="accept" id="acceptbtn" disabled><i class="fa fa-check-square-o"></i> @Supervisor.Accept</button>
+                                    <button type="submit" class="btn btn-sm btn-danger pull-left" name="SubmitButton" value="otreject"><i class="fa fa-times"></i> @Supervisor.Reject</button>
+
+                                </div>
                             }
                         }
 

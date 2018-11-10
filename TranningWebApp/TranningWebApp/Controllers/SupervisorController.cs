@@ -53,7 +53,7 @@ namespace TmsWebApp.Controllers
             volunteer.OTDateString = volunteer.OTDateTime != null ? volunteer.OTDateTime.Value.ToShortDateString() : null;
             var Ots = new OTRepository().Get();
 
-            var Ots1 = Ots.Select(x =>
+            var Ots1 = Ots.Where(x => (volunteer.orientation_training != null && volunteer.orientation_training.Id == x.Id) || x.OTDateTime != null && x.OTDateTime.Value.Date >= DateTime.Now.Date).Select(x =>
              new SelectListItem { Text = x.Subject + " - " + (x.OTDateTime != null ? x.OTDateTime.Value.ToShortDateString() : null), Value = x.Id + "" }).ToList();
             if (volunteer.orientation_training == null)
                 volunteer.OTId = Ots.Last().Id;
