@@ -1,0 +1,24 @@
+﻿
+@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.User</b>
+    <br />
+    <br />
+    This is to inform you that volunteer <b>@Model.VolunteerName</b> has reject OT <b>@Model.OTSubject</b> on <b>@DateTime.Now.ToShortDateString()</b>
+
+    <br />
+    <br />
+    Regards
+    <br />
+    Volunteer
+    <br />
+    @Model.VolunteerName
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

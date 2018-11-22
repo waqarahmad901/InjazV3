@@ -1,0 +1,57 @@
+﻿@model TmsWebApp.Models.ForgotPasswordViewModel
+@{
+    Layout = null;
+}
+@using TranningWebApp.Resource
+@{
+    string lan = "en";
+    string dir = "ltr";
+    if (Request.Cookies["lan"] != null && Request.Cookies["lan"].Value == "ar")
+    {
+        lan = "ar";
+        dir = "rtl";
+    }
+}
+<!DOCTYPE html>
+<html lang="@lan" dir="@dir">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Injaz</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/simple-line-icons.css" rel="stylesheet">
+
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/cust-style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <!-- <div class="col-md-12 text-center">
+                <img src="img/injaz.png" class="logo">
+            </div> -->
+            <div class="col-md-8" style="text-align:center">
+                <div class="card-group">
+                    <div class="card mt-3 mb-3">
+                        <div class="card-block">
+                            <img src="~/img/error.png" style="margin-top:30px; margin-bottom:50px"/>
+                            <h2>Error occured!</h2>
+                           
+                            <p class="text-muted" style="font-size:30px;margin-top:100px">Please <a href="@Url.Action("Login","Account")">@General.TSignin</a> </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

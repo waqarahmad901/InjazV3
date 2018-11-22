@@ -2310,6 +2310,7 @@
           <Property Name="OTId" Type="int" />
           <Property Name="OTIdAssigner" Type="int" />
           <Property Name="OTAcceptedByVolunteer" Type="bit" Nullable="false" />
+          <Property Name="OTRejectedByVolunteer" Type="bit" Nullable="false" />
           <Property Name="OTAttendenceForVolunteer" Type="bit" Nullable="false" />
           <Property Name="OTDateTime" Type="datetime" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="30" />
@@ -3164,6 +3165,7 @@
           <Property Name="ThirdName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="orientation_training" Relationship="TrainingProjectModel.FK_volunteer_profile_orientation_training" FromRole="volunteer_profile" ToRole="orientation_training" />
+          <Property Name="OTRejectedByVolunteer" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_adminuser_lk_role">
           <End Role="lk_role" Type="Self.lk_role" Multiplicity="1" />
@@ -5951,6 +5953,7 @@
           <EntitySetMapping Name="volunteer_profile">
             <EntityTypeMapping TypeName="TrainingProjectModel.volunteer_profile">
               <MappingFragment StoreEntitySet="volunteer_profile">
+                <ScalarProperty Name="OTRejectedByVolunteer" ColumnName="OTRejectedByVolunteer" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
                 <ScalarProperty Name="SecondName" ColumnName="SecondName" />

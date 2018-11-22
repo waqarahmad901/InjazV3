@@ -160,9 +160,45 @@ namespace TmsWebApp.Controllers
                 repository.Put(oVolunteer.Id, oVolunteer);
                 return Redirect("/Volunteer/Edit?id=" + oVolunteer.RowGuid);
             }
+            if (volunteer.SubmitButton == "otreject")
+            {
+                //todo: send notification to super admin
+                if (oVolunteer.OTIdAssigner != null)
+                {
+                    var ot = new OTRepository().Get(oVolunteer.OTId.Value);
+                    var admin = new AccountRepository().Get(oVolunteer.OTIdAssigner.Value);
+                    var bogusController = Util.CreateController<EmailTemplateController>();
+                    EmailTemplateModel emodel =
+                        new EmailTemplateModel
+                        {
+                            Title = "Injaz: accepted by volunteer.",
+                            VolunteerName = oVolunteer.VolunteerName,
+                            User = admin.FirstName,
+                            OTSubject = ot.Subject
+                        };
+                    string body =
+                        Util.RenderViewToString(bogusController.ControllerContext, "VolunteerAcceptsOT", emodel);
+                    EmailSender.SendSupportEmail(body, admin.Email);
+
+                }
+
+                oVolunteer.OTRejectedByVolunteer =true;
+                repository.Put(oVolunteer.Id, oVolunteer);
+                return Redirect("/Volunteer/Edit?id=" + oVolunteer.RowGuid);
+            }
             if (volunteer.SubmitButton == "otattendense")
             {
-                oVolunteer.OTAttendenceForVolunteer = volunteer.OTAttendenceForVolunteer;
+                if (volunteer.OTAttendenceForVolunteer)
+                {
+                    oVolunteer.OTAttendenceForVolunteer = volunteer.OTAttendenceForVolunteer;
+                }
+                else
+                {
+                    oVolunteer.OTId = volunteer.OTId;
+                    oVolunteer.OTIdAssigner = cu.OUser.Id;
+                    oVolunteer.OTAcceptedByVolunteer = false;
+                    oVolunteer.OTRejectedByVolunteer = false;
+                }
                 repository.Put(oVolunteer.Id, oVolunteer);
                 return RedirectToAction("Index", new { status = "approved" });
             }

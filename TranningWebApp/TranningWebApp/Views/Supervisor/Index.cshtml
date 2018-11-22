@@ -89,55 +89,59 @@
                             <td>@item.AcademicQualification</td>
                             <td>@item.VolunteerMobile</td>
                             @if (status == "pending" || string.IsNullOrEmpty(status) || (status == "rejected"))
+                            {
+                                <td>
+                                    @if (status == "rejected")
                                     {
-                                    <td>
-                                        @if (status == "rejected")
-                                            {
-                                            <a href="@Url.Action("ApproveRejectByCustomUrl", new { rowGuid = item.RowGuid, reqStatus = "approved", comment = "" })">@Supervisor.Approve</a>
-                                            }
-                                            else
-                                            {
-                                            <a href="@Url.Action("ApproveRejectByCustomUrl", new { rowGuid = item.RowGuid, reqStatus = "approved", comment = "" })">@Supervisor.Approve</a>
-                                            <a href="#" onclick="openModel('@item.RowGuid')">@Supervisor.Reject</a>
-                                            }
-                                    </td>
+                                        <a href="@Url.Action("ApproveRejectByCustomUrl", new { rowGuid = item.RowGuid, reqStatus = "approved", comment = "" })">@Supervisor.Approve</a>
                                     }
+                                    else
+                                    {
+                                        <a href="@Url.Action("ApproveRejectByCustomUrl", new { rowGuid = item.RowGuid, reqStatus = "approved", comment = "" })">@Supervisor.Approve</a>
+                                        <a href="#" onclick="openModel('@item.RowGuid')">@Supervisor.Reject</a>
+                                    }
+                                </td>
+                            }
                             @if (status == "rejected")
-                                    {
-                                    <td>@item.RejectedBy</td>
+                            {
+                                <td>@item.RejectedBy</td>
 
-                                    }
+                            }
                             @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status != "rejected")
-                                    {
-                                        if (item.OTAttendenceForVolunteer)
-                                        {
-                                    <td>@Supervisor.Marked</td>
-                                        }
-                                        else
-                                        {
+                            {
+                                if (item.OTAcceptedByVolunteer)
+                                {
+                                    <td>@Supervisor.Accept</td>
+                                }
+                                else if (item.OTRejectedByVolunteer)
+                                {
+                                    <td>@Supervisor.Reject</td>
+                                }
+                                else
+                                {
                                     <td>@Supervisor.NotMarked</td>
 
-                                        }
-                                    }
+                                }
+                            }
 
                             @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status != "rejected")
-                                    {
-                                        if (item.IsActive != null && item.IsActive.Value)
-                                        {
+                            {
+                                if (item.IsActive != null && item.IsActive.Value)
+                                {
                                     <td><span class="badge badge-success">@General.Active</span></td>
-                                        }
-                                        else
-                                        {
+                                }
+                                else
+                                {
                                     <td><span class="badge badge-default">@General.InActive</span></td>
-                                        }
-                                    }
+                                }
+                            }
                             <td>
 
                                 <a href="@Url.Action("Edit", new { id = item.RowGuid })" title="Edit"><i class="fa fa-pencil"></i></a>
                                 @if (cu.EnumRole == TmsWebApp.Common.EnumUserRole.SuperAdmin && status != "rejected")
-                                        {
-                                        <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a>
-                                        }
+                                {
+                                    <a href="#" onclick="onArchiveClick('@Model.PageNumber','@item.RowGuid')" title="Archive"><i class="fa fa-archive"></i></a>
+                                }
                             </td>
                         </tr>
 

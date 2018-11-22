@@ -27,6 +27,12 @@ namespace TmsWebApp.Controllers
             return View();
         }
 
+        public ActionResult Error()
+        {
+
+            return View();
+        }
+
         public ActionResult ChangeLanguage(string lan)
         {
             HttpCookie myCookie = new HttpCookie("lan");

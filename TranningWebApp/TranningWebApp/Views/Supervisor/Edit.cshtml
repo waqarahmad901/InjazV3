@@ -174,7 +174,7 @@
                                     </div>
                                 }
                             }
-                            @if (!Model.OTAcceptedByVolunteer && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
+                            @if (!(Model.OTAcceptedByVolunteer || Model.OTRejectedByVolunteer) && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
                             {
                                 <div class="form-group">
                                     <label class="form-form-control-label">@Supervisor.SetOT</label>
@@ -191,7 +191,7 @@
                                 <label style="margin-left:10px">@Supervisor.Accecptedbyvolunteer </label>
                             }
 
-                            @if (Model.OTAcceptedByVolunteer && cu.EnumRole == EnumUserRole.SuperAdmin)
+                            @if ((Model.OTAcceptedByVolunteer || Model.OTRejectedByVolunteer) && cu.EnumRole == EnumUserRole.SuperAdmin)
                             {
                                 <div class="form-group">
                                     <label class="form-form-control-label">@Supervisor.SetOT</label>
@@ -201,10 +201,13 @@
                                     @Html.CheckBoxFor(x => x.OTAcceptedByVolunteer, new { @style = "margin-top:5px", @disabled = "disabled" })
                                     <label style="margin-left:10px">@Supervisor.Accecptedbyvolunteer </label>
                                 </div>
+                                if (Model.OTAcceptedByVolunteer)
+                                {
                                 <div class="form-group">
                                     @Html.CheckBoxFor(x => x.OTAttendenceForVolunteer, new { @style = "margin-top:5px", @onchange = "changeAttForVol(this)" })
                                     <label style="margin-left:10px">@Supervisor.OTAttendance</label>
                                 </div>
+                                }
                             }
                             @Html.HiddenFor(x => x.RowGuid)
                         </div>
@@ -233,7 +236,7 @@
                             }
                         }
 
-                        @if (!Model.OTAcceptedByVolunteer && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
+                        @if (!(Model.OTAcceptedByVolunteer || Model.OTRejectedByVolunteer) && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
                         {
                            
                             <div class="card-footer">
@@ -245,7 +248,7 @@
 
                         @if (Model.OTAcceptedByVolunteer && cu.EnumRole == EnumUserRole.SuperAdmin)
                         {
-                            string btnState = Model.OTAttendenceForVolunteer ? "" : "disabled";
+                            string btnState = Model.OTAttendenceForVolunteer ? "disabled" : "";
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-sm btn-primary pull-right" id="approveBtn" name="SubmitButton" value="otattendense" @btnState><i class="fa fa-check-square-o"></i> @Supervisor.Confirm</button>
@@ -265,9 +268,12 @@
 
     function changeAttForVol(checkbox) {
         if (checkbox.checked == true) {
-            document.getElementById("approveBtn").removeAttribute("disabled");
+
+            //document.getElementById("approveBtn").removeAttribute("disabled");
+            document.getElementById("OTId").setAttribute("disabled", "disabled");
         } else {
-            document.getElementById("approveBtn").setAttribute("disabled", "disabled");
+            //document.getElementById("approveBtn").setAttribute("disabled", "disabled");
+            document.getElementById("OTId").removeAttribute("disabled");
         }
     }
     function OTAcceptedByVolunteerChange(checkbox)

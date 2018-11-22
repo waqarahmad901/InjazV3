@@ -838,7 +838,7 @@ namespace TmsWebApp.Controllers
             var su = Session["user"] as ContextUser;
             var repository = new AccountRepository();
             
-            var partnerid = TempData["partnerid"].ToString();
+            var partnerid = TempData["partnerid"]?.ToString();
             if (partnerid != null)
             {
                 var FunderUserID = new FunderRepository().GetByRowId(Guid.Parse(partnerid)).FunderUserID;
