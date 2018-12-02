@@ -496,6 +496,11 @@ namespace TmsWebApp.Controllers
                     return RedirectToAction("StudentAttendense", new { sessionId = oSession.RowGUID });
 
                 }
+                if (session.SubmitButton == "showattendance")
+                {
+                    return RedirectToAction("StudentAttendense", new { sessionId = oSession.RowGUID,isedit = false });
+
+                }
                 if (session.SubmitButton == "reject")
                 {
                     oSession.Status = SessionStatus.Rejected.ToString();
@@ -557,11 +562,11 @@ namespace TmsWebApp.Controllers
                     var outputFile = PdfGenerator.GenerateOnflyPdf(certificatePath, pdfCoordinates, fontFilePath);
                     if (session.SubmitButton == "viewcertificate")
                     {
-                        EmailSender.SendSupportEmail("Student Template", participant.Email, outputFile);
+                        EmailSender.SendSupportEmail("Please find certificate in attachments", participant.Email, outputFile);
                         oSession.session_participant.Where(x => x.ParticipantID == participant.Id).First().IsCertificateGenerated = true;
                     }
                     else
-                        EmailSender.SendSupportEmail("Volunteer Template", oSession.volunteer_profile.VolunteerEmail, outputFile);
+                        EmailSender.SendSupportEmail("Please find certificate in attachments", oSession.volunteer_profile.VolunteerEmail, outputFile);
 
                 }
             }

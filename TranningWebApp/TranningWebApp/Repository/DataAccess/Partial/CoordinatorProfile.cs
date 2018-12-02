@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using TmsWebApp.HelpingUtilities;
 
 namespace TranningWebApp.Repository.DataAccess
@@ -16,6 +17,8 @@ namespace TranningWebApp.Repository.DataAccess
         public string Password { get; set; }
         [EmailAddress(ErrorMessageResourceType = typeof(Resource.Funder), ErrorMessageResourceName = "EmailNotCorrect")]
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
+        [Remote("EmailAlreadyExistCoordinator", "Home", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "EmailAlreadyExist")]
+
         public string CoordinatorEmail { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string Gender { get; set; }

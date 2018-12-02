@@ -171,31 +171,35 @@
         if ($("#stuform").valid()) {
             $('#submitgbutton').button('loading');
             debugger;
+
+            var intlNumber = $(".selected-dial-code").text() + $("#Mobile").val();
+            $("#MobileNo").val(intlNumber);
+            $("#stuform").submit();
            
             // check if email is already exist
-            $.ajax({
-                url : "/Participant/CheckEmail",
-                type : "get",
-                async: false,
-                data: { email: $("#email").val(), nid: $("#NationalID").val() },
-                success:function (data, status) {
-                    $('#submitgbutton').button('reset');
-                    if (data.email == true) {
-                        $("#emailvalidation").show();
+            //$.ajax({
+            //    url : "/Participant/CheckEmail",
+            //    type : "get",
+            //    async: false,
+            //    data: { email: $("#email").val(), nid: $("#NationalID").val() },
+            //    success:function (data, status) {
+            //        $('#submitgbutton').button('reset');
+            //        if (data.email == true) {
+            //            $("#emailvalidation").show();
                         
-                    }
-                    else if (data.nid == true) {
-                        $("#nidvalidation").show();
+            //        }
+            //        else if (data.nid == true) {
+            //            $("#nidvalidation").show();
 
-                    }
-                    else {
-                        debugger;
-                        var intlNumber = $(".selected-dial-code").text() + $("#Mobile").val();
-                        $("#MobileNo").val(intlNumber); 
-                        $("#stuform").submit();
-                    }
-                }    
-             }); 
+            //        }
+            //        else {
+            //            debugger;
+            //            var intlNumber = $(".selected-dial-code").text() + $("#Mobile").val();
+            //            $("#MobileNo").val(intlNumber); 
+            //            $("#stuform").submit();
+            //        }
+            //    }    
+            // }); 
         }  
     }
 

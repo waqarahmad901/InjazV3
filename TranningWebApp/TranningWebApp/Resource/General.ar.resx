@@ -420,4 +420,10 @@
   <data name="MobileAlreadyValidation" xml:space="preserve">
     <value>رقم الجوال موجود بالفعل</value>
   </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>البريد الإلكتروني المستخدم بالفعل ، يرجى اختيار بريد إلكتروني آخر</value>
+  </data>
+  <data name="UserAlreadyExist" xml:space="preserve">
+    <value>المستخدم بالفعل في المستخدم ، يرجى اختيار آخر</value>
+  </data>
 </root>

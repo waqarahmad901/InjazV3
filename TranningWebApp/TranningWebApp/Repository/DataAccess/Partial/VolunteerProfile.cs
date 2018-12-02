@@ -19,7 +19,10 @@ namespace TranningWebApp.Repository.DataAccess
         public string VolunteerName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Resource.Funder), ErrorMessageResourceName = "EmailNotCorrect")]
+        [Remote("EmailAlreadyExist", "Home", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "EmailAlreadyExist")]
+
         public string VolunteerEmail { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorNumaric")]
         [StringLength(10, MinimumLength = 9, ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "PhoneLengthValidation")]

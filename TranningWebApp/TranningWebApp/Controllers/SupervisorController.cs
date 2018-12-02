@@ -120,6 +120,7 @@ namespace TmsWebApp.Controllers
                 //   oVolunteer.OTDateTime = DateTime.Parse(volunteer.OTDateString);
                 oVolunteer.OTId = volunteer.OTId;
                 oVolunteer.OTIdAssigner = cu.OUser.Id;
+                oVolunteer.OTRejectedByVolunteer = false;
                 repository.Put(oVolunteer.Id, oVolunteer);
                 string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
                 var bogusController = Util.CreateController<EmailTemplateController>();

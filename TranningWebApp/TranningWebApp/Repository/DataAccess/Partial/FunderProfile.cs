@@ -8,6 +8,7 @@ namespace TranningWebApp.Repository.DataAccess
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
 
     public partial class funder_profile
     {
@@ -23,6 +24,7 @@ namespace TranningWebApp.Repository.DataAccess
         public string FunderMobile { get; set; } 
         [EmailAddress(ErrorMessageResourceType = typeof(Resource.Funder), ErrorMessageResourceName = "EmailNotCorrect")]
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
+        [Remote("EmailAlreadyExistFunder", "Home", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "EmailAlreadyExist")]
         public string FunderEmail { get; set; }
         //[Required(ErrorMessage = "Password is required")]
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d~!@#$%^&*()_+]{8,}$", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "PassordError")]

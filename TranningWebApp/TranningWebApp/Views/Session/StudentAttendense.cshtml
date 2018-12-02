@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "StudentAttendense";
     DateTime startDay = Model.ActualDateTime.Value;
+    var isDisabled = Request["isedit"] != null ? "disabled" : "";
 
 }
 <script type="text/javascript">
@@ -71,7 +72,7 @@
                                                 int id = Model.session_actual_time.ElementAt(i).Id;
                                                 if (IsActive)
                                                 {
-                                                    <td><input type="checkbox" name="@(item.ParticipantID +"-" +id)" /></td>
+                                                    <td><input type="checkbox" name="@(item.ParticipantID +"-" +id)" @isDisabled/></td>
                                                 }
                                             }
                                         </tr>
@@ -82,7 +83,11 @@
                         </div>
                         @Html.HiddenFor(x=>x.RowGUID)
                         <div class="card-footer">
+                            @if (isDisabled == "")
+                            {
                             <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="approved"><i class="fa fa-dot-circle-o"></i> @SessionX.Submit</button>
+
+                            }
                         </div>
                     </div>
                 </div>

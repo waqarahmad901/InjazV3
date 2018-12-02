@@ -18,7 +18,7 @@ using TranningWebApp.Repository.Lookup;
 
 namespace TmsWebApp.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     public class HomeController : BaseController
     {
         public ActionResult Index()
@@ -38,7 +38,7 @@ namespace TmsWebApp.Controllers
             HttpCookie myCookie = new HttpCookie("lan");
             myCookie.Value = lan;
             myCookie.Expires = DateTime.Now.AddMonths(1);
-            Response.Cookies.Add(myCookie); 
+            Response.Cookies.Add(myCookie);
             if (Request.UrlReferrer != null) return Redirect(Request.UrlReferrer.PathAndQuery);
             return View("Index");
         }
@@ -81,7 +81,7 @@ namespace TmsWebApp.Controllers
                     }
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 isSavedSuccessfully = false;
             }
@@ -89,11 +89,11 @@ namespace TmsWebApp.Controllers
 
             if (isSavedSuccessfully)
             {
-                return Json(new {Message = fName});
+                return Json(new { Message = fName });
             }
             else
             {
-                return Json(new {Message = "Error in saving file"});
+                return Json(new { Message = "Error in saving file" });
             }
         }
 
@@ -125,9 +125,9 @@ namespace TmsWebApp.Controllers
         [AllowAnonymous]
         public ActionResult ConvertDateCalendar(string dateConv, string calendar, string dateLangCulture)
         {
-           
-                return Json(Util.DateConversion(dateConv, calendar, dateLangCulture), JsonRequestBehavior.AllowGet);
-           }
+
+            return Json(Util.DateConversion(dateConv, calendar, dateLangCulture), JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         [AllowAnonymous]
@@ -136,11 +136,11 @@ namespace TmsWebApp.Controllers
             DashBoardClanderModel clander = new DashBoardClanderModel();
             List<string> list = new List<string>();
             DateTime currDate = DateTime.Parse(dateConv);
-            for(int i =0; i < days; i++)
+            for (int i = 0; i < days; i++)
             {
                 DateTime tempdate = currDate.AddDays(i);
                 if (i == 0)
-                    clander.startdate = Util.DateConversion(tempdate.ToShortDateString(), calendar, dateLangCulture,true);
+                    clander.startdate = Util.DateConversion(tempdate.ToShortDateString(), calendar, dateLangCulture, true);
                 if (i == days - 1)
                     clander.enddate = Util.DateConversion(tempdate.ToShortDateString(), calendar, dateLangCulture, true);
 
@@ -158,7 +158,7 @@ namespace TmsWebApp.Controllers
         public ActionResult GetCountryIso(int id)
         {
             var repo = new CountryRepository();
-            return Json(repo.Get(id).Iso2,JsonRequestBehavior.AllowGet);
+            return Json(repo.Get(id).Iso2, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetDistrict(string id)
@@ -168,10 +168,42 @@ namespace TmsWebApp.Controllers
         }
 
         public ActionResult validatevolmobile(string VolunteerMobile)
-       {
+        {
             var repo = new VolunteerRepository();
             return Json(!repo.ValidateMobileNumber(VolunteerMobile), JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult EmailAlreadyExist(string VolunteerEmail)
+        {
+            var repo = new VolunteerRepository();
+            return Json(!repo.EmailAlreadyExist(VolunteerEmail), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult EmailAlreadyExistFunder(string FunderEmail)
+        {
+            var repo = new VolunteerRepository();
+            return Json(!repo.EmailAlreadyExist(FunderEmail), JsonRequestBehavior.AllowGet);
+        }
+         public ActionResult EmailAlreadyExistStudent(string Email)
+        {
+            var repo = new VolunteerRepository();
+            return Json(!repo.EmailAlreadyExist(Email), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult EmailAlreadyExistUser(string Email)
+        {
+            var repo = new VolunteerRepository();
+            return Json(!repo.EmailAlreadyExist(Email), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult EmailAlreadyExistCoordinator(string CoordinatorEmail)
+        {
+            var repo = new VolunteerRepository();
+            return Json(!repo.EmailAlreadyExist(CoordinatorEmail), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult UserAlreadyExist(string Username)
+        {
+            var repo = new VolunteerRepository();
+            return Json(!repo.UserAlreadyExist(Username), JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult ChanngeProfile()
         {
@@ -181,7 +213,7 @@ namespace TmsWebApp.Controllers
                 if (cu.EnumRole == EnumUserRole.Funder)
                 {
                     var funderid = new FunderRepository().GetByUserId(cu.OUser.Id).RowGUID;
-                    return RedirectToAction("Edit", "Funder",new {id = funderid });
+                    return RedirectToAction("Edit", "Funder", new { id = funderid });
                 }
                 if (cu.EnumRole == EnumUserRole.SuperAdmin || cu.EnumRole == EnumUserRole.Approver1 || cu.EnumRole == EnumUserRole.Approver2 || cu.EnumRole == EnumUserRole.Approver3)
                 {
@@ -193,7 +225,7 @@ namespace TmsWebApp.Controllers
                 if (cu.EnumRole == EnumUserRole.Participant)
                     return RedirectToAction("ParticipantProfile", "Participant");
                 if (cu.EnumRole == EnumUserRole.Volunteer)
-                    return RedirectToAction("VolunteerProfile", "Volunteer",new {editprofile = true});
+                    return RedirectToAction("VolunteerProfile", "Volunteer", new { editprofile = true });
             }
             return null;
         }

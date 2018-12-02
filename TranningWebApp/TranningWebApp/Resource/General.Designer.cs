@@ -19,7 +19,7 @@ namespace TranningWebApp.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class General {
@@ -246,6 +246,15 @@ namespace TranningWebApp.Resource {
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email already in use, please choose another.
+        /// </summary>
+        public static string EmailAlreadyExist {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExist", resourceCulture);
             }
         }
         
@@ -912,6 +921,15 @@ namespace TranningWebApp.Resource {
         public static string UpdatePassword {
             get {
                 return ResourceManager.GetString("UpdatePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already in user, please choose another.
+        /// </summary>
+        public static string UserAlreadyExist {
+            get {
+                return ResourceManager.GetString("UserAlreadyExist", resourceCulture);
             }
         }
         

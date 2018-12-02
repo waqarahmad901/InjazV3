@@ -415,6 +415,10 @@
                                 {
                                     <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="request"><i class="ffa-dot-circle-o"></i> @SessionX.AssignThisSession</button>
                                 }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="showattendance"><i class="ffa-dot-circle-o"></i> @SessionX.StudentAttendense</button>
+                                }
                             }
                             else if (cu.EnumRole == EnumUserRole.Volunteer && Model.EnumSessionStatus == SessionStatus.Occured)
                             {
@@ -465,7 +469,7 @@
                                     }
 
             </div>
-            @if (Model.Status == SessionStatus.Occured.ToString() && cu.EnumRole == EnumUserRole.Coordinator)
+            @if ((Model.Status == SessionStatus.Occured.ToString() || Model.Status == SessionStatus.Approved.ToString()) && (cu.EnumRole == EnumUserRole.Coordinator || cu.EnumRole == EnumUserRole.SuperAdmin))
             {
                 @Html.Partial("_SessionOccured", Model);
             }

@@ -7,6 +7,14 @@
     var cu = Session["user"] as ContextUser;
     var errorExcel = Request.QueryString["excelerror"] != null;
     var error = Request.QueryString["error"];
+
+    var style = "";
+    
+    if (cu.EnumRole == EnumUserRole.SuperAdmin || Model.ActualDateTime?.Date.AddDays(-1).Date == DateTime.Now.Date)
+    {
+        style = "display:none";
+    }
+
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -109,7 +117,7 @@
 
                 this.on("success", function (file, response) {
                     debugger;
-           
+
                     var imagePathArray = $('#SessionImageLink')[0].value.split(",");
 
                     for (i = 0; i < imagePathArray.length; i++) {
@@ -205,16 +213,16 @@
                     var filesize = file.size;
 
                     if ((Extenstion == "jpg" || Extenstion == "png" || Extenstion == "doc" || Extenstion == "pdf" || Extenstion == "jpeg") && (filesize <= 2000000)) {
- 
+
                     }
                     else {
                         this.removeFile(file);
-                         
+
                         $("#dropzoneFormIdentification").css("border", "4px solid red");
                         $('#identification-photo-error').html("File Not Supported!");
                         $('#identification-photo-error').css("display", "block");
                     }
-                }); 
+                });
                 this.on("success", function (file, response) {
                     debugger;
                     var imagePathArray = $('#EvaluationImageLink')[0].value.split(",");
@@ -225,16 +233,16 @@
                     });
                     for (i = 0; i < imagePathArray.length; i++) {
                         var imageName = imagePathArray[i].trim();
-                        if (imageName != "" && response.Message.lastIndexOf(imageName) != -1) { 
+                        if (imageName != "" && response.Message.lastIndexOf(imageName) != -1) {
                             $('#EvaluationImageLink')[0].value = $('#EvaluationImageLink')[0].value.replace(imageName + ",", "").trim();
                             break;
                         }
-                    } 
-                    $('#EvaluationImageLink')[0].value += response.Message + ", "; 
-                    //  document.getElementById('ProfileImageLink').value = file.name; 
-                }); 
+                    }
+                    $('#EvaluationImageLink')[0].value += response.Message + ", ";
+                    //  document.getElementById('ProfileImageLink').value = file.name;
+                });
             }
-        }; 
+        };
     });
 
 
@@ -258,7 +266,7 @@
         window.location.href = "@Url.Action("Edit",new {id = Model.RowGUID })";
                       });
 
-    
+
      function excelClick() {
         debugger;
         $("#excelclick").button('loading');
@@ -271,11 +279,11 @@
             var excelModel = $('[data-remodal-id=modal]').remodal();
             excelModel.open();
             if ("@errorExcel" === "True")
-            { 
-                $("#filevalidation").show(); 
+            {
+                $("#filevalidation").show();
                 $("#excelerrormsg").text("@error")
             }
-           
+
         });
      }
     if ("@errorExcel" === "True")
@@ -285,7 +293,7 @@
     }
 
 
- 
+
 
 
     function onPageClick(page) {
@@ -301,11 +309,11 @@
             <div class="col-sm-12" style="margin-bottom:10px">
                 @if (Model.session_participant.Count() < Model.NumberOfActualStudents)
                 {
-                    <button type="button" id="addstudent" class="btn btn-sm btn-primary pull-right"  data-loading-text="<i class='fa fa-plus'></i> @SessionX.AddStudent <i class='fa fa-spinner fa-spin'></i>" name="SubmitButton" onclick="participantClick(@null)"><i class="fa fa-plus"></i> @SessionX.AddStudent </button>
+                    <button style="@style" type="button" id="addstudent" class="btn btn-sm btn-primary pull-right" data-loading-text="<i class='fa fa-plus'></i> @SessionX.AddStudent <i class='fa fa-spinner fa-spin'></i>" name="SubmitButton" onclick="participantClick(@null)"><i class="fa fa-plus"></i> @SessionX.AddStudent </button>
                     @*<button type="button" class="btn btn-sm btn-primary pull-right" name="SubmitButton" style="margin-right:5%" value="approved"><i class="fa fa-dot-circle-o"></i> Add In Bulk</button>*@
-                    <button type="button" id="excelclick" class="btn btn-sm btn-primary pull-right" name="SubmitButton" data-loading-text="<i class='fa fa-upload'></i> @SessionX.UploadExcel <i class='fa fa-spinner fa-spin'></i>" style="margin-right:5%" value="approved" onclick="excelClick()"><i class="fa fa-upload"></i> @SessionX.UploadExcel </button>
+                    <button type="button" id="excelclick" class="btn btn-sm btn-primary pull-right" name="SubmitButton" data-loading-text="<i class='fa fa-upload'></i> @SessionX.UploadExcel <i class='fa fa-spinner fa-spin'></i>" style="margin-right:5%; @style" value="approved" onclick="excelClick()"><i class="fa fa-upload"></i> @SessionX.UploadExcel </button>
                 }
-                <a class="btn btn-sm btn-primary pull-right" style="margin-right:5%" href="~/Uploads/DocumentLibrary/DefaultDocument/StudentList.xlsx" name="SubmitButton"><i class="fa fa-download"></i> @SessionX.DownloadExcel</a>
+                <a class="btn btn-sm btn-primary pull-right" style="margin-right:5%; @style" href="~/Uploads/DocumentLibrary/DefaultDocument/StudentList.xlsx" name="SubmitButton"><i class="fa fa-download"></i> @SessionX.DownloadExcel</a>
             </div>
             <table class="table table-hover table-outline mb-0">
                 <thead class="thead-default">
@@ -321,7 +329,7 @@
                             <td>@(item.Name + " " + item.FatherName + " " + item.Family)</td>
                             <td>@item.Mobile</td>
                             <td>@item.NationalID</td>
-                            <td><a href="#" onclick="participantClick('@item.RowGuid')" title="Edit"><i class="fa fa-pencil"></i></a></td>
+                            <td><a href="#" onclick="participantClick('@item.RowGuid')" style="@style" title="Edit"><i class="fa fa-pencil"></i></a></td>
                         </tr>
                     }
                 </thead>
@@ -331,63 +339,67 @@
     </div>
 </div>
 
-<div class="col-sm-6">
-    @using (Html.BeginForm("MarkCompleted", "Session", FormMethod.Post))
-    {
-        <div class="card">
-            <div class="card-header">
-                <strong class="text-primary"><i class="icon-plus"></i> @SessionX.SessionManagement</strong>
-            </div>
-            <div class="card-block">
-                <form action="#"></form>
+@if ((Model.Status == SessionStatus.Occured.ToString()) && (cu.EnumRole == EnumUserRole.Coordinator))
+{
 
-                <div class="form-group">
-                    <label>@SessionX.UploadAddsessionformphoto</label>
-                    @Html.HiddenFor(x => x.SessionImageLink)
-                    <form action="@Url.Action("SaveUploadedFile","Home",new {type = "sessionphoto" })" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 100%; background: none; ">
-                        <div class="fallback">
-                            <input name="file" type="file" multiple />
-                            <input type="submit" value="Upload" />
-                        </div>
-                    </form>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("MarkCompleted", "Session", FormMethod.Post))
+        {
+            <div class="card">
+                <div class="card-header">
+                    <strong class="text-primary"><i class="icon-plus"></i> @SessionX.SessionManagement</strong>
                 </div>
+                <div class="card-block">
+                    <form action="#"></form>
 
-                <div class="form-group">
-                    <label>@SessionX.UploadAddevluationformphoto</label>
-                    @Html.HiddenFor(x => x.EvaluationImageLink)
-                    <form action="@Url.Action("SaveUploadedFile","Home",new {type = "seesionevaluation" })" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneFormEvaluation" style="width: 100%; background: none; ">
-                        <div class="fallback">
-                            <input name="file" type="file" multiple />
-                            <input type="submit" value="Upload" />
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        <label>@SessionX.UploadAddsessionformphoto</label>
+                        @Html.HiddenFor(x => x.SessionImageLink)
+                        <form action="@Url.Action("SaveUploadedFile", "Home", new { type = "sessionphoto" })" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 100%; background: none; ">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                                <input type="submit" value="Upload" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="form-group">
+                        <label>@SessionX.UploadAddevluationformphoto</label>
+                        @Html.HiddenFor(x => x.EvaluationImageLink)
+                        <form action="@Url.Action("SaveUploadedFile", "Home", new { type = "seesionevaluation" })" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneFormEvaluation" style="width: 100%; background: none; ">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                                <input type="submit" value="Upload" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(x => x.MarkedCompletedByVolunteer, new { @style = "margin-top:5px" })
+                        <label style="margin-left:10px"> @SessionX.SessionMarkedCompleted </label>
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(x => x.MarkedCompletedByCoordinator, new { @style = "margin-top:5px" })
+                        <label style="margin-left:10px">@SessionX.SessionMarkedCompletedCoordniator </label>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    @Html.CheckBoxFor(x => x.MarkedCompletedByVolunteer, new { @style = "margin-top:5px" })
-                    <label style="margin-left:10px"> @SessionX.SessionMarkedCompleted </label>
-                </div>
-                <div class="form-group">
-                    @Html.CheckBoxFor(x => x.MarkedCompletedByCoordinator, new { @style = "margin-top:5px" })
-                    <label style="margin-left:10px">@SessionX.SessionMarkedCompletedCoordniator </label>
-                </div>
-                
-            </div>
-            <div class="card-footer">
-                @if (cu.EnumRole == EnumUserRole.Coordinator && Model.MarkedCompletedByCoordinator)
-                {
-                    if (!Model.IsFilledCoordinator)
+                <div class="card-footer">
+                    @if (cu.EnumRole == EnumUserRole.Coordinator && Model.MarkedCompletedByCoordinator)
                     {
-                         <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="fillvolunteerevaluation" style="margin-left:10px"><i class="fa fa-dot-circle-o"></i> @SessionX.Fillupvolunteerevaluation</button>
+                        if (!Model.IsFilledCoordinator)
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="fillvolunteerevaluation" style="margin-left:10px"><i class="fa fa-dot-circle-o"></i> @SessionX.Fillupvolunteerevaluation</button>
+                        }
                     }
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="Upload" style="margin-left:10px"><i class="fa fa-dot-circle-o"></i> @SessionX.UploadPhotos</button>
-                    <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="MarkComplete"><i class="fa fa-dot-circle-o"></i> @SessionX.MarkCompleted</button>
-                }
+                    else
+                    {
+                        <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="Upload" style="margin-left:10px"><i class="fa fa-dot-circle-o"></i> @SessionX.UploadPhotos</button>
+                        <button type="submit" class="btn btn-sm btn-primary pull-right" name="SubmitButton" value="MarkComplete"><i class="fa fa-dot-circle-o"></i> @SessionX.MarkCompleted</button>
+                    }
+                </div>
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
             </div>
-            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
-        </div>
-    }
-</div>
+        }
+    </div>
 
+}

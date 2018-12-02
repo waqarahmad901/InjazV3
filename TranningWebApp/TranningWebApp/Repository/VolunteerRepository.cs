@@ -167,5 +167,13 @@ namespace TranningWebApp.Repository
         {
             return Context.volunteer_profile.Any(x => x.VolunteerMobile == mobNumber);
         }
+        internal bool EmailAlreadyExist(string email)
+        {
+            return Context.users.Any(x => x.Email== email);
+        }
+        internal bool UserAlreadyExist(string user)
+        {
+            return Context.users.Any(x => x.Username == user);
+        }
     }
 }

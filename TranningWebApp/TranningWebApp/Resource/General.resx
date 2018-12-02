@@ -432,4 +432,10 @@
   <data name="MobileAlreadyValidation" xml:space="preserve">
     <value>Mobile Number Already Exist.</value>
   </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>Email already in use, please choose another</value>
+  </data>
+  <data name="UserAlreadyExist" xml:space="preserve">
+    <value>User already in user, please choose another</value>
+  </data>
 </root>

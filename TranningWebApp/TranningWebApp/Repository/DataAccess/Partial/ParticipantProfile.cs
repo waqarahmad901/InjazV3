@@ -9,6 +9,7 @@ namespace TranningWebApp.Repository.DataAccess
 {
     using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public partial class participant_profile
     {
@@ -30,6 +31,8 @@ namespace TranningWebApp.Repository.DataAccess
         public string Mobile { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Resource.Funder), ErrorMessageResourceName = "EmailNotCorrect")]
+        [Remote("EmailAlreadyExistStudent", "Home", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "EmailAlreadyExist")]
+
         public string Email { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
