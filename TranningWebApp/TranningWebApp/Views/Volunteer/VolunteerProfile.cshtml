@@ -171,7 +171,7 @@
                                             new SelectListItem{ Text= General.Diploma, Value = "Diploma" },
                                             new SelectListItem{ Text=General.Bachelor , Value = "Bachelor" },
                                             new SelectListItem{ Text=General.HigherDiploma , Value = "HigherDiploma" },
-                                            new SelectListItem{ Text=General.Fellowship , Value = "Fellowship" },
+                                            new SelectListItem{ Text=General.Fellowship , Value = "Master" },
                                             new SelectListItem{ Text=General.PHD , Value = "PHD" },
                                          }, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.AcademicQualification, "", new { @class = "text-danger" })
@@ -280,7 +280,7 @@
                             </div>
                             
 
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label>@Coordinator.VolunteerActivity1</label>
                                 @Html.TextAreaFor(m => m.VolunteerActivity1, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.VolunteerActivity1, "", new { @class = "text-danger" })
@@ -310,7 +310,7 @@
                                 <br />
                                 @Html.TextBoxFor(m => m.OtherCertificate3, new { @class = "form-control" })
 
-                            </div>
+                            </div>*@
                           
                             <div class="form-group">
                                 <label>@Volunteer.LinkedIn</label>

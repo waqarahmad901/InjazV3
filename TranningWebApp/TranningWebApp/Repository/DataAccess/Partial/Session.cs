@@ -30,6 +30,9 @@ namespace TranningWebApp.Repository.DataAccess
 
         public string SessionImageLink { get; set; }
         public string EvaluationImageLink { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
+
+        public string StudentEvaluationCatagory { get; set; }
 
         public IPagedList<participant_profile> PagedParticipants { get; set; }
 

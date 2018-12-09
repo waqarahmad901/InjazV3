@@ -136,6 +136,7 @@ namespace TmsWebApp.Controllers
                 oVolunteer.CreatedBy = 1;
                 oVolunteer.FirstLogin = true;
                 oVolunteer.RowGuid = Guid.NewGuid();
+                oVolunteer.IsActive = true;
             }
             else
             {

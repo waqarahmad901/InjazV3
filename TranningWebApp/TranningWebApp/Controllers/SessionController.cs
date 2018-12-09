@@ -99,7 +99,7 @@ namespace TmsWebApp.Controllers
 
         public ActionResult Edit(Guid? id, int page = 1)
         {
-            SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "0" };
+            SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "" };
 
 
 

@@ -1091,7 +1091,7 @@
     <Content Include="Views\EmailTemplate\VolunteerRejected.cshtml" />
     <Content Include="Views\EmailTemplate\VolunteerApproved.cshtml" />
     <Content Include="Views\EmailTemplate\SchoolProfileCoordinator.cshtml" />
-    <Content Include="Views\EmailTemplate\OTLinkWithVolunteer.cshtml" />
+    <Content Include="Views\EmailTemplate\OTLink.cshtml" />
     <Content Include="Views\EmailTemplate\VolunteerRejectOT.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>

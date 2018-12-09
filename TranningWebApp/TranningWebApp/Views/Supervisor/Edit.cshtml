@@ -174,7 +174,7 @@
                                     </div>
                                 }
                             }
-                            @if (!Model.OTAcceptedByVolunteer || Model.OTRejectedByVolunteer && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
+                            @if ((!Model.OTAcceptedByVolunteer || Model.OTRejectedByVolunteer) && isApproved && cu.EnumRole == EnumUserRole.SuperAdmin)
                             {
                                 <div class="form-group">
                                     <label class="form-form-control-label">@Supervisor.SetOT</label>

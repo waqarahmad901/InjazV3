@@ -154,6 +154,7 @@ namespace TmsWebApp.Controllers
                 ot.RowGuid = Guid.NewGuid();
                 ot.CreatedAt = DateTime.Now;
                 ot.CreatedBy = cu.OUser.Id;
+                ot.IsActive = true;
             }
             else
             {
@@ -177,6 +178,13 @@ namespace TmsWebApp.Controllers
             {
                var vol = new VolunteerRepository().Get(int.Parse(item));
                OTLinkWithVolunteerEmail(vol, ot.Subject);
+
+            }
+
+            foreach (var item in ot.SchoolIds.Split(','))
+            {
+                var sch = new SchoolRepository().Get(int.Parse(item));
+                OTLinkWithSchoolEmail(sch, ot.Subject);
 
             }
 
@@ -211,13 +219,22 @@ namespace TmsWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        private void OTLinkWithSchoolEmail(school sch, string OTName)
+        {
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with school", RedirectUrl = url, VolunteerName = sch.coordinator_profile.First().CoordinatorName, OTName = OTName };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLink", model);
+            EmailSender.SendSupportEmail(body, sch.coordinator_profile.First().CoordinatorEmail);
+        }
+
         private static void OTLinkWithVolunteerEmail(volunteer_profile volunteer,string OTName)
         {
            
             string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
             var bogusController = Util.CreateController<EmailTemplateController>();
             EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with volunteer", RedirectUrl = url, VolunteerName = volunteer.VolunteerName ,OTName = OTName};
-            string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLinkWithVolunteer", model);
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLink", model);
             EmailSender.SendSupportEmail(body, volunteer.VolunteerEmail);
         }
 

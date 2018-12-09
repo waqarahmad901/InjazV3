@@ -127,7 +127,7 @@ namespace TmsWebApp.Controllers
                 EmailTemplateModel emodel =
                     new EmailTemplateModel
                     {
-                        Title = "Volunteer Approved", 
+                        Title = "Volunteer Select OT", 
                         VolunteerName = oVolunteer.VolunteerName 
                     };
                 string body =
@@ -172,13 +172,13 @@ namespace TmsWebApp.Controllers
                     EmailTemplateModel emodel =
                         new EmailTemplateModel
                         {
-                            Title = "Injaz: accepted by volunteer.",
+                            Title = "Injaz: rejected by volunteer.",
                             VolunteerName = oVolunteer.VolunteerName,
                             User = admin.FirstName,
                             OTSubject = ot.Subject
                         };
                     string body =
-                        Util.RenderViewToString(bogusController.ControllerContext, "VolunteerAcceptsOT", emodel);
+                        Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRejectOT", emodel);
                     EmailSender.SendSupportEmail(body, admin.Email);
 
                 }

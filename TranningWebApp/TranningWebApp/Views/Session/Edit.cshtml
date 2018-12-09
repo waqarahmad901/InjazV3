@@ -274,6 +274,8 @@
                                 <div class="form-group col-sm-6">
                                     <label for="mobile">@SessionX.StudentEvaluation </label>
                                     @Html.DropDownListFor(m => m.StudentEvaluationCatagory, (List<SelectListItem>)ViewBag.evaluationCatagory, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.StudentEvaluationCatagory, "", new { @class = "text-danger" })
+
                                 </div>
 
                                 </div>

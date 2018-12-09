@@ -47,7 +47,6 @@ namespace TranningWebApp.Repository.DataAccess
         public Nullable<int> EmailSentToCoordinator1UserID3 { get; set; } 
         public bool VolunteerReceiveSessionDetailInEmail { get; set; }
         public bool VolunteerMarkedStudentAttendenceInSession { get; set; } 
-        public string StudentEvaluationCatagory { get; set; }
         public bool IsVolunteerCertificateGenerated { get; set; }  
         public Nullable<int> Country { get; set; }
     

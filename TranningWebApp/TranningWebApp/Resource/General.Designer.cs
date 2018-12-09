@@ -295,7 +295,7 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fellowship.
+        ///   Looks up a localized string similar to Master.
         /// </summary>
         public static string Fellowship {
             get {
