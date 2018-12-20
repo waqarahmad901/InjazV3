@@ -44,7 +44,7 @@
                             <th>@Volunteer.Gender</th>
                             <th>@Volunteer.City</th>
                             <th>@Coordinator.TOTCertificate</th>
-                            <th>AQ</th>
+                            <th>@Volunteer.AQ</th>
                             <th>@General.MobileNo</th>
 
                             @if (status == "pending" || string.IsNullOrEmpty(status) || (status == "rejected"))
@@ -83,7 +83,15 @@
 
                             </td>
                             <td>@item.VolunteerEmail</td>
-                            <td>@item.Gender</td>
+                            <td>@if (item.Gender == "Male")
+                            {
+                                @General.Male
+                            }
+                            else
+                            {
+                                @General.Female
+                            }
+                            </td>
                             <td>@item.City</td>
                             <td>@item.HasTOTCertificate</td>
                             <td>@item.AcademicQualification</td>

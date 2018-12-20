@@ -144,6 +144,16 @@ namespace TmsWebApp.Controllers
                 {
                     participant.session_participant.Add(new session_participant { SessionID = profile.SessionId, ParticipantID = participant.Id });
                 }
+
+                var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel model = new EmailTemplateModel { Title = "Coordinator create student", RedirectUrl = url };
+                string body = Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorCreateStudent", model);
+                EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+                return RedirectToAction("Index", "Session");
+
             }
             else
             {

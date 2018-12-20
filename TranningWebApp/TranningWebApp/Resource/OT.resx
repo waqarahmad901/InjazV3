@@ -186,4 +186,13 @@
   <data name="VolunteerList" xml:space="preserve">
     <value>Volunteer List</value>
   </data>
+  <data name="NumberOfattendene" xml:space="preserve">
+    <value>Number Of attendene</value>
+  </data>
+  <data name="OTStatus" xml:space="preserve">
+    <value>OT Stataus</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>

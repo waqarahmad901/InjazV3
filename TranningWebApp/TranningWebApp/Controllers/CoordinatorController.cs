@@ -206,6 +206,12 @@ namespace TmsWebApp.Controllers
                     coordinator.school.Region = profile.school.Region;
                     coordinator.school.Status = "Initial";
 
+                    string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                    var bogusController = Util.CreateController<EmailTemplateController>();
+                    EmailTemplateModel model = new EmailTemplateModel { Title = "School is created", RedirectUrl = url };
+                    string body = Util.RenderViewToString(bogusController.ControllerContext, "SchoolCreated", model);
+                    EmailSender.SendSupportEmail(body, su.OUser.Email);
+
                 }
 
                else

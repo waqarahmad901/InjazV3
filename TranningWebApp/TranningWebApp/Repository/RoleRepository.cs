@@ -23,6 +23,11 @@ namespace TranningWebApp.Repository
             return Context.lk_role.Find(id);
         }
 
+        public lk_role GetByCode(int code)
+        {
+            return Context.lk_role.Where(x=>x.Code == code).FirstOrDefault();
+        }
+
         //Create a new collection
         public void Post(lk_role entity)
         {

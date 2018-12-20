@@ -186,4 +186,7 @@
   <data name="WaitApproval" xml:space="preserve">
     <value>انتظر الموافقة من مسؤول النظام</value>
   </data>
+  <data name="AQ" xml:space="preserve">
+    <value>الشهادة العلمية</value>
+  </data>
 </root>

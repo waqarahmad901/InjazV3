@@ -186,4 +186,13 @@
   <data name="VolunteerList" xml:space="preserve">
     <value>قائمة المتطوعين</value>
   </data>
+  <data name="NumberOfattendene" xml:space="preserve">
+    <value>عدد الحضور</value>
+  </data>
+  <data name="OTStatus" xml:space="preserve">
+    <value>الحالةالملتقى التدريبي</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
 </root>

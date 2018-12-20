@@ -10,6 +10,7 @@ namespace TmsWebApp.Models
         public string Title { get; set; }
         public string RedirectUrl { get; set; }
         public string User { get; set; }
+        public string NumberOfStudents { get; set; }
         public string Email{ get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -21,6 +22,13 @@ namespace TmsWebApp.Models
         public string FunderName { get; set; }
         public string Comment { get; set; }
         public string OTName { get; set; }
+        public string Region { get; set; }
+        public string City { get; set; }
+        public string Gender { get; set; }
+        public string ContactPersonName { get; set; }
+        public string SessionStartDate { get; set; }
+        public string ContactPersonPhone { get; set; }
+        public string SessionEndDate { get; set; }
 
     }
 }

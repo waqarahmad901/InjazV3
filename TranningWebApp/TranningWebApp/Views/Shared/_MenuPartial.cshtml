@@ -142,7 +142,7 @@
             </ul>
 
         }
-        else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver1)
+        else if (user != null && (user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver1|| user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver2 ||user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver3))
 
         {
             <ul class="nav">
@@ -164,7 +164,7 @@
 
             </ul>
         }
-        else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver2)
+        @*else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Approver2)
         {
             <ul class="nav">
                 <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
@@ -182,12 +182,12 @@
 
 
             </ul>
-        }
+        }*@
         else if (user != null && user.EnumRole == TmsWebApp.Common.EnumUserRole.Funder)
         {
             <ul class="nav"> 
                 <li class="nav-item @(@currentUrl.Contains("dashboard") ? "active" : "")">
-                    <a class="nav-link" href="@Url.Action("Index","Supervisor",new {menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
+                    <a class="nav-link" href="@Url.Action("Index","Report",new {menu = "dashboard" })"><i class="icon-calendar"></i> @Menu.Dashboard</a>
                 </li>
                 <li class="nav-item @(@currentUrl.Equals("Report") ? "active" : "")">
                     <a class="nav-link" href="@Url.Action("Index", "Report",new {menu = "report" })"><i class="icon-doc"></i> @Menu.Reports</a>

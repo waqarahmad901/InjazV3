@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using TmsWebApp.HelpingUtilities;
+using TmsWebApp.Models;
 using TranningWebApp.Common;
 using TranningWebApp.Controllers;
 using TranningWebApp.Repository;
@@ -120,16 +122,25 @@ namespace TmsWebApp.Controllers
                 cerModel.UploadFilePath = fileName;
             }
             if (cer.Id == 0)
+            {
                 certificateRepo.Post(cerModel);
+                var cu = Session["user"] as ContextUser;
+
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel model = new EmailTemplateModel { Title = "Certificate is created", RedirectUrl = url };
+                string body = Util.RenderViewToString(bogusController.ControllerContext, "OTCreated", model);
+                EmailSender.SendSupportEmail(body, cu.OUser.Email);
+            }
             else
-                certificateRepo.Put(cer.Id,cerModel);
+                certificateRepo.Put(cer.Id, cerModel);
 
             return RedirectToAction("Index");
         }
         public ActionResult Delete(int id)
         {
             var repository = new FunderRepository();
-            repository.Delete(id);
+           repository.Delete(id);
             return RedirectToAction("Index");
         }
     }

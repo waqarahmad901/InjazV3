@@ -155,6 +155,12 @@ namespace TmsWebApp.Controllers
                 ot.CreatedAt = DateTime.Now;
                 ot.CreatedBy = cu.OUser.Id;
                 ot.IsActive = true;
+
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel model = new EmailTemplateModel { Title = "OT is created", RedirectUrl = url };
+                string body = Util.RenderViewToString(bogusController.ControllerContext, "OTCreated", model);
+                EmailSender.SendSupportEmail(body, cu.OUser.Email);
             }
             else
             {
@@ -176,15 +182,20 @@ namespace TmsWebApp.Controllers
 
             foreach (var item in ot.VolunteersIds.Split(','))
             {
-               var vol = new VolunteerRepository().Get(int.Parse(item));
-               OTLinkWithVolunteerEmail(vol, ot.Subject);
-
+                if (!string.IsNullOrEmpty(item))
+                {
+                    var vol = new VolunteerRepository().Get(int.Parse(item));
+                    OTLinkWithVolunteerEmail(vol, ot.Subject);
+                }
             }
 
             foreach (var item in ot.SchoolIds.Split(','))
             {
-                var sch = new SchoolRepository().Get(int.Parse(item));
-                OTLinkWithSchoolEmail(sch, ot.Subject);
+                if (!string.IsNullOrEmpty(item))
+                {
+                    var sch = new SchoolRepository().Get(int.Parse(item));
+                    OTLinkWithSchoolEmail(sch, ot.Subject);
+                }
 
             }
 

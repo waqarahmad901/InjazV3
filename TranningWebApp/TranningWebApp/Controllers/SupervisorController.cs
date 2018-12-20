@@ -149,11 +149,35 @@ namespace TmsWebApp.Controllers
                             Title = "Injaz: accepted by volunteer.",
                             VolunteerName = oVolunteer.VolunteerName,
                             User = admin.FirstName,
-                            OTSubject = ot.Subject
+                            OTSubject = ot.Subject,
+                            Region = ot.Region,
+                            City = ot.City,
+                            Gender = ot.Gender,
+                            ContactPersonName = ot.ContactPersonName,
+                            ContactPersonPhone = ot.ContactPersonPhone
                         };
                     string body =
                         Util.RenderViewToString(bogusController.ControllerContext, "VolunteerAcceptsOT", emodel);
                     EmailSender.SendSupportEmail(body, admin.Email);
+
+
+                     bogusController = Util.CreateController<EmailTemplateController>();
+                     emodel =
+                        new EmailTemplateModel
+                        {
+                            Title = "thanks for acceptance.",
+                            VolunteerName = oVolunteer.VolunteerName,
+                            User = admin.FirstName,
+                            OTSubject = ot.Subject,
+                            Region = ot.Region,
+                            City = ot.City,
+                            Gender = ot.Gender,
+                            ContactPersonName = ot.ContactPersonName,
+                            ContactPersonPhone = ot.ContactPersonPhone
+                        };
+                    body =
+                        Util.RenderViewToString(bogusController.ControllerContext, "VolunteerAcceptsOT", emodel);
+                    EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
 
                 }
 
@@ -246,6 +270,23 @@ namespace TmsWebApp.Controllers
             {
                 oVolunteer.IsApprovedAtLevel1 = true;
                 oVolunteer.ApprovedAtLevel1Comments = volunteer.ApprovedAtLevel1Comments;
+
+                var role = new RoleRepository().GetByCode((int)EnumUserRole.Approver2);
+                var user = new AccountRepository().GetByRoleId(role.Id);
+                
+
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Request Sent",
+                        RedirectUrl = url,
+                        VolunteerName = oVolunteer.VolunteerName
+                    };
+                string body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRequest", emodel);
+                EmailSender.SendSupportEmail(body, user.Email);
             }
             if (cu.EnumRole == EnumUserRole.Approver2)
             {
@@ -253,6 +294,25 @@ namespace TmsWebApp.Controllers
                 oVolunteer.ApprovedAtLevel2Comments = volunteer.ApprovedAtLevel2Comments;
                 oVolunteer.RejectedBy = null;
                 oVolunteer.IsRejected = false;
+
+
+
+                var role = new RoleRepository().GetByCode((int)EnumUserRole.Approver3);
+                var user = new AccountRepository().GetByRoleId(role.Id);
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Request Sent",
+                        RedirectUrl = url,
+                        VolunteerName = oVolunteer.VolunteerName
+                    };
+                string body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRequest", emodel);
+                EmailSender.SendSupportEmail(body, user.Email);
+
+
             }
             if (cu.EnumRole == EnumUserRole.Approver3)
             {
@@ -276,6 +336,21 @@ namespace TmsWebApp.Controllers
                 string body =
                     Util.RenderViewToString(bogusController.ControllerContext, "VolunteerCreated", emodel);
                 EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+                
+                var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+                 url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                bogusController = Util.CreateController<EmailTemplateController>();
+                 emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Request Approved",
+                        RedirectUrl = url,
+                        VolunteerName = oVolunteer.VolunteerName
+                    };
+               body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRequest", emodel);
+                EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             }
             repository.Put(oVolunteer.Id, oVolunteer);
         }

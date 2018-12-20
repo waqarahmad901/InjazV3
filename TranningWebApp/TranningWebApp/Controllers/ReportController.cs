@@ -12,6 +12,7 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using TranningWebApp.Common;
+using TranningWebApp.Resource;
 
 namespace TranningWebApp.Controllers
 {
@@ -196,9 +197,12 @@ namespace TranningWebApp.Controllers
 
         public ActionResult GeneralReport()
         {
+            SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "" };
+
             var Values = new GeneralReportModel();
             var cities = new CityRepository().Get().Distinct().Select(x =>
-                 new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                 new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + ""}).ToList();
+            cities.Insert(0, defaultselect);
             ViewBag.citiesdd = cities;
             return View(Values);
         }

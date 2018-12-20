@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using TmsWebApp.Common;
 using TmsWebApp.Controllers;
 using TmsWebApp.HelpingUtilities;
 using TmsWebApp.Models;
@@ -57,6 +58,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPreEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "CPPre Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
 
@@ -101,7 +111,16 @@ namespace TranningWebApp.Controllers
             ecpp.CreatedAt = DateTime.Now;
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository(); 
-            sessionrepo.SetPostEvaluationStatus(ecpp.StudentId, ecpp.SessionId); 
+            sessionrepo.SetPostEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "CPPost Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
 
 
@@ -143,6 +162,14 @@ namespace TranningWebApp.Controllers
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPreEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
 
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "CPPost Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
 
@@ -180,6 +207,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPostEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "MrshdyAfter Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
 
@@ -216,6 +252,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPreEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "SafeerPre Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
 
@@ -253,6 +298,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPostEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "SafferPost Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+            
             return RedirectToAction("Index", "Session");
         }
  
@@ -289,6 +343,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPostEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "SYCPostP1 Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
         public ActionResult SYCPostP2(int? participantid, int? sessionid)
@@ -359,6 +422,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPreEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "SYCPreP1 Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
         public ActionResult SYCPreP2(int? participantid, int? sessionid)
@@ -394,6 +466,15 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPreEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "SYCPreP2 Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
 
@@ -440,6 +521,14 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPostEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "PFPost Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
+
             return RedirectToAction("Index", "Session");
         }
 
@@ -488,6 +577,13 @@ namespace TranningWebApp.Controllers
             repo.Post(ecpp);
             var sessionrepo = new SessionRepository();
             sessionrepo.SetPreEvaluationStatus(ecpp.StudentId, ecpp.SessionId);
+            var role = new RoleRepository().GetByCode((int)EnumUserRole.SuperAdmin);
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            EmailTemplateModel model = new EmailTemplateModel { Title = "PFPre Evaluation is filled now", RedirectUrl = url };
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "Evaluation", model);
+            EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
             return RedirectToAction("Index", "Session");
         }
 

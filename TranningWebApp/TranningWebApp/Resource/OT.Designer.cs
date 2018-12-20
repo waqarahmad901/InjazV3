@@ -19,7 +19,7 @@ namespace TranningWebApp.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class OT {
@@ -169,6 +169,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number Of attendene.
+        /// </summary>
+        public static string NumberOfattendene {
+            get {
+                return ResourceManager.GetString("NumberOfattendene", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Orientation Training.
         /// </summary>
         public static string OrientationTraining {
@@ -183,6 +192,15 @@ namespace TranningWebApp.Resource {
         public static string OTDate {
             get {
                 return ResourceManager.GetString("OTDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OT Stataus.
+        /// </summary>
+        public static string OTStatus {
+            get {
+                return ResourceManager.GetString("OTStatus", resourceCulture);
             }
         }
         
@@ -237,6 +255,15 @@ namespace TranningWebApp.Resource {
         public static string StartDate {
             get {
                 return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         

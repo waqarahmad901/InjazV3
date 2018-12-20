@@ -60,6 +60,9 @@
                 $('select').attr("disabled", "disabled");
                 $("#@Html.IdFor(x => x.SessionOccured)").parent().hide();
                 $("#@Html.IdFor(x => x.MarkedCompletedByVolunteer)").parent().hide();
+                $(".actualdate").removeAttr("disabled");
+                bindDatedLocal();
+
             }
             if ("@Model.Status" == "Occured") {
                 $('input').not("#@Html.IdFor(x=>x.Id)").not("#@Html.IdFor(x=>x.IsActive)").attr("disabled", "disabled");

@@ -5,11 +5,17 @@
 }
 <div>
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear<b> @Model.User</b>
+    <br />Dear
     <br />
     <br />
     This is to inform you that volunteer <b>@Model.VolunteerName</b> has accepted OT <b>@Model.OTSubject</b> on <b>@DateTime.Now.ToShortDateString()</b>
+    <p>Here are details;</p>
+    <p>Region : @Model.Region</p>
 
+    <p>City : @Model.City</p>
+    <p>Gender: @Model.Gender</p>
+    <p>Contact Person Name: @Model.ContactPersonName</p>
+    <p> Contact Person Phone: @Model.ContactPersonPhone</p>
     <br />
     <br />
     Regards

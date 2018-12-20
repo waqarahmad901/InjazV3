@@ -93,6 +93,12 @@ namespace TranningWebApp.Repository
         {
             return Context.users.FirstOrDefault(x => x.RowGuid == rowGuid);
         }
+
+        internal user GetByRoleId(int id)
+        {
+            return Context.users.FirstOrDefault(x => x.RoleId == id);
+        }
+
         //public userContext GetuserContext(string mobile)
         //{
         //    var context = new userContext();

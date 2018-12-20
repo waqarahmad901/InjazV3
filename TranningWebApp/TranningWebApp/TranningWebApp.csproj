@@ -1094,6 +1094,15 @@
     <Content Include="Views\EmailTemplate\OTLink.cshtml" />
     <Content Include="Views\EmailTemplate\VolunteerRejectOT.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerRequest.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerApprovedSession.cshtml" />
+    <Content Include="Views\EmailTemplate\PartnerCreated.cshtml" />
+    <Content Include="Views\EmailTemplate\SchoolCreated.cshtml" />
+    <Content Include="Views\EmailTemplate\OTCreated.cshtml" />
+    <Content Include="Views\EmailTemplate\SessionCreated.cshtml" />
+    <Content Include="Views\EmailTemplate\CertificatedCreated.cshtml" />
+    <Content Include="Views\EmailTemplate\Evaluation.cshtml" />
+    <Content Include="Views\EmailTemplate\CoordinatorCreateStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

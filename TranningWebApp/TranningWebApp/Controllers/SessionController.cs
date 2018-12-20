@@ -279,6 +279,12 @@ namespace TmsWebApp.Controllers
                 oSession.CreatedBy = cu.OUser.Id;
                 oSession.Status = SessionStatus.Pending.ToString();
 
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel model = new EmailTemplateModel { Title = "Session is created", RedirectUrl = url };
+                string body = Util.RenderViewToString(bogusController.ControllerContext, "SessionCreated", model);
+                EmailSender.SendSupportEmail(body, cu.OUser.Email);
+
             }
             else
             {
@@ -347,7 +353,7 @@ namespace TmsWebApp.Controllers
                 oSession.VolunteerCertificate = session.VolunteerCertificate == 0 ? null : session.VolunteerCertificate;
                 oSession.StudentEvaluationCatagory = session.StudentEvaluationCatagory;
             }
-            if (cu.EnumRole == EnumUserRole.Coordinator && session.ActualDateTime != null)
+            if (session.ActualDateTime != null)
             {
                 oSession.ActualEndDateTime = session.ActualEndDateTime;
                 oSession.ActualDateTime = session.ActualDateTime;
@@ -373,7 +379,7 @@ namespace TmsWebApp.Controllers
                 // check date and time change by admin
                 bool isChangeDate = CheckAnyChageInAdminAndCoordinatorTime(oSession);
 
-                if (isChangeDate)
+                if (isChangeDate && cu.EnumRole != EnumUserRole.SuperAdmin)
                 {
                     if (oSession.Status != SessionStatus.DateChanges.ToString())
                         SendEmailNotificationDateChanged(oSession);
@@ -439,7 +445,7 @@ namespace TmsWebApp.Controllers
                 oSession.ConfirmKitReceivedBySchool = session.ConfirmKitReceivedBySchool;
             }
 
-            if (currentStatus == SessionStatus.Approved && oldActualDate != null && oSession.ActualDateTime != oldActualDate)
+            if (cu.EnumRole != EnumUserRole.SuperAdmin && currentStatus == SessionStatus.Approved && oldActualDate != null && oSession.ActualDateTime != oldActualDate)
             {
                 if (oSession.Status != SessionStatus.Approved.ToString())
                     SendEmailNotificationDateChanged(oSession);
@@ -498,7 +504,7 @@ namespace TmsWebApp.Controllers
                 }
                 if (session.SubmitButton == "showattendance")
                 {
-                    return RedirectToAction("StudentAttendense", new { sessionId = oSession.RowGUID,isedit = false });
+                    return RedirectToAction("StudentAttendense", new { sessionId = oSession.RowGUID, isedit = false });
 
                 }
                 if (session.SubmitButton == "reject")
@@ -723,18 +729,46 @@ namespace TmsWebApp.Controllers
                 EmailTemplateModel emodel =
                     new EmailTemplateModel
                     {
-                        Title = "Notification: coordinator session marked as completed.",
+                        Title = "Notification: session has been finished.",
                         CoordinatorName = oSession.school.coordinator_profile.FirstOrDefault().CoordinatorName,
                         SessionTitle = oSession.ProgramName,
                         VolunteerName = oSession.volunteer_profile.VolunteerName,
-                        User = oSession.school.user.FirstName
-                    };
-                string body =
-                    Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorMarkCompleted", emodel);
-                EmailSender.SendSupportEmail(body, volEmail);
+                        User = "admin",
+                        NumberOfStudents = oSession.session_participant.Count.ToString(),
 
+                    };
+
+                string body =
+                         Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorMarkCompleted", emodel);
                 var adminEmail = new AccountRepository().Get(oSession.CreatedBy).Email;
                 EmailSender.SendSupportEmail(body, adminEmail);
+
+
+                emodel =
+                   new EmailTemplateModel
+                   {
+                       Title = "Notification: session has been finished.",
+                       CoordinatorName = oSession.school.coordinator_profile.FirstOrDefault().CoordinatorName,
+                       SessionTitle = oSession.ProgramName,
+                       VolunteerName = oSession.volunteer_profile.VolunteerName,
+                       User = oSession.school.user.FirstName,
+
+                   };
+
+                body =
+                        Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorMarkCompleted", emodel);
+                EmailSender.SendSupportEmail(body, volEmail);
+
+
+                foreach (var item in oSession.session_participant.ToList())
+                {
+                    EmailSender.SendSupportEmail(body, item.participant_profile.Email);
+
+                }
+
+
+
+
 
             }
             sessionRepo.Put(oSession.Id, oSession);
@@ -799,6 +833,19 @@ namespace TmsWebApp.Controllers
             string body =
                 Util.RenderViewToString(bogusController.ControllerContext, "ApprovedByAdmin", emodel);
             EmailSender.SendSupportEmail(body, cor.CoordinatorEmail);
+
+            emodel =
+               new EmailTemplateModel
+               {
+                   Title = "Notification: Attend the training session and prepare the students and login.",
+                   SessionTitle = oSession.ProgramName,
+                   CoordinatorName = cor.CoordinatorName,
+                   SessionStartDate = oSession.ActualDateTime.ToString(),
+                   SessionEndDate = oSession.ActualEndDateTime.ToString()
+               };
+            body =
+               Util.RenderViewToString(bogusController.ControllerContext, "VolunteerApprovedSession", emodel);
+            EmailSender.SendSupportEmail(body, oSession.volunteer_profile.VolunteerEmail);
         }
         public ActionResult Delete(int id)
         {

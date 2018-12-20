@@ -122,6 +122,13 @@ namespace TmsWebApp.Controllers
                 funder.CreatedAt = DateTime.Now;
                 funder.CreatedBy = cu.OUser.Id;
                 funder.FunderEmail = profile.FunderEmail;
+                funder.Password = EncryptionKeys.Encrypt(profile.Password);
+
+                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                var bogusController = Util.CreateController<EmailTemplateController>();
+                EmailTemplateModel model = new EmailTemplateModel { Title = "Partner is created", RedirectUrl = url};
+                string body = Util.RenderViewToString(bogusController.ControllerContext, "PartnerCreated", model);
+                EmailSender.SendSupportEmail(body, cu.OUser.Email);
 
             }
             else
@@ -148,9 +155,9 @@ namespace TmsWebApp.Controllers
                     IsMobileVerified = false,
                     IsEmailVerified = false,
                     CreatedBy = cu.OUser.Id,
-
-        };
-            funder.Password = EncryptionKeys.Encrypt(profile.Password);
+                    Password = EncryptionKeys.Encrypt(profile.Password)
+                };
+            
             
             funder.FunderName = profile.FunderName;
             funder.FatherName = profile.FatherName;

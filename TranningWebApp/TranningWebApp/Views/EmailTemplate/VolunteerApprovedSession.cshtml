@@ -1,0 +1,27 @@
+﻿
+@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear
+    <br />
+    <br />
+    Please attend the training session and prepare the students and login
+    heare are the tranning session details.
+    <p>SessionTitle : @Model.SessionTitle,</p>
+    <p>CoordinatorName : @Model.CoordinatorName,</p>
+    <p>SessionStartDate : @Model.SessionStartDate</p>
+    <p>SessionEndDate : @Model.SessionEndDate</p>
+        <br />
+        Regards
+        <br />
+        Volunteer
+        <br />
+        @Model.VolunteerName
+        <br />
+        Injaz Tranning Management System
+        <br />
+        <a href="@appUrl">@appUrl</a>
+</div>

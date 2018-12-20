@@ -219,6 +219,22 @@ namespace TmsWebApp.Controllers
 
                 repository.Post(oVolunteer);
 
+                var role = new RoleRepository().GetByCode((int)EnumUserRole.Approver1);
+                var user = new AccountRepository().GetByRoleId(role.Id);
+                url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+               bogusController = Util.CreateController<EmailTemplateController>();
+               emodel =
+                    new EmailTemplateModel
+                    {
+                        Title = "Volunteer Request Sent",
+                        RedirectUrl = url,
+                        VolunteerName = oVolunteer.VolunteerName
+                    };
+               body =
+                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRequest", emodel);
+                EmailSender.SendSupportEmail(body, user.Email);
+
+
                 cu = new ContextUser
                 {
                     OUser = new user

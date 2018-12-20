@@ -8,15 +8,21 @@
     <br />Dear<b> @Model.VolunteerName</b>
     <br />
     <br />
-    This is to inform you that coordinator <b>@Model.CoordinatorName</b> has mark completed a session with title <b>@Model.SessionTitle</b> on <b>@DateTime.Now.ToShortDateString()</b> 
+    This is to inform you that coordinator <b>@Model.CoordinatorName</b> has been finished a session with title <b>@Model.SessionTitle</b>
+    @if (Model.User != "admin")
+    {
+       <p>Please enter to do final evaluation to issue the certificate</p>
+    }
+    else
+    {
+        <p>Number of Students : @Model.NumberOfStudents</p>
+    }
     <br />
     <br />
     <br />
     Regards
     <br />
     Administrator
-    <br />
-    @Model.User
     <br />
     Injaz Tranning Management System
     <br />
