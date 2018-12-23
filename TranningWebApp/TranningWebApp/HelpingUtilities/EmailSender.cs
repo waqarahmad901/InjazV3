@@ -54,28 +54,33 @@ namespace TmsWebApp.HelpingUtilities
                 string isEmailSet = ConfigurationManager.AppSettings["IsEmailSent"];
                 if (string.IsNullOrEmpty(isEmailSet) || bool.Parse(isEmailSet))
                 {
-                    SmtpClient Client = new SmtpClient(ConfigurationManager.AppSettings["SMTPHost"]);
-                    System.Net.Mail.MailMessage msg = new MailMessage();
-                    msg.IsBodyHtml = true;
-                    msg.Body = message;
-                    msg.Subject = "Injaz Support Message ";
-                    msg.From = new MailAddress(ConfigurationManager.AppSettings["SMTPSupport"]);
-                    msg.To.Add(receiverAddress);
+                    SmtpClient client = new SmtpClient(ConfigurationManager.AppSettings["SMTPHost"]);
+                    var mailMessage = new MailMessage();
+                    mailMessage.IsBodyHtml = true;
+                    mailMessage.Body = message;
+                    mailMessage.Subject = "Injaz Support Message ";
+                    mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["SMTPSupport"]);
+
+                    foreach (var address in receiverAddress.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        mailMessage.To.Add(address);
+                    }
+                    //mailMessage.To.Add(receiverAddress);
 
                     if (attachmentFilename != null)
                     {
                         Attachment attachment = new Attachment(attachmentFilename);
 
-                        msg.Attachments.Add(attachment);
+                        mailMessage.Attachments.Add(attachment);
                     }
 
-                    Client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SMTPUserName"], ConfigurationManager.AppSettings["SMTPPassword"]);
+                    client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SMTPUserName"], ConfigurationManager.AppSettings["SMTPPassword"]);
                     //Client.Host = ConfigurationManager.AppSettings["SMTPHost"];
-                    Client.Port = Int32.Parse(ConfigurationManager.AppSettings["SMTPPort"]);
-                    Client.EnableSsl = ConfigurationManager.AppSettings["SMTPEnableSSL"].ToLower() == "true";
+                    client.Port = Int32.Parse(ConfigurationManager.AppSettings["SMTPPort"]);
+                    client.EnableSsl = ConfigurationManager.AppSettings["SMTPEnableSSL"].ToLower() == "true";
 
-                    Client.Send(msg);
-                    Client.Dispose();
+                    client.Send(mailMessage);
+                    client.Dispose();
 
                 }
             }
