@@ -189,4 +189,7 @@
   <data name="AQ" xml:space="preserve">
     <value>الشهادة العلمية</value>
   </data>
+  <data name="otnotassign" xml:space="preserve">
+    <value>لقد تم طلبك بنجاح ، ولكن لم يتم تخصيص OT بعد</value>
+  </data>
 </root>

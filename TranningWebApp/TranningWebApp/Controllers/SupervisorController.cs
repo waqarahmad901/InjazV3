@@ -13,7 +13,7 @@ using TranningWebApp.Common;
 using TranningWebApp.Controllers;
 using TranningWebApp.Repository;
 using TranningWebApp.Repository.DataAccess;
-
+using TranningWebApp.Resource;
 
 namespace TmsWebApp.Controllers
 {
@@ -55,8 +55,10 @@ namespace TmsWebApp.Controllers
 
             var Ots1 = Ots.Where(x => (volunteer.orientation_training != null && volunteer.orientation_training.Id == x.Id) || x.OTDateTime != null && x.OTDateTime.Value.Date >= DateTime.Now.Date).Select(x =>
              new SelectListItem { Text = x.Subject + " - " + (x.OTDateTime != null ? x.OTDateTime.Value.ToShortDateString() : null), Value = x.Id + "" }).ToList();
-            if (volunteer.orientation_training == null)
+            if (volunteer.orientation_training == null && Ots.Count() > 0)
                 volunteer.OTId = Ots.Last().Id;
+            SelectListItem defaultselect = new SelectListItem { Text = General.Select, Value = "" };
+            Ots1.Insert(0, defaultselect);
             ViewBag.Otsdd = Ots1;
             return View(volunteer);
         }

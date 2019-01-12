@@ -186,4 +186,7 @@
   <data name="AQ" xml:space="preserve">
     <value>AQ</value>
   </data>
+  <data name="otnotassign" xml:space="preserve">
+    <value>Your request has been successfully, but OT is not assign yet</value>
+  </data>
 </root>

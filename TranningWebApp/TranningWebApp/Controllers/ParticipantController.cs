@@ -152,7 +152,7 @@ namespace TmsWebApp.Controllers
                 EmailTemplateModel model = new EmailTemplateModel { Title = "Coordinator create student", RedirectUrl = url };
                 string body = Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorCreateStudent", model);
                 EmailSender.SendSupportEmail(body, role.users.FirstOrDefault().Email);
-                return RedirectToAction("Index", "Session");
+              
 
             }
             else
