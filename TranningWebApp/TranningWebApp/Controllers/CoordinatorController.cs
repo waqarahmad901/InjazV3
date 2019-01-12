@@ -312,7 +312,7 @@ namespace TmsWebApp.Controllers
             var bogusController = Util.CreateController<EmailTemplateController>();
             EmailTemplateModel model = new EmailTemplateModel { Title = "Coordinator Registraion ", RedirectUrl = url,CoordinatorName = coordinator.school.SchoolName};
             string body = Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorRegistration", model);
-            string file = Server.MapPath("~/Uploads/DocumentLibrary/DefaultDocument/CoordinatorRegister.docx");
+            string file = Server.MapPath("~/Downloads/CoordinatorRegister.docx");
 
             EmailSender.SendSupportEmail(body, coordinator.CoordinatorEmail, file);
         }
