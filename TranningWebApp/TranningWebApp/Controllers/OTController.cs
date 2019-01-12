@@ -177,28 +177,31 @@ namespace TmsWebApp.Controllers
             ot.Region = profile.Region;
             ot.Gender = profile.Gender;
             ot.City = profile.City;
-            ot.SchoolIds = profile.Schools != null ? string.Join(",", profile.Schools.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
-            ot.VolunteersIds = profile.Volunteers != null ? string.Join(",", profile.Volunteers.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
-
-            //foreach (var item in ot.VolunteersIds.Split(','))
+            ot.SchoolIds = profile.Schools != null ? string.Join(",", profile.Schools.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : default(string);
+            ot.VolunteersIds = profile.Volunteers != null ? string.Join(",", profile.Volunteers.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : default(string);
+            //if (!string.IsNullOrEmpty(ot.VolunteersIds))
             //{
-            //    if (!string.IsNullOrEmpty(item))
+            //    foreach (var item in ot.VolunteersIds.Split(','))
             //    {
-            //        var vol = new VolunteerRepository().Get(int.Parse(item));
-            //        //OTLinkWithVolunteerEmail(vol, ot);
+            //        if (!string.IsNullOrEmpty(item))
+            //        {
+            //            var vol = new VolunteerRepository().Get(int.Parse(item));
+            //            OTLinkWithVolunteerEmail(vol, ot.Subject);
+            //        }
             //    }
             //}
-
-            foreach (var item in ot.SchoolIds.Split(','))
+            if (!string.IsNullOrEmpty(ot.SchoolIds))
             {
-                if (!string.IsNullOrEmpty(item))
+                foreach (var item in ot.SchoolIds.Split(','))
                 {
-                    var sch = new SchoolRepository().Get(int.Parse(item));
-                    OTLinkWithSchoolEmail(sch, ot);
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        var sch = new SchoolRepository().Get(int.Parse(item));
+                        OTLinkWithSchoolEmail(sch, ot.Subject);
+                    }
+
                 }
-
             }
-
             ot.ContactPersonName = profile.ContactPersonName;
             ot.ContactPersonPhone = profile.ContactPersonPhone;
 

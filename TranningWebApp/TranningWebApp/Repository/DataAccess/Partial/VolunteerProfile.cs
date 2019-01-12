@@ -78,5 +78,9 @@ namespace TranningWebApp.Repository.DataAccess
             }
 
         }
+        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
+
+        public Nullable<int> OTId { get; set; }
+
     }
 }

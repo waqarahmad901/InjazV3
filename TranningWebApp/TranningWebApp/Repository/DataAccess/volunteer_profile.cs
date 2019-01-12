@@ -48,7 +48,6 @@ namespace TranningWebApp.Repository.DataAccess
         public string ApprovedAtLevel1Comments { get; set; }
         public string ApprovedAtLevel2Comments { get; set; }
         public string ApprovedAtLevel3Comments { get; set; }
-        public Nullable<int> OTId { get; set; }
         public bool OTAcceptedByVolunteer { get; set; }
         public bool OTRejectedByVolunteer { get; set; }
         public bool OTAttendenceForVolunteer { get; set; }

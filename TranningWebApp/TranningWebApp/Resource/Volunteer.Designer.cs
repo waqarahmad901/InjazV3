@@ -178,6 +178,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your request has been successfully, but OT is not assign yet.
+        /// </summary>
+        public static string otnotassign {
+            get {
+                return ResourceManager.GetString("otnotassign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Student.
         /// </summary>
         public static string Participant {
