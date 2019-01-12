@@ -197,7 +197,7 @@ namespace TmsWebApp.Controllers
                     if (!string.IsNullOrEmpty(item))
                     {
                         var sch = new SchoolRepository().Get(int.Parse(item));
-                        OTLinkWithSchoolEmail(sch, ot.Subject);
+                        OTLinkWithSchoolEmail(sch, ot);
                     }
 
                 }
