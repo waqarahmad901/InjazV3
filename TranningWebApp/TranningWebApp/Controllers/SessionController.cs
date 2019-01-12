@@ -525,17 +525,25 @@ namespace TmsWebApp.Controllers
                 if (session.SubmitButton == "viewcertificate" || session.SubmitButton == "volunteerviewcertificate")
                 {
                     var participant = new ParticipiantRepository().GetByUserId(cu.OUser.Id);
-                    string certificatePath = null;
-
+                    string certificatePath = Server.MapPath(oSession.certificate.UploadFilePath);
+                     
                     List<PdfCoordinatesModel> pdfCoordinates = null;
+                    var outputPath = Path.GetDirectoryName(oSession.certificate.UploadFilePath);
+                    outputPath = Path.Combine(outputPath, "output");
+                    outputPath = Server.MapPath(outputPath);
+                    if (!Directory.Exists(outputPath))
+                    {
+                        Directory.CreateDirectory(outputPath);
+                    }
+             
                     if (cu.EnumRole == EnumUserRole.Participant)
                     {
-                        certificatePath = Server.MapPath(oSession.certificate.UploadFilePath);
+
+                        
                         pdfCoordinates = new CertificateDictionary().GetPdfCoordinatesFromDictionary(oSession.certificate.Type);
                     }
                     else
                     {
-                        certificatePath = Server.MapPath(oSession.certificate1.UploadFilePath);
                         pdfCoordinates = new CertificateDictionary().GetPdfCoordinatesFromDictionary(oSession.certificate1.Type);
                         oSession.IsVolunteerCertificateGenerated = true;
                     }
@@ -565,7 +573,7 @@ namespace TmsWebApp.Controllers
                         }
                     }
                     string fontFilePath = Server.MapPath("~/fonts/Arabic Fonts/trado.ttf");
-                    var outputFile = PdfGenerator.GenerateOnflyPdf(certificatePath, pdfCoordinates, fontFilePath);
+                    var outputFile = PdfGenerator.GenerateOnflyPdf(certificatePath,outputPath, pdfCoordinates, fontFilePath);
                     if (session.SubmitButton == "viewcertificate")
                     {
                         EmailSender.SendSupportEmail("Please find certificate in attachments", participant.Email, outputFile);

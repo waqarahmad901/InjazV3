@@ -239,10 +239,10 @@ namespace TmsWebApp.Controllers
             var bogusController = Util.CreateController<EmailTemplateController>();
             EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with school", RedirectUrl = url, VolunteerName = sch.coordinator_profile.First().CoordinatorName, OTName = ot.Subject,
                 City = ot.City, Region = ot.Region,
-                CoordinatorName = sch.coordinator_profile.First().CoordinatorName,
-                ContactPersonPhone = sch.coordinator_profile.First().CoordinatorMobile,
+                CoordinatorName = ot.ContactPersonName,
+                ContactPersonPhone =ot.ContactPersonPhone,
                 TypeOfSchool = sch.TypeOfSchool,
-            OTDate = ot.OTDateTime.ToString()
+            OTDate = ot.OTDateTime?.ToString("yyyy/MM/dd")
             };
             string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLink", model);
             EmailSender.SendSupportEmail(body, sch.coordinator_profile.First().CoordinatorEmail);

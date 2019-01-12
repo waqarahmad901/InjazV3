@@ -12,13 +12,13 @@ namespace TmsWebApp.HelpingUtilities
 {
     public class PdfGenerator
     {
-        public static string GenerateOnflyPdf(string filePath,  List<PdfCoordinatesModel> pdfCoordinates,string fontFilePath)
+        public static string GenerateOnflyPdf(string sourceFilePath,string desFolderPath,  List<PdfCoordinatesModel> pdfCoordinates,string fontFilePath)
         {
-            string oldFile = filePath;
-            string newFile = Path.Combine(Path.GetDirectoryName(filePath),DateTime.Now.ToString("ddMMyyyyhhmmsstt")+".pdf");
+           
+            string newFile = Path.Combine(desFolderPath,DateTime.Now.ToString("ddMMyyyyhhmmsstt")+".pdf");
 
             // open the reader
-            PdfReader reader = new PdfReader(oldFile);
+            PdfReader reader = new PdfReader(sourceFilePath);
             fontFilePath = @"c:\windows\fonts\tahoma.ttf";
             BaseFont bf = BaseFont.CreateFont(fontFilePath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
