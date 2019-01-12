@@ -397,21 +397,12 @@ namespace TmsWebApp.Controllers
                     participant.isActive = true;
                     if (participant.Id == 0)
                     {
-                        string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) +
-                                     "/Account/Login";
+                        string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
                         var bogusController = Util.CreateController<EmailTemplateController>();
-                        EmailTemplateModel emodel =
-                            new EmailTemplateModel
-                            {
-                                Title = "Complete Profile",
-                                RedirectUrl = url,
-                                UserName = participant.Email,
-                                User = participant.Email,
-                                Password = EncryptionKeys.Decrypt(participant.user.Password)
-                            };
-                        string body =
-                            Util.RenderViewToString(bogusController.ControllerContext, "CoordinatorProfile", emodel);
+                        EmailTemplateModel model1 = new EmailTemplateModel { Title = "Complete Profile", RedirectUrl = url, UserName = participant.Email, Password = EncryptionKeys.Decrypt(participant.user.Password), ParticipantName = participant.Name, User = participant.user.FirstName };
+                        string body = Util.RenderViewToString(bogusController.ControllerContext, "ParticipantProfile", model1);
                         EmailSender.SendSupportEmail(body, participant.Email);
+                        
                         participant.IsEmailSent = true;
                         participantRepo.Post(participant);
 
