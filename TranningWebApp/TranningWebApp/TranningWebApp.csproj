@@ -925,6 +925,7 @@
     <Content Include="fonts\Arabic Fonts\GE Dinar Two\GE Dinar Two Light.otf" />
     <Content Include="fonts\Arabic Fonts\GE Dinar Two\GE Dinar Two Medium.otf" />
     <Content Include="fonts\Arabic Fonts\trado.ttf" />
+    <Content Include="Downloads\CoordinatorRegister.docx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\clander\date.conversion.js" />
     <Content Include="Scripts\clander\jquery.calendars.islamic.js" />
