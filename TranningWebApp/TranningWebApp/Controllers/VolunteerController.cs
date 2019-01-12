@@ -82,7 +82,7 @@ namespace TmsWebApp.Controllers
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
                 };
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
-           new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
+           new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Jeddah" }).ToList();
             ViewBag.distictdd = distict;
             HttpCookie lanCookie = Request.Cookies["lan"];
             var lan = lanCookie == null ? "en" : lanCookie.Value;
@@ -94,14 +94,14 @@ namespace TmsWebApp.Controllers
             ViewBag.universites = universites;
             if (oVolunteer.Region == null)
             {
-                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Jeddah").Select(x =>
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                 ViewBag.citiesdd = cities;
             }
             else
             {
                 var cities = new CityRepository().Get().Distinct().Where(x => x.Region == oVolunteer.Region).Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                 ViewBag.citiesdd = cities;
             }
             if (oVolunteer.Id == 0)
@@ -117,7 +117,7 @@ namespace TmsWebApp.Controllers
         public ActionResult GetFilterCities(string region)
         {
             var cities = new CityRepository().Get().Distinct().Where(x => x.Region == region).Select(x =>
-                                    new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                                    new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             return Json(cities, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

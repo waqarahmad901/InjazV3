@@ -221,7 +221,7 @@ namespace TmsWebApp.Controllers
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
             };
             var cities = new CityRepository().Get().Distinct().Select(x =>
-               new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+               new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             ViewBag.citiesdd = cities;
             ViewBag.stageofschooldd = new List<SelectListItem>
             {

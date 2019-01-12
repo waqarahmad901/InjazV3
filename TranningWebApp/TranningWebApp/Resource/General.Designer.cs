@@ -979,6 +979,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This field must be a valid link.
+        /// </summary>
+        public static string ValidatorUrlFormat {
+            get {
+                return ResourceManager.GetString("ValidatorUrlFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View Report.
         /// </summary>
         public static string ViewReport {

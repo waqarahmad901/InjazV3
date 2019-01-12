@@ -1,26 +1,24 @@
 ﻿
 @model TmsWebApp.Models.EmailTemplateModel
 
-<div>
+
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear<b> @Model.CoordinatorName</b>
+    <br />عزيزي/تي  المرشد/ ه<b> @Model.CoordinatorName</b>
     <br />
     <br />
-    Please update your details in registration form<br />
-    <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
-    <br />
-    User : <b>@Model.UserName</b>
-    <br />
-    Password : <b>@Model.Password</b> 
+    لقد تم تفعيل حسابكم بنجاح <br />
+    وتستطعيون الأن الدخول إلى بوابة إنجاز من خلال الرابط التالي واستخدام بياناتكم  <br />
     <br />
     <br />
-    Regards
+    الرابط  : <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
     <br />
-    Administrator
+    اسم المستخدم : <b>@Model.UserName</b>
     <br />
-    @Model.User
+    كلمة المرور : <b>@Model.Password</b>
     <br />
-    Injaz Tranning Management System
+    <br />
+    إنجاز السعودية
     <br />
     <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
 

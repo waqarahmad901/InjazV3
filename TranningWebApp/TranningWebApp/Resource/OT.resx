@@ -195,4 +195,31 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="CompanyProgram" xml:space="preserve">
+    <value>Company program</value>
+  </data>
+  <data name="FriendOfEarth" xml:space="preserve">
+    <value>Friend of earth</value>
+  </data>
+  <data name="ItsMyBusiness" xml:space="preserve">
+    <value>Its my business</value>
+  </data>
+  <data name="LeadershipProgram" xml:space="preserve">
+    <value>Leadership program</value>
+  </data>
+  <data name="PersonalEconomic" xml:space="preserve">
+    <value>Personal economic</value>
+  </data>
+  <data name="PersonalFinance" xml:space="preserve">
+    <value>Personal finance</value>
+  </data>
+  <data name="PersonalLifePlanning" xml:space="preserve">
+    <value>Personal life planning</value>
+  </data>
+  <data name="SteerYourCarrer" xml:space="preserve">
+    <value>Steer your carrer</value>
+  </data>
+  <data name="SuccessSkils" xml:space="preserve">
+    <value>Success skils</value>
+  </data>
 </root>

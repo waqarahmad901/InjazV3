@@ -1,16 +1,17 @@
 ﻿
 @model TmsWebApp.Models.EmailTemplateModel
 
-<div>
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear
+    <br /> نص الرسالة : عزيزي /عزيزتي <b> @Model.VolunteerName</b>
     <br />
     <br />
-    This is to informed that OT is created now.
+    نود إبلاغكم بإنه تم إنشاء لقاء تدريبي نأمل الدخول على بوابة انجاز للموافقة على اللقاء
     <br />
-    Administrator 
+    نشكر لكم رغبتكم في التطوع مع إنجاز السعودية ومشاركتنا رسالة تمكين الشباب السعودي من مستقبل أقتصادي أفضل .
     <br />
-    Injaz Tranning Management System
+    <br />
+    إنجاز السعودية
     <br />
     <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
 

@@ -27,7 +27,7 @@ namespace TranningWebApp.Controllers
         public ActionResult SchoolRegandNumberOfStudentChart()
         {
             var cities = new CityRepository().Get().Distinct().Select(x =>
-                new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             ViewBag.citiesdd = cities;
             return View();
         }
@@ -100,7 +100,7 @@ namespace TranningWebApp.Controllers
         public ActionResult TotalSchoolParticipantChart()
         {
             var cities = new CityRepository().Get().Distinct().Select(x =>
-                new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             ViewBag.citiesdd = cities;
             return View();
         }
@@ -117,7 +117,7 @@ namespace TranningWebApp.Controllers
         public ActionResult TotalSessionInSchoolParticipantChart()
         {
             var cities = new CityRepository().Get().Distinct().Select(x =>
-                new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             ViewBag.citiesdd = cities;
             return View();
         }
@@ -201,7 +201,7 @@ namespace TranningWebApp.Controllers
 
             var Values = new GeneralReportModel();
             var cities = new CityRepository().Get().Distinct().Select(x =>
-                 new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + ""}).ToList();
+                 new SelectListItem { Text = x.City + "", Value = x.City + ""}).ToList();
             cities.Insert(0, defaultselect);
             ViewBag.citiesdd = cities;
             return View(Values);

@@ -96,14 +96,14 @@ namespace TmsWebApp.Controllers
             }
             if (otModel.Region == null)
             {
-                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Jeddah").Select(x =>
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                 ViewBag.citiesdd = cities;
             }
             else
             {
                 var cities = new CityRepository().Get().Distinct().Where(x => x.Region == otModel.Region).Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                 ViewBag.citiesdd = cities;
             }
             ViewBag.genderdd = new List<SelectListItem>
@@ -112,13 +112,13 @@ namespace TmsWebApp.Controllers
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
                 };
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
-        new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
+        new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Jeddah" }).ToList();
             ViewBag.distictdd = distict;
 
             int[] otVolunteers = !string.IsNullOrEmpty(otModel.VolunteersIds) ? otModel.VolunteersIds.Split(',').Select(x=>int.Parse(x)).ToArray() : new int[] { };
             int[] otSchools = !string.IsNullOrEmpty(otModel.SchoolIds ) ? otModel.SchoolIds.Split(',').Select(x => int.Parse(x)).ToArray() : new int[] { };
 
-            string city = string.IsNullOrEmpty(otModel.City) ? "Jeddah" : otModel.City;
+            string city = string.IsNullOrEmpty(otModel.City) ? "وسط جدة" : otModel.City;
             string gender = string.IsNullOrEmpty(otModel.Gender) ? "Male" : otModel.Gender;
 
             otModel.Volunteers = new VolunteerRepository().GetApprovedVolunteer().Where(x=>x.City == city && x.Gender == gender).Select(x =>
@@ -180,21 +180,21 @@ namespace TmsWebApp.Controllers
             ot.SchoolIds = profile.Schools != null ? string.Join(",", profile.Schools.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
             ot.VolunteersIds = profile.Volunteers != null ? string.Join(",", profile.Volunteers.Where(x => x.Selected == true).Select(x => x.Value).ToArray()) : null;
 
-            foreach (var item in ot.VolunteersIds.Split(','))
-            {
-                if (!string.IsNullOrEmpty(item))
-                {
-                    var vol = new VolunteerRepository().Get(int.Parse(item));
-                    OTLinkWithVolunteerEmail(vol, ot.Subject);
-                }
-            }
+            //foreach (var item in ot.VolunteersIds.Split(','))
+            //{
+            //    if (!string.IsNullOrEmpty(item))
+            //    {
+            //        var vol = new VolunteerRepository().Get(int.Parse(item));
+            //        //OTLinkWithVolunteerEmail(vol, ot);
+            //    }
+            //}
 
             foreach (var item in ot.SchoolIds.Split(','))
             {
                 if (!string.IsNullOrEmpty(item))
                 {
                     var sch = new SchoolRepository().Get(int.Parse(item));
-                    OTLinkWithSchoolEmail(sch, ot.Subject);
+                    OTLinkWithSchoolEmail(sch, ot);
                 }
 
             }
@@ -230,21 +230,41 @@ namespace TmsWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        private void OTLinkWithSchoolEmail(school sch, string OTName)
+        private void OTLinkWithSchoolEmail(school sch, orientation_training ot)
         {
             string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
             var bogusController = Util.CreateController<EmailTemplateController>();
-            EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with school", RedirectUrl = url, VolunteerName = sch.coordinator_profile.First().CoordinatorName, OTName = OTName };
+            EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with school", RedirectUrl = url, VolunteerName = sch.coordinator_profile.First().CoordinatorName, OTName = ot.Subject,
+                City = ot.City, Region = ot.Region,
+                CoordinatorName = sch.coordinator_profile.First().CoordinatorName,
+                ContactPersonPhone = sch.coordinator_profile.First().CoordinatorMobile,
+                TypeOfSchool = sch.TypeOfSchool,
+            OTDate = ot.OTDateTime.ToString()
+            };
             string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLink", model);
             EmailSender.SendSupportEmail(body, sch.coordinator_profile.First().CoordinatorEmail);
         }
 
-        private static void OTLinkWithVolunteerEmail(volunteer_profile volunteer,string OTName)
+        private static void OTLinkWithVolunteerEmail(volunteer_profile volunteer,orientation_training ot)
         {
            
             string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
             var bogusController = Util.CreateController<EmailTemplateController>();
-            EmailTemplateModel model = new EmailTemplateModel { Title = "OT link with volunteer", RedirectUrl = url, VolunteerName = volunteer.VolunteerName ,OTName = OTName};
+           // EmailTemplateModel model = new EmailTemplateModel { Title = , RedirectUrl = url, VolunteerName = volunteer.VolunteerName ,OTName = OTName};
+
+            EmailTemplateModel model = new EmailTemplateModel
+            {
+                Title = "OT link with volunteer",
+                RedirectUrl = url,
+                VolunteerName = volunteer.VolunteerName,
+                OTName = ot.Subject,
+                City = ot.City,
+                Region = ot.Region,
+                ContactPersonName = ot.ContactPersonName,
+                ContactPersonPhone = ot.ContactPersonPhone,
+                OTDate = ot.OTDateTime.ToString()
+            };
+
             string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLink", model);
             EmailSender.SendSupportEmail(body, volunteer.VolunteerEmail);
         }

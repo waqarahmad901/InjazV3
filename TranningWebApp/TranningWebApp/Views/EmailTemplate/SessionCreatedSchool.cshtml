@@ -5,22 +5,17 @@
 
 
 
-<div>
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear<b> @Model.CoordinatorName</b>
+    <br />عزيزي/تي  المرشد/ ه <b> @Model.CoordinatorName</b>
     <br />
     <br />
-    This is to inform you that the session <b>@Model.SessionTitle</b> has been created by <b>@Model.User</b> on <b>@DateTime.Now.ToShortDateString()</b>.
+    نفيدكم بأنه تم إنشاء جلسة تدريبية للطلاب على برنامج <b>@Model.SessionTitle</b>
     <br />
-    Your Login Id : @Model.Email
+    نأمل منكم الدخول على حسابكم في بوابة إنجاز للموافقة على الجلسة التدريبة
     <br />
-    Regards
     <br />
-    Administrator
-    <br />
-    @Model.User
-    <br />
-    Injaz Tranning Management System
+    إنجاز السعودية
     <br />
     <a href="@appUrl">@appUrl</a>
 </div>

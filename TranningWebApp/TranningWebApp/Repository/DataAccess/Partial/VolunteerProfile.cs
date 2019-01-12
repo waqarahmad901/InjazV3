@@ -15,8 +15,8 @@ namespace TranningWebApp.Repository.DataAccess
         public string OTDateString { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
-
         public string VolunteerName { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Resource.Funder), ErrorMessageResourceName = "EmailNotCorrect")]
         [Remote("EmailAlreadyExist", "Home", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "EmailAlreadyExist")]
@@ -43,7 +43,7 @@ namespace TranningWebApp.Repository.DataAccess
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
 
         public string VolunteerExperince1 { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
+
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorNumaric")]
         [StringLength(10, MinimumLength = 9, ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "PhoneLengthValidation")]
         public string Telephone { get; set; }
@@ -54,6 +54,7 @@ namespace TranningWebApp.Repository.DataAccess
 
         public string City { get; set; }
 
+        [Url(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorUrlFormat")]
         public string LinkedIn { get; set; }
 
         public string[] SelectedExp { get; set; }
@@ -61,8 +62,10 @@ namespace TranningWebApp.Repository.DataAccess
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string VolExp { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string SecondName { get; set; }
         public string ThirdName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string LastName { get; set; }
 
         public string IslamicDate

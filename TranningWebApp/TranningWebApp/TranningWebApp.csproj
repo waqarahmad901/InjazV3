@@ -1103,6 +1103,11 @@
     <Content Include="Views\EmailTemplate\CertificatedCreated.cshtml" />
     <Content Include="Views\EmailTemplate\Evaluation.cshtml" />
     <Content Include="Views\EmailTemplate\CoordinatorCreateStudent.cshtml" />
+    <Content Include="Views\EmailTemplate\CoordinatorProfile-eng.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerCreated - Eng.cshtml" />
+    <Content Include="Views\EmailTemplate\VolunteerRegister-eng.cshtml" />
+    <Content Include="Views\EmailTemplate\SessionCreatedSchool-eng.cshtml" />
+    <Content Include="Views\EmailTemplate\ParticipantProfile-eng.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1174,6 +1179,7 @@
     <EmbeddedResource Include="Resource\OT.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OT.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource\Participant.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1248,6 +1254,8 @@
           <DevelopmentServerPort>57541</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:44301/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:44301/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

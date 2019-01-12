@@ -78,7 +78,7 @@ namespace TmsWebApp.Controllers
                         new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
             ViewBag.countries = countries;
             var cities = new CityRepository().Get().Distinct().Select(x =>
-              new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+              new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             ViewBag.citiesdd = cities;
             if (id == null)
             {
@@ -112,7 +112,7 @@ namespace TmsWebApp.Controllers
                        new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
                     ViewBag.countries = countries;
                     var cities = new CityRepository().Get().Distinct().Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                     ViewBag.citiesdd = cities;
                     ViewBag.EmailExist = true;
                     return View(profile);

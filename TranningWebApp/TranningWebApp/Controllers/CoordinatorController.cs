@@ -88,7 +88,7 @@ namespace TmsWebApp.Controllers
         {
            
             var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
-                    new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
+                    new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Jeddah" }).ToList();
             ViewBag.distictdd = distict;
 
             coordinator_profile coordinator = null;
@@ -117,14 +117,14 @@ namespace TmsWebApp.Controllers
 
             if (coordinator.school == null || coordinator.school.Region == null)
             {
-                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Jeddah").Select(x =>
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                 ViewBag.citiesdd = cities;
             }
             else
             {
                 var cities = new CityRepository().Get().Distinct().Where(x => x.Region == coordinator.school.Region).Select(x =>
-                       new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                       new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                 ViewBag.citiesdd = cities;
             }
 
@@ -147,18 +147,18 @@ namespace TmsWebApp.Controllers
                     coordinator = coordinatorRepo.GetByEmail(profile.CoordinatorEmail);
                     if (coordinator == null || coordinator.school == null || coordinator.school.Region == null)
                     {
-                        var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Makkah Region").Select(x =>
-                               new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                        var cities = new CityRepository().Get().Distinct().Where(x => x.Region == "Jeddah").Select(x =>
+                               new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                         ViewBag.citiesdd = cities;
                     }
                     else
                     {
                         var cities = new CityRepository().Get().Distinct().Where(x => x.Region == coordinator.school.Region).Select(x =>
-                               new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                               new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
                         ViewBag.citiesdd = cities;
                     }
                     var distict = new CityRepository().Get().GroupBy(x => x.Region).Select(x => x.First()).Select(x =>
-                    new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Makkah Region" }).ToList();
+                    new SelectListItem { Text = x.Region + " (" + x.Region_ar + ")", Value = x.Region + "", Selected = x.Region == "Jeddah" }).ToList();
                     ViewBag.distictdd = distict;
                     ViewBag.EmailExist = true;
                     if(su != null && su.EnumRole == EnumUserRole.Coordinator)

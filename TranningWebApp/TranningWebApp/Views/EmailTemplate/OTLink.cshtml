@@ -4,21 +4,25 @@
     string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
 }
 
-<div>
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    Dear <b>@Model.VolunteerName</b>
+    <br /> نص الرسالة : عزيزي /عزيزتي <b> @Model.VolunteerName</b>
     <br />
     <br />
-    This is to inform you that the OT <b>@Model.OTName</b> has been assign to you. 
+    شكرا على الموافقة لعمل لقاء تدريبي في تاريخ
+    @Model.OTDate
     <br />
+    منطقة : @Model.Region
     <br />
-    Regards
+    مدينة  : @Model.City
     <br />
-    Administrator
+    اسم المسؤل  : @Model.ContactPersonName
     <br />
-    @Model.UserName
+    رقم الجوال   : @Model.ContactPersonPhone
     <br />
-    Injaz Tranning Management System
+    نشكر لكم رغبتكم في التطوع مع إنجاز السعودية ومشاركتنا رسالة تمكين الشباب السعودي من مستقبل أقتصادي أفضل .
+    <br />
+    إنجاز السعودية
     <br />
     <a href="@appUrl">@appUrl</a>
 </div>

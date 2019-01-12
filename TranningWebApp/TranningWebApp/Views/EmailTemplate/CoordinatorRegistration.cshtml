@@ -1,27 +1,29 @@
 ﻿
 @model TmsWebApp.Models.EmailTemplateModel
 
-<div>
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear<b> @Model.CoordinatorName</b>
+    <h2 style='text-align:center'> تسجيل المرشد الطلابي</h2>
+    <br />عزيزي/تي<b> @Model.CoordinatorName</b>
     <br />
     <br />
-    Please fill your registration form and follow the instractions for attached document: .
+    نشكر لكم أهتمامكم ودعمكم للطلاب وتسليحهم بمهارات القرن 21 ورفع جاهزيتهم لسوق العمل ورفع الوعي بالثقافة المالية والألمام بعالم ريادة الأعمال ومشاركتنا رسالتنا في تمكين الشباب السعودي من مستقبل أقتصادي أفضل .
     <br />
-    <ol> 
-        <li>  Download the attached document.</li>
-        <li>  Update the document with relevent information.</li>
-        <li>  Upload the document in Injaz : <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>.</li> 
-    </ol> 
     <br />
-    <br /> 
-    Regards
+    الرجاء استكمال نموذج التسجيل حسب التعليمات التاليه .
     <br />
-    Administrator
+    <ol>
+        <li> تنزيل المستندات المرفقه</li>
+        <li> استكمال البيانات   و تحديث المعلومات في المستندات</li>
+        <li> تحميل المستندات على الرابط بالاسفل : <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>.</li>
+    </ol>
     <br />
-    @Model.User
     <br />
-    Injaz Tranning Management System
-    <br /> 
-   <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
+    شاكرين ومقدرين لكم تعاونكم
+    @*<br />
+        @Model.User*@
+    <br />
+    إنجاز السعودية
+    <br />
+    <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
 </div>

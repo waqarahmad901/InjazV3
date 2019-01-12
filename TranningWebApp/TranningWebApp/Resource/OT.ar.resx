@@ -195,4 +195,31 @@
   <data name="Status" xml:space="preserve">
     <value>الحالة</value>
   </data>
+  <data name="CompanyProgram" xml:space="preserve">
+    <value>الشركة </value>
+  </data>
+  <data name="FriendOfEarth" xml:space="preserve">
+    <value>أصدقاء الأرض</value>
+  </data>
+  <data name="ItsMyBusiness" xml:space="preserve">
+    <value>انا صاحب مشروعي</value>
+  </data>
+  <data name="LeadershipProgram" xml:space="preserve">
+    <value>كيف أكون قائد </value>
+  </data>
+  <data name="PersonalEconomic" xml:space="preserve">
+    <value>قراراتي المالية</value>
+  </data>
+  <data name="PersonalFinance" xml:space="preserve">
+    <value>تمويلي الشخصي</value>
+  </data>
+  <data name="PersonalLifePlanning" xml:space="preserve">
+    <value>انا ومحيطي</value>
+  </data>
+  <data name="SteerYourCarrer" xml:space="preserve">
+    <value>طريقي الى سوق العمل</value>
+  </data>
+  <data name="SuccessSkils" xml:space="preserve">
+    <value>مهارات النجاح</value>
+  </data>
 </root>

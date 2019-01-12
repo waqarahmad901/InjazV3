@@ -3,23 +3,26 @@
 @{
     string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
 }
-<div>
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear<b> @Model.VolunteerName</b>
-    <br />
-    This is to inform you that you that your account has been created successfully, After the first login you can change your password.
-    
-    <br />
-    User : <b>@Model.UserName</b>
-    <br />
-    Password : <b>@Model.Password</b> 
+    <h2 style='text-align:center'> تسجيل المتطوع</h2>
+    <br /> نص الرسالة : عزيزي /عزيزتي <b> @Model.VolunteerName</b>
     <br />
     <br />
-    Regards
+    نشكر لكم رغبتكم في التطوع مع إنجاز السعودية ومشاركتنا رسالة تمكين
     <br />
-    Administrator 
+    الشباب السعودي من مستقبل أقتصادي أفضل .
     <br />
-    Injaz Tranning Management System
+    <br />
+    نامل منكم الدخول إلى بوابة إنجاز من خلال الرابط التالي
+    <br />
+
+    اسم المستخدم : <b>@Model.UserName</b>
+    <br />
+    كلمة المرور : <b>@Model.Password</b>
+    <br />
+    <br />
+    إنجاز السعودية
     <br />
     <a href="@appUrl">@appUrl</a>
 </div>

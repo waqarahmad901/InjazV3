@@ -122,17 +122,19 @@ namespace TmsWebApp.Controllers
                 oVolunteer.OTIdAssigner = cu.OUser.Id;
                 oVolunteer.OTRejectedByVolunteer = false;
                 repository.Put(oVolunteer.Id, oVolunteer);
-                string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
-                var bogusController = Util.CreateController<EmailTemplateController>();
-                EmailTemplateModel emodel =
-                    new EmailTemplateModel
-                    {
-                        Title = "Volunteer Select OT", 
-                        VolunteerName = oVolunteer.VolunteerName 
-                    };
-                string body =
-                    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerApproved", emodel);
-                EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+                //string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+                //var bogusController = Util.CreateController<EmailTemplateController>();
+                //EmailTemplateModel emodel =
+                //    new EmailTemplateModel
+                //    {
+                //        Title = "Volunteer Select OT", 
+                //        VolunteerName = oVolunteer.VolunteerName 
+                //    };
+                //string body =
+                //    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerApproved", emodel);
+                //EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+
+                OTSetToVolunteerEmail(oVolunteer, oVolunteer.orientation_training);
                 return RedirectToAction("Index", new { status = "approved" });
             }
             if (volunteer.SubmitButton == "accept")
@@ -161,23 +163,23 @@ namespace TmsWebApp.Controllers
                     EmailSender.SendSupportEmail(body, admin.Email);
 
 
-                     bogusController = Util.CreateController<EmailTemplateController>();
-                     emodel =
-                        new EmailTemplateModel
-                        {
-                            Title = "thanks for acceptance.",
-                            VolunteerName = oVolunteer.VolunteerName,
-                            User = admin.FirstName,
-                            OTSubject = ot.Subject,
-                            Region = ot.Region,
-                            City = ot.City,
-                            Gender = ot.Gender,
-                            ContactPersonName = ot.ContactPersonName,
-                            ContactPersonPhone = ot.ContactPersonPhone
-                        };
-                    body =
-                        Util.RenderViewToString(bogusController.ControllerContext, "VolunteerAcceptsOT", emodel);
-                    EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
+                    // bogusController = Util.CreateController<EmailTemplateController>();
+                    // emodel =
+                    //    new EmailTemplateModel
+                    //    {
+                    //        Title = "thanks for acceptance.",
+                    //        VolunteerName = oVolunteer.VolunteerName,
+                    //        User = admin.FirstName,
+                    //        OTSubject = ot.Subject,
+                    //        Region = ot.Region,
+                    //        City = ot.City,
+                    //        Gender = ot.Gender,
+                    //        ContactPersonName = ot.ContactPersonName,
+                    //        ContactPersonPhone = ot.ContactPersonPhone
+                    //    };
+                    //body =
+                    //    Util.RenderViewToString(bogusController.ControllerContext, "VolunteerAcceptsOT", emodel);
+                    //EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
 
                 }
 
@@ -231,6 +233,29 @@ namespace TmsWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        private static void OTSetToVolunteerEmail(volunteer_profile volunteer, orientation_training ot)
+        {
+
+            string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
+            var bogusController = Util.CreateController<EmailTemplateController>();
+            // EmailTemplateModel model = new EmailTemplateModel { Title = , RedirectUrl = url, VolunteerName = volunteer.VolunteerName ,OTName = OTName};
+
+            EmailTemplateModel model = new EmailTemplateModel
+            {
+                Title = "OT is assigned to volunteer",
+                RedirectUrl = url,
+                VolunteerName = volunteer.VolunteerName,
+                OTName = ot.Subject,
+                City = ot.City,
+                Region = ot.Region,
+                ContactPersonName = ot.ContactPersonName,
+                ContactPersonPhone = ot.ContactPersonPhone,
+                OTDate = ot.OTDateTime?.ToString("yyyy/MM/dd")
+            };
+
+            string body = Util.RenderViewToString(bogusController.ControllerContext, "OTLink", model);
+            EmailSender.SendSupportEmail(body, volunteer.VolunteerEmail);
+        }
         private void SendRejectedMailToVolunteer(volunteer_profile oVolunteer, ContextUser cu)
         {
 

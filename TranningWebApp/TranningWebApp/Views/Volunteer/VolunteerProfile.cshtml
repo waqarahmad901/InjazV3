@@ -249,13 +249,22 @@
                                                                
                               @Html.ListBoxFor(m => m.SelectedExp, new List<SelectListItem>
                                         {
-                                            new SelectListItem{ Text= "Safeer", Value ="Safeer" },
+                                            /*new SelectListItem{ Text= "Safeer", Value ="Safeer" },
                                             new SelectListItem{ Text="PF" , Value = "PF"},
                                             new SelectListItem{ Text="CP" , Value = "CP"},
                                             new SelectListItem{ Text="SYC – School" , Value = "SYC – School"},
                                             new SelectListItem{ Text="SYC – University" , Value = "SYC – University"},
                                             new SelectListItem{ Text="Morshidi" , Value = "Morshidi"},
-                                            new SelectListItem{ Text="LP" , Value = "LP"},
+                                            new SelectListItem{ Text="LP" , Value = "LP"},*/
+                                            new SelectListItem { Selected = true, Text = @OT.PersonalLifePlanning, Value =  "PFP"},
+new SelectListItem { Text = @OT.FriendOfEarth, Value =  "FOE"},
+new SelectListItem { Text = @OT.LeadershipProgram, Value =  "LP"},
+new SelectListItem { Text = @OT.ItsMyBusiness, Value =  "IMB"},
+new SelectListItem { Text = @OT.SuccessSkils, Value =  "SS"},
+new SelectListItem { Text = @OT.PersonalFinance, Value =  "PF"},
+new SelectListItem { Text = @OT.CompanyProgram, Value =  "CP"},
+new SelectListItem { Text = @OT.PersonalEconomic, Value =  "PE"},
+new SelectListItem { Text = @OT.SteerYourCarrer, Value =  "SYC"}
                                          }, new { @class = "multiselect form-control listbox", multiple = "multiple" })
                             
                                                                  
@@ -315,10 +324,11 @@
                             <div class="form-group">
                                 <label>@Volunteer.LinkedIn</label>
                                 @Html.TextBoxFor(m => m.LinkedIn, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LinkedIn, "", new { @class = "text-danger" })
 
                                 @if (Request["editprofile"] != null)
                                 {
-                                    @Html.Hidden("editprofile",new {@value = true})
+                                    @Html.Hidden("editprofile", new { @value = true })
                                 }
                             </div>
 

@@ -1,0 +1,25 @@
+﻿
+@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.VolunteerName</b>
+    <br />
+    This is to inform you that you that your account has been created successfully, After the first login you can change your password.
+    
+    <br />
+    User : <b>@Model.UserName</b>
+    <br />
+    Password : <b>@Model.Password</b> 
+    <br />
+    <br />
+    Regards
+    <br />
+    Administrator 
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

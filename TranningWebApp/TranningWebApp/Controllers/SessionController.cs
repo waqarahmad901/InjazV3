@@ -199,7 +199,7 @@ namespace TmsWebApp.Controllers
                 new SelectListItem { Selected = false, Text = General.Female, Value= "Female"}
                 };
             var cities = new CityRepository().Get().Distinct().Select(x =>
-                  new SelectListItem { Text = x.City + " (" + x.City_ar + ")", Value = x.City + "", Selected = x.City == "Jeddah" }).ToList();
+                  new SelectListItem { Text = x.City + "", Value = x.City + "", Selected = x.City == "وسط جدة" }).ToList();
             ViewBag.citiesdd = cities;
             var countries = new CountryRepository().Get().Select(x =>
                        new SelectListItem { Text = x.Name, Value = x.Id + "" }).ToList();
@@ -211,7 +211,7 @@ namespace TmsWebApp.Controllers
             ViewBag.school = school;
 
             var gender = string.IsNullOrEmpty(sessionModel.Gender) ? "Male" : sessionModel.Gender;
-            var city = string.IsNullOrEmpty(sessionModel.City) ? "Jeddah" : sessionModel.City;
+            var city = string.IsNullOrEmpty(sessionModel.City) ? "وسط جدة" : sessionModel.City;
             var volunteer = new VolunteerRepository().GetApprovedVolunteer().Where(x => x.Gender == gender && x.City == city).Select(x =>
                new SelectListItem { Text = x.VolunteerName, Value = x.Id + "" }).ToList();
             volunteer.Insert(0, defaultselect);

@@ -101,12 +101,16 @@
                                     <label for="name">@OT.ProgrammName</label>
                                     @Html.DropDownListFor(m => m.Subject, new List<SelectListItem>
                                         {
-                                            new SelectListItem { Selected = true, Text = "PF", Value =  "PF"},
-                                            new SelectListItem { Selected = false, Text = "Safeer", Value= "Safeer"},
-                                            new SelectListItem { Selected = false, Text = "SYC", Value= "SYC"},
-                                            new SelectListItem { Selected = false, Text = "CP", Value= "CP"},
-                                            new SelectListItem { Selected = false, Text = "LP", Value= "LP"},
-                                            new SelectListItem { Selected = false, Text = "Murshidy", Value= "Murshidy"}
+new SelectListItem { Selected = true, Text = @OT.PersonalLifePlanning, Value =  "PFP"},
+new SelectListItem { Selected = false, Text = @OT.FriendOfEarth, Value =  "FOE"},
+new SelectListItem { Selected = false, Text = @OT.LeadershipProgram, Value =  "LP"},
+new SelectListItem { Selected = false, Text = @OT.ItsMyBusiness, Value =  "IMB"},
+new SelectListItem { Selected = false, Text = @OT.SuccessSkils, Value =  "SS"},
+new SelectListItem { Selected = false, Text = @OT.PersonalFinance, Value =  "PF"},
+new SelectListItem { Selected = false, Text = @OT.CompanyProgram, Value =  "CP"},
+new SelectListItem { Selected = false, Text = @OT.PersonalEconomic, Value =  "PE"},
+new SelectListItem { Selected = false, Text = @OT.SteerYourCarrer, Value =  "SYC"}
+                                           
                                          }, new { @class = "form-control"})
                                     @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
 

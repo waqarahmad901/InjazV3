@@ -18,7 +18,7 @@ namespace TranningWebApp.Repository
 
         public IEnumerable<school> GetByFilters(string city, string stageOfSchool, string typeOfSchool)
         {
-            city = string.IsNullOrEmpty(city) ? "Jeddah" : city;
+            city = string.IsNullOrEmpty(city) ? "وسط جدة" : city;
             typeOfSchool = string.IsNullOrEmpty(typeOfSchool)? "Male" : typeOfSchool;
             stageOfSchool = string.IsNullOrEmpty(stageOfSchool) ? "Primary" : stageOfSchool;
 
@@ -27,7 +27,7 @@ namespace TranningWebApp.Repository
 
         public IEnumerable<school> GetByFilters(string city, string typeOfSchool)
         {
-            city = string.IsNullOrEmpty(city) ? "Jeddah" : city;
+            city = string.IsNullOrEmpty(city) ? "وسط جدة" : city;
             typeOfSchool = string.IsNullOrEmpty(typeOfSchool) ? "Male" : typeOfSchool;
             
 

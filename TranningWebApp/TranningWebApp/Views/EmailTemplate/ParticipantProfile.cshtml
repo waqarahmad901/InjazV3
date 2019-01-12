@@ -1,26 +1,28 @@
 ﻿
 @model TmsWebApp.Models.EmailTemplateModel
 
-<div>
+<div lang="ar" dir="rtl">
     <h2 style='text-align:center'> @Model.Title</h2>
-    <br />Dear<b> @Model.ParticipantName</b>
+    <br />عزيزي/ تي الطالب/ه :<b> @Model.ParticipantName</b>
     <br />
     <br />
-    Please update your details in registration form<br />
-    <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
+    لقد تم تسجيلكم في بوابة إنجاز الألكتروني
     <br />
-    User : <b>@Model.UserName</b>
+    نأمل منكم الدخول على الرابط التالي :  <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
     <br />
-    Password : <b>@Model.Password</b> 
+    واستخدام المعلومات التالية للدخول على حسابكم في البوابة
     <br />
     <br />
-    Regards
+
     <br />
-    Administrator
+    اسم المستخدم : <b>@Model.UserName</b>
     <br />
-    @Model.User
+    كلمة المرور :<b>@Model.Password</b>
     <br />
-    Injaz Tranning Management System
+    <br />
+    مع تحيات
+    <br />
+    إنجاز السعودية
     <br />
     <a href="@Model.RedirectUrl">@Model.RedirectUrl</a>
 

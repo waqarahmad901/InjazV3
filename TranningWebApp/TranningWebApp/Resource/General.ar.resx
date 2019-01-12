@@ -426,4 +426,7 @@
   <data name="UserAlreadyExist" xml:space="preserve">
     <value>المستخدم بالفعل في المستخدم ، يرجى اختيار آخر</value>
   </data>
+  <data name="ValidatorUrlFormat" xml:space="preserve">
+    <value>يجب أن يكون هذا الحقل رابطًا صالحًا</value>
+  </data>
 </root>

@@ -70,6 +70,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company program.
+        /// </summary>
+        public static string CompanyProgram {
+            get {
+                return ResourceManager.GetString("CompanyProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact Person.
         /// </summary>
         public static string ContactPerson {
@@ -124,6 +133,15 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friend of earth.
+        /// </summary>
+        public static string FriendOfEarth {
+            get {
+                return ResourceManager.GetString("FriendOfEarth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From.
         /// </summary>
         public static string From {
@@ -138,6 +156,24 @@ namespace TranningWebApp.Resource {
         public static string Hijri {
             get {
                 return ResourceManager.GetString("Hijri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Its my business.
+        /// </summary>
+        public static string ItsMyBusiness {
+            get {
+                return ResourceManager.GetString("ItsMyBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leadership program.
+        /// </summary>
+        public static string LeadershipProgram {
+            get {
+                return ResourceManager.GetString("LeadershipProgram", resourceCulture);
             }
         }
         
@@ -205,6 +241,33 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personal economic.
+        /// </summary>
+        public static string PersonalEconomic {
+            get {
+                return ResourceManager.GetString("PersonalEconomic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal finance.
+        /// </summary>
+        public static string PersonalFinance {
+            get {
+                return ResourceManager.GetString("PersonalFinance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal life planning.
+        /// </summary>
+        public static string PersonalLifePlanning {
+            get {
+                return ResourceManager.GetString("PersonalLifePlanning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Programm Name.
         /// </summary>
         public static string ProgrammName {
@@ -268,11 +331,29 @@ namespace TranningWebApp.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Steer your carrer.
+        /// </summary>
+        public static string SteerYourCarrer {
+            get {
+                return ResourceManager.GetString("SteerYourCarrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OT Name.
         /// </summary>
         public static string Subject {
             get {
                 return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success skils.
+        /// </summary>
+        public static string SuccessSkils {
+            get {
+                return ResourceManager.GetString("SuccessSkils", resourceCulture);
             }
         }
         

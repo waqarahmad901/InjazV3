@@ -19,7 +19,7 @@ namespace TranningWebApp.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SessionX {
@@ -156,6 +156,15 @@ namespace TranningWebApp.Resource {
         public static string DownloadExcel {
             get {
                 return ResourceManager.GetString("DownloadExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can change the session date here, if needed.
+        /// </summary>
+        public static string EditDataMessage {
+            get {
+                return ResourceManager.GetString("EditDataMessage", resourceCulture);
             }
         }
         

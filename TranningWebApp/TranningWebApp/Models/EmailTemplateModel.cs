@@ -29,6 +29,7 @@ namespace TmsWebApp.Models
         public string SessionStartDate { get; set; }
         public string ContactPersonPhone { get; set; }
         public string SessionEndDate { get; set; }
-
+        public string TypeOfSchool { get; set; }
+        public string OTDate { get; set; }
     }
 }

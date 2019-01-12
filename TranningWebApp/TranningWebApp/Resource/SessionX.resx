@@ -297,4 +297,7 @@
   <data name="RequestedStartDate" xml:space="preserve">
     <value>Requested Start Date</value>
   </data>
+  <data name="EditDataMessage" xml:space="preserve">
+    <value>You can change the session date here, if needed</value>
+  </data>
 </root>

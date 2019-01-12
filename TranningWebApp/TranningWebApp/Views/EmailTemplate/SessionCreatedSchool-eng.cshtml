@@ -1,0 +1,26 @@
+﻿@model TmsWebApp.Models.EmailTemplateModel
+@{
+    string appUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+}
+
+
+
+<div>
+    <h2 style='text-align:center'> @Model.Title</h2>
+    <br />Dear<b> @Model.CoordinatorName</b>
+    <br />
+    <br />
+    This is to inform you that the session <b>@Model.SessionTitle</b> has been created by <b>@Model.User</b> on <b>@DateTime.Now.ToShortDateString()</b>.
+    <br />
+    Your Login Id : @Model.Email
+    <br />
+    Regards
+    <br />
+    Administrator
+    <br />
+    @Model.User
+    <br />
+    Injaz Tranning Management System
+    <br />
+    <a href="@appUrl">@appUrl</a>
+</div>

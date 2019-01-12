@@ -201,12 +201,21 @@
                                     <label for="phone" ,@maxlength=10>@SessionX.ProgramName</label> 
                                     @Html.DropDownListFor(m => m.ProgramName, new List<SelectListItem>
                                         {
-                                            new SelectListItem { Selected = true, Text = "PF", Value =  "PF"},
+                                          /*  new SelectListItem { Selected = true, Text = "PF", Value =  "PF"},
                                             new SelectListItem { Selected = false, Text = "Safeer", Value= "Safeer"},
                                             new SelectListItem { Selected = false, Text = "SYC", Value= "SYC"},
                                             new SelectListItem { Selected = false, Text = "CP", Value= "CP"},
                                             new SelectListItem { Selected = false, Text = "LP", Value= "LP"},
-                                            new SelectListItem { Selected = false, Text = "Murshidy", Value= "Murshidy"}
+                                            new SelectListItem { Selected = false, Text = "Murshidy", Value= "Murshidy"}*/
+                                            new SelectListItem { Selected = true, Text = @OT.PersonalLifePlanning, Value =  "PFP"},
+new SelectListItem { Selected = false, Text = @OT.FriendOfEarth, Value =  "FOE"},
+new SelectListItem { Selected = false, Text = @OT.LeadershipProgram, Value =  "LP"},
+new SelectListItem { Selected = false, Text = @OT.ItsMyBusiness, Value =  "IMB"},
+new SelectListItem { Selected = false, Text = @OT.SuccessSkils, Value =  "SS"},
+new SelectListItem { Selected = false, Text = @OT.PersonalFinance, Value =  "PF"},
+new SelectListItem { Selected = false, Text = @OT.CompanyProgram, Value =  "CP"},
+new SelectListItem { Selected = false, Text = @OT.PersonalEconomic, Value =  "PE"},
+new SelectListItem { Selected = false, Text = @OT.SteerYourCarrer, Value =  "SYC"}
                                          }, new { @class = "form-control"})
                                     @Html.ValidationMessageFor(m => m.ProgramName, "", new { @class = "text-danger" })
 
@@ -325,88 +334,93 @@
                                     </div>
 
                                     <div class="row" style="width:100%">
-                                        <div class="form-group col-sm-6">
-                                            <label style="width: 100%">@SessionX.RequestedStartDate</label>
-                                            <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                            @Html.TextBoxFor(m => m.ActualDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualstart", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
-                                            @Html.ValidationMessageFor(m => m.ActualDateTime, "", new { @class = "text-danger" })
+                                        <div class="form-group col-sm-12">
+                                            <span style="color:green;font-style: italic">@SessionX.EditDataMessage</span>
 
-                                        </div>
-                                        <div class="form-group col-sm-6" style="margin-top:0.5%">
-                                            <label style="width: 100%"></label>
-                                            <label style="font-style: italic">@SessionX.Hijri</label>
-                                            @Html.TextBoxFor(m => m.ActualDateStringStringIslamic, new { @class = "form-control date-islamic-1 actualdate actualstartislamic", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
-                                            @Html.ValidationMessageFor(m => m.ActualDateStringStringIslamic, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-sm-6">
 
+                                                <label style="width: 100%">@SessionX.RequestedStartDate</label>
+                                                <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                                @Html.TextBoxFor(m => m.ActualDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualstart", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                                @Html.ValidationMessageFor(m => m.ActualDateTime, "", new { @class = "text-danger" })
+
+                                            </div>
+                                            <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                                <label style="width: 100%"></label>
+                                                <label style="font-style: italic">@SessionX.Hijri</label>
+                                                @Html.TextBoxFor(m => m.ActualDateStringStringIslamic, new { @class = "form-control date-islamic-1 actualdate actualstartislamic", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                                @Html.ValidationMessageFor(m => m.ActualDateStringStringIslamic, "", new { @class = "text-danger" })
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    if (Model.ChangeDateVisible)
-                                    {
+                                        if (Model.ChangeDateVisible)
+                                        {
                                         <button type="button" class="btn btn-sm btn-primary pull-right" onclick="changeDate()">@SessionX.ChangeDate</button>
-                                    }
+                                        }
 
-                                    <div class="row" style="width:100%">
-                                        <div class="form-group col-sm-6">
-                                            <label style="width: 100%">@SessionX.RequestedEndDate</label>
-                                            <label style="font-style: italic">@Coordinator.Gorgian</label>
-                                            @Html.TextBoxFor(m => m.ActualEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualend", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
-                                            @Html.ValidationMessageFor(m => m.ActualEndDateTime, "", new { @class = "text-danger" })
+                                        <div class="row" style="width:100%">
+                                            <div class="form-group col-sm-6">
+                                                <label style="width: 100%">@SessionX.RequestedEndDate</label>
+                                                <label style="font-style: italic">@Coordinator.Gorgian</label>
+                                                @Html.TextBoxFor(m => m.ActualEndDateTime, "{0:dd/MM/yyyy}", new { @class = "form-control date-1 actualdate actualend", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                                @Html.ValidationMessageFor(m => m.ActualEndDateTime, "", new { @class = "text-danger" })
 
 
+                                            </div>
+                                            <div class="form-group col-sm-6" style="margin-top:0.5%">
+                                                <label style="width: 100%"></label>
+                                                <label style="font-style: italic">@SessionX.Hijri</label>
+                                                @Html.TextBoxFor(m => m.ActualEndDateStringIslamic, new { @class = "form-control date-islamic-1 actualdate actualendislamic", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
+                                                @Html.ValidationMessageFor(m => m.ActualEndDateStringIslamic, "", new { @class = "text-danger" })
+
+
+                                            </div>
                                         </div>
-                                        <div class="form-group col-sm-6" style="margin-top:0.5%">
-                                            <label style="width: 100%"></label>
-                                            <label style="font-style: italic">@SessionX.Hijri</label>
-                                            @Html.TextBoxFor(m => m.ActualEndDateStringIslamic, new { @class = "form-control date-islamic-1 actualdate actualendislamic", @placeholder = "Enter Proposed Date", @value = Model.ProposedDateTime.ToString("dd/MM/yyyy") })
-                                            @Html.ValidationMessageFor(m => m.ActualEndDateStringIslamic, "", new { @class = "text-danger" })
+                                        @Html.Partial("_SessionTime", Model, new ViewDataDictionary { { "type", "act" }, { "addtionalclass", "actualdate" } })
 
-
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(x => x.ApprovedByAdmin, new { @style = "margin-top:5px", @class = "check" })
+                                            <label style="margin-left:10px">@SessionX.ApprovedbyAdmin</label>
                                         </div>
-                                    </div>
-                                    @Html.Partial("_SessionTime", Model, new ViewDataDictionary { { "type", "act" }, { "addtionalclass", "actualdate" } })
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(x => x.SendKitByMailCourier, new { @style = "margin-top:5px", @class = "check" })
+                                            <label style="margin-left:10px">@SessionX.SendthekitbyMailCourier</label>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(x => x.ConfirmKitReceivedBySchool, new { @style = "margin-top:5px", @class = "check" })
+                                            <label style="margin-left:10px">@SessionX.ConfirmKitReceivedBySchool</label>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(x => x.SessionOccured, new { @style = "margin-top:5px", @class = "check" })
+                                            <label style="margin-left:10px">@SessionX.Sessionhasoccured</label>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(x => x.MarkedCompletedByVolunteer, new { @style = "margin-top:5px", @class = "check" })
+                                            <label style="margin-left:10px">@SessionX.Sessionmarkedcompletedbyvolunteer</label>
+                                        </div>
+                                        @*if (cu.EnumRole == EnumUserRole.Volunteer && Model.EnumSessionStatus == SessionStatus.Approved)
+        {
+        <div class="form-group">
+            @Html.CheckBoxFor(x=>x.RequestThisSession, new { @style = "margin-top:5px", @class = "check",@value = (Model.VolunteerId != null).ToString().ToLower() })
+            <label style="margin-left:10px">@SessionX.RequestThisSession</label>
+        </div>
+         }*@
+                                        if (cu.EnumRole == EnumUserRole.Volunteer && Model.EnumSessionStatus == SessionStatus.Occured)
+                                        {
+                                        <div class="form-group">
+                                            @*@Html.CheckBoxFor(x=>x.VolunteerMarkedStudentAttendenceInSession, new { @style = "margin-top:5px", @class = "check" })*@
+                                            @*<label style="margin-left:10px">@SessionX.StudnetAttendence</label>*@
+                                        </div>
+                                        }
+                                        }
+                                        @if (Model != null && Model.Id > 0)
+                                        {
+                                            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
 
-                                    <div class="form-group">
-                                        @Html.CheckBoxFor(x => x.ApprovedByAdmin, new { @style = "margin-top:5px", @class = "check" })
-                                        <label style="margin-left:10px">@SessionX.ApprovedbyAdmin</label>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.CheckBoxFor(x => x.SendKitByMailCourier, new { @style = "margin-top:5px", @class = "check" })
-                                        <label style="margin-left:10px">@SessionX.SendthekitbyMailCourier</label>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.CheckBoxFor(x => x.ConfirmKitReceivedBySchool, new { @style = "margin-top:5px", @class = "check" })
-                                        <label style="margin-left:10px">@SessionX.ConfirmKitReceivedBySchool</label>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.CheckBoxFor(x => x.SessionOccured, new { @style = "margin-top:5px", @class = "check" })
-                                        <label style="margin-left:10px">@SessionX.Sessionhasoccured</label>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.CheckBoxFor(x => x.MarkedCompletedByVolunteer, new { @style = "margin-top:5px", @class = "check" })
-                                        <label style="margin-left:10px">@SessionX.Sessionmarkedcompletedbyvolunteer</label>
-                                    </div>
-                                    @*if (cu.EnumRole == EnumUserRole.Volunteer && Model.EnumSessionStatus == SessionStatus.Approved)
-                {
-                <div class="form-group">
-                    @Html.CheckBoxFor(x=>x.RequestThisSession, new { @style = "margin-top:5px", @class = "check",@value = (Model.VolunteerId != null).ToString().ToLower() })
-                    <label style="margin-left:10px">@SessionX.RequestThisSession</label>
-                </div>
-                 }*@
-                                if (cu.EnumRole == EnumUserRole.Volunteer && Model.EnumSessionStatus == SessionStatus.Occured)
-                                {
-                                    <div class="form-group">
-                                        @*@Html.CheckBoxFor(x=>x.VolunteerMarkedStudentAttendenceInSession, new { @style = "margin-top:5px", @class = "check" })*@
-                                        @*<label style="margin-left:10px">@SessionX.StudnetAttendence</label>*@
-                                    </div>
-                                    }
-                                }
-                                @if (Model != null && Model.Id > 0)
-                                {
-                                    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                                        }
 
-                                }
-
-                            </div>
+                                    </div>
                         <div class="card-footer">
                             @if (cu.EnumRole == EnumUserRole.SuperAdmin && (Model.Status == SessionStatus.DateChanges.ToString() || Model.Status == SessionStatus.StudentChanges.ToString()))
                             {

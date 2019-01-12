@@ -438,4 +438,7 @@
   <data name="UserAlreadyExist" xml:space="preserve">
     <value>User already in user, please choose another</value>
   </data>
+  <data name="ValidatorUrlFormat" xml:space="preserve">
+    <value>This field must be a valid link</value>
+  </data>
 </root>
