@@ -43,15 +43,15 @@ namespace TmsWebApp.Common
                 new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=695,Y = 132, CertifiacteData = CertificateEnum.NameOfVolunteer}
             });
             certificatesDictionary.Add("SafeerCertificate_Volunteer", new List<PdfCoordinatesModel>() {
-                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=490,Y = 360, CertifiacteData = CertificateEnum.NameOfVolunteer},
-                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=290,Y = 144, CertifiacteData = CertificateEnum.TranningHour},
-                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=744,Y = 144, CertifiacteData = CertificateEnum.TranningDate}
+                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=490,Y = 300, CertifiacteData = CertificateEnum.NameOfVolunteer},
+                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=180,Y = 124, CertifiacteData = CertificateEnum.TranningHour},
+                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=660,Y = 124, CertifiacteData = CertificateEnum.TranningDate}
             });
             certificatesDictionary.Add("SYCCertificates-Student", new List<PdfCoordinatesModel>() {
-                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=324,Y = 362, CertifiacteData = CertificateEnum.NameOfStudent},
+                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=340,Y = 348, CertifiacteData = CertificateEnum.NameOfStudent},
                 //new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=495,Y = 265 },
-                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=191,Y = 151,CertifiacteData = CertificateEnum.NameOfVolunteer},
-                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=671,Y = 151,CertifiacteData= CertificateEnum.NameOfCoordinator}
+                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=191,Y = 135,CertifiacteData = CertificateEnum.NameOfVolunteer},
+                new PdfCoordinatesModel { Alignment = Element.ALIGN_LEFT,X=671,Y = 135,CertifiacteData= CertificateEnum.NameOfCoordinator}
             });
             certificatesDictionary.Add("SYCCertificates-Volunteer", new List<PdfCoordinatesModel>() { 
                 new PdfCoordinatesModel { Alignment = Element.ALIGN_RIGHT,X=405,Y = 350,CertifiacteData= CertificateEnum.NameOfVolunteer}

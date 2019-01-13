@@ -525,7 +525,7 @@ namespace TmsWebApp.Controllers
                 if (session.SubmitButton == "viewcertificate" || session.SubmitButton == "volunteerviewcertificate")
                 {
                     var participant = new ParticipiantRepository().GetByUserId(cu.OUser.Id);
-                    string certificatePath = Server.MapPath(oSession.certificate.UploadFilePath);
+                    string certificatePath = null ;
                      
                     List<PdfCoordinatesModel> pdfCoordinates = null;
                     var outputPath = Path.GetDirectoryName(oSession.certificate.UploadFilePath);
@@ -539,11 +539,14 @@ namespace TmsWebApp.Controllers
                     if (cu.EnumRole == EnumUserRole.Participant)
                     {
 
-                        
+                     certificatePath = Server.MapPath(oSession.certificate.UploadFilePath);
+
                         pdfCoordinates = new CertificateDictionary().GetPdfCoordinatesFromDictionary(oSession.certificate.Type);
                     }
                     else
                     {
+                         certificatePath = Server.MapPath(oSession.certificate1.UploadFilePath);
+
                         pdfCoordinates = new CertificateDictionary().GetPdfCoordinatesFromDictionary(oSession.certificate1.Type);
                         oSession.IsVolunteerCertificateGenerated = true;
                     }

@@ -120,6 +120,7 @@ namespace TmsWebApp.Controllers
             var participantRepo = new ParticipiantRepository();
             participant_profile participant = null;
             var cu = Session["user"] as ContextUser;
+            var schoolId = participantRepo.GetSchoolId(cu.OUser.Id);
             if (profile.Id == 0)
             {
                 if (accountRepo.EmailExist(profile.Email))
@@ -184,6 +185,7 @@ namespace TmsWebApp.Controllers
             participant.FatherName = profile.FatherName;
             participant.Family = profile.Family;
             participant.NationalID = profile.NationalID;
+            participant.SchoolId = schoolId;
             if (profile.MobileNo != null)
                 participant.Mobile = profile.MobileNo;
             else
@@ -309,12 +311,14 @@ namespace TmsWebApp.Controllers
             var session = new SessionRepository().Get(model.SessionId);
             try
             {
-                string fileName = "~/Uploads/" + file.FileName;
+                string fileName = "~/Uploads/" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string filePath = Server.MapPath(fileName);
                 file.SaveAs(filePath);
                 var participantRepo = new ParticipiantRepository();
                 participant_profile participant = null;
                 var cu = Session["user"] as ContextUser;
+                var schoolId = participantRepo.GetSchoolId(cu.OUser.Id);
+
                 List<participant_profile> profileList = new List<participant_profile>();
                 using (ExcelPackage xlPackage = new ExcelPackage(new FileInfo(filePath)))
                 {
@@ -394,6 +398,7 @@ namespace TmsWebApp.Controllers
                     participant.Family = profile.Family;
                     participant.NationalID = profile.NationalID;
                     participant.Mobile = profile.Mobile;
+                    participant.SchoolId = schoolId;
                     participant.isActive = true;
                     if (participant.Id == 0)
                     {

@@ -64,5 +64,10 @@ namespace TranningWebApp.Repository
         {
             return Context.participant_profile.Where(x =>  x.NationalID == nationalID).FirstOrDefault();
         }
+
+        public int GetSchoolId(int userId)
+        {
+            return Context.coordinator_profile.Where(x => x.CoordinatorUserID == userId).First().SchoolId;
+        }
     }
 }
