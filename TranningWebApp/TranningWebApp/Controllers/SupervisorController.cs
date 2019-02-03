@@ -88,8 +88,8 @@ namespace TmsWebApp.Controllers
                     oVolunteer.ApprovedAtLevel3Comments = comment;
 
                 repository.Put(oVolunteer.Id, oVolunteer);
-
-                SendRejectedMailToVolunteer(oVolunteer, cu);
+                if(cu.EnumRole == EnumUserRole.Approver3)
+                    SendRejectedMailToVolunteer(oVolunteer, cu);
 
             }
             return RedirectToAction("Index");
@@ -111,9 +111,9 @@ namespace TmsWebApp.Controllers
                 oVolunteer.ApprovedAtLevel3Comments = volunteer.ApprovedAtLevel3Comments;
 
                 repository.Put(oVolunteer.Id, oVolunteer);
-                
 
-                SendRejectedMailToVolunteer(oVolunteer, cu);
+                if (cu.EnumRole == EnumUserRole.Approver3)
+                    SendRejectedMailToVolunteer(oVolunteer, cu);
 
                 return RedirectToAction("Index");
             }
