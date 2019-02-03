@@ -21,7 +21,7 @@ namespace TranningWebApp.Repository
             model.SessionOccuredCount = sessions.Where(x => x.Status == "Occured").Count();
 
             var volunteer = Context.volunteer_profile.ToList();
-            model.volunteerAvailableCount = volunteer.Where(x => x.IsApprovedAtLevel1 != null && x.IsApprovedAtLevel1.Value && x.IsApprovedAtLevel2 != null && x.IsApprovedAtLevel2.Value && x.IsApprovedAtLevel3 != null && x.IsApprovedAtLevel3.Value).Count();
+            model.volunteerAvailableCount = volunteer.Where(x => x.IsApprovedAtLevel3 != null && x.IsApprovedAtLevel3.Value).Count();
             model.volunteerRejectedCount = volunteer.Where(x => x.IsRejected != null && x.IsRejected.Value).Count();
             model.volunteerPendingCount = volunteer.Count - model.volunteerAvailableCount - model.volunteerRejectedCount;
 

@@ -13,6 +13,7 @@ namespace TranningWebApp.Repository.DataAccess
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> OTDateTime { get; set; }
+        [Url(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorUrlFormat")]
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string Location { get; set; }
         public string Subject { get; set; }

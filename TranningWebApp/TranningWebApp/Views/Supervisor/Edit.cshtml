@@ -5,9 +5,7 @@
 @using TranningWebApp.Resource
 @{
     ViewBag.Title = "Edit";
-    bool isApproved = Model.IsApprovedAtLevel1 != null && Model.IsApprovedAtLevel1.Value
-        && Model.IsApprovedAtLevel2 != null && Model.IsApprovedAtLevel2.Value
-        && Model.IsApprovedAtLevel3 != null && Model.IsApprovedAtLevel3.Value;
+    bool isApproved = Model.IsApprovedAtLevel3 != null && Model.IsApprovedAtLevel3.Value;
 
     var cu = Session["user"] as ContextUser;
 }

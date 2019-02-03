@@ -62,10 +62,9 @@ namespace TranningWebApp.Repository
             if (status == "approved")
             {
                 return Context.volunteer_profile.Where(x =>
-                x.IsApprovedAtLevel1 != null && x.IsApprovedAtLevel1.Value
-                && x.IsApprovedAtLevel2 != null && x.IsApprovedAtLevel2.Value
-                && x.IsApprovedAtLevel3 != null && x.IsApprovedAtLevel3.Value
-                && (x.IsRejected == null || x.IsRejected.Value == false)
+              
+                x.IsApprovedAtLevel3 != null && x.IsApprovedAtLevel3.Value
+               
                                       && (string.IsNullOrEmpty(filter) || x.VolunteerName.Contains(filter) || x.Gender.Equals(filter)
                       || x.City.Contains(filter) || x.VolunteerMobile.Contains(filter) || x.VolunteerEmail.Contains(filter)
                       || x.AcademicQualification.Equals(filter) || (filter == "marked" && x.OTAttendenceForVolunteer)
@@ -105,9 +104,7 @@ namespace TranningWebApp.Repository
         public IEnumerable<volunteer_profile> GetApprovedVolunteer()
         {
             return Context.volunteer_profile.Where(x =>
-            x.IsApprovedAtLevel1 != null && x.IsApprovedAtLevel1.Value
-            && x.IsApprovedAtLevel2 != null && x.IsApprovedAtLevel2.Value
-            && x.IsApprovedAtLevel3 != null && x.IsApprovedAtLevel3.Value
+            x.IsApprovedAtLevel3 != null && x.IsApprovedAtLevel3.Value
             && (x.IsRejected == null || x.IsRejected.Value == false)
             && (x.IsActive != null && x.IsActive.Value)
             ).ToList();

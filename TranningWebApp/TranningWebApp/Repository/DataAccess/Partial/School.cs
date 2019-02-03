@@ -51,7 +51,7 @@ namespace TranningWebApp.Repository.DataAccess
         public string SchoolGuardMobile { get; set; }
         public string LinkedInAddress { get; set; }
         public string GoogleAddress { get; set; }
-
+        [Url(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorUrlFormat")]
         [Required(ErrorMessageResourceType = typeof(Resource.General), ErrorMessageResourceName = "ValidatorRequired")]
         public string SchoolGeoLocation { get; set; }
     }

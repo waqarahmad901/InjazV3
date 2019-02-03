@@ -596,9 +596,7 @@ namespace TmsWebApp.Controllers
             {
                 cu.OUser.Id = oVoluntee.Id;
                 Session["user"] = cu;
-                if (oVoluntee.IsApprovedAtLevel1 != null && oVoluntee.IsApprovedAtLevel1.Value
-                    && oVoluntee.IsApprovedAtLevel2 != null && oVoluntee.IsApprovedAtLevel2.Value
-                    && oVoluntee.IsApprovedAtLevel3 != null && oVoluntee.IsApprovedAtLevel3.Value
+                if (oVoluntee.IsApprovedAtLevel3 != null && oVoluntee.IsApprovedAtLevel3.Value
                     && !oVoluntee.OTAttendenceForVolunteer)
                 {
                     return RedirectToAction("Edit", "Supervisor", new { id = oVoluntee.RowGuid });

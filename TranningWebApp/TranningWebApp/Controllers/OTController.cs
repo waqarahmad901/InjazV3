@@ -190,18 +190,18 @@ namespace TmsWebApp.Controllers
             //        }
             //    }
             //}
-            if (!string.IsNullOrEmpty(ot.SchoolIds))
-            {
-                foreach (var item in ot.SchoolIds.Split(','))
-                {
-                    if (!string.IsNullOrEmpty(item))
-                    {
-                        var sch = new SchoolRepository().Get(int.Parse(item));
-                        OTLinkWithSchoolEmail(sch, ot);
-                    }
+            //if (!string.IsNullOrEmpty(ot.SchoolIds))
+            //{
+            //    foreach (var item in ot.SchoolIds.Split(','))
+            //    {
+            //        if (!string.IsNullOrEmpty(item))
+            //        {
+            //            var sch = new SchoolRepository().Get(int.Parse(item));
+            //            OTLinkWithSchoolEmail(sch, ot);
+            //        }
 
-                }
-            }
+            //    }
+            //}
             ot.ContactPersonName = profile.ContactPersonName;
             ot.ContactPersonPhone = profile.ContactPersonPhone;
 
