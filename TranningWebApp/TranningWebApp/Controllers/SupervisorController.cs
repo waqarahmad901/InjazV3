@@ -88,8 +88,8 @@ namespace TmsWebApp.Controllers
                     oVolunteer.ApprovedAtLevel3Comments = comment;
 
                 repository.Put(oVolunteer.Id, oVolunteer);
-                if(cu.EnumRole == EnumUserRole.Approver3)
-                    SendRejectedMailToVolunteer(oVolunteer, cu);
+
+                SendRejectedMailToVolunteer(oVolunteer, cu);
 
             }
             return RedirectToAction("Index");
@@ -111,9 +111,9 @@ namespace TmsWebApp.Controllers
                 oVolunteer.ApprovedAtLevel3Comments = volunteer.ApprovedAtLevel3Comments;
 
                 repository.Put(oVolunteer.Id, oVolunteer);
+                
 
-                if (cu.EnumRole == EnumUserRole.Approver3)
-                    SendRejectedMailToVolunteer(oVolunteer, cu);
+                SendRejectedMailToVolunteer(oVolunteer, cu);
 
                 return RedirectToAction("Index");
             }
@@ -262,9 +262,9 @@ namespace TmsWebApp.Controllers
         {
 
             string comment = "";
-            if (cu.EnumRole == EnumUserRole.Approver1)
+            if (cu.EnumRole == EnumUserRole.Approver3)
             {
-                comment = oVolunteer.ApprovedAtLevel1Comments; 
+                comment = oVolunteer.ApprovedAtLevel3Comments; 
                 string url = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Login";
                 var bogusController = Util.CreateController<EmailTemplateController>();
                 EmailTemplateModel emodel =
@@ -279,9 +279,9 @@ namespace TmsWebApp.Controllers
                     Util.RenderViewToString(bogusController.ControllerContext, "VolunteerRejected", emodel);
                 EmailSender.SendSupportEmail(body, oVolunteer.VolunteerEmail);
             }
+            if (cu.EnumRole == EnumUserRole.Approver1)
+                comment = oVolunteer.ApprovedAtLevel1Comments;
             if (cu.EnumRole == EnumUserRole.Approver2)
-                comment = oVolunteer.ApprovedAtLevel2Comments;
-            if (cu.EnumRole == EnumUserRole.Approver3)
                 comment = oVolunteer.ApprovedAtLevel3Comments;
         }
 
