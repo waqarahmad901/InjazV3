@@ -105,6 +105,7 @@ namespace TmsWebApp.Controllers
             if (volunteer.SubmitButton == "reject")
             {
                 oVolunteer.IsRejected = true;
+
                 oVolunteer.RejectedBy = cu.OUser.Username;
                 oVolunteer.ApprovedAtLevel1Comments = volunteer.ApprovedAtLevel1Comments;
                 oVolunteer.ApprovedAtLevel2Comments = volunteer.ApprovedAtLevel2Comments;
@@ -317,6 +318,7 @@ namespace TmsWebApp.Controllers
             }
             if (cu.EnumRole == EnumUserRole.Approver2)
             {
+                oVolunteer.IsApprovedAtLevel1 = true;
                 oVolunteer.IsApprovedAtLevel2 = true;
                 oVolunteer.ApprovedAtLevel2Comments = volunteer.ApprovedAtLevel2Comments;
                 oVolunteer.RejectedBy = null;
@@ -345,6 +347,8 @@ namespace TmsWebApp.Controllers
             {
                 oVolunteer.RejectedBy = null;
                 oVolunteer.IsRejected = false;
+                oVolunteer.IsApprovedAtLevel1 = true;
+                oVolunteer.IsApprovedAtLevel2 = true;
                 oVolunteer.IsApprovedAtLevel3 = true;
 
                 oVolunteer.ApprovedAtLevel3Comments = volunteer.ApprovedAtLevel3Comments;
